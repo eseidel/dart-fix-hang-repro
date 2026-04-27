@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/teams_update_in_org_request_notification_setting.dart';
 import 'package:github_out/models/teams_update_in_org_request_permission.dart';
@@ -10,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamsUpdateInOrgRequest {
-  const TeamsUpdateInOrgRequest({
+  TeamsUpdateInOrgRequest({
     this.name,
     this.description,
     this.privacy,
@@ -37,7 +33,7 @@ class TeamsUpdateInOrgRequest {
         permission: TeamsUpdateInOrgRequestPermission.maybeFromJson(
           json['permission'] as String?,
         ),
-        parentTeamId: json['parent_team_id'] as int?,
+        parentTeamId: (json['parent_team_id'] as int?),
       ),
     );
   }
@@ -110,11 +106,11 @@ class TeamsUpdateInOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamsUpdateInOrgRequest &&
-        name == other.name &&
-        description == other.description &&
-        privacy == other.privacy &&
-        notificationSetting == other.notificationSetting &&
-        permission == other.permission &&
-        parentTeamId == other.parentTeamId;
+        this.name == other.name &&
+        this.description == other.description &&
+        this.privacy == other.privacy &&
+        this.notificationSetting == other.notificationSetting &&
+        this.permission == other.permission &&
+        this.parentTeamId == other.parentTeamId;
   }
 }

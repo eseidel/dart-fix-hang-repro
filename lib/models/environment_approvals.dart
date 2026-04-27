@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/environment_approvals_environments_inner.dart';
 import 'package:github_out/models/environment_approvals_state.dart';
@@ -15,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class EnvironmentApprovals {
   /// {@macro environment_approvals}
-  const EnvironmentApprovals({
+  EnvironmentApprovals({
     required this.environments,
     required this.state,
     required this.user,
@@ -89,9 +85,9 @@ class EnvironmentApprovals {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is EnvironmentApprovals &&
-        listsEqual(environments, other.environments) &&
-        state == other.state &&
-        user == other.user &&
-        comment == other.comment;
+        listsEqual(this.environments, other.environments) &&
+        this.state == other.state &&
+        this.user == other.user &&
+        this.comment == other.comment;
   }
 }

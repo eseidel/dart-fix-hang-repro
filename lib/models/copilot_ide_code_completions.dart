@@ -1,9 +1,7 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_ide_code_completions_editors_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions_editors_inner_models_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions_editors_inner_models_inner_languages_inner.dart';
 import 'package:github_out/models/copilot_ide_code_completions_languages_inner.dart';
 import 'package:meta/meta.dart';
 
@@ -13,11 +11,11 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotIdeCodeCompletions {
   /// {@macro copilot_ide_code_completions}
-  const CopilotIdeCodeCompletions({
-    required this.entries,
+  CopilotIdeCodeCompletions({
     this.totalEngagedUsers,
     this.languages,
     this.editors,
+    required this.entries,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CopilotIdeCodeCompletions].
@@ -26,7 +24,7 @@ class CopilotIdeCodeCompletions {
       'CopilotIdeCodeCompletions',
       json,
       () => CopilotIdeCodeCompletions(
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
         languages: (json['languages'] as List?)
             ?.map<CopilotIdeCodeCompletionsLanguagesInner>(
               (e) => CopilotIdeCodeCompletionsLanguagesInner.fromJson(
@@ -41,7 +39,7 @@ class CopilotIdeCodeCompletions {
               ),
             )
             .toList(),
-        entries: json.map(MapEntry.new),
+        entries: json.map((key, value) => MapEntry(key, value)),
       ),
     );
   }
@@ -64,7 +62,7 @@ class CopilotIdeCodeCompletions {
   final List<CopilotIdeCodeCompletionsEditorsInner>? editors;
   final Map<String, dynamic> entries;
 
-  dynamic operator [](String key) => entries[key];
+  dynamic? operator [](String key) => entries[key];
 
   /// Converts a [CopilotIdeCodeCompletions] to a `Map<String, dynamic>`.
   Map<String, dynamic> toJson() {
@@ -72,7 +70,7 @@ class CopilotIdeCodeCompletions {
       'total_engaged_users': totalEngagedUsers,
       'languages': languages?.map((e) => e.toJson()).toList(),
       'editors': editors?.map((e) => e.toJson()).toList(),
-      ...entries.map(MapEntry.new),
+      ...entries.map((key, value) => MapEntry(key, value)),
     };
   }
 
@@ -88,9 +86,9 @@ class CopilotIdeCodeCompletions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotIdeCodeCompletions &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        listsEqual(languages, other.languages) &&
-        listsEqual(editors, other.editors) &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        listsEqual(this.languages, other.languages) &&
+        listsEqual(this.editors, other.editors) &&
         mapsEqual(entries, other.entries);
   }
 }

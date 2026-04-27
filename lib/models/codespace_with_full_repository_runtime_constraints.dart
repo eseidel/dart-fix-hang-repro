@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodespaceWithFullRepositoryRuntimeConstraints {
-  const CodespaceWithFullRepositoryRuntimeConstraints({
+  CodespaceWithFullRepositoryRuntimeConstraints({
     this.allowedPortPrivacySettings,
   });
 
@@ -52,7 +52,7 @@ class CodespaceWithFullRepositoryRuntimeConstraints {
     if (identical(this, other)) return true;
     return other is CodespaceWithFullRepositoryRuntimeConstraints &&
         listsEqual(
-          allowedPortPrivacySettings,
+          this.allowedPortPrivacySettings,
           other.allowedPortPrivacySettings,
         );
   }

@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Label {
   /// {@macro label}
-  const Label({
+  Label({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -25,7 +25,7 @@ class Label {
       'Label',
       json,
       () => Label(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         name: json['name'] as String,
@@ -100,12 +100,12 @@ class Label {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Label &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        name == other.name &&
-        description == other.description &&
-        color == other.color &&
-        default_ == other.default_;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.color == other.color &&
+        this.default_ == other.default_;
   }
 }

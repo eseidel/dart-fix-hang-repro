@@ -5,9 +5,9 @@ sealed class Metadata1 {
 
   factory Metadata1.fromJson(dynamic json) {
     return switch (json) {
-      final String v => Metadata1String(v),
-      final num v => Metadata1Num(v),
-      final bool v => Metadata1Bool(v),
+      String v => Metadata1String(v),
+      num v => Metadata1Num(v),
+      bool v => Metadata1Bool(v),
       _ => throw FormatException(
         'Unsupported shape for Metadata1: ${json.runtimeType}',
       ),

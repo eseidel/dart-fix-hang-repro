@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleMaxFileSizeParameters {
-  const RepositoryRuleMaxFileSizeParameters({
+  RepositoryRuleMaxFileSizeParameters({
     required this.maxFileSize,
   });
 
@@ -16,7 +16,7 @@ class RepositoryRuleMaxFileSizeParameters {
       'RepositoryRuleMaxFileSizeParameters',
       json,
       () => RepositoryRuleMaxFileSizeParameters(
-        maxFileSize: json['max_file_size'] as int,
+        maxFileSize: (json['max_file_size'] as int),
       ),
     );
   }
@@ -51,6 +51,6 @@ class RepositoryRuleMaxFileSizeParameters {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleMaxFileSizeParameters &&
-        maxFileSize == other.maxFileSize;
+        this.maxFileSize == other.maxFileSize;
   }
 }

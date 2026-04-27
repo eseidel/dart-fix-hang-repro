@@ -5,8 +5,8 @@ sealed class WebhookConfigInsecureSsl {
 
   factory WebhookConfigInsecureSsl.fromJson(dynamic json) {
     return switch (json) {
-      final String v => WebhookConfigInsecureSslString(v),
-      final num v => WebhookConfigInsecureSslNum(v),
+      String v => WebhookConfigInsecureSslString(v),
+      num v => WebhookConfigInsecureSslNum(v),
       _ => throw FormatException(
         'Unsupported shape for WebhookConfigInsecureSsl: ${json.runtimeType}',
       ),

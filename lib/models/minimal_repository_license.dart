@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class MinimalRepositoryLicense {
-  const MinimalRepositoryLicense({
+  MinimalRepositoryLicense({
     this.key,
     this.name,
     this.spdxId,
@@ -65,10 +65,10 @@ class MinimalRepositoryLicense {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MinimalRepositoryLicense &&
-        key == other.key &&
-        name == other.name &&
-        spdxId == other.spdxId &&
-        url == other.url &&
-        nodeId == other.nodeId;
+        this.key == other.key &&
+        this.name == other.name &&
+        this.spdxId == other.spdxId &&
+        this.url == other.url &&
+        this.nodeId == other.nodeId;
   }
 }

@@ -9,10 +9,11 @@ import 'package:meta/meta.dart';
 @immutable
 class OrgHook {
   /// {@macro org_hook}
-  const OrgHook({
+  OrgHook({
     required this.id,
     required this.url,
     required this.pingUrl,
+    this.deliveriesUrl,
     required this.name,
     required this.events,
     required this.active,
@@ -20,7 +21,6 @@ class OrgHook {
     required this.updatedAt,
     required this.createdAt,
     required this.type,
-    this.deliveriesUrl,
   });
 
   /// Converts a `Map<String, dynamic>` to an [OrgHook].
@@ -29,7 +29,7 @@ class OrgHook {
       'OrgHook',
       json,
       () => OrgHook(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         url: Uri.parse(json['url'] as String),
         pingUrl: Uri.parse(json['ping_url'] as String),
         deliveriesUrl: maybeParseUri(json['deliveries_url'] as String?),
@@ -119,16 +119,16 @@ class OrgHook {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgHook &&
-        id == other.id &&
-        url == other.url &&
-        pingUrl == other.pingUrl &&
-        deliveriesUrl == other.deliveriesUrl &&
-        name == other.name &&
-        listsEqual(events, other.events) &&
-        active == other.active &&
-        config == other.config &&
-        updatedAt == other.updatedAt &&
-        createdAt == other.createdAt &&
-        type == other.type;
+        this.id == other.id &&
+        this.url == other.url &&
+        this.pingUrl == other.pingUrl &&
+        this.deliveriesUrl == other.deliveriesUrl &&
+        this.name == other.name &&
+        listsEqual(this.events, other.events) &&
+        this.active == other.active &&
+        this.config == other.config &&
+        this.updatedAt == other.updatedAt &&
+        this.createdAt == other.createdAt &&
+        this.type == other.type;
   }
 }

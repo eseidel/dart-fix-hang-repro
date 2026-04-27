@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/git_tag_object.dart';
 import 'package:github_out/models/git_tag_tagger.dart';
@@ -15,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GitTag {
   /// {@macro git_tag}
-  const GitTag({
+  GitTag({
     required this.nodeId,
     required this.tag,
     required this.sha,
@@ -110,13 +106,13 @@ class GitTag {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitTag &&
-        nodeId == other.nodeId &&
-        tag == other.tag &&
-        sha == other.sha &&
-        url == other.url &&
-        message == other.message &&
-        tagger == other.tagger &&
-        object == other.object &&
-        verification == other.verification;
+        this.nodeId == other.nodeId &&
+        this.tag == other.tag &&
+        this.sha == other.sha &&
+        this.url == other.url &&
+        this.message == other.message &&
+        this.tagger == other.tagger &&
+        this.object == other.object &&
+        this.verification == other.verification;
   }
 }

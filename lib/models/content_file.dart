@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ContentFile {
   /// {@macro content_file}
-  const ContentFile({
+  ContentFile({
     required this.type,
     required this.encoding,
     required this.size,
@@ -35,7 +35,7 @@ class ContentFile {
       () => ContentFile(
         type: ContentFileType.fromJson(json['type'] as String),
         encoding: json['encoding'] as String,
-        size: json['size'] as int,
+        size: (json['size'] as int),
         name: json['name'] as String,
         path: json['path'] as String,
         content: json['content'] as String,
@@ -123,19 +123,19 @@ class ContentFile {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ContentFile &&
-        type == other.type &&
-        encoding == other.encoding &&
-        size == other.size &&
-        name == other.name &&
-        path == other.path &&
-        content == other.content &&
-        sha == other.sha &&
-        url == other.url &&
-        gitUrl == other.gitUrl &&
-        htmlUrl == other.htmlUrl &&
-        downloadUrl == other.downloadUrl &&
-        links == other.links &&
-        target == other.target &&
-        submoduleGitUrl == other.submoduleGitUrl;
+        this.type == other.type &&
+        this.encoding == other.encoding &&
+        this.size == other.size &&
+        this.name == other.name &&
+        this.path == other.path &&
+        this.content == other.content &&
+        this.sha == other.sha &&
+        this.url == other.url &&
+        this.gitUrl == other.gitUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.downloadUrl == other.downloadUrl &&
+        this.links == other.links &&
+        this.target == other.target &&
+        this.submoduleGitUrl == other.submoduleGitUrl;
   }
 }

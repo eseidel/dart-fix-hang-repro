@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -13,14 +9,38 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/messages/forbidden_gist_response.dart';
+import 'package:github_out/messages/gists_check_is_starred404_response.dart';
 import 'package:github_out/messages/gists_create_comment_request.dart';
 import 'package:github_out/messages/gists_create_request.dart';
 import 'package:github_out/messages/gists_update_comment_request.dart';
 import 'package:github_out/messages/gists_update_request.dart';
+import 'package:github_out/models/author_association.dart';
 import 'package:github_out/models/base_gist.dart';
+import 'package:github_out/models/base_gist_files.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/forbidden_gist_response_block.dart';
 import 'package:github_out/models/gist_comment.dart';
 import 'package:github_out/models/gist_commit.dart';
+import 'package:github_out/models/gist_commit_change_status.dart';
+import 'package:github_out/models/gist_history.dart';
+import 'package:github_out/models/gist_history_change_status.dart';
 import 'package:github_out/models/gist_simple.dart';
+import 'package:github_out/models/gist_simple_files.dart';
+import 'package:github_out/models/gist_simple_fork_of.dart';
+import 'package:github_out/models/gist_simple_fork_of_files.dart';
+import 'package:github_out/models/gist_simple_forks_inner.dart';
+import 'package:github_out/models/gists_create_request_files.dart';
+import 'package:github_out/models/gists_create_request_public.dart';
+import 'package:github_out/models/gists_create_request_public_one_of_1.dart';
+import 'package:github_out/models/gists_update_request_files.dart';
+import 'package:github_out/models/public_user.dart';
+import 'package:github_out/models/public_user_plan.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 
 /// View, modify your gists.
 class GistsApi {
@@ -40,7 +60,7 @@ class GistsApi {
       method: Method.get,
       path: '/gists',
       queryParameters: {
-        if (since != null) 'since': [since.toIso8601String()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -49,7 +69,7 @@ class GistsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -75,12 +95,13 @@ class GistsApi {
       method: Method.post,
       path: '/gists',
       body: gistsCreateRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -110,7 +131,7 @@ class GistsApi {
       method: Method.get,
       path: '/gists/public',
       queryParameters: {
-        if (since != null) 'since': [since.toIso8601String()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -119,7 +140,7 @@ class GistsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -143,7 +164,7 @@ class GistsApi {
       method: Method.get,
       path: '/gists/starred',
       queryParameters: {
-        if (since != null) 'since': [since.toIso8601String()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -152,7 +173,7 @@ class GistsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -182,13 +203,13 @@ class GistsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/gists/{gist_id}'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}'.replaceAll('{gist_id}', '${gistId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -208,13 +229,13 @@ class GistsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.delete,
-      path: '/gists/{gist_id}'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}'.replaceAll('{gist_id}', '${gistId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -243,14 +264,15 @@ class GistsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.patch,
-      path: '/gists/{gist_id}'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}'.replaceAll('{gist_id}', '${gistId}'),
       body: gistsUpdateRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -282,7 +304,7 @@ class GistsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/gists/{gist_id}/comments'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}/comments'.replaceAll('{gist_id}', '${gistId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -292,7 +314,7 @@ class GistsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -325,14 +347,15 @@ class GistsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/gists/{gist_id}/comments'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}/comments'.replaceAll('{gist_id}', '${gistId}'),
       body: gistsCreateCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -364,14 +387,14 @@ class GistsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/gists/{gist_id}/comments/{comment_id}'
-          .replaceAll('{gist_id}', gistId)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{gist_id}', '${gistId}')
+          .replaceAll('{comment_id}', '${commentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -393,14 +416,14 @@ class GistsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/gists/{gist_id}/comments/{comment_id}'
-          .replaceAll('{gist_id}', gistId)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{gist_id}', '${gistId}')
+          .replaceAll('{comment_id}', '${commentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -425,15 +448,16 @@ class GistsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/gists/{gist_id}/comments/{comment_id}'
-          .replaceAll('{gist_id}', gistId)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{gist_id}', '${gistId}')
+          .replaceAll('{comment_id}', '${commentId}'),
       body: gistsUpdateCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -455,7 +479,7 @@ class GistsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/gists/{gist_id}/commits'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}/commits'.replaceAll('{gist_id}', '${gistId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -465,7 +489,7 @@ class GistsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -489,7 +513,7 @@ class GistsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/gists/{gist_id}/forks'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}/forks'.replaceAll('{gist_id}', '${gistId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -499,7 +523,7 @@ class GistsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -521,13 +545,13 @@ class GistsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/gists/{gist_id}/forks'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}/forks'.replaceAll('{gist_id}', '${gistId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -547,13 +571,13 @@ class GistsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/gists/{gist_id}/star'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}/star'.replaceAll('{gist_id}', '${gistId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -567,13 +591,13 @@ class GistsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.put,
-      path: '/gists/{gist_id}/star'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}/star'.replaceAll('{gist_id}', '${gistId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -585,13 +609,13 @@ class GistsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.delete,
-      path: '/gists/{gist_id}/star'.replaceAll('{gist_id}', gistId),
+      path: '/gists/{gist_id}/star'.replaceAll('{gist_id}', '${gistId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -615,14 +639,14 @@ class GistsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/gists/{gist_id}/{sha}'
-          .replaceAll('{gist_id}', gistId)
-          .replaceAll('{sha}', sha),
+          .replaceAll('{gist_id}', '${gistId}')
+          .replaceAll('{sha}', '${sha}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -645,9 +669,9 @@ class GistsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/users/{username}/gists'.replaceAll('{username}', username),
+      path: '/users/{username}/gists'.replaceAll('{username}', '${username}'),
       queryParameters: {
-        if (since != null) 'since': [since.toIso8601String()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -656,7 +680,7 @@ class GistsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

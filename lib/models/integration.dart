@@ -1,6 +1,8 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration_owner.dart';
 import 'package:github_out/models/integration_permissions.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template integration}
@@ -13,9 +15,11 @@ import 'package:meta/meta.dart';
 @immutable
 class Integration {
   /// {@macro integration}
-  const Integration({
+  Integration({
     required this.id,
+    this.slug,
     required this.nodeId,
+    this.clientId,
     required this.owner,
     required this.name,
     required this.description,
@@ -25,8 +29,6 @@ class Integration {
     required this.updatedAt,
     required this.permissions,
     required this.events,
-    this.slug,
-    this.clientId,
     this.installationsCount,
   });
 
@@ -36,7 +38,7 @@ class Integration {
       'Integration',
       json,
       () => Integration(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         slug: json['slug'] as String?,
         nodeId: json['node_id'] as String,
         clientId: json['client_id'] as String?,
@@ -51,7 +53,7 @@ class Integration {
           json['permissions'] as Map<String, dynamic>,
         ),
         events: (json['events'] as List).cast<String>(),
-        installationsCount: json['installations_count'] as int?,
+        installationsCount: (json['installations_count'] as int?),
       ),
     );
   }
@@ -158,19 +160,19 @@ class Integration {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Integration &&
-        id == other.id &&
-        slug == other.slug &&
-        nodeId == other.nodeId &&
-        clientId == other.clientId &&
-        owner == other.owner &&
-        name == other.name &&
-        description == other.description &&
-        externalUrl == other.externalUrl &&
-        htmlUrl == other.htmlUrl &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        permissions == other.permissions &&
-        listsEqual(events, other.events) &&
-        installationsCount == other.installationsCount;
+        this.id == other.id &&
+        this.slug == other.slug &&
+        this.nodeId == other.nodeId &&
+        this.clientId == other.clientId &&
+        this.owner == other.owner &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.externalUrl == other.externalUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.permissions == other.permissions &&
+        listsEqual(this.events, other.events) &&
+        this.installationsCount == other.installationsCount;
   }
 }

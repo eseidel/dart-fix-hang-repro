@@ -1,6 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/file_commit_commit.dart';
+import 'package:github_out/models/file_commit_commit_author.dart';
+import 'package:github_out/models/file_commit_commit_committer.dart';
+import 'package:github_out/models/file_commit_commit_parents_inner.dart';
+import 'package:github_out/models/file_commit_commit_tree.dart';
+import 'package:github_out/models/file_commit_commit_verification.dart';
 import 'package:github_out/models/file_commit_content.dart';
+import 'package:github_out/models/file_commit_content_links.dart';
 import 'package:meta/meta.dart';
 
 /// {@template file_commit}
@@ -10,7 +16,7 @@ import 'package:meta/meta.dart';
 @immutable
 class FileCommit {
   /// {@macro file_commit}
-  const FileCommit({
+  FileCommit({
     required this.content,
     required this.commit,
   });
@@ -61,7 +67,7 @@ class FileCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is FileCommit &&
-        content == other.content &&
-        commit == other.commit;
+        this.content == other.content &&
+        this.commit == other.commit;
   }
 }

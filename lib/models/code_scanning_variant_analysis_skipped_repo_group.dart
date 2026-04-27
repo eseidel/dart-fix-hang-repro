@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_repository.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningVariantAnalysisSkippedRepoGroup {
-  const CodeScanningVariantAnalysisSkippedRepoGroup({
+  CodeScanningVariantAnalysisSkippedRepoGroup({
     required this.repositoryCount,
     required this.repositories,
   });
@@ -22,7 +18,7 @@ class CodeScanningVariantAnalysisSkippedRepoGroup {
       'CodeScanningVariantAnalysisSkippedRepoGroup',
       json,
       () => CodeScanningVariantAnalysisSkippedRepoGroup(
-        repositoryCount: json['repository_count'] as int,
+        repositoryCount: (json['repository_count'] as int),
         repositories: (json['repositories'] as List)
             .map<CodeScanningVariantAnalysisRepository>(
               (e) => CodeScanningVariantAnalysisRepository.fromJson(
@@ -73,7 +69,7 @@ class CodeScanningVariantAnalysisSkippedRepoGroup {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningVariantAnalysisSkippedRepoGroup &&
-        repositoryCount == other.repositoryCount &&
-        listsEqual(repositories, other.repositories);
+        this.repositoryCount == other.repositoryCount &&
+        listsEqual(this.repositories, other.repositories);
   }
 }

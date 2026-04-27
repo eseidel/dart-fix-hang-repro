@@ -1,5 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/workflow_run_usage_billable.dart';
+import 'package:github_out/models/workflow_run_usage_billable_m_a_c_o_s.dart';
+import 'package:github_out/models/workflow_run_usage_billable_m_a_c_o_s_job_runs_inner.dart';
+import 'package:github_out/models/workflow_run_usage_billable_u_b_u_n_t_u.dart';
+import 'package:github_out/models/workflow_run_usage_billable_u_b_u_n_t_u_job_runs_inner.dart';
+import 'package:github_out/models/workflow_run_usage_billable_w_i_n_d_o_w_s.dart';
+import 'package:github_out/models/workflow_run_usage_billable_w_i_n_d_o_w_s_job_runs_inner.dart';
 import 'package:meta/meta.dart';
 
 /// {@template workflow_run_usage}
@@ -9,7 +15,7 @@ import 'package:meta/meta.dart';
 @immutable
 class WorkflowRunUsage {
   /// {@macro workflow_run_usage}
-  const WorkflowRunUsage({
+  WorkflowRunUsage({
     required this.billable,
     this.runDurationMs,
   });
@@ -23,7 +29,7 @@ class WorkflowRunUsage {
         billable: WorkflowRunUsageBillable.fromJson(
           json['billable'] as Map<String, dynamic>,
         ),
-        runDurationMs: json['run_duration_ms'] as int?,
+        runDurationMs: (json['run_duration_ms'] as int?),
       ),
     );
   }
@@ -58,7 +64,7 @@ class WorkflowRunUsage {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is WorkflowRunUsage &&
-        billable == other.billable &&
-        runDurationMs == other.runDurationMs;
+        this.billable == other.billable &&
+        this.runDurationMs == other.runDurationMs;
   }
 }

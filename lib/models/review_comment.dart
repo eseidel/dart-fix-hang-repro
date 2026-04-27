@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/link.dart';
 import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/review_comment_links.dart';
 import 'package:github_out/models/review_comment_side.dart';
@@ -15,7 +16,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReviewComment {
   /// {@macro review_comment}
-  const ReviewComment({
+  ReviewComment({
     required this.url,
     required this.pullRequestReviewId,
     required this.id,
@@ -26,6 +27,7 @@ class ReviewComment {
     required this.originalPosition,
     required this.commitId,
     required this.originalCommitId,
+    this.inReplyToId,
     required this.user,
     required this.body,
     required this.createdAt,
@@ -34,7 +36,6 @@ class ReviewComment {
     required this.pullRequestUrl,
     required this.authorAssociation,
     required this.links,
-    this.inReplyToId,
     this.bodyText,
     this.bodyHtml,
     this.reactions,
@@ -54,16 +55,17 @@ class ReviewComment {
       json,
       () => ReviewComment(
         url: Uri.parse(json['url'] as String),
-        pullRequestReviewId: checkedKey(json, 'pull_request_review_id') as int?,
-        id: json['id'] as int,
+        pullRequestReviewId:
+            (checkedKey(json, 'pull_request_review_id') as int?),
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         diffHunk: json['diff_hunk'] as String,
         path: json['path'] as String,
-        position: checkedKey(json, 'position') as int?,
-        originalPosition: json['original_position'] as int,
+        position: (checkedKey(json, 'position') as int?),
+        originalPosition: (json['original_position'] as int),
         commitId: json['commit_id'] as String,
         originalCommitId: json['original_commit_id'] as String,
-        inReplyToId: json['in_reply_to_id'] as int?,
+        inReplyToId: (json['in_reply_to_id'] as int?),
         user: SimpleUser.maybeFromJson(
           checkedKey(json, 'user') as Map<String, dynamic>?,
         ),
@@ -87,10 +89,10 @@ class ReviewComment {
         startSide: ReviewCommentStartSide.maybeFromJson(
           json['start_side'] as String?,
         ),
-        line: json['line'] as int?,
-        originalLine: json['original_line'] as int?,
-        startLine: json['start_line'] as int?,
-        originalStartLine: json['original_start_line'] as int?,
+        line: (json['line'] as int?),
+        originalLine: (json['original_line'] as int?),
+        startLine: (json['start_line'] as int?),
+        originalStartLine: (json['original_start_line'] as int?),
         subjectType: ReviewCommentSubjectType.maybeFromJson(
           json['subject_type'] as String?,
         ),
@@ -272,34 +274,34 @@ class ReviewComment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReviewComment &&
-        url == other.url &&
-        pullRequestReviewId == other.pullRequestReviewId &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        diffHunk == other.diffHunk &&
-        path == other.path &&
-        position == other.position &&
-        originalPosition == other.originalPosition &&
-        commitId == other.commitId &&
-        originalCommitId == other.originalCommitId &&
-        inReplyToId == other.inReplyToId &&
-        user == other.user &&
-        body == other.body &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        htmlUrl == other.htmlUrl &&
-        pullRequestUrl == other.pullRequestUrl &&
-        authorAssociation == other.authorAssociation &&
-        links == other.links &&
-        bodyText == other.bodyText &&
-        bodyHtml == other.bodyHtml &&
-        reactions == other.reactions &&
-        side == other.side &&
-        startSide == other.startSide &&
-        line == other.line &&
-        originalLine == other.originalLine &&
-        startLine == other.startLine &&
-        originalStartLine == other.originalStartLine &&
-        subjectType == other.subjectType;
+        this.url == other.url &&
+        this.pullRequestReviewId == other.pullRequestReviewId &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.diffHunk == other.diffHunk &&
+        this.path == other.path &&
+        this.position == other.position &&
+        this.originalPosition == other.originalPosition &&
+        this.commitId == other.commitId &&
+        this.originalCommitId == other.originalCommitId &&
+        this.inReplyToId == other.inReplyToId &&
+        this.user == other.user &&
+        this.body == other.body &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.htmlUrl == other.htmlUrl &&
+        this.pullRequestUrl == other.pullRequestUrl &&
+        this.authorAssociation == other.authorAssociation &&
+        this.links == other.links &&
+        this.bodyText == other.bodyText &&
+        this.bodyHtml == other.bodyHtml &&
+        this.reactions == other.reactions &&
+        this.side == other.side &&
+        this.startSide == other.startSide &&
+        this.line == other.line &&
+        this.originalLine == other.originalLine &&
+        this.startLine == other.startLine &&
+        this.originalStartLine == other.originalStartLine &&
+        this.subjectType == other.subjectType;
   }
 }

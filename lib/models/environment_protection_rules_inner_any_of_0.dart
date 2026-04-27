@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class EnvironmentProtectionRulesInnerAnyOf0 {
-  const EnvironmentProtectionRulesInnerAnyOf0({
+  EnvironmentProtectionRulesInnerAnyOf0({
     required this.id,
     required this.nodeId,
     required this.type,
@@ -20,7 +20,7 @@ class EnvironmentProtectionRulesInnerAnyOf0 {
       'EnvironmentProtectionRulesInnerAnyOf0',
       json,
       () => EnvironmentProtectionRulesInnerAnyOf0(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         type: json['type'] as String,
         waitTimer: WaitTimer.maybeFromJson(json['wait_timer'] as int?),
@@ -76,9 +76,9 @@ class EnvironmentProtectionRulesInnerAnyOf0 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is EnvironmentProtectionRulesInnerAnyOf0 &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        type == other.type &&
-        waitTimer == other.waitTimer;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.type == other.type &&
+        this.waitTimer == other.waitTimer;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/custom_property_set_payload_default_value.dart';
 import 'package:github_out/models/custom_property_set_payload_value_type.dart';
@@ -15,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CustomPropertySetPayload {
   /// {@macro custom_property_set_payload}
-  const CustomPropertySetPayload({
+  CustomPropertySetPayload({
     required this.valueType,
     this.required_,
     this.defaultValue,
@@ -103,11 +99,11 @@ class CustomPropertySetPayload {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CustomPropertySetPayload &&
-        valueType == other.valueType &&
-        required_ == other.required_ &&
-        defaultValue == other.defaultValue &&
-        description == other.description &&
-        listsEqual(allowedValues, other.allowedValues) &&
-        valuesEditableBy == other.valuesEditableBy;
+        this.valueType == other.valueType &&
+        this.required_ == other.required_ &&
+        this.defaultValue == other.defaultValue &&
+        this.description == other.description &&
+        listsEqual(this.allowedValues, other.allowedValues) &&
+        this.valuesEditableBy == other.valuesEditableBy;
   }
 }

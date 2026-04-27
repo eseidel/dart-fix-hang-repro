@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BaseGistFiles {
-  const BaseGistFiles({
+  BaseGistFiles({
     this.filename,
     this.type,
     this.language,
@@ -22,7 +22,7 @@ class BaseGistFiles {
         type: json['type'] as String?,
         language: json['language'] as String?,
         rawUrl: json['raw_url'] as String?,
-        size: json['size'] as int?,
+        size: (json['size'] as int?),
         encoding: json['encoding'] as String? ?? 'utf-8',
       ),
     );
@@ -73,11 +73,11 @@ class BaseGistFiles {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BaseGistFiles &&
-        filename == other.filename &&
-        type == other.type &&
-        language == other.language &&
-        rawUrl == other.rawUrl &&
-        size == other.size &&
-        encoding == other.encoding;
+        this.filename == other.filename &&
+        this.type == other.type &&
+        this.language == other.language &&
+        this.rawUrl == other.rawUrl &&
+        this.size == other.size &&
+        this.encoding == other.encoding;
   }
 }

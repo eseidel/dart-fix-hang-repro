@@ -1,18 +1,37 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
+import 'package:github_out/messages/issue_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/issue.dart';
 import 'package:github_out/models/issue_event_dismissed_review.dart';
 import 'package:github_out/models/issue_event_label.dart';
 import 'package:github_out/models/issue_event_milestone.dart';
 import 'package:github_out/models/issue_event_project_card.dart';
 import 'package:github_out/models/issue_event_rename.dart';
+import 'package:github_out/models/issue_labels_inner.dart';
+import 'package:github_out/models/issue_labels_inner_one_of_1.dart';
+import 'package:github_out/models/issue_state_reason.dart';
+import 'package:github_out/models/issue_type.dart';
+import 'package:github_out/models/issue_type_color.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
+import 'package:github_out/models/reaction_rollup.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/sub_issues_summary.dart';
 import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 /// {@template issue_event}
@@ -22,7 +41,7 @@ import 'package:meta/meta.dart';
 @immutable
 class IssueEvent {
   /// {@macro issue_event}
-  const IssueEvent({
+  IssueEvent({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -53,7 +72,7 @@ class IssueEvent {
       'IssueEvent',
       json,
       () => IssueEvent(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         actor: SimpleUser.maybeFromJson(
@@ -257,27 +276,27 @@ class IssueEvent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssueEvent &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        actor == other.actor &&
-        event == other.event &&
-        commitId == other.commitId &&
-        commitUrl == other.commitUrl &&
-        createdAt == other.createdAt &&
-        issue == other.issue &&
-        label == other.label &&
-        assignee == other.assignee &&
-        assigner == other.assigner &&
-        reviewRequester == other.reviewRequester &&
-        requestedReviewer == other.requestedReviewer &&
-        requestedTeam == other.requestedTeam &&
-        dismissedReview == other.dismissedReview &&
-        milestone == other.milestone &&
-        projectCard == other.projectCard &&
-        rename == other.rename &&
-        authorAssociation == other.authorAssociation &&
-        lockReason == other.lockReason &&
-        performedViaGithubApp == other.performedViaGithubApp;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.actor == other.actor &&
+        this.event == other.event &&
+        this.commitId == other.commitId &&
+        this.commitUrl == other.commitUrl &&
+        this.createdAt == other.createdAt &&
+        this.issue == other.issue &&
+        this.label == other.label &&
+        this.assignee == other.assignee &&
+        this.assigner == other.assigner &&
+        this.reviewRequester == other.reviewRequester &&
+        this.requestedReviewer == other.requestedReviewer &&
+        this.requestedTeam == other.requestedTeam &&
+        this.dismissedReview == other.dismissedReview &&
+        this.milestone == other.milestone &&
+        this.projectCard == other.projectCard &&
+        this.rename == other.rename &&
+        this.authorAssociation == other.authorAssociation &&
+        this.lockReason == other.lockReason &&
+        this.performedViaGithubApp == other.performedViaGithubApp;
   }
 }

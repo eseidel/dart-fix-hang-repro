@@ -2,7 +2,7 @@
 /// closing the alert.
 enum CodeScanningAlertDismissedReason {
   falsePositive._('false positive'),
-  wontFix._("won't fix"),
+  wontFix._('won\'t fix'),
   usedInTests._('used in tests');
 
   const CodeScanningAlertDismissedReason._(this.value);

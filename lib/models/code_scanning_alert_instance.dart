@@ -11,7 +11,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningAlertInstance {
-  const CodeScanningAlertInstance({
+  CodeScanningAlertInstance({
     this.ref,
     this.analysisKey,
     this.environment,
@@ -135,15 +135,15 @@ class CodeScanningAlertInstance {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningAlertInstance &&
-        ref == other.ref &&
-        analysisKey == other.analysisKey &&
-        environment == other.environment &&
-        category == other.category &&
-        state == other.state &&
-        commitSha == other.commitSha &&
-        message == other.message &&
-        location == other.location &&
-        htmlUrl == other.htmlUrl &&
-        listsEqual(classifications, other.classifications);
+        this.ref == other.ref &&
+        this.analysisKey == other.analysisKey &&
+        this.environment == other.environment &&
+        this.category == other.category &&
+        this.state == other.state &&
+        this.commitSha == other.commitSha &&
+        this.message == other.message &&
+        this.location == other.location &&
+        this.htmlUrl == other.htmlUrl &&
+        listsEqual(this.classifications, other.classifications);
   }
 }

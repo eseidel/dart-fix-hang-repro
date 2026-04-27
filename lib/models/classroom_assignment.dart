@@ -1,6 +1,7 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/classroom.dart';
 import 'package:github_out/models/classroom_assignment_type.dart';
+import 'package:github_out/models/simple_classroom_organization.dart';
 import 'package:github_out/models/simple_classroom_repository.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ClassroomAssignment {
   /// {@macro classroom_assignment}
-  const ClassroomAssignment({
+  ClassroomAssignment({
     required this.id,
     required this.publicRepo,
     required this.title,
@@ -39,7 +40,7 @@ class ClassroomAssignment {
       'ClassroomAssignment',
       json,
       () => ClassroomAssignment(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         publicRepo: json['public_repo'] as bool,
         title: json['title'] as String,
         type: ClassroomAssignmentType.fromJson(json['type'] as String),
@@ -49,12 +50,12 @@ class ClassroomAssignment {
         studentsAreRepoAdmins: json['students_are_repo_admins'] as bool,
         feedbackPullRequestsEnabled:
             json['feedback_pull_requests_enabled'] as bool,
-        maxTeams: checkedKey(json, 'max_teams') as int?,
-        maxMembers: checkedKey(json, 'max_members') as int?,
+        maxTeams: (checkedKey(json, 'max_teams') as int?),
+        maxMembers: (checkedKey(json, 'max_members') as int?),
         editor: json['editor'] as String,
-        accepted: json['accepted'] as int,
-        submitted: json['submitted'] as int,
-        passing: json['passing'] as int,
+        accepted: (json['accepted'] as int),
+        submitted: (json['submitted'] as int),
+        passing: (json['passing'] as int),
         language: json['language'] as String,
         deadline: maybeParseDateTime(checkedKey(json, 'deadline') as String?),
         starterCodeRepository: SimpleClassroomRepository.fromJson(
@@ -207,24 +208,24 @@ class ClassroomAssignment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ClassroomAssignment &&
-        id == other.id &&
-        publicRepo == other.publicRepo &&
-        title == other.title &&
-        type == other.type &&
-        inviteLink == other.inviteLink &&
-        invitationsEnabled == other.invitationsEnabled &&
-        slug == other.slug &&
-        studentsAreRepoAdmins == other.studentsAreRepoAdmins &&
-        feedbackPullRequestsEnabled == other.feedbackPullRequestsEnabled &&
-        maxTeams == other.maxTeams &&
-        maxMembers == other.maxMembers &&
-        editor == other.editor &&
-        accepted == other.accepted &&
-        submitted == other.submitted &&
-        passing == other.passing &&
-        language == other.language &&
-        deadline == other.deadline &&
-        starterCodeRepository == other.starterCodeRepository &&
-        classroom == other.classroom;
+        this.id == other.id &&
+        this.publicRepo == other.publicRepo &&
+        this.title == other.title &&
+        this.type == other.type &&
+        this.inviteLink == other.inviteLink &&
+        this.invitationsEnabled == other.invitationsEnabled &&
+        this.slug == other.slug &&
+        this.studentsAreRepoAdmins == other.studentsAreRepoAdmins &&
+        this.feedbackPullRequestsEnabled == other.feedbackPullRequestsEnabled &&
+        this.maxTeams == other.maxTeams &&
+        this.maxMembers == other.maxMembers &&
+        this.editor == other.editor &&
+        this.accepted == other.accepted &&
+        this.submitted == other.submitted &&
+        this.passing == other.passing &&
+        this.language == other.language &&
+        this.deadline == other.deadline &&
+        this.starterCodeRepository == other.starterCodeRepository &&
+        this.classroom == other.classroom;
   }
 }

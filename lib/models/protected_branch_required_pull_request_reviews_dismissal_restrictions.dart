@@ -1,16 +1,17 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ProtectedBranchRequiredPullRequestReviewsDismissalRestrictions {
-  const ProtectedBranchRequiredPullRequestReviewsDismissalRestrictions({
+  ProtectedBranchRequiredPullRequestReviewsDismissalRestrictions({
     required this.url,
     required this.usersUrl,
     required this.teamsUrl,
@@ -95,11 +96,11 @@ class ProtectedBranchRequiredPullRequestReviewsDismissalRestrictions {
     if (identical(this, other)) return true;
     return other
             is ProtectedBranchRequiredPullRequestReviewsDismissalRestrictions &&
-        url == other.url &&
-        usersUrl == other.usersUrl &&
-        teamsUrl == other.teamsUrl &&
-        listsEqual(users, other.users) &&
-        listsEqual(teams, other.teams) &&
-        listsEqual(apps, other.apps);
+        this.url == other.url &&
+        this.usersUrl == other.usersUrl &&
+        this.teamsUrl == other.teamsUrl &&
+        listsEqual(this.users, other.users) &&
+        listsEqual(this.teams, other.teams) &&
+        listsEqual(this.apps, other.apps);
   }
 }

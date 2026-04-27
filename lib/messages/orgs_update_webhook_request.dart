@@ -1,10 +1,14 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/orgs_update_webhook_request_config.dart';
+import 'package:github_out/models/webhook_config_content_type.dart';
+import 'package:github_out/models/webhook_config_insecure_ssl.dart';
+import 'package:github_out/models/webhook_config_secret.dart';
+import 'package:github_out/models/webhook_config_url.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrgsUpdateWebhookRequest {
-  const OrgsUpdateWebhookRequest({
+  OrgsUpdateWebhookRequest({
     this.config,
     this.events = const <String>['push'],
     this.active = true,
@@ -74,9 +78,9 @@ class OrgsUpdateWebhookRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsUpdateWebhookRequest &&
-        config == other.config &&
-        listsEqual(events, other.events) &&
-        active == other.active &&
-        name == other.name;
+        this.config == other.config &&
+        listsEqual(this.events, other.events) &&
+        this.active == other.active &&
+        this.name == other.name;
   }
 }

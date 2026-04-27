@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsUpdateBranch202Response {
-  const PullsUpdateBranch202Response({
+  PullsUpdateBranch202Response({
     this.message,
     this.url,
   });
@@ -52,7 +52,7 @@ class PullsUpdateBranch202Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsUpdateBranch202Response &&
-        message == other.message &&
-        url == other.url;
+        this.message == other.message &&
+        this.url == other.url;
   }
 }

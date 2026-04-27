@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/codespace_machine.dart';
+import 'package:github_out/models/codespace_machine_prebuild_availability.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesRepoMachinesForAuthenticatedUser200Response {
-  const CodespacesRepoMachinesForAuthenticatedUser200Response({
+  CodespacesRepoMachinesForAuthenticatedUser200Response({
     required this.totalCount,
     required this.machines,
   });
@@ -18,7 +19,7 @@ class CodespacesRepoMachinesForAuthenticatedUser200Response {
       'CodespacesRepoMachinesForAuthenticatedUser200Response',
       json,
       () => CodespacesRepoMachinesForAuthenticatedUser200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         machines: (json['machines'] as List)
             .map<CodespaceMachine>(
               (e) => CodespaceMachine.fromJson(e as Map<String, dynamic>),
@@ -61,7 +62,7 @@ class CodespacesRepoMachinesForAuthenticatedUser200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesRepoMachinesForAuthenticatedUser200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(machines, other.machines);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.machines, other.machines);
   }
 }

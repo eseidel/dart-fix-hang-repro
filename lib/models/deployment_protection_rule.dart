@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DeploymentProtectionRule {
   /// {@macro deployment_protection_rule}
-  const DeploymentProtectionRule({
+  DeploymentProtectionRule({
     required this.id,
     required this.nodeId,
     required this.enabled,
@@ -22,7 +22,7 @@ class DeploymentProtectionRule {
       'DeploymentProtectionRule',
       json,
       () => DeploymentProtectionRule(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         enabled: json['enabled'] as bool,
         app: CustomDeploymentRuleApp.fromJson(
@@ -79,9 +79,9 @@ class DeploymentProtectionRule {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DeploymentProtectionRule &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        enabled == other.enabled &&
-        app == other.app;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.enabled == other.enabled &&
+        this.app == other.app;
   }
 }

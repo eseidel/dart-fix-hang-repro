@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class HovercardContextsInner {
-  const HovercardContextsInner({
+  HovercardContextsInner({
     required this.message,
     required this.octicon,
   });
@@ -50,7 +50,7 @@ class HovercardContextsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is HovercardContextsInner &&
-        message == other.message &&
-        octicon == other.octicon;
+        this.message == other.message &&
+        this.octicon == other.octicon;
   }
 }

@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/marketplace_listing_plan.dart';
+import 'package:github_out/models/marketplace_listing_plan_price_model.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class MarketplacePurchaseMarketplacePendingChange {
-  const MarketplacePurchaseMarketplacePendingChange({
+  MarketplacePurchaseMarketplacePendingChange({
     this.isInstalled,
     this.effectiveDate,
     this.unitCount,
@@ -23,8 +24,8 @@ class MarketplacePurchaseMarketplacePendingChange {
       () => MarketplacePurchaseMarketplacePendingChange(
         isInstalled: json['is_installed'] as bool?,
         effectiveDate: json['effective_date'] as String?,
-        unitCount: json['unit_count'] as int?,
-        id: json['id'] as int?,
+        unitCount: (json['unit_count'] as int?),
+        id: (json['id'] as int?),
         plan: MarketplaceListingPlan.maybeFromJson(
           json['plan'] as Map<String, dynamic>?,
         ),
@@ -77,10 +78,10 @@ class MarketplacePurchaseMarketplacePendingChange {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MarketplacePurchaseMarketplacePendingChange &&
-        isInstalled == other.isInstalled &&
-        effectiveDate == other.effectiveDate &&
-        unitCount == other.unitCount &&
-        id == other.id &&
-        plan == other.plan;
+        this.isInstalled == other.isInstalled &&
+        this.effectiveDate == other.effectiveDate &&
+        this.unitCount == other.unitCount &&
+        this.id == other.id &&
+        this.plan == other.plan;
   }
 }

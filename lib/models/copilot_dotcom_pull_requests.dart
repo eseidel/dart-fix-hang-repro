@@ -1,9 +1,6 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_dotcom_pull_requests_repositories_inner.dart';
+import 'package:github_out/models/copilot_dotcom_pull_requests_repositories_inner_models_inner.dart';
 import 'package:meta/meta.dart';
 
 /// {@template copilot_dotcom_pull_requests}
@@ -12,10 +9,10 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotDotcomPullRequests {
   /// {@macro copilot_dotcom_pull_requests}
-  const CopilotDotcomPullRequests({
-    required this.entries,
+  CopilotDotcomPullRequests({
     this.totalEngagedUsers,
     this.repositories,
+    required this.entries,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CopilotDotcomPullRequests].
@@ -24,7 +21,7 @@ class CopilotDotcomPullRequests {
       'CopilotDotcomPullRequests',
       json,
       () => CopilotDotcomPullRequests(
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
         repositories: (json['repositories'] as List?)
             ?.map<CopilotDotcomPullRequestsRepositoriesInner>(
               (e) => CopilotDotcomPullRequestsRepositoriesInner.fromJson(
@@ -32,7 +29,7 @@ class CopilotDotcomPullRequests {
               ),
             )
             .toList(),
-        entries: json.map(MapEntry.new),
+        entries: json.map((key, value) => MapEntry(key, value)),
       ),
     );
   }
@@ -55,14 +52,14 @@ class CopilotDotcomPullRequests {
   final List<CopilotDotcomPullRequestsRepositoriesInner>? repositories;
   final Map<String, dynamic> entries;
 
-  dynamic operator [](String key) => entries[key];
+  dynamic? operator [](String key) => entries[key];
 
   /// Converts a [CopilotDotcomPullRequests] to a `Map<String, dynamic>`.
   Map<String, dynamic> toJson() {
     return {
       'total_engaged_users': totalEngagedUsers,
       'repositories': repositories?.map((e) => e.toJson()).toList(),
-      ...entries.map(MapEntry.new),
+      ...entries.map((key, value) => MapEntry(key, value)),
     };
   }
 
@@ -77,8 +74,8 @@ class CopilotDotcomPullRequests {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotDotcomPullRequests &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        listsEqual(repositories, other.repositories) &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        listsEqual(this.repositories, other.repositories) &&
         mapsEqual(entries, other.entries);
   }
 }

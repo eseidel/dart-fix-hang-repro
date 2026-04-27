@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsGenerateRunnerJitconfigForRepoRequest {
-  const ActionsGenerateRunnerJitconfigForRepoRequest({
+  ActionsGenerateRunnerJitconfigForRepoRequest({
     required this.name,
     required this.runnerGroupId,
     required this.labels,
@@ -20,7 +20,7 @@ class ActionsGenerateRunnerJitconfigForRepoRequest {
       json,
       () => ActionsGenerateRunnerJitconfigForRepoRequest(
         name: json['name'] as String,
-        runnerGroupId: json['runner_group_id'] as int,
+        runnerGroupId: (json['runner_group_id'] as int),
         labels: (json['labels'] as List).cast<String>(),
         workFolder: json['work_folder'] as String? ?? '_work',
       ),
@@ -75,9 +75,9 @@ class ActionsGenerateRunnerJitconfigForRepoRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsGenerateRunnerJitconfigForRepoRequest &&
-        name == other.name &&
-        runnerGroupId == other.runnerGroupId &&
-        listsEqual(labels, other.labels) &&
-        workFolder == other.workFolder;
+        this.name == other.name &&
+        this.runnerGroupId == other.runnerGroupId &&
+        listsEqual(this.labels, other.labels) &&
+        this.workFolder == other.workFolder;
   }
 }

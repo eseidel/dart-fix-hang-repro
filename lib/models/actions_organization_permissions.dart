@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsOrganizationPermissions {
-  const ActionsOrganizationPermissions({
+  ActionsOrganizationPermissions({
     required this.enabledRepositories,
     this.selectedRepositoriesUrl,
     this.allowedActions,
@@ -83,9 +83,9 @@ class ActionsOrganizationPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsOrganizationPermissions &&
-        enabledRepositories == other.enabledRepositories &&
-        selectedRepositoriesUrl == other.selectedRepositoriesUrl &&
-        allowedActions == other.allowedActions &&
-        selectedActionsUrl == other.selectedActionsUrl;
+        this.enabledRepositories == other.enabledRepositories &&
+        this.selectedRepositoriesUrl == other.selectedRepositoriesUrl &&
+        this.allowedActions == other.allowedActions &&
+        this.selectedActionsUrl == other.selectedActionsUrl;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GistHistoryChangeStatus {
-  const GistHistoryChangeStatus({
+  GistHistoryChangeStatus({
     this.total,
     this.additions,
     this.deletions,
@@ -15,9 +15,9 @@ class GistHistoryChangeStatus {
       'GistHistoryChangeStatus',
       json,
       () => GistHistoryChangeStatus(
-        total: json['total'] as int?,
-        additions: json['additions'] as int?,
-        deletions: json['deletions'] as int?,
+        total: (json['total'] as int?),
+        additions: (json['additions'] as int?),
+        deletions: (json['deletions'] as int?),
       ),
     );
   }
@@ -55,8 +55,8 @@ class GistHistoryChangeStatus {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistHistoryChangeStatus &&
-        total == other.total &&
-        additions == other.additions &&
-        deletions == other.deletions;
+        this.total == other.total &&
+        this.additions == other.additions &&
+        this.deletions == other.deletions;
   }
 }

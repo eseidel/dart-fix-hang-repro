@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GistComment {
   /// {@macro gist_comment}
-  const GistComment({
+  GistComment({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -27,7 +27,7 @@ class GistComment {
       'GistComment',
       json,
       () => GistComment(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         body: json['body'] as String,
@@ -111,13 +111,13 @@ class GistComment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistComment &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        body == other.body &&
-        user == other.user &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        authorAssociation == other.authorAssociation;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.body == other.body &&
+        this.user == other.user &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.authorAssociation == other.authorAssociation;
   }
 }

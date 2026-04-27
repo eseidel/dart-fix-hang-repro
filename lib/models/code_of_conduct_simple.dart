@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeOfConductSimple {
   /// {@macro code_of_conduct_simple}
-  const CodeOfConductSimple({
+  CodeOfConductSimple({
     required this.url,
     required this.key,
     required this.name,
@@ -73,9 +73,9 @@ class CodeOfConductSimple {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeOfConductSimple &&
-        url == other.url &&
-        key == other.key &&
-        name == other.name &&
-        htmlUrl == other.htmlUrl;
+        this.url == other.url &&
+        this.key == other.key &&
+        this.name == other.name &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class IssueSearchResultItemSubIssuesSummary {
   /// {@macro issue_search_result_item_sub_issues_summary}
-  const IssueSearchResultItemSubIssuesSummary({
+  IssueSearchResultItemSubIssuesSummary({
     required this.total,
     required this.completed,
     required this.percentCompleted,
@@ -22,9 +22,9 @@ class IssueSearchResultItemSubIssuesSummary {
       'IssueSearchResultItemSubIssuesSummary',
       json,
       () => IssueSearchResultItemSubIssuesSummary(
-        total: json['total'] as int,
-        completed: json['completed'] as int,
-        percentCompleted: json['percent_completed'] as int,
+        total: (json['total'] as int),
+        completed: (json['completed'] as int),
+        percentCompleted: (json['percent_completed'] as int),
       ),
     );
   }
@@ -65,8 +65,8 @@ class IssueSearchResultItemSubIssuesSummary {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssueSearchResultItemSubIssuesSummary &&
-        total == other.total &&
-        completed == other.completed &&
-        percentCompleted == other.percentCompleted;
+        this.total == other.total &&
+        this.completed == other.completed &&
+        this.percentCompleted == other.percentCompleted;
   }
 }

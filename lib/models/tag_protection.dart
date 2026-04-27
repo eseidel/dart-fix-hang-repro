@@ -8,12 +8,12 @@ import 'package:meta/meta.dart';
 @immutable
 class TagProtection {
   /// {@macro tag_protection}
-  const TagProtection({
-    required this.pattern,
+  TagProtection({
     this.id,
     this.createdAt,
     this.updatedAt,
     this.enabled,
+    required this.pattern,
   });
 
   /// Converts a `Map<String, dynamic>` to a [TagProtection].
@@ -22,7 +22,7 @@ class TagProtection {
       'TagProtection',
       json,
       () => TagProtection(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         createdAt: json['created_at'] as String?,
         updatedAt: json['updated_at'] as String?,
         enabled: json['enabled'] as bool?,
@@ -79,10 +79,10 @@ class TagProtection {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TagProtection &&
-        id == other.id &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        enabled == other.enabled &&
-        pattern == other.pattern;
+        this.id == other.id &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.enabled == other.enabled &&
+        this.pattern == other.pattern;
   }
 }

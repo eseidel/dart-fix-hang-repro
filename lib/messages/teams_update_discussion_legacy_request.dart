@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamsUpdateDiscussionLegacyRequest {
-  const TeamsUpdateDiscussionLegacyRequest({
+  TeamsUpdateDiscussionLegacyRequest({
     this.title,
     this.body,
   });
@@ -59,7 +59,7 @@ class TeamsUpdateDiscussionLegacyRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamsUpdateDiscussionLegacyRequest &&
-        title == other.title &&
-        body == other.body;
+        this.title == other.title &&
+        this.body == other.body;
   }
 }

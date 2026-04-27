@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SelectedActions {
-  const SelectedActions({
+  SelectedActions({
     this.githubOwnedAllowed,
     this.verifiedAllowed,
     this.patternsAllowed,
@@ -74,8 +74,8 @@ class SelectedActions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SelectedActions &&
-        githubOwnedAllowed == other.githubOwnedAllowed &&
-        verifiedAllowed == other.verifiedAllowed &&
-        listsEqual(patternsAllowed, other.patternsAllowed);
+        this.githubOwnedAllowed == other.githubOwnedAllowed &&
+        this.verifiedAllowed == other.verifiedAllowed &&
+        listsEqual(this.patternsAllowed, other.patternsAllowed);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposMergeUpstreamRequest {
-  const ReposMergeUpstreamRequest({
+  ReposMergeUpstreamRequest({
     required this.branch,
   });
 
@@ -43,6 +43,6 @@ class ReposMergeUpstreamRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ReposMergeUpstreamRequest && branch == other.branch;
+    return other is ReposMergeUpstreamRequest && this.branch == other.branch;
   }
 }

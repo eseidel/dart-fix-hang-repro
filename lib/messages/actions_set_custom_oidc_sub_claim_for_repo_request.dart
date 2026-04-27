@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsSetCustomOidcSubClaimForRepoRequest {
   /// {@macro actions_set_custom_oidc_sub_claim_for_repo_request}
-  const ActionsSetCustomOidcSubClaimForRepoRequest({
+  ActionsSetCustomOidcSubClaimForRepoRequest({
     required this.useDefault,
     this.includeClaimKeys,
   });
@@ -66,7 +66,7 @@ class ActionsSetCustomOidcSubClaimForRepoRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsSetCustomOidcSubClaimForRepoRequest &&
-        useDefault == other.useDefault &&
-        listsEqual(includeClaimKeys, other.includeClaimKeys);
+        this.useDefault == other.useDefault &&
+        listsEqual(this.includeClaimKeys, other.includeClaimKeys);
   }
 }

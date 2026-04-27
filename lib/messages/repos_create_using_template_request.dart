@@ -3,9 +3,9 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateUsingTemplateRequest {
-  const ReposCreateUsingTemplateRequest({
-    required this.name,
+  ReposCreateUsingTemplateRequest({
     this.owner,
+    required this.name,
     this.description,
     this.includeAllBranches = false,
     this.private = false,
@@ -81,10 +81,10 @@ class ReposCreateUsingTemplateRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateUsingTemplateRequest &&
-        owner == other.owner &&
-        name == other.name &&
-        description == other.description &&
-        includeAllBranches == other.includeAllBranches &&
-        private == other.private;
+        this.owner == other.owner &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.includeAllBranches == other.includeAllBranches &&
+        this.private == other.private;
   }
 }

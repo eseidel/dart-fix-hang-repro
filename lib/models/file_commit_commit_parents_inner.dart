@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class FileCommitCommitParentsInner {
-  const FileCommitCommitParentsInner({
+  FileCommitCommitParentsInner({
     this.url,
     this.htmlUrl,
     this.sha,
@@ -57,8 +57,8 @@ class FileCommitCommitParentsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is FileCommitCommitParentsInner &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        sha == other.sha;
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.sha == other.sha;
   }
 }

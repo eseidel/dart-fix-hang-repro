@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ServiceUnavailableResponse {
-  const ServiceUnavailableResponse({
+  ServiceUnavailableResponse({
     this.code,
     this.message,
     this.documentationUrl,
@@ -55,8 +55,8 @@ class ServiceUnavailableResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ServiceUnavailableResponse &&
-        code == other.code &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl;
+        this.code == other.code &&
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl;
   }
 }

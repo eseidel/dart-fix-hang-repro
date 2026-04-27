@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ParticipationStats {
   /// {@macro participation_stats}
-  const ParticipationStats({
+  ParticipationStats({
     required this.all,
     required this.owner,
   });
@@ -54,7 +54,7 @@ class ParticipationStats {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ParticipationStats &&
-        listsEqual(all, other.all) &&
-        listsEqual(owner, other.owner);
+        listsEqual(this.all, other.all) &&
+        listsEqual(this.owner, other.owner);
   }
 }

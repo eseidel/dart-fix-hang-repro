@@ -9,9 +9,9 @@ import 'package:meta/meta.dart';
 @immutable
 class RunnerLabel {
   /// {@macro runner_label}
-  const RunnerLabel({
-    required this.name,
+  RunnerLabel({
     this.id,
+    required this.name,
     this.type,
   });
 
@@ -21,7 +21,7 @@ class RunnerLabel {
       'RunnerLabel',
       json,
       () => RunnerLabel(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         name: json['name'] as String,
         type: RunnerLabelType.maybeFromJson(json['type'] as String?),
       ),
@@ -67,8 +67,8 @@ class RunnerLabel {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RunnerLabel &&
-        id == other.id &&
-        name == other.name &&
-        type == other.type;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.type == other.type;
   }
 }

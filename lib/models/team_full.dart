@@ -2,6 +2,7 @@ import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/team_full_notification_setting.dart';
 import 'package:github_out/models/team_full_privacy.dart';
 import 'package:github_out/models/team_organization.dart';
+import 'package:github_out/models/team_organization_plan.dart';
 import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
@@ -13,7 +14,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TeamFull {
   /// {@macro team_full}
-  const TeamFull({
+  TeamFull({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -21,17 +22,17 @@ class TeamFull {
     required this.name,
     required this.slug,
     required this.description,
+    this.privacy,
+    this.notificationSetting,
     required this.permission,
     required this.membersUrl,
     required this.repositoriesUrl,
+    this.parent,
     required this.membersCount,
     required this.reposCount,
     required this.createdAt,
     required this.updatedAt,
     required this.organization,
-    this.privacy,
-    this.notificationSetting,
-    this.parent,
     this.ldapDn,
   });
 
@@ -41,7 +42,7 @@ class TeamFull {
       'TeamFull',
       json,
       () => TeamFull(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         htmlUrl: Uri.parse(json['html_url'] as String),
@@ -58,8 +59,8 @@ class TeamFull {
         parent: TeamSimple.maybeFromJson(
           json['parent'] as Map<String, dynamic>?,
         ),
-        membersCount: json['members_count'] as int,
-        reposCount: json['repos_count'] as int,
+        membersCount: (json['members_count'] as int),
+        reposCount: (json['repos_count'] as int),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         organization: TeamOrganization.fromJson(
@@ -199,24 +200,24 @@ class TeamFull {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamFull &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        name == other.name &&
-        slug == other.slug &&
-        description == other.description &&
-        privacy == other.privacy &&
-        notificationSetting == other.notificationSetting &&
-        permission == other.permission &&
-        membersUrl == other.membersUrl &&
-        repositoriesUrl == other.repositoriesUrl &&
-        parent == other.parent &&
-        membersCount == other.membersCount &&
-        reposCount == other.reposCount &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        organization == other.organization &&
-        ldapDn == other.ldapDn;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.name == other.name &&
+        this.slug == other.slug &&
+        this.description == other.description &&
+        this.privacy == other.privacy &&
+        this.notificationSetting == other.notificationSetting &&
+        this.permission == other.permission &&
+        this.membersUrl == other.membersUrl &&
+        this.repositoriesUrl == other.repositoriesUrl &&
+        this.parent == other.parent &&
+        this.membersCount == other.membersCount &&
+        this.reposCount == other.reposCount &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.organization == other.organization &&
+        this.ldapDn == other.ldapDn;
   }
 }

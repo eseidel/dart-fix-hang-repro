@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class OrgsCreateInvitationRequest {
-  const OrgsCreateInvitationRequest({
+  OrgsCreateInvitationRequest({
     this.inviteeId,
     this.email,
     this.role,
@@ -17,7 +17,7 @@ class OrgsCreateInvitationRequest {
       'OrgsCreateInvitationRequest',
       json,
       () => OrgsCreateInvitationRequest(
-        inviteeId: json['invitee_id'] as int?,
+        inviteeId: (json['invitee_id'] as int?),
         email: json['email'] as String?,
         role: OrgsCreateInvitationRequestRole.maybeFromJson(
           json['role'] as String?,
@@ -84,9 +84,9 @@ class OrgsCreateInvitationRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsCreateInvitationRequest &&
-        inviteeId == other.inviteeId &&
-        email == other.email &&
-        role == other.role &&
-        listsEqual(teamIds, other.teamIds);
+        this.inviteeId == other.inviteeId &&
+        this.email == other.email &&
+        this.role == other.role &&
+        listsEqual(this.teamIds, other.teamIds);
   }
 }

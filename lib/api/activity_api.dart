@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -21,16 +17,73 @@ import 'package:github_out/messages/activity_mark_repo_notifications_as_read202_
 import 'package:github_out/messages/activity_mark_repo_notifications_as_read_request.dart';
 import 'package:github_out/messages/activity_set_repo_subscription_request.dart';
 import 'package:github_out/messages/activity_set_thread_subscription_request.dart';
+import 'package:github_out/messages/issue_pull_request.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
+import 'package:github_out/models/actor.dart';
+import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/direction_param.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/event.dart';
+import 'package:github_out/models/event_payload.dart';
+import 'package:github_out/models/event_payload_pages_inner.dart';
+import 'package:github_out/models/event_repo.dart';
 import 'package:github_out/models/feed.dart';
+import 'package:github_out/models/feed_links.dart';
+import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
+import 'package:github_out/models/issue.dart';
+import 'package:github_out/models/issue_comment.dart';
+import 'package:github_out/models/issue_labels_inner.dart';
+import 'package:github_out/models/issue_labels_inner_one_of_1.dart';
+import 'package:github_out/models/issue_state_reason.dart';
+import 'package:github_out/models/issue_type.dart';
+import 'package:github_out/models/issue_type_color.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/link_with_type.dart';
+import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
+import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/repository_subscription.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/sort_starred_param.dart';
+import 'package:github_out/models/stargazer.dart';
+import 'package:github_out/models/starred_repository.dart';
+import 'package:github_out/models/sub_issues_summary.dart';
 import 'package:github_out/models/thread.dart';
+import 'package:github_out/models/thread_subject.dart';
 import 'package:github_out/models/thread_subscription.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class ActivityMarkNotificationsAsReadResponse {
@@ -129,7 +182,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -180,7 +233,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -204,8 +257,8 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/networks/{owner}/{repo}/events'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -215,7 +268,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -245,8 +298,8 @@ class ActivityApi {
       queryParameters: {
         if (all != null) 'all': [all.toString()],
         if (participating != null) 'participating': [participating.toString()],
-        if (since != null) 'since': [since.toIso8601String()],
-        if (before != null) 'before': [before.toIso8601String()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
+        if (before != null) 'before': [before.toIso8601String().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
       },
@@ -255,7 +308,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -285,12 +338,13 @@ class ActivityApi {
       method: Method.put,
       path: '/notifications',
       body: activityMarkNotificationsAsReadRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -314,14 +368,14 @@ class ActivityApi {
       method: Method.get,
       path: '/notifications/threads/{thread_id}'.replaceAll(
         '{thread_id}',
-        '$threadId',
+        '${threadId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -343,14 +397,14 @@ class ActivityApi {
       method: Method.delete,
       path: '/notifications/threads/{thread_id}'.replaceAll(
         '{thread_id}',
-        '$threadId',
+        '${threadId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -366,14 +420,14 @@ class ActivityApi {
       method: Method.patch,
       path: '/notifications/threads/{thread_id}'.replaceAll(
         '{thread_id}',
-        '$threadId',
+        '${threadId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -393,14 +447,14 @@ class ActivityApi {
       method: Method.get,
       path: '/notifications/threads/{thread_id}/subscription'.replaceAll(
         '{thread_id}',
-        '$threadId',
+        '${threadId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -434,15 +488,16 @@ class ActivityApi {
       method: Method.put,
       path: '/notifications/threads/{thread_id}/subscription'.replaceAll(
         '{thread_id}',
-        '$threadId',
+        '${threadId}',
       ),
       body: activitySetThreadSubscriptionRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -469,14 +524,14 @@ class ActivityApi {
       method: Method.delete,
       path: '/notifications/threads/{thread_id}/subscription'.replaceAll(
         '{thread_id}',
-        '$threadId',
+        '${threadId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -492,7 +547,7 @@ class ActivityApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/events'.replaceAll('{org}', org),
+      path: '/orgs/{org}/events'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -502,7 +557,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -528,8 +583,8 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/events'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -539,7 +594,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -568,13 +623,13 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/notifications'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (all != null) 'all': [all.toString()],
         if (participating != null) 'participating': [participating.toString()],
-        if (since != null) 'since': [since.toIso8601String()],
-        if (before != null) 'before': [before.toIso8601String()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
+        if (before != null) 'before': [before.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -583,7 +638,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -615,15 +670,16 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/notifications'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: activityMarkRepoNotificationsAsReadRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -656,8 +712,8 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/stargazers'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -667,7 +723,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -691,8 +747,8 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/subscribers'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -702,7 +758,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -727,14 +783,14 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/subscription'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -762,15 +818,16 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/subscription'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: activitySetRepoSubscriptionRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -795,14 +852,14 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/subscription'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -826,8 +883,8 @@ class ActivityApi {
       method: Method.get,
       path: '/user/starred',
       queryParameters: {
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -836,7 +893,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -860,14 +917,14 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/user/starred/{owner}/{repo}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -883,14 +940,14 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/user/starred/{owner}/{repo}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -904,14 +961,14 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/user/starred/{owner}/{repo}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -934,7 +991,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -965,7 +1022,7 @@ class ActivityApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/users/{username}/events'.replaceAll('{username}', username),
+      path: '/users/{username}/events'.replaceAll('{username}', '${username}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -975,7 +1032,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1004,8 +1061,8 @@ class ActivityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/users/{username}/events/orgs/{org}'
-          .replaceAll('{username}', username)
-          .replaceAll('{org}', org),
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1015,7 +1072,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1041,7 +1098,7 @@ class ActivityApi {
       method: Method.get,
       path: '/users/{username}/events/public'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1052,7 +1109,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1083,7 +1140,7 @@ class ActivityApi {
       method: Method.get,
       path: '/users/{username}/received_events'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1094,7 +1151,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1120,7 +1177,7 @@ class ActivityApi {
       method: Method.get,
       path: '/users/{username}/received_events/public'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1131,7 +1188,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1162,10 +1219,10 @@ class ActivityApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/users/{username}/starred'.replaceAll('{username}', username),
+      path: '/users/{username}/starred'.replaceAll('{username}', '${username}'),
       queryParameters: {
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1174,7 +1231,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1198,7 +1255,7 @@ class ActivityApi {
       method: Method.get,
       path: '/users/{username}/subscriptions'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1209,7 +1266,7 @@ class ActivityApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

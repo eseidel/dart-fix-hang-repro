@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposUpdateCommitCommentRequest {
-  const ReposUpdateCommitCommentRequest({
+  ReposUpdateCommitCommentRequest({
     required this.body,
   });
 
@@ -45,6 +45,6 @@ class ReposUpdateCommitCommentRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ReposUpdateCommitCommentRequest && body == other.body;
+    return other is ReposUpdateCommitCommentRequest && this.body == other.body;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProtectedBranchAllowForcePushes {
-  const ProtectedBranchAllowForcePushes({
+  ProtectedBranchAllowForcePushes({
     required this.enabled,
   });
 
@@ -44,6 +44,7 @@ class ProtectedBranchAllowForcePushes {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ProtectedBranchAllowForcePushes && enabled == other.enabled;
+    return other is ProtectedBranchAllowForcePushes &&
+        this.enabled == other.enabled;
   }
 }

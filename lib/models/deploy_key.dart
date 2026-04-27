@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DeployKey {
   /// {@macro deploy_key}
-  const DeployKey({
+  DeployKey({
     required this.id,
     required this.key,
     required this.url,
@@ -27,7 +27,7 @@ class DeployKey {
       'DeployKey',
       json,
       () => DeployKey(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         key: json['key'] as String,
         url: json['url'] as String,
         title: json['title'] as String,
@@ -95,15 +95,15 @@ class DeployKey {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DeployKey &&
-        id == other.id &&
-        key == other.key &&
-        url == other.url &&
-        title == other.title &&
-        verified == other.verified &&
-        createdAt == other.createdAt &&
-        readOnly == other.readOnly &&
-        addedBy == other.addedBy &&
-        lastUsed == other.lastUsed &&
-        enabled == other.enabled;
+        this.id == other.id &&
+        this.key == other.key &&
+        this.url == other.url &&
+        this.title == other.title &&
+        this.verified == other.verified &&
+        this.createdAt == other.createdAt &&
+        this.readOnly == other.readOnly &&
+        this.addedBy == other.addedBy &&
+        this.lastUsed == other.lastUsed &&
+        this.enabled == other.enabled;
   }
 }

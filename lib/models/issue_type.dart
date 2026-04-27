@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class IssueType {
   /// {@macro issue_type}
-  const IssueType({
+  IssueType({
     required this.id,
     required this.nodeId,
     required this.name,
@@ -26,7 +26,7 @@ class IssueType {
       'IssueType',
       json,
       () => IssueType(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         description: checkedKey(json, 'description') as String?,
@@ -101,13 +101,13 @@ class IssueType {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssueType &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        description == other.description &&
-        color == other.color &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        isEnabled == other.isEnabled;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.color == other.color &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.isEnabled == other.isEnabled;
   }
 }

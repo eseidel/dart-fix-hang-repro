@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GistSimpleForkOf {
   /// {@macro gist_simple_fork_of}
-  const GistSimpleForkOf({
+  GistSimpleForkOf({
     required this.url,
     required this.forksUrl,
     required this.commitsUrl,
@@ -25,9 +25,9 @@ class GistSimpleForkOf {
     required this.updatedAt,
     required this.description,
     required this.comments,
+    this.commentsEnabled,
     required this.user,
     required this.commentsUrl,
-    this.commentsEnabled,
     this.owner,
     this.truncated,
     this.forks,
@@ -58,7 +58,7 @@ class GistSimpleForkOf {
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         description: checkedKey(json, 'description') as String?,
-        comments: json['comments'] as int,
+        comments: (json['comments'] as int),
         commentsEnabled: json['comments_enabled'] as bool?,
         user: SimpleUser.maybeFromJson(
           checkedKey(json, 'user') as Map<String, dynamic>?,
@@ -165,26 +165,26 @@ class GistSimpleForkOf {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistSimpleForkOf &&
-        url == other.url &&
-        forksUrl == other.forksUrl &&
-        commitsUrl == other.commitsUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        gitPullUrl == other.gitPullUrl &&
-        gitPushUrl == other.gitPushUrl &&
-        htmlUrl == other.htmlUrl &&
-        mapsEqual(files, other.files) &&
-        public == other.public &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        description == other.description &&
-        comments == other.comments &&
-        commentsEnabled == other.commentsEnabled &&
-        user == other.user &&
-        commentsUrl == other.commentsUrl &&
-        owner == other.owner &&
-        truncated == other.truncated &&
-        listsEqual(forks, other.forks) &&
-        listsEqual(history, other.history);
+        this.url == other.url &&
+        this.forksUrl == other.forksUrl &&
+        this.commitsUrl == other.commitsUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.gitPullUrl == other.gitPullUrl &&
+        this.gitPushUrl == other.gitPushUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        mapsEqual(this.files, other.files) &&
+        this.public == other.public &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.description == other.description &&
+        this.comments == other.comments &&
+        this.commentsEnabled == other.commentsEnabled &&
+        this.user == other.user &&
+        this.commentsUrl == other.commentsUrl &&
+        this.owner == other.owner &&
+        this.truncated == other.truncated &&
+        listsEqual(this.forks, other.forks) &&
+        listsEqual(this.history, other.history);
   }
 }

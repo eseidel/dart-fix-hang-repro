@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesCreateCommentRequest {
-  const IssuesCreateCommentRequest({
+  IssuesCreateCommentRequest({
     required this.body,
   });
 
@@ -43,6 +43,6 @@ class IssuesCreateCommentRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is IssuesCreateCommentRequest && body == other.body;
+    return other is IssuesCreateCommentRequest && this.body == other.body;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -9,15 +5,49 @@ import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/secret_scanning_create_push_protection_bypass_request.dart';
 import 'package:github_out/messages/secret_scanning_update_alert_request.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
+import 'package:github_out/models/alert_created_at.dart';
+import 'package:github_out/models/alert_html_url.dart';
 import 'package:github_out/models/alert_number.dart';
+import 'package:github_out/models/alert_updated_at.dart';
+import 'package:github_out/models/alert_url.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/direction_param.dart';
 import 'package:github_out/models/organization_secret_scanning_alert.dart';
+import 'package:github_out/models/organization_secret_scanning_alert_validity.dart';
 import 'package:github_out/models/secret_scanning_alert.dart';
+import 'package:github_out/models/secret_scanning_alert_resolution.dart';
+import 'package:github_out/models/secret_scanning_alert_resolution_comment.dart';
 import 'package:github_out/models/secret_scanning_alert_sort_param.dart';
+import 'package:github_out/models/secret_scanning_alert_state.dart';
 import 'package:github_out/models/secret_scanning_alert_state_param.dart';
+import 'package:github_out/models/secret_scanning_alert_validity.dart';
+import 'package:github_out/models/secret_scanning_first_detected_location.dart';
 import 'package:github_out/models/secret_scanning_location.dart';
+import 'package:github_out/models/secret_scanning_location_commit.dart';
+import 'package:github_out/models/secret_scanning_location_details.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_body.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_comment.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_title.dart';
+import 'package:github_out/models/secret_scanning_location_issue_body.dart';
+import 'package:github_out/models/secret_scanning_location_issue_comment.dart';
+import 'package:github_out/models/secret_scanning_location_issue_title.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_body.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_comment.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_review.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_review_comment.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_title.dart';
+import 'package:github_out/models/secret_scanning_location_type.dart';
+import 'package:github_out/models/secret_scanning_location_wiki_commit.dart';
 import 'package:github_out/models/secret_scanning_push_protection_bypass.dart';
+import 'package:github_out/models/secret_scanning_push_protection_bypass_placeholder_id.dart';
+import 'package:github_out/models/secret_scanning_push_protection_bypass_reason.dart';
+import 'package:github_out/models/secret_scanning_scan.dart';
 import 'package:github_out/models/secret_scanning_scan_history.dart';
+import 'package:github_out/models/secret_scanning_scan_history_custom_pattern_backfill_scans_inner.dart';
+import 'package:github_out/models/simple_repository.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:http/http.dart' as http;
 
 /// Retrieve secret scanning alerts from a repository.
 class SecretScanningApi {
@@ -58,18 +88,18 @@ class SecretScanningApi {
       method: Method.get,
       path: '/enterprises/{enterprise}/secret-scanning/alerts'.replaceAll(
         '{enterprise}',
-        enterprise,
+        '${enterprise}',
       ),
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
-        if (secretType != null) 'secret_type': [secretType],
-        if (resolution != null) 'resolution': [resolution],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (secretType != null) 'secret_type': [secretType.toString()],
+        if (resolution != null) 'resolution': [resolution.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (validity != null) 'validity': [validity],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (validity != null) 'validity': [validity.toString()],
         if (isPubliclyLeaked != null)
           'is_publicly_leaked': [isPubliclyLeaked.toString()],
         if (isMultiRepo != null) 'is_multi_repo': [isMultiRepo.toString()],
@@ -80,7 +110,7 @@ class SecretScanningApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -126,18 +156,18 @@ class SecretScanningApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/secret-scanning/alerts'.replaceAll('{org}', org),
+      path: '/orgs/{org}/secret-scanning/alerts'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
-        if (secretType != null) 'secret_type': [secretType],
-        if (resolution != null) 'resolution': [resolution],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (secretType != null) 'secret_type': [secretType.toString()],
+        if (resolution != null) 'resolution': [resolution.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (validity != null) 'validity': [validity],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (validity != null) 'validity': [validity.toString()],
         if (isPubliclyLeaked != null)
           'is_publicly_leaked': [isPubliclyLeaked.toString()],
         if (isMultiRepo != null) 'is_multi_repo': [isMultiRepo.toString()],
@@ -148,7 +178,7 @@ class SecretScanningApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -196,19 +226,19 @@ class SecretScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/secret-scanning/alerts'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
-        if (secretType != null) 'secret_type': [secretType],
-        if (resolution != null) 'resolution': [resolution],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (secretType != null) 'secret_type': [secretType.toString()],
+        if (resolution != null) 'resolution': [resolution.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (validity != null) 'validity': [validity],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (validity != null) 'validity': [validity.toString()],
         if (isPubliclyLeaked != null)
           'is_publicly_leaked': [isPubliclyLeaked.toString()],
         if (isMultiRepo != null) 'is_multi_repo': [isMultiRepo.toString()],
@@ -219,7 +249,7 @@ class SecretScanningApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -253,8 +283,8 @@ class SecretScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
       queryParameters: {
         if (hideSecret != null) 'hide_secret': [hideSecret.toString()],
@@ -264,7 +294,7 @@ class SecretScanningApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -296,16 +326,17 @@ class SecretScanningApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
       body: secretScanningUpdateAlertRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -340,8 +371,8 @@ class SecretScanningApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/secret-scanning/alerts/{alert_number}/locations'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
               .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
@@ -352,7 +383,7 @@ class SecretScanningApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -385,15 +416,16 @@ class SecretScanningApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/secret-scanning/push-protection-bypasses'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: secretScanningCreatePushProtectionBypassRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -421,14 +453,14 @@ class SecretScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/secret-scanning/scan-history'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

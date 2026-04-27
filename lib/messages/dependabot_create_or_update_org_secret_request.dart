@@ -1,17 +1,13 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/dependabot_create_or_update_org_secret_request_visibility.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class DependabotCreateOrUpdateOrgSecretRequest {
-  const DependabotCreateOrUpdateOrgSecretRequest({
-    required this.visibility,
+  DependabotCreateOrUpdateOrgSecretRequest({
     this.encryptedValue,
     this.keyId,
+    required this.visibility,
     this.selectedRepositoryIds,
   });
 
@@ -96,9 +92,9 @@ class DependabotCreateOrUpdateOrgSecretRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotCreateOrUpdateOrgSecretRequest &&
-        encryptedValue == other.encryptedValue &&
-        keyId == other.keyId &&
-        visibility == other.visibility &&
-        listsEqual(selectedRepositoryIds, other.selectedRepositoryIds);
+        this.encryptedValue == other.encryptedValue &&
+        this.keyId == other.keyId &&
+        this.visibility == other.visibility &&
+        listsEqual(this.selectedRepositoryIds, other.selectedRepositoryIds);
   }
 }

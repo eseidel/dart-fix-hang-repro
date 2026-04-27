@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SubIssuesSummary {
   /// {@macro sub_issues_summary}
-  const SubIssuesSummary({
+  SubIssuesSummary({
     required this.total,
     required this.completed,
     required this.percentCompleted,
@@ -19,9 +19,9 @@ class SubIssuesSummary {
       'SubIssuesSummary',
       json,
       () => SubIssuesSummary(
-        total: json['total'] as int,
-        completed: json['completed'] as int,
-        percentCompleted: json['percent_completed'] as int,
+        total: (json['total'] as int),
+        completed: (json['completed'] as int),
+        percentCompleted: (json['percent_completed'] as int),
       ),
     );
   }
@@ -59,8 +59,8 @@ class SubIssuesSummary {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SubIssuesSummary &&
-        total == other.total &&
-        completed == other.completed &&
-        percentCompleted == other.percentCompleted;
+        this.total == other.total &&
+        this.completed == other.completed &&
+        this.percentCompleted == other.percentCompleted;
   }
 }

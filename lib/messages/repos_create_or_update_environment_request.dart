@@ -1,9 +1,6 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/deployment_branch_policy_settings.dart';
+import 'package:github_out/models/deployment_reviewer_type.dart';
 import 'package:github_out/models/prevent_self_review.dart';
 import 'package:github_out/models/repos_create_or_update_environment_request_reviewers_inner.dart';
 import 'package:github_out/models/wait_timer.dart';
@@ -11,7 +8,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateOrUpdateEnvironmentRequest {
-  const ReposCreateOrUpdateEnvironmentRequest({
+  ReposCreateOrUpdateEnvironmentRequest({
     this.waitTimer,
     this.preventSelfReview,
     this.reviewers,
@@ -100,9 +97,9 @@ class ReposCreateOrUpdateEnvironmentRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateOrUpdateEnvironmentRequest &&
-        waitTimer == other.waitTimer &&
-        preventSelfReview == other.preventSelfReview &&
-        listsEqual(reviewers, other.reviewers) &&
-        deploymentBranchPolicy == other.deploymentBranchPolicy;
+        this.waitTimer == other.waitTimer &&
+        this.preventSelfReview == other.preventSelfReview &&
+        listsEqual(this.reviewers, other.reviewers) &&
+        this.deploymentBranchPolicy == other.deploymentBranchPolicy;
   }
 }

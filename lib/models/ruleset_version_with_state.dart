@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RulesetVersionWithState {
-  const RulesetVersionWithState({
+  RulesetVersionWithState({
     required this.versionId,
     required this.actor,
     required this.updatedAt,
@@ -17,7 +17,7 @@ class RulesetVersionWithState {
       'RulesetVersionWithState',
       json,
       () => RulesetVersionWithState(
-        versionId: json['version_id'] as int,
+        versionId: (json['version_id'] as int),
         actor: RulesetVersionActor.fromJson(
           json['actor'] as Map<String, dynamic>,
         ),
@@ -68,9 +68,9 @@ class RulesetVersionWithState {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RulesetVersionWithState &&
-        versionId == other.versionId &&
-        actor == other.actor &&
-        updatedAt == other.updatedAt &&
-        state == other.state;
+        this.versionId == other.versionId &&
+        this.actor == other.actor &&
+        this.updatedAt == other.updatedAt &&
+        this.state == other.state;
   }
 }

@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PageBuild {
   /// {@macro page_build}
-  const PageBuild({
+  PageBuild({
     required this.url,
     required this.status,
     required this.error,
@@ -34,7 +34,7 @@ class PageBuild {
           checkedKey(json, 'pusher') as Map<String, dynamic>?,
         ),
         commit: json['commit'] as String,
-        duration: json['duration'] as int,
+        duration: (json['duration'] as int),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
       ),
@@ -92,13 +92,13 @@ class PageBuild {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PageBuild &&
-        url == other.url &&
-        status == other.status &&
-        error == other.error &&
-        pusher == other.pusher &&
-        commit == other.commit &&
-        duration == other.duration &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.url == other.url &&
+        this.status == other.status &&
+        this.error == other.error &&
+        this.pusher == other.pusher &&
+        this.commit == other.commit &&
+        this.duration == other.duration &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

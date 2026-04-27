@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReleaseAsset {
   /// {@macro release_asset}
-  const ReleaseAsset({
+  ReleaseAsset({
     required this.url,
     required this.browserDownloadUrl,
     required this.id,
@@ -35,15 +35,15 @@ class ReleaseAsset {
       () => ReleaseAsset(
         url: Uri.parse(json['url'] as String),
         browserDownloadUrl: Uri.parse(json['browser_download_url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         label: checkedKey(json, 'label') as String?,
         state: ReleaseAssetState.fromJson(json['state'] as String),
         contentType: json['content_type'] as String,
-        size: json['size'] as int,
+        size: (json['size'] as int),
         digest: checkedKey(json, 'digest') as String?,
-        downloadCount: json['download_count'] as int,
+        downloadCount: (json['download_count'] as int),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         uploader: SimpleUser.maybeFromJson(
@@ -127,19 +127,19 @@ class ReleaseAsset {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReleaseAsset &&
-        url == other.url &&
-        browserDownloadUrl == other.browserDownloadUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        label == other.label &&
-        state == other.state &&
-        contentType == other.contentType &&
-        size == other.size &&
-        digest == other.digest &&
-        downloadCount == other.downloadCount &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        uploader == other.uploader;
+        this.url == other.url &&
+        this.browserDownloadUrl == other.browserDownloadUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.label == other.label &&
+        this.state == other.state &&
+        this.contentType == other.contentType &&
+        this.size == other.size &&
+        this.digest == other.digest &&
+        this.downloadCount == other.downloadCount &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.uploader == other.uploader;
   }
 }

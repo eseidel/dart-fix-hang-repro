@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposRenameBranchRequest {
-  const ReposRenameBranchRequest({
+  ReposRenameBranchRequest({
     required this.newName,
   });
 
@@ -43,6 +43,6 @@ class ReposRenameBranchRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ReposRenameBranchRequest && newName == other.newName;
+    return other is ReposRenameBranchRequest && this.newName == other.newName;
   }
 }

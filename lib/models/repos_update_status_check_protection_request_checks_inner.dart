@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposUpdateStatusCheckProtectionRequestChecksInner {
-  const ReposUpdateStatusCheckProtectionRequestChecksInner({
+  ReposUpdateStatusCheckProtectionRequestChecksInner({
     required this.context,
     this.appId,
   });
@@ -18,7 +18,7 @@ class ReposUpdateStatusCheckProtectionRequestChecksInner {
       json,
       () => ReposUpdateStatusCheckProtectionRequestChecksInner(
         context: json['context'] as String,
-        appId: json['app_id'] as int?,
+        appId: (json['app_id'] as int?),
       ),
     );
   }
@@ -62,7 +62,7 @@ class ReposUpdateStatusCheckProtectionRequestChecksInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposUpdateStatusCheckProtectionRequestChecksInner &&
-        context == other.context &&
-        appId == other.appId;
+        this.context == other.context &&
+        this.appId == other.appId;
   }
 }

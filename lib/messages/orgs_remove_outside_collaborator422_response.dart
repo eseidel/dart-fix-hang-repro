@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class OrgsRemoveOutsideCollaborator422Response {
-  const OrgsRemoveOutsideCollaborator422Response({
+  OrgsRemoveOutsideCollaborator422Response({
     this.message,
     this.documentationUrl,
   });
@@ -56,7 +56,7 @@ class OrgsRemoveOutsideCollaborator422Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsRemoveOutsideCollaborator422Response &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl;
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl;
   }
 }

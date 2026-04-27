@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamProjectPermissions {
-  const TeamProjectPermissions({
+  TeamProjectPermissions({
     required this.read,
     required this.write,
     required this.admin,
@@ -55,8 +55,8 @@ class TeamProjectPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamProjectPermissions &&
-        read == other.read &&
-        write == other.write &&
-        admin == other.admin;
+        this.read == other.read &&
+        this.write == other.write &&
+        this.admin == other.admin;
   }
 }

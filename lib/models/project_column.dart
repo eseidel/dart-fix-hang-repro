@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ProjectColumn {
   /// {@macro project_column}
-  const ProjectColumn({
+  ProjectColumn({
     required this.url,
     required this.projectUrl,
     required this.cardsUrl,
@@ -28,7 +28,7 @@ class ProjectColumn {
         url: Uri.parse(json['url'] as String),
         projectUrl: Uri.parse(json['project_url'] as String),
         cardsUrl: Uri.parse(json['cards_url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         createdAt: DateTime.parse(json['created_at'] as String),
@@ -102,13 +102,13 @@ class ProjectColumn {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectColumn &&
-        url == other.url &&
-        projectUrl == other.projectUrl &&
-        cardsUrl == other.cardsUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.url == other.url &&
+        this.projectUrl == other.projectUrl &&
+        this.cardsUrl == other.cardsUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

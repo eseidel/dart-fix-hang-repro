@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 /// **Required when using multi-line comments unless using `in_reply_to`**. The
 /// `start_side` is the starting side of the diff that the comment applies to.
 /// Can be `LEFT` or `RIGHT`. To learn more about multi-line comments, see

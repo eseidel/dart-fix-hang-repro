@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRulesetConditionsRepositoryIdTargetRepositoryId {
-  const RepositoryRulesetConditionsRepositoryIdTargetRepositoryId({
+  RepositoryRulesetConditionsRepositoryIdTargetRepositoryId({
     this.repositoryIds,
   });
 
@@ -52,6 +52,6 @@ class RepositoryRulesetConditionsRepositoryIdTargetRepositoryId {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRulesetConditionsRepositoryIdTargetRepositoryId &&
-        listsEqual(repositoryIds, other.repositoryIds);
+        listsEqual(this.repositoryIds, other.repositoryIds);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleRequiredDeploymentsParameters {
-  const RepositoryRuleRequiredDeploymentsParameters({
+  RepositoryRuleRequiredDeploymentsParameters({
     required this.requiredDeploymentEnvironments,
   });
 
@@ -53,7 +53,7 @@ class RepositoryRuleRequiredDeploymentsParameters {
     if (identical(this, other)) return true;
     return other is RepositoryRuleRequiredDeploymentsParameters &&
         listsEqual(
-          requiredDeploymentEnvironments,
+          this.requiredDeploymentEnvironments,
           other.requiredDeploymentEnvironments,
         );
   }

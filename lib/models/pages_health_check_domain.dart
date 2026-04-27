@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PagesHealthCheckDomain {
-  const PagesHealthCheckDomain({
+  PagesHealthCheckDomain({
     this.host,
     this.uri,
     this.nameservers,
@@ -184,33 +184,34 @@ class PagesHealthCheckDomain {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PagesHealthCheckDomain &&
-        host == other.host &&
-        uri == other.uri &&
-        nameservers == other.nameservers &&
-        dnsResolves == other.dnsResolves &&
-        isProxied == other.isProxied &&
-        isCloudflareIp == other.isCloudflareIp &&
-        isFastlyIp == other.isFastlyIp &&
-        isOldIpAddress == other.isOldIpAddress &&
-        isARecord == other.isARecord &&
-        hasCnameRecord == other.hasCnameRecord &&
-        hasMxRecordsPresent == other.hasMxRecordsPresent &&
-        isValidDomain == other.isValidDomain &&
-        isApexDomain == other.isApexDomain &&
-        shouldBeARecord == other.shouldBeARecord &&
-        isCnameToGithubUserDomain == other.isCnameToGithubUserDomain &&
-        isCnameToPagesDotGithubDotCom == other.isCnameToPagesDotGithubDotCom &&
-        isCnameToFastly == other.isCnameToFastly &&
-        isPointedToGithubPagesIp == other.isPointedToGithubPagesIp &&
-        isNonGithubPagesIpPresent == other.isNonGithubPagesIpPresent &&
-        isPagesDomain == other.isPagesDomain &&
-        isServedByPages == other.isServedByPages &&
-        isValid == other.isValid &&
-        reason == other.reason &&
-        respondsToHttps == other.respondsToHttps &&
-        enforcesHttps == other.enforcesHttps &&
-        httpsError == other.httpsError &&
-        isHttpsEligible == other.isHttpsEligible &&
-        caaError == other.caaError;
+        this.host == other.host &&
+        this.uri == other.uri &&
+        this.nameservers == other.nameservers &&
+        this.dnsResolves == other.dnsResolves &&
+        this.isProxied == other.isProxied &&
+        this.isCloudflareIp == other.isCloudflareIp &&
+        this.isFastlyIp == other.isFastlyIp &&
+        this.isOldIpAddress == other.isOldIpAddress &&
+        this.isARecord == other.isARecord &&
+        this.hasCnameRecord == other.hasCnameRecord &&
+        this.hasMxRecordsPresent == other.hasMxRecordsPresent &&
+        this.isValidDomain == other.isValidDomain &&
+        this.isApexDomain == other.isApexDomain &&
+        this.shouldBeARecord == other.shouldBeARecord &&
+        this.isCnameToGithubUserDomain == other.isCnameToGithubUserDomain &&
+        this.isCnameToPagesDotGithubDotCom ==
+            other.isCnameToPagesDotGithubDotCom &&
+        this.isCnameToFastly == other.isCnameToFastly &&
+        this.isPointedToGithubPagesIp == other.isPointedToGithubPagesIp &&
+        this.isNonGithubPagesIpPresent == other.isNonGithubPagesIpPresent &&
+        this.isPagesDomain == other.isPagesDomain &&
+        this.isServedByPages == other.isServedByPages &&
+        this.isValid == other.isValid &&
+        this.reason == other.reason &&
+        this.respondsToHttps == other.respondsToHttps &&
+        this.enforcesHttps == other.enforcesHttps &&
+        this.httpsError == other.httpsError &&
+        this.isHttpsEligible == other.isHttpsEligible &&
+        this.caaError == other.caaError;
   }
 }

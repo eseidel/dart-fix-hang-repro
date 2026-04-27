@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsCreateRepoVariableRequest {
-  const ActionsCreateRepoVariableRequest({
+  ActionsCreateRepoVariableRequest({
     required this.name,
     required this.value,
   });
@@ -57,7 +57,7 @@ class ActionsCreateRepoVariableRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsCreateRepoVariableRequest &&
-        name == other.name &&
-        value == other.value;
+        this.name == other.name &&
+        this.value == other.value;
   }
 }

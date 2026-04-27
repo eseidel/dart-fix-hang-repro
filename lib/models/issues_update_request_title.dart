@@ -6,8 +6,8 @@ sealed class IssuesUpdateRequestTitle {
 
   factory IssuesUpdateRequestTitle.fromJson(dynamic json) {
     return switch (json) {
-      final String v => IssuesUpdateRequestTitleString(v),
-      final int v => IssuesUpdateRequestTitleInt(v),
+      String v => IssuesUpdateRequestTitleString(v),
+      int v => IssuesUpdateRequestTitleInt(v),
       _ => throw FormatException(
         'Unsupported shape for IssuesUpdateRequestTitle: ${json.runtimeType}',
       ),

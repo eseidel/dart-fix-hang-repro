@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/status_check_policy_checks_inner.dart';
 import 'package:meta/meta.dart';
@@ -13,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class StatusCheckPolicy {
   /// {@macro status_check_policy}
-  const StatusCheckPolicy({
+  StatusCheckPolicy({
     required this.url,
     required this.strict,
     required this.contexts,
@@ -90,10 +86,10 @@ class StatusCheckPolicy {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is StatusCheckPolicy &&
-        url == other.url &&
-        strict == other.strict &&
-        listsEqual(contexts, other.contexts) &&
-        listsEqual(checks, other.checks) &&
-        contextsUrl == other.contextsUrl;
+        this.url == other.url &&
+        this.strict == other.strict &&
+        listsEqual(this.contexts, other.contexts) &&
+        listsEqual(this.checks, other.checks) &&
+        this.contextsUrl == other.contextsUrl;
   }
 }

@@ -1,8 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/gist_history.dart';
+import 'package:github_out/models/gist_history_change_status.dart';
 import 'package:github_out/models/gist_simple_files.dart';
 import 'package:github_out/models/gist_simple_fork_of.dart';
+import 'package:github_out/models/gist_simple_fork_of_files.dart';
 import 'package:github_out/models/gist_simple_forks_inner.dart';
+import 'package:github_out/models/public_user.dart';
+import 'package:github_out/models/public_user_plan.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -13,7 +17,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GistSimple {
   /// {@macro gist_simple}
-  const GistSimple({
+  GistSimple({
     @deprecated this.forks,
     @deprecated this.history,
     this.forkOf,
@@ -75,7 +79,7 @@ class GistSimple {
         createdAt: json['created_at'] as String?,
         updatedAt: json['updated_at'] as String?,
         description: json['description'] as String?,
-        comments: json['comments'] as int?,
+        comments: (json['comments'] as int?),
         commentsEnabled: json['comments_enabled'] as bool?,
         user: json['user'] as String?,
         commentsUrl: json['comments_url'] as String?,
@@ -183,27 +187,27 @@ class GistSimple {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistSimple &&
-        listsEqual(forks, other.forks) &&
-        listsEqual(history, other.history) &&
-        forkOf == other.forkOf &&
-        url == other.url &&
-        forksUrl == other.forksUrl &&
-        commitsUrl == other.commitsUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        gitPullUrl == other.gitPullUrl &&
-        gitPushUrl == other.gitPushUrl &&
-        htmlUrl == other.htmlUrl &&
-        mapsEqual(files, other.files) &&
-        public == other.public &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        description == other.description &&
-        comments == other.comments &&
-        commentsEnabled == other.commentsEnabled &&
-        user == other.user &&
-        commentsUrl == other.commentsUrl &&
-        owner == other.owner &&
-        truncated == other.truncated;
+        listsEqual(this.forks, other.forks) &&
+        listsEqual(this.history, other.history) &&
+        this.forkOf == other.forkOf &&
+        this.url == other.url &&
+        this.forksUrl == other.forksUrl &&
+        this.commitsUrl == other.commitsUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.gitPullUrl == other.gitPullUrl &&
+        this.gitPushUrl == other.gitPushUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        mapsEqual(this.files, other.files) &&
+        this.public == other.public &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.description == other.description &&
+        this.comments == other.comments &&
+        this.commentsEnabled == other.commentsEnabled &&
+        this.user == other.user &&
+        this.commentsUrl == other.commentsUrl &&
+        this.owner == other.owner &&
+        this.truncated == other.truncated;
   }
 }

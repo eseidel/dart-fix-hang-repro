@@ -1,10 +1,14 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/custom_property.dart';
+import 'package:github_out/models/custom_property_default_value.dart';
+import 'package:github_out/models/custom_property_source_type.dart';
+import 'package:github_out/models/custom_property_value_type.dart';
+import 'package:github_out/models/custom_property_values_editable_by.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrgsCreateOrUpdateCustomPropertiesRequest {
-  const OrgsCreateOrUpdateCustomPropertiesRequest({
+  OrgsCreateOrUpdateCustomPropertiesRequest({
     required this.properties,
   });
 
@@ -55,6 +59,6 @@ class OrgsCreateOrUpdateCustomPropertiesRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsCreateOrUpdateCustomPropertiesRequest &&
-        listsEqual(properties, other.properties);
+        listsEqual(this.properties, other.properties);
   }
 }

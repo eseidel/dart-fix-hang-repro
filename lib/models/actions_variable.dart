@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsVariable {
   /// {@macro actions_variable}
-  const ActionsVariable({
+  ActionsVariable({
     required this.name,
     required this.value,
     required this.createdAt,
@@ -77,9 +77,9 @@ class ActionsVariable {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsVariable &&
-        name == other.name &&
-        value == other.value &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.name == other.name &&
+        this.value == other.value &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

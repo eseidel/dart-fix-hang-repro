@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -14,6 +10,9 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/messages/hook_delivery_request.dart';
+import 'package:github_out/messages/hook_delivery_response.dart';
+import 'package:github_out/messages/hook_response.dart';
 import 'package:github_out/messages/repos_add_app_access_restrictions_request.dart';
 import 'package:github_out/messages/repos_add_collaborator_request.dart';
 import 'package:github_out/messages/repos_add_status_check_contexts_request.dart';
@@ -36,6 +35,7 @@ import 'package:github_out/messages/repos_create_fork_request.dart';
 import 'package:github_out/messages/repos_create_in_org_request.dart';
 import 'package:github_out/messages/repos_create_or_update_custom_properties_values_request.dart';
 import 'package:github_out/messages/repos_create_or_update_environment_request.dart';
+import 'package:github_out/messages/repos_create_or_update_file_contents409_response.dart';
 import 'package:github_out/messages/repos_create_or_update_file_contents_request.dart';
 import 'package:github_out/messages/repos_create_org_ruleset_request.dart';
 import 'package:github_out/messages/repos_create_pages_deployment_request.dart';
@@ -45,6 +45,7 @@ import 'package:github_out/messages/repos_create_repo_ruleset_request.dart';
 import 'package:github_out/messages/repos_create_tag_protection_request.dart';
 import 'package:github_out/messages/repos_create_using_template_request.dart';
 import 'package:github_out/messages/repos_create_webhook_request.dart';
+import 'package:github_out/messages/repos_delete403_response.dart';
 import 'package:github_out/messages/repos_delete_file_request.dart';
 import 'package:github_out/messages/repos_generate_release_notes_request.dart';
 import 'package:github_out/messages/repos_get_all_deployment_protection_rules200_response.dart';
@@ -79,65 +80,222 @@ import 'package:github_out/messages/repos_update_request.dart';
 import 'package:github_out/messages/repos_update_status_check_protection_request.dart';
 import 'package:github_out/messages/repos_update_webhook_config_for_repo_request.dart';
 import 'package:github_out/messages/repos_update_webhook_request.dart';
+import 'package:github_out/messages/repository_rule_pull_request.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
 import 'package:github_out/models/activity.dart';
+import 'package:github_out/models/activity_activity_type.dart';
+import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/auto_merge.dart';
+import 'package:github_out/models/auto_merge_merge_method.dart';
 import 'package:github_out/models/autolink.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/branch_protection.dart';
+import 'package:github_out/models/branch_protection_allow_deletions.dart';
+import 'package:github_out/models/branch_protection_allow_force_pushes.dart';
+import 'package:github_out/models/branch_protection_allow_fork_syncing.dart';
+import 'package:github_out/models/branch_protection_block_creations.dart';
+import 'package:github_out/models/branch_protection_lock_branch.dart';
+import 'package:github_out/models/branch_protection_required_conversation_resolution.dart';
+import 'package:github_out/models/branch_protection_required_linear_history.dart';
+import 'package:github_out/models/branch_protection_required_signatures.dart';
 import 'package:github_out/models/branch_restriction_policy.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner_owner.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner_permissions.dart';
+import 'package:github_out/models/branch_restriction_policy_teams_inner.dart';
+import 'package:github_out/models/branch_restriction_policy_users_inner.dart';
 import 'package:github_out/models/branch_short.dart';
+import 'package:github_out/models/branch_short_commit.dart';
 import 'package:github_out/models/branch_with_protection.dart';
+import 'package:github_out/models/branch_with_protection_links.dart';
 import 'package:github_out/models/check_automated_security_fixes.dart';
 import 'package:github_out/models/clone_traffic.dart';
+import 'package:github_out/models/code_of_conduct.dart';
+import 'package:github_out/models/code_of_conduct_simple.dart';
 import 'package:github_out/models/codeowners_errors.dart';
+import 'package:github_out/models/codeowners_errors_errors_inner.dart';
 import 'package:github_out/models/collaborator.dart';
+import 'package:github_out/models/collaborator_permissions.dart';
 import 'package:github_out/models/combined_commit_status.dart';
 import 'package:github_out/models/commit.dart';
 import 'package:github_out/models/commit_activity.dart';
+import 'package:github_out/models/commit_author.dart';
 import 'package:github_out/models/commit_comment.dart';
+import 'package:github_out/models/commit_commit.dart';
+import 'package:github_out/models/commit_commit_tree.dart';
+import 'package:github_out/models/commit_committer.dart';
 import 'package:github_out/models/commit_comparison.dart';
+import 'package:github_out/models/commit_comparison_status.dart';
+import 'package:github_out/models/commit_parents_inner.dart';
+import 'package:github_out/models/commit_stats.dart';
+import 'package:github_out/models/community_health_file.dart';
 import 'package:github_out/models/community_profile.dart';
+import 'package:github_out/models/community_profile_files.dart';
+import 'package:github_out/models/content_directory_inner.dart';
+import 'package:github_out/models/content_directory_inner_links.dart';
+import 'package:github_out/models/content_directory_inner_type.dart';
 import 'package:github_out/models/content_file.dart';
+import 'package:github_out/models/content_file_links.dart';
+import 'package:github_out/models/content_file_type.dart';
+import 'package:github_out/models/content_submodule.dart';
+import 'package:github_out/models/content_submodule_links.dart';
+import 'package:github_out/models/content_submodule_type.dart';
+import 'package:github_out/models/content_symlink.dart';
+import 'package:github_out/models/content_symlink_links.dart';
+import 'package:github_out/models/content_symlink_type.dart';
 import 'package:github_out/models/content_traffic.dart';
 import 'package:github_out/models/contributor.dart';
 import 'package:github_out/models/contributor_activity.dart';
+import 'package:github_out/models/contributor_activity_weeks_inner.dart';
+import 'package:github_out/models/custom_deployment_rule_app.dart';
 import 'package:github_out/models/custom_property_value.dart';
+import 'package:github_out/models/custom_property_value_value.dart';
 import 'package:github_out/models/deploy_key.dart';
 import 'package:github_out/models/deployment.dart';
 import 'package:github_out/models/deployment_branch_policy.dart';
 import 'package:github_out/models/deployment_branch_policy_name_pattern.dart';
 import 'package:github_out/models/deployment_branch_policy_name_pattern_with_type.dart';
+import 'package:github_out/models/deployment_branch_policy_name_pattern_with_type_type.dart';
+import 'package:github_out/models/deployment_branch_policy_settings.dart';
+import 'package:github_out/models/deployment_branch_policy_type.dart';
+import 'package:github_out/models/deployment_payload.dart';
 import 'package:github_out/models/deployment_protection_rule.dart';
+import 'package:github_out/models/deployment_reviewer_type.dart';
 import 'package:github_out/models/deployment_status.dart';
+import 'package:github_out/models/deployment_status_state.dart';
+import 'package:github_out/models/diff_entry.dart';
+import 'package:github_out/models/diff_entry_status.dart';
 import 'package:github_out/models/direction_param.dart';
 import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/environment.dart';
+import 'package:github_out/models/environment_protection_rules_inner.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_0.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1_reviewers_inner.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1_reviewers_inner_reviewer.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_2.dart';
 import 'package:github_out/models/file_commit.dart';
+import 'package:github_out/models/file_commit_commit.dart';
+import 'package:github_out/models/file_commit_commit_author.dart';
+import 'package:github_out/models/file_commit_commit_committer.dart';
+import 'package:github_out/models/file_commit_commit_parents_inner.dart';
+import 'package:github_out/models/file_commit_commit_tree.dart';
+import 'package:github_out/models/file_commit_commit_verification.dart';
+import 'package:github_out/models/file_commit_content.dart';
+import 'package:github_out/models/file_commit_content_links.dart';
 import 'package:github_out/models/full_repository.dart';
+import 'package:github_out/models/full_repository_merge_commit_message.dart';
+import 'package:github_out/models/full_repository_merge_commit_title.dart';
+import 'package:github_out/models/full_repository_permissions.dart';
+import 'package:github_out/models/full_repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/full_repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/git_user.dart';
 import 'package:github_out/models/hook.dart';
 import 'package:github_out/models/hook_delivery.dart';
 import 'package:github_out/models/hook_delivery_item.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/link.dart';
 import 'package:github_out/models/merged_upstream.dart';
+import 'package:github_out/models/merged_upstream_merge_type.dart';
+import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
+import 'package:github_out/models/org_ruleset_conditions.dart';
+import 'package:github_out/models/org_ruleset_conditions_one_of_0.dart';
+import 'package:github_out/models/org_ruleset_conditions_one_of_1.dart';
+import 'package:github_out/models/org_ruleset_conditions_one_of_2.dart';
 import 'package:github_out/models/page.dart';
 import 'package:github_out/models/page_build.dart';
+import 'package:github_out/models/page_build_error.dart';
 import 'package:github_out/models/page_build_status.dart';
+import 'package:github_out/models/page_build_type.dart';
 import 'package:github_out/models/page_deployment.dart';
+import 'package:github_out/models/page_deployment_id.dart';
+import 'package:github_out/models/page_protected_domain_state.dart';
+import 'package:github_out/models/page_status.dart';
 import 'package:github_out/models/pages_deployment_id_param.dart';
 import 'package:github_out/models/pages_deployment_status.dart';
+import 'package:github_out/models/pages_deployment_status_status.dart';
 import 'package:github_out/models/pages_health_check.dart';
+import 'package:github_out/models/pages_health_check_alt_domain.dart';
+import 'package:github_out/models/pages_health_check_domain.dart';
+import 'package:github_out/models/pages_https_certificate.dart';
+import 'package:github_out/models/pages_https_certificate_state.dart';
+import 'package:github_out/models/pages_source_hash.dart';
 import 'package:github_out/models/participation_stats.dart';
 import 'package:github_out/models/per_param.dart';
+import 'package:github_out/models/prevent_self_review.dart';
 import 'package:github_out/models/protected_branch.dart';
 import 'package:github_out/models/protected_branch_admin_enforced.dart';
+import 'package:github_out/models/protected_branch_allow_deletions.dart';
+import 'package:github_out/models/protected_branch_allow_force_pushes.dart';
+import 'package:github_out/models/protected_branch_allow_fork_syncing.dart';
+import 'package:github_out/models/protected_branch_block_creations.dart';
+import 'package:github_out/models/protected_branch_enforce_admins.dart';
+import 'package:github_out/models/protected_branch_lock_branch.dart';
 import 'package:github_out/models/protected_branch_pull_request_review.dart';
+import 'package:github_out/models/protected_branch_pull_request_review_bypass_pull_request_allowances.dart';
+import 'package:github_out/models/protected_branch_pull_request_review_dismissal_restrictions.dart';
+import 'package:github_out/models/protected_branch_required_conversation_resolution.dart';
+import 'package:github_out/models/protected_branch_required_linear_history.dart';
+import 'package:github_out/models/protected_branch_required_pull_request_reviews.dart';
+import 'package:github_out/models/protected_branch_required_pull_request_reviews_bypass_pull_request_allowances.dart';
+import 'package:github_out/models/protected_branch_required_pull_request_reviews_dismissal_restrictions.dart';
+import 'package:github_out/models/protected_branch_required_signatures.dart';
+import 'package:github_out/models/protected_branch_required_status_check.dart';
+import 'package:github_out/models/protected_branch_required_status_check_checks_inner.dart';
 import 'package:github_out/models/pull_request_simple.dart';
+import 'package:github_out/models/pull_request_simple_base.dart';
+import 'package:github_out/models/pull_request_simple_head.dart';
+import 'package:github_out/models/pull_request_simple_labels_inner.dart';
+import 'package:github_out/models/pull_request_simple_links.dart';
+import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/referrer_traffic.dart';
 import 'package:github_out/models/release.dart';
 import 'package:github_out/models/release_asset.dart';
+import 'package:github_out/models/release_asset_state.dart';
 import 'package:github_out/models/release_notes_content.dart';
+import 'package:github_out/models/repos_add_status_check_contexts_request_one_of_0.dart';
+import 'package:github_out/models/repos_add_team_access_restrictions_request_one_of_0.dart';
+import 'package:github_out/models/repos_create_attestation_request_bundle.dart';
+import 'package:github_out/models/repos_create_attestation_request_bundle_dsse_envelope.dart';
+import 'package:github_out/models/repos_create_attestation_request_bundle_verification_material.dart';
+import 'package:github_out/models/repos_create_commit_status_request_state.dart';
+import 'package:github_out/models/repos_create_deployment_request_payload.dart';
+import 'package:github_out/models/repos_create_deployment_status_request_state.dart';
+import 'package:github_out/models/repos_create_for_authenticated_user_request_merge_commit_message.dart';
+import 'package:github_out/models/repos_create_for_authenticated_user_request_merge_commit_title.dart';
+import 'package:github_out/models/repos_create_for_authenticated_user_request_squash_merge_commit_message.dart';
+import 'package:github_out/models/repos_create_for_authenticated_user_request_squash_merge_commit_title.dart';
+import 'package:github_out/models/repos_create_in_org_request_merge_commit_message.dart';
+import 'package:github_out/models/repos_create_in_org_request_merge_commit_title.dart';
+import 'package:github_out/models/repos_create_in_org_request_squash_merge_commit_message.dart';
+import 'package:github_out/models/repos_create_in_org_request_squash_merge_commit_title.dart';
+import 'package:github_out/models/repos_create_in_org_request_visibility.dart';
+import 'package:github_out/models/repos_create_or_update_environment_request_reviewers_inner.dart';
+import 'package:github_out/models/repos_create_or_update_file_contents_request_author.dart';
+import 'package:github_out/models/repos_create_or_update_file_contents_request_committer.dart';
+import 'package:github_out/models/repos_create_org_ruleset_request_target.dart';
+import 'package:github_out/models/repos_create_pages_site_request_build_type.dart';
+import 'package:github_out/models/repos_create_pages_site_request_source.dart';
+import 'package:github_out/models/repos_create_pages_site_request_source_path.dart';
+import 'package:github_out/models/repos_create_release_request_make_latest.dart';
+import 'package:github_out/models/repos_create_repo_ruleset_request_target.dart';
+import 'package:github_out/models/repos_create_webhook_request_config.dart';
+import 'package:github_out/models/repos_delete_file_request_author.dart';
+import 'package:github_out/models/repos_delete_file_request_committer.dart';
 import 'package:github_out/models/repos_list_activities_parameter8.dart';
 import 'package:github_out/models/repos_list_activities_parameter9.dart';
+import 'package:github_out/models/repos_list_attestations200_response_attestations_inner.dart';
+import 'package:github_out/models/repos_list_attestations200_response_attestations_inner_bundle.dart';
+import 'package:github_out/models/repos_list_attestations200_response_attestations_inner_bundle_dsse_envelope.dart';
+import 'package:github_out/models/repos_list_attestations200_response_attestations_inner_bundle_verification_material.dart';
 import 'package:github_out/models/repos_list_collaborators_parameter2.dart';
 import 'package:github_out/models/repos_list_collaborators_parameter3.dart';
 import 'package:github_out/models/repos_list_for_authenticated_user_parameter0.dart';
@@ -151,27 +309,226 @@ import 'package:github_out/models/repos_list_for_user_parameter1.dart';
 import 'package:github_out/models/repos_list_for_user_parameter2.dart';
 import 'package:github_out/models/repos_list_for_user_parameter3.dart';
 import 'package:github_out/models/repos_list_forks_parameter2.dart';
+import 'package:github_out/models/repos_remove_status_check_contexts_request_one_of_0.dart';
+import 'package:github_out/models/repos_remove_team_access_restrictions_request_one_of_0.dart';
+import 'package:github_out/models/repos_set_status_check_contexts_request_one_of_0.dart';
+import 'package:github_out/models/repos_set_team_access_restrictions_request_one_of_0.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_required_pull_request_reviews.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_required_pull_request_reviews_bypass_pull_request_allowances.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_required_pull_request_reviews_dismissal_restrictions.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_required_status_checks.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_required_status_checks_checks_inner.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_restrictions.dart';
+import 'package:github_out/models/repos_update_information_about_pages_site_request_build_type.dart';
+import 'package:github_out/models/repos_update_information_about_pages_site_request_source.dart';
+import 'package:github_out/models/repos_update_information_about_pages_site_request_source_any_of_0.dart';
+import 'package:github_out/models/repos_update_information_about_pages_site_request_source_any_of_1.dart';
+import 'package:github_out/models/repos_update_information_about_pages_site_request_source_any_of_1_path.dart';
+import 'package:github_out/models/repos_update_invitation_request_permissions.dart';
+import 'package:github_out/models/repos_update_org_ruleset_request_target.dart';
+import 'package:github_out/models/repos_update_pull_request_review_protection_request_bypass_pull_request_allowances.dart';
+import 'package:github_out/models/repos_update_pull_request_review_protection_request_dismissal_restrictions.dart';
+import 'package:github_out/models/repos_update_release_request_make_latest.dart';
+import 'package:github_out/models/repos_update_repo_ruleset_request_target.dart';
+import 'package:github_out/models/repos_update_request_merge_commit_message.dart';
+import 'package:github_out/models/repos_update_request_merge_commit_title.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_code_security.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/repos_update_request_squash_merge_commit_message.dart';
+import 'package:github_out/models/repos_update_request_squash_merge_commit_title.dart';
+import 'package:github_out/models/repos_update_request_visibility.dart';
+import 'package:github_out/models/repos_update_status_check_protection_request_checks_inner.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
 import 'package:github_out/models/repository_collaborator_permission.dart';
 import 'package:github_out/models/repository_invitation.dart';
+import 'package:github_out/models/repository_invitation_permissions.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_rule.dart';
+import 'package:github_out/models/repository_rule_branch_name_pattern.dart';
+import 'package:github_out/models/repository_rule_branch_name_pattern_parameters.dart';
+import 'package:github_out/models/repository_rule_branch_name_pattern_parameters_operator.dart';
+import 'package:github_out/models/repository_rule_branch_name_pattern_type.dart';
+import 'package:github_out/models/repository_rule_code_scanning.dart';
+import 'package:github_out/models/repository_rule_code_scanning_parameters.dart';
+import 'package:github_out/models/repository_rule_code_scanning_type.dart';
+import 'package:github_out/models/repository_rule_commit_author_email_pattern.dart';
+import 'package:github_out/models/repository_rule_commit_author_email_pattern_parameters.dart';
+import 'package:github_out/models/repository_rule_commit_author_email_pattern_parameters_operator.dart';
+import 'package:github_out/models/repository_rule_commit_author_email_pattern_type.dart';
+import 'package:github_out/models/repository_rule_commit_message_pattern.dart';
+import 'package:github_out/models/repository_rule_commit_message_pattern_parameters.dart';
+import 'package:github_out/models/repository_rule_commit_message_pattern_parameters_operator.dart';
+import 'package:github_out/models/repository_rule_commit_message_pattern_type.dart';
+import 'package:github_out/models/repository_rule_committer_email_pattern.dart';
+import 'package:github_out/models/repository_rule_committer_email_pattern_parameters.dart';
+import 'package:github_out/models/repository_rule_committer_email_pattern_parameters_operator.dart';
+import 'package:github_out/models/repository_rule_committer_email_pattern_type.dart';
+import 'package:github_out/models/repository_rule_creation.dart';
+import 'package:github_out/models/repository_rule_creation_type.dart';
+import 'package:github_out/models/repository_rule_deletion.dart';
+import 'package:github_out/models/repository_rule_deletion_type.dart';
 import 'package:github_out/models/repository_rule_detailed.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_0.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_1.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_10.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_11.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_12.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_13.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_14.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_15.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_16.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_17.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_18.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_19.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_2.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_20.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_3.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_4.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_5.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_6.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_7.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_8.dart';
+import 'package:github_out/models/repository_rule_detailed_one_of_9.dart';
+import 'package:github_out/models/repository_rule_enforcement.dart';
+import 'package:github_out/models/repository_rule_file_extension_restriction.dart';
+import 'package:github_out/models/repository_rule_file_extension_restriction_parameters.dart';
+import 'package:github_out/models/repository_rule_file_extension_restriction_type.dart';
+import 'package:github_out/models/repository_rule_file_path_restriction.dart';
+import 'package:github_out/models/repository_rule_file_path_restriction_parameters.dart';
+import 'package:github_out/models/repository_rule_file_path_restriction_type.dart';
+import 'package:github_out/models/repository_rule_max_file_path_length.dart';
+import 'package:github_out/models/repository_rule_max_file_path_length_parameters.dart';
+import 'package:github_out/models/repository_rule_max_file_path_length_type.dart';
+import 'package:github_out/models/repository_rule_max_file_size.dart';
+import 'package:github_out/models/repository_rule_max_file_size_parameters.dart';
+import 'package:github_out/models/repository_rule_max_file_size_type.dart';
+import 'package:github_out/models/repository_rule_merge_queue.dart';
+import 'package:github_out/models/repository_rule_merge_queue_parameters.dart';
+import 'package:github_out/models/repository_rule_merge_queue_parameters_grouping_strategy.dart';
+import 'package:github_out/models/repository_rule_merge_queue_parameters_merge_method.dart';
+import 'package:github_out/models/repository_rule_merge_queue_type.dart';
+import 'package:github_out/models/repository_rule_non_fast_forward.dart';
+import 'package:github_out/models/repository_rule_non_fast_forward_type.dart';
+import 'package:github_out/models/repository_rule_params_code_scanning_tool.dart';
+import 'package:github_out/models/repository_rule_params_code_scanning_tool_alerts_threshold.dart';
+import 'package:github_out/models/repository_rule_params_code_scanning_tool_security_alerts_threshold.dart';
+import 'package:github_out/models/repository_rule_params_status_check_configuration.dart';
+import 'package:github_out/models/repository_rule_params_workflow_file_reference.dart';
+import 'package:github_out/models/repository_rule_pull_request_parameters.dart';
+import 'package:github_out/models/repository_rule_pull_request_parameters_allowed_merge_methods_inner.dart';
+import 'package:github_out/models/repository_rule_pull_request_type.dart';
+import 'package:github_out/models/repository_rule_required_deployments.dart';
+import 'package:github_out/models/repository_rule_required_deployments_parameters.dart';
+import 'package:github_out/models/repository_rule_required_deployments_type.dart';
+import 'package:github_out/models/repository_rule_required_linear_history.dart';
+import 'package:github_out/models/repository_rule_required_linear_history_type.dart';
+import 'package:github_out/models/repository_rule_required_signatures.dart';
+import 'package:github_out/models/repository_rule_required_signatures_type.dart';
+import 'package:github_out/models/repository_rule_required_status_checks.dart';
+import 'package:github_out/models/repository_rule_required_status_checks_parameters.dart';
+import 'package:github_out/models/repository_rule_required_status_checks_type.dart';
+import 'package:github_out/models/repository_rule_ruleset_info_ruleset_source_type.dart';
+import 'package:github_out/models/repository_rule_tag_name_pattern.dart';
+import 'package:github_out/models/repository_rule_tag_name_pattern_parameters.dart';
+import 'package:github_out/models/repository_rule_tag_name_pattern_parameters_operator.dart';
+import 'package:github_out/models/repository_rule_tag_name_pattern_type.dart';
+import 'package:github_out/models/repository_rule_update.dart';
+import 'package:github_out/models/repository_rule_update_parameters.dart';
+import 'package:github_out/models/repository_rule_update_type.dart';
+import 'package:github_out/models/repository_rule_violation_error.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata_secret_scanning.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata_secret_scanning_bypass_placeholders_inner.dart';
+import 'package:github_out/models/repository_rule_workflows.dart';
+import 'package:github_out/models/repository_rule_workflows_parameters.dart';
+import 'package:github_out/models/repository_rule_workflows_type.dart';
 import 'package:github_out/models/repository_ruleset.dart';
+import 'package:github_out/models/repository_ruleset_bypass_actor.dart';
+import 'package:github_out/models/repository_ruleset_bypass_actor_actor_type.dart';
+import 'package:github_out/models/repository_ruleset_bypass_actor_bypass_mode.dart';
+import 'package:github_out/models/repository_ruleset_conditions.dart';
+import 'package:github_out/models/repository_ruleset_conditions_1.dart';
+import 'package:github_out/models/repository_ruleset_conditions_ref_name.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_id_target_repository_id.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_name_target_repository_name.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_property_spec.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_property_spec_source.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_property_target_repository_property.dart';
+import 'package:github_out/models/repository_ruleset_current_user_can_bypass.dart';
+import 'package:github_out/models/repository_ruleset_links.dart';
+import 'package:github_out/models/repository_ruleset_links_html.dart';
+import 'package:github_out/models/repository_ruleset_links_self.dart';
+import 'package:github_out/models/repository_ruleset_source_type.dart';
+import 'package:github_out/models/repository_ruleset_target.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/rule_suite.dart';
+import 'package:github_out/models/rule_suite_evaluation_result.dart';
+import 'package:github_out/models/rule_suite_result.dart';
 import 'package:github_out/models/rule_suite_result_param.dart';
+import 'package:github_out/models/rule_suite_rule_evaluations_inner.dart';
+import 'package:github_out/models/rule_suite_rule_evaluations_inner_enforcement.dart';
+import 'package:github_out/models/rule_suite_rule_evaluations_inner_result.dart';
+import 'package:github_out/models/rule_suite_rule_evaluations_inner_rule_source.dart';
 import 'package:github_out/models/rule_suites_inner.dart';
+import 'package:github_out/models/rule_suites_inner_evaluation_result.dart';
+import 'package:github_out/models/rule_suites_inner_result.dart';
 import 'package:github_out/models/ruleset_version.dart';
+import 'package:github_out/models/ruleset_version_actor.dart';
 import 'package:github_out/models/ruleset_version_with_state.dart';
+import 'package:github_out/models/secret_scanning_push_protection_bypass_placeholder_id.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/short_branch.dart';
+import 'package:github_out/models/short_branch_commit.dart';
+import 'package:github_out/models/simple_commit_status.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/status.dart';
 import 'package:github_out/models/status_check_policy.dart';
+import 'package:github_out/models/status_check_policy_checks_inner.dart';
 import 'package:github_out/models/tag.dart';
+import 'package:github_out/models/tag_commit.dart';
 import 'package:github_out/models/tag_protection.dart';
 import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:github_out/models/time_period_param.dart';
 import 'package:github_out/models/topic.dart';
+import 'package:github_out/models/traffic.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/validation_error_simple.dart';
+import 'package:github_out/models/verification.dart';
 import 'package:github_out/models/view_traffic.dart';
+import 'package:github_out/models/wait_timer.dart';
 import 'package:github_out/models/webhook_config.dart';
+import 'package:github_out/models/webhook_config_content_type.dart';
+import 'package:github_out/models/webhook_config_insecure_ssl.dart';
+import 'package:github_out/models/webhook_config_secret.dart';
+import 'package:github_out/models/webhook_config_url.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class ReposAddCollaboratorResponse {
@@ -564,11 +921,11 @@ class ReposApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/repos'.replaceAll('{org}', org),
+      path: '/orgs/{org}/repos'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (type != null) 'type': [type.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (type != null) 'type': [type.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -577,7 +934,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -605,14 +962,15 @@ class ReposApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/repos'.replaceAll('{org}', org),
+      path: '/orgs/{org}/repos'.replaceAll('{org}', '${org}'),
       body: reposCreateInOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -635,18 +993,18 @@ class ReposApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/rulesets'.replaceAll('{org}', org),
+      path: '/orgs/{org}/rulesets'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (targets != null) 'targets': [targets],
+        if (targets != null) 'targets': [targets.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -669,14 +1027,15 @@ class ReposApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/rulesets'.replaceAll('{org}', org),
+      path: '/orgs/{org}/rulesets'.replaceAll('{org}', '${org}'),
       body: reposCreateOrgRulesetRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -705,14 +1064,15 @@ class ReposApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/rulesets/rule-suites'.replaceAll('{org}', org),
+      path: '/orgs/{org}/rulesets/rule-suites'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (ref != null) 'ref': [ref],
-        if (repositoryName != null) 'repository_name': [repositoryName],
-        if (timePeriod != null) 'time_period': [timePeriod.toJson()],
-        if (actorName != null) 'actor_name': [actorName],
+        if (ref != null) 'ref': [ref.toString()],
+        if (repositoryName != null)
+          'repository_name': [repositoryName.toString()],
+        if (timePeriod != null) 'time_period': [timePeriod.toJson().toString()],
+        if (actorName != null) 'actor_name': [actorName.toString()],
         if (ruleSuiteResult != null)
-          'rule_suite_result': [ruleSuiteResult.toJson()],
+          'rule_suite_result': [ruleSuiteResult.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -721,7 +1081,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -748,14 +1108,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/rulesets/rule-suites/{rule_suite_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{rule_suite_id}', '$ruleSuiteId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{rule_suite_id}', '${ruleSuiteId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -781,14 +1141,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/rulesets/{ruleset_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{ruleset_id}', '$rulesetId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{ruleset_id}', '${rulesetId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -811,15 +1171,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/rulesets/{ruleset_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{ruleset_id}', '$rulesetId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{ruleset_id}', '${rulesetId}'),
       body: reposUpdateOrgRulesetRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -841,14 +1202,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/rulesets/{ruleset_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{ruleset_id}', '$rulesetId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{ruleset_id}', '${rulesetId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -871,14 +1232,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -907,14 +1268,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -931,15 +1292,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposUpdateRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -975,24 +1337,25 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/activity'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (direction != null) 'direction': [direction.toJson()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (ref != null) 'ref': [ref],
-        if (actor != null) 'actor': [actor],
-        if (timePeriod != null) 'time_period': [timePeriod.toJson()],
-        if (activityType != null) 'activity_type': [activityType.toJson()],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (ref != null) 'ref': [ref.toString()],
+        if (actor != null) 'actor': [actor.toString()],
+        if (timePeriod != null) 'time_period': [timePeriod.toJson().toString()],
+        if (activityType != null)
+          'activity_type': [activityType.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1024,15 +1387,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/attestations'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateAttestationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1074,21 +1438,21 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/attestations/{subject_digest}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{subject_digest}', subjectDigest),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{subject_digest}', '${subjectDigest}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (predicateType != null) 'predicate_type': [predicateType],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (predicateType != null) 'predicate_type': [predicateType.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1113,14 +1477,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/autolinks'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1143,15 +1507,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/autolinks'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateAutolinkRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1178,15 +1543,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/autolinks/{autolink_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{autolink_id}', '$autolinkId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{autolink_id}', '${autolinkId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1213,15 +1578,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/autolinks/{autolink_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{autolink_id}', '$autolinkId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{autolink_id}', '${autolinkId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1239,14 +1604,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/automated-security-fixes'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1271,14 +1636,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/automated-security-fixes'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1295,14 +1660,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/automated-security-fixes'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1319,8 +1684,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/branches'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (protected != null) 'protected': [protected.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1331,7 +1696,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1356,15 +1721,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/branches/{branch}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1392,15 +1757,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/branches/{branch}/protection'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1439,16 +1804,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/branches/{branch}/protection'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
       body: reposUpdateBranchProtectionRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1476,15 +1842,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/branches/{branch}/protection'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1504,15 +1870,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1543,15 +1909,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1582,15 +1948,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/branches/{branch}/protection/enforce_admins'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1611,15 +1977,15 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1648,15 +2014,15 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1686,16 +2052,17 @@ class ReposApi {
       method: Method.patch,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_pull_request_reviews'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposUpdatePullRequestReviewProtectionRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1734,15 +2101,15 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1775,15 +2142,15 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1816,15 +2183,15 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_signatures'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1845,15 +2212,15 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1882,15 +2249,15 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1916,16 +2283,17 @@ class ReposApi {
       method: Method.patch,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposUpdateStatusCheckProtectionRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1954,15 +2322,15 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1990,16 +2358,17 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposAddStatusCheckContextsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2027,16 +2396,17 @@ class ReposApi {
       method: Method.put,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposSetStatusCheckContextsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2065,16 +2435,17 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/required_status_checks/contexts'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposRemoveStatusCheckContextsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2106,15 +2477,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2144,15 +2515,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2178,15 +2549,15 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2223,16 +2594,17 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposAddAppAccessRestrictionsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2270,16 +2642,17 @@ class ReposApi {
       method: Method.put,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposSetAppAccessRestrictionsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2317,16 +2690,17 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/apps'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposRemoveAppAccessRestrictionsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2360,15 +2734,15 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2402,16 +2776,17 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposAddTeamAccessRestrictionsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2446,16 +2821,17 @@ class ReposApi {
       method: Method.put,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposSetTeamAccessRestrictionsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2489,16 +2865,17 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/teams'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposRemoveTeamAccessRestrictionsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2529,15 +2906,15 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2579,16 +2956,17 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposAddUserAccessRestrictionsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2632,16 +3010,17 @@ class ReposApi {
       method: Method.put,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposSetUserAccessRestrictionsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2685,16 +3064,17 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/branches/{branch}/protection/restrictions/users'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{branch}', branch),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{branch}', '${branch}'),
       body: reposRemoveUserAccessRestrictionsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2734,16 +3114,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/branches/{branch}/rename'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
       body: reposRenameBranchRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2771,17 +3152,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codeowners/errors'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (ref != null) 'ref': [ref],
+        if (ref != null) 'ref': [ref.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2826,11 +3207,12 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/collaborators'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (affiliation != null) 'affiliation': [affiliation.toJson()],
-        if (permission != null) 'permission': [permission.toJson()],
+        if (affiliation != null)
+          'affiliation': [affiliation.toJson().toString()],
+        if (permission != null) 'permission': [permission.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -2839,7 +3221,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2876,15 +3258,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/collaborators/{username}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{username}', username),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2960,16 +3342,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/collaborators/{username}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{username}', username),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{username}', '${username}'),
       body: reposAddCollaboratorRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3025,15 +3408,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/collaborators/{username}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{username}', username),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3063,15 +3446,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/collaborators/{username}/permission'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{username}', username),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3112,8 +3495,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -3123,7 +3506,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3164,15 +3547,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3195,15 +3578,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3235,16 +3618,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       body: reposUpdateCommitCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3319,15 +3703,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (sha != null) 'sha': [sha],
-        if (path != null) 'path': [path],
-        if (author != null) 'author': [author],
-        if (committer != null) 'committer': [committer],
-        if (since != null) 'since': [since.toIso8601String()],
-        if (until != null) 'until': [until.toIso8601String()],
+        if (sha != null) 'sha': [sha.toString()],
+        if (path != null) 'path': [path.toString()],
+        if (author != null) 'author': [author.toString()],
+        if (committer != null) 'committer': [committer.toString()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
+        if (until != null) 'until': [until.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -3336,7 +3720,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3367,15 +3751,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits/{commit_sha}/branches-where-head'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{commit_sha}', commitSha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{commit_sha}', '${commitSha}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3418,9 +3802,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits/{commit_sha}/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{commit_sha}', commitSha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{commit_sha}', '${commitSha}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -3430,7 +3814,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3480,16 +3864,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/commits/{commit_sha}/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{commit_sha}', commitSha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{commit_sha}', '${commitSha}'),
       body: reposCreateCommitCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3519,9 +3904,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits/{commit_sha}/pulls'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{commit_sha}', commitSha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{commit_sha}', '${commitSha}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -3531,7 +3916,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3628,9 +4013,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits/{ref}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -3640,7 +4025,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3672,9 +4057,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits/{ref}/status'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -3684,7 +4069,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3714,9 +4099,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits/{ref}/statuses'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -3726,7 +4111,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3764,14 +4149,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/community/profile'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3890,9 +4275,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/compare/{basehead}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{basehead}', basehead),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{basehead}', '${basehead}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -3902,7 +4287,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3983,18 +4368,18 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/contents/{path}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{path}', path),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{path}', '${path}'),
       queryParameters: {
-        if (ref != null) 'ref': [ref],
+        if (ref != null) 'ref': [ref.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4029,16 +4414,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/contents/{path}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{path}', path),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{path}', '${path}'),
       body: reposCreateOrUpdateFileContentsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4081,16 +4467,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/contents/{path}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{path}', path),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{path}', '${path}'),
       body: reposDeleteFileRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4124,10 +4511,10 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/contributors'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (anon != null) 'anon': [anon],
+        if (anon != null) 'anon': [anon.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -4136,7 +4523,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4168,13 +4555,13 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/deployments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (sha != null) 'sha': [sha],
-        if (ref != null) 'ref': [ref],
-        if (task != null) 'task': [task],
-        if (environment != null) 'environment': [environment],
+        if (sha != null) 'sha': [sha.toString()],
+        if (ref != null) 'ref': [ref.toString()],
+        if (task != null) 'task': [task.toString()],
+        if (environment != null) 'environment': [environment.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -4183,7 +4570,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4278,15 +4665,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/deployments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateDeploymentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4313,15 +4701,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/deployments/{deployment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{deployment_id}', '$deploymentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{deployment_id}', '${deploymentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4364,15 +4752,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/deployments/{deployment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{deployment_id}', '$deploymentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{deployment_id}', '${deploymentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4389,9 +4777,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/deployments/{deployment_id}/statuses'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{deployment_id}', '$deploymentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{deployment_id}', '${deploymentId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -4401,7 +4789,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4431,16 +4819,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/deployments/{deployment_id}/statuses'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{deployment_id}', '$deploymentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{deployment_id}', '${deploymentId}'),
       body: reposCreateDeploymentStatusRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4465,16 +4854,16 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/deployments/{deployment_id}/statuses/{status_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{deployment_id}', '$deploymentId')
-              .replaceAll('{status_id}', '$statusId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{deployment_id}', '${deploymentId}')
+              .replaceAll('{status_id}', '${statusId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4516,15 +4905,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/dispatches'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateDispatchEventRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4545,8 +4935,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/environments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -4556,7 +4946,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4587,15 +4977,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/environments/{environment_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{environment_name}', environmentName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{environment_name}', '${environmentName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4634,16 +5024,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/environments/{environment_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{environment_name}', environmentName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{environment_name}', '${environmentName}'),
       body: reposCreateOrUpdateEnvironmentRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4667,15 +5058,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/environments/{environment_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{environment_name}', environmentName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{environment_name}', '${environmentName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4699,9 +5090,9 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -4711,7 +5102,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4740,16 +5131,17 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}'),
       body: deploymentBranchPolicyNamePatternWithType.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4779,16 +5171,16 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{branch_policy_id}', '$branchPolicyId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{branch_policy_id}', '${branchPolicyId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4817,17 +5209,18 @@ class ReposApi {
       method: Method.put,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{branch_policy_id}', '$branchPolicyId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{branch_policy_id}', '${branchPolicyId}'),
       body: deploymentBranchPolicyNamePattern.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4855,16 +5248,16 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment-branch-policies/{branch_policy_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{branch_policy_id}', '$branchPolicyId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{branch_policy_id}', '${branchPolicyId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4892,15 +5285,15 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules'
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{owner}', owner),
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{owner}', '${owner}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4938,16 +5331,17 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules'
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{owner}', owner),
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{owner}', '${owner}'),
       body: reposCreateDeploymentProtectionRuleRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4988,9 +5382,9 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/apps'
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{owner}', owner),
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{owner}', '${owner}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -5000,7 +5394,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5034,16 +5428,16 @@ class ReposApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{protection_rule_id}', '$protectionRuleId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{protection_rule_id}', '${protectionRuleId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5074,16 +5468,16 @@ class ReposApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/deployment_protection_rules/{protection_rule_id}'
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{owner}', owner)
-              .replaceAll('{protection_rule_id}', '$protectionRuleId'),
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{protection_rule_id}', '${protectionRuleId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5100,10 +5494,10 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/forks'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (sort != null) 'sort': [sort.toJson()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -5112,7 +5506,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5148,15 +5542,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/forks'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateForkRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5181,8 +5576,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/hooks'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -5192,7 +5587,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5218,15 +5613,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/hooks'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateWebhookRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5249,15 +5645,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5281,15 +5677,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5309,16 +5705,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}'),
       body: reposUpdateWebhookRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5345,15 +5742,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}/config'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5384,16 +5781,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}/config'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}'),
       body: reposUpdateWebhookConfigForRepoRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5419,19 +5817,19 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}/deliveries'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (cursor != null) 'cursor': [cursor],
+        if (cursor != null) 'cursor': [cursor.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5457,16 +5855,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId')
-          .replaceAll('{delivery_id}', '$deliveryId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}')
+          .replaceAll('{delivery_id}', '${deliveryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5491,16 +5889,16 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/hooks/{hook_id}/deliveries/{delivery_id}/attempts'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{hook_id}', '$hookId')
-              .replaceAll('{delivery_id}', '$deliveryId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{hook_id}', '${hookId}')
+              .replaceAll('{delivery_id}', '${deliveryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5523,15 +5921,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}/pings'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5552,15 +5950,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/hooks/{hook_id}/tests'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5577,8 +5975,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/invitations'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -5588,7 +5986,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5613,15 +6011,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/invitations/{invitation_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{invitation_id}', '$invitationId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{invitation_id}', '${invitationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5637,16 +6035,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/invitations/{invitation_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{invitation_id}', '$invitationId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{invitation_id}', '${invitationId}'),
       body: reposUpdateInvitationRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5670,8 +6069,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/keys'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -5681,7 +6080,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5704,15 +6103,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/keys'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateDeployKeyRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5735,15 +6135,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/keys/{key_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{key_id}', '$keyId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{key_id}', '${keyId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5767,15 +6167,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/keys/{key_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{key_id}', '$keyId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{key_id}', '${keyId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5790,20 +6190,20 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/languages'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     if (response.body.isNotEmpty) {
       return (jsonDecode(response.body) as Map<String, dynamic>).map(
-        (key, value) => MapEntry(key, value as int),
+        (key, value) => MapEntry(key, (value as int)),
       );
     }
 
@@ -5821,15 +6221,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/merge-upstream'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposMergeUpstreamRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5852,15 +6253,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/merges'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposMergeRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5885,14 +6287,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pages'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5920,15 +6322,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pages'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreatePagesSiteRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5958,15 +6361,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/pages'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposUpdateInformationAboutPagesSiteRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5987,14 +6391,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/pages'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -6013,8 +6417,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pages/builds'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -6024,7 +6428,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6055,14 +6459,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pages/builds'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6088,14 +6492,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pages/builds/latest'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6121,15 +6525,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pages/builds/{build_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{build_id}', '$buildId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{build_id}', '${buildId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6154,15 +6558,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pages/deployments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreatePagesDeploymentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6188,15 +6593,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{pages_deployment_id}', '${pagesDeploymentId.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6223,8 +6628,8 @@ class ReposApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/pages/deployments/{pages_deployment_id}/cancel'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
               .replaceAll(
                 '{pages_deployment_id}',
                 '${pagesDeploymentId.toJson()}',
@@ -6234,7 +6639,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -6262,14 +6667,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pages/health'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6279,7 +6684,7 @@ class ReposApi {
           jsonDecode(response.body) as Map<String, dynamic>,
         ),
       ),
-      202 => const ReposGetPagesHealthCheckResponse202(EmptyObject()),
+      202 => ReposGetPagesHealthCheckResponse202(const EmptyObject()),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
     };
   }
@@ -6297,14 +6702,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/private-vulnerability-reporting'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6329,14 +6734,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/private-vulnerability-reporting'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -6353,14 +6758,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/private-vulnerability-reporting'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -6375,14 +6780,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/properties/values'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6413,15 +6818,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/properties/values'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateOrUpdateCustomPropertiesValuesRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -6446,17 +6852,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/readme'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (ref != null) 'ref': [ref],
+        if (ref != null) 'ref': [ref.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6490,18 +6896,18 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/readme/{dir}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{dir}', dir),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{dir}', '${dir}'),
       queryParameters: {
-        if (ref != null) 'ref': [ref],
+        if (ref != null) 'ref': [ref.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6531,8 +6937,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/releases'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -6542,7 +6948,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6573,15 +6979,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/releases'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateReleaseRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6613,15 +7020,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/releases/assets/{asset_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{asset_id}', '$assetId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{asset_id}', '${assetId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6644,15 +7051,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/releases/assets/{asset_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{asset_id}', '$assetId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{asset_id}', '${assetId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -6668,16 +7075,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/releases/assets/{asset_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{asset_id}', '$assetId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{asset_id}', '${assetId}'),
       body: reposUpdateReleaseAssetRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6705,15 +7113,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/releases/generate-notes'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposGenerateReleaseNotesRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6740,14 +7149,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/releases/latest'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6770,15 +7179,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/releases/tags/{tag}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{tag}', tag),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{tag}', '${tag}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6807,15 +7216,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/releases/{release_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{release_id}', '$releaseId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{release_id}', '${releaseId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6838,15 +7247,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/releases/{release_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{release_id}', '$releaseId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{release_id}', '${releaseId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -6862,16 +7271,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/releases/{release_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{release_id}', '$releaseId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{release_id}', '${releaseId}'),
       body: reposUpdateReleaseRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6896,9 +7306,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/releases/{release_id}/assets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{release_id}', '$releaseId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{release_id}', '${releaseId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -6908,7 +7318,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -6981,12 +7391,12 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/releases/{release_id}/assets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{release_id}', '$releaseId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{release_id}', '${releaseId}'),
       queryParameters: {
-        'name': [name],
-        if (label != null) 'label': [label],
+        'name': [name.toString()],
+        if (label != null) 'label': [label.toString()],
       },
       body: uint8List,
       bodyContentType: BodyContentType.octetStream,
@@ -6995,7 +7405,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7026,9 +7436,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/rules/branches/{branch}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{branch}', branch),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{branch}', '${branch}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -7038,7 +7448,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7066,21 +7476,21 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/rulesets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
         if (includesParents != null)
           'includes_parents': [includesParents.toString()],
-        if (targets != null) 'targets': [targets],
+        if (targets != null) 'targets': [targets.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7105,15 +7515,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/rulesets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateRepoRulesetRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7143,14 +7554,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/rulesets/rule-suites'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (ref != null) 'ref': [ref],
-        if (timePeriod != null) 'time_period': [timePeriod.toJson()],
-        if (actorName != null) 'actor_name': [actorName],
+        if (ref != null) 'ref': [ref.toString()],
+        if (timePeriod != null) 'time_period': [timePeriod.toJson().toString()],
+        if (actorName != null) 'actor_name': [actorName.toString()],
         if (ruleSuiteResult != null)
-          'rule_suite_result': [ruleSuiteResult.toJson()],
+          'rule_suite_result': [ruleSuiteResult.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -7159,7 +7570,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7187,15 +7598,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/rulesets/rule-suites/{rule_suite_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{rule_suite_id}', '$ruleSuiteId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{rule_suite_id}', '${ruleSuiteId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7223,9 +7634,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/rulesets/{ruleset_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ruleset_id}', '$rulesetId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ruleset_id}', '${rulesetId}'),
       queryParameters: {
         if (includesParents != null)
           'includes_parents': [includesParents.toString()],
@@ -7235,7 +7646,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7259,16 +7670,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/rulesets/{ruleset_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ruleset_id}', '$rulesetId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ruleset_id}', '${rulesetId}'),
       body: reposUpdateRepoRulesetRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7291,15 +7703,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/rulesets/{ruleset_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ruleset_id}', '$rulesetId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ruleset_id}', '${rulesetId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -7316,9 +7728,9 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/rulesets/{ruleset_id}/history'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ruleset_id}', '$rulesetId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ruleset_id}', '${rulesetId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -7328,7 +7740,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7354,16 +7766,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/rulesets/{ruleset_id}/history/{version_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ruleset_id}', '$rulesetId')
-          .replaceAll('{version_id}', '$versionId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ruleset_id}', '${rulesetId}')
+          .replaceAll('{version_id}', '${versionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7391,14 +7803,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/stats/code_frequency'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7422,14 +7834,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/stats/commit_activity'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7469,14 +7881,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/stats/contributors'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7511,14 +7923,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/stats/participation'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7548,14 +7960,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/stats/punch_card'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7584,16 +7996,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/statuses/{sha}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{sha}', sha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{sha}', '${sha}'),
       body: reposCreateCommitStatusRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7615,8 +8028,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/tags'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -7626,7 +8039,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7656,14 +8069,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/tags/protection'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7695,15 +8108,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/tags/protection'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposCreateTagProtectionRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7733,15 +8147,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/tags/protection/{tag_protection_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{tag_protection_id}', '$tagProtectionId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{tag_protection_id}', '${tagProtectionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -7764,15 +8178,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/tarball/{ref}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -7797,8 +8211,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/teams'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -7808,7 +8222,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7832,8 +8246,8 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/topics'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -7843,7 +8257,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7864,15 +8278,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/topics'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposReplaceAllTopicsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7895,17 +8310,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/traffic/clones'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (per != null) 'per': [per.toJson()],
+        if (per != null) 'per': [per.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7927,14 +8342,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/traffic/popular/paths'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7958,14 +8373,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/traffic/popular/referrers'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -7992,17 +8407,17 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/traffic/views'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (per != null) 'per': [per.toJson()],
+        if (per != null) 'per': [per.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -8030,15 +8445,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/transfer'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: reposTransferRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -8064,14 +8480,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/vulnerability-alerts'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -8088,14 +8504,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/vulnerability-alerts'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -8113,14 +8529,14 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/vulnerability-alerts'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -8144,15 +8560,15 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/zipball/{ref}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -8178,15 +8594,16 @@ class ReposApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{template_owner}/{template_repo}/generate'
-          .replaceAll('{template_owner}', templateOwner)
-          .replaceAll('{template_repo}', templateRepo),
+          .replaceAll('{template_owner}', '${templateOwner}')
+          .replaceAll('{template_repo}', '${templateRepo}'),
       body: reposCreateUsingTemplateRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -8223,7 +8640,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -8260,22 +8677,22 @@ class ReposApi {
       method: Method.get,
       path: '/user/repos',
       queryParameters: {
-        if (visibility != null) 'visibility': [visibility.toJson()],
-        if (affiliation != null) 'affiliation': [affiliation],
-        if (type != null) 'type': [type.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (visibility != null) 'visibility': [visibility.toJson().toString()],
+        if (affiliation != null) 'affiliation': [affiliation.toString()],
+        if (type != null) 'type': [type.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (since != null) 'since': [since.toIso8601String()],
-        if (before != null) 'before': [before.toIso8601String()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
+        if (before != null) 'before': [before.toIso8601String().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -8304,12 +8721,13 @@ class ReposApi {
       method: Method.post,
       path: '/user/repos',
       body: reposCreateForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -8341,7 +8759,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -8365,14 +8783,14 @@ class ReposApi {
       method: Method.delete,
       path: '/user/repository_invitations/{invitation_id}'.replaceAll(
         '{invitation_id}',
-        '$invitationId',
+        '${invitationId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -8386,14 +8804,14 @@ class ReposApi {
       method: Method.patch,
       path: '/user/repository_invitations/{invitation_id}'.replaceAll(
         '{invitation_id}',
-        '$invitationId',
+        '${invitationId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -8410,11 +8828,11 @@ class ReposApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/users/{username}/repos'.replaceAll('{username}', username),
+      path: '/users/{username}/repos'.replaceAll('{username}', '${username}'),
       queryParameters: {
-        if (type != null) 'type': [type.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (type != null) 'type': [type.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -8423,7 +8841,7 @@ class ReposApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

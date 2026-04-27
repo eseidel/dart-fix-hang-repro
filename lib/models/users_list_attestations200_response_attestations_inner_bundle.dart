@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/users_list_attestations200_response_attestations_inner_bundle_dsse_envelope.dart';
 import 'package:github_out/models/users_list_attestations200_response_attestations_inner_bundle_verification_material.dart';
@@ -16,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class UsersListAttestations200ResponseAttestationsInnerBundle {
   /// {@macro users_list_attestations200_response_attestations_inner_bundle}
-  const UsersListAttestations200ResponseAttestationsInnerBundle({
+  UsersListAttestations200ResponseAttestationsInnerBundle({
     this.mediaType,
     this.verificationMaterial,
     this.dsseEnvelope,
@@ -80,8 +76,8 @@ class UsersListAttestations200ResponseAttestationsInnerBundle {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UsersListAttestations200ResponseAttestationsInnerBundle &&
-        mediaType == other.mediaType &&
-        verificationMaterial == other.verificationMaterial &&
-        dsseEnvelope == other.dsseEnvelope;
+        this.mediaType == other.mediaType &&
+        this.verificationMaterial == other.verificationMaterial &&
+        this.dsseEnvelope == other.dsseEnvelope;
   }
 }

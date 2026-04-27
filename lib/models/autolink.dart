@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Autolink {
   /// {@macro autolink}
-  const Autolink({
+  Autolink({
     required this.id,
     required this.keyPrefix,
     required this.urlTemplate,
@@ -21,7 +21,7 @@ class Autolink {
       'Autolink',
       json,
       () => Autolink(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         keyPrefix: json['key_prefix'] as String,
         urlTemplate: json['url_template'] as String,
         isAlphanumeric: json['is_alphanumeric'] as bool,
@@ -76,9 +76,9 @@ class Autolink {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Autolink &&
-        id == other.id &&
-        keyPrefix == other.keyPrefix &&
-        urlTemplate == other.urlTemplate &&
-        isAlphanumeric == other.isAlphanumeric;
+        this.id == other.id &&
+        this.keyPrefix == other.keyPrefix &&
+        this.urlTemplate == other.urlTemplate &&
+        this.isAlphanumeric == other.isAlphanumeric;
   }
 }

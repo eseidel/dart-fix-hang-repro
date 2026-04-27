@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BillingUsageReport {
-  const BillingUsageReport({
+  BillingUsageReport({
     this.usageItems,
   });
 
@@ -50,6 +50,6 @@ class BillingUsageReport {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BillingUsageReport &&
-        listsEqual(usageItems, other.usageItems);
+        listsEqual(this.usageItems, other.usageItems);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CampaignsCreateCampaignRequestCodeScanningAlertsInner {
-  const CampaignsCreateCampaignRequestCodeScanningAlertsInner({
+  CampaignsCreateCampaignRequestCodeScanningAlertsInner({
     required this.repositoryId,
     required this.alertNumbers,
   });
@@ -17,7 +17,7 @@ class CampaignsCreateCampaignRequestCodeScanningAlertsInner {
       'CampaignsCreateCampaignRequestCodeScanningAlertsInner',
       json,
       () => CampaignsCreateCampaignRequestCodeScanningAlertsInner(
-        repositoryId: json['repository_id'] as int,
+        repositoryId: (json['repository_id'] as int),
         alertNumbers: (json['alert_numbers'] as List).cast<int>(),
       ),
     );
@@ -59,7 +59,7 @@ class CampaignsCreateCampaignRequestCodeScanningAlertsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CampaignsCreateCampaignRequestCodeScanningAlertsInner &&
-        repositoryId == other.repositoryId &&
-        listsEqual(alertNumbers, other.alertNumbers);
+        this.repositoryId == other.repositoryId &&
+        listsEqual(this.alertNumbers, other.alertNumbers);
   }
 }

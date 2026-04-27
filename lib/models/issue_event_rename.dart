@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class IssueEventRename {
   /// {@macro issue_event_rename}
-  const IssueEventRename({
+  IssueEventRename({
     required this.from,
     required this.to,
   });
@@ -54,6 +54,8 @@ class IssueEventRename {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is IssueEventRename && from == other.from && to == other.to;
+    return other is IssueEventRename &&
+        this.from == other.from &&
+        this.to == other.to;
   }
 }

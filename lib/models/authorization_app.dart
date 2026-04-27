@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AuthorizationApp {
-  const AuthorizationApp({
+  AuthorizationApp({
     required this.clientId,
     required this.name,
     required this.url,
@@ -55,8 +55,8 @@ class AuthorizationApp {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is AuthorizationApp &&
-        clientId == other.clientId &&
-        name == other.name &&
-        url == other.url;
+        this.clientId == other.clientId &&
+        this.name == other.name &&
+        this.url == other.url;
   }
 }

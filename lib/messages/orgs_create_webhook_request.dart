@@ -6,11 +6,15 @@
 // ignore_for_file: comment_references
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/orgs_create_webhook_request_config.dart';
+import 'package:github_out/models/webhook_config_content_type.dart';
+import 'package:github_out/models/webhook_config_insecure_ssl.dart';
+import 'package:github_out/models/webhook_config_secret.dart';
+import 'package:github_out/models/webhook_config_url.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrgsCreateWebhookRequest {
-  const OrgsCreateWebhookRequest({
+  OrgsCreateWebhookRequest({
     required this.name,
     required this.config,
     this.events = const <String>['push'],
@@ -80,9 +84,9 @@ class OrgsCreateWebhookRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsCreateWebhookRequest &&
-        name == other.name &&
-        config == other.config &&
-        listsEqual(events, other.events) &&
-        active == other.active;
+        this.name == other.name &&
+        this.config == other.config &&
+        listsEqual(this.events, other.events) &&
+        this.active == other.active;
   }
 }

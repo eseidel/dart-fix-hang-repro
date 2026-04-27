@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Stargazer {
   /// {@macro stargazer}
-  const Stargazer({
+  Stargazer({
     required this.starredAt,
     required this.user,
   });
@@ -61,7 +61,7 @@ class Stargazer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Stargazer &&
-        starredAt == other.starredAt &&
-        user == other.user;
+        this.starredAt == other.starredAt &&
+        this.user == other.user;
   }
 }

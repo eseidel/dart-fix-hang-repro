@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReposCreateOrUpdateFileContentsRequestCommitter {
   /// {@macro repos_create_or_update_file_contents_request_committer}
-  const ReposCreateOrUpdateFileContentsRequestCommitter({
+  ReposCreateOrUpdateFileContentsRequestCommitter({
     required this.name,
     required this.email,
     this.date,
@@ -72,8 +72,8 @@ class ReposCreateOrUpdateFileContentsRequestCommitter {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateOrUpdateFileContentsRequestCommitter &&
-        name == other.name &&
-        email == other.email &&
-        date == other.date;
+        this.name == other.name &&
+        this.email == other.email &&
+        this.date == other.date;
   }
 }

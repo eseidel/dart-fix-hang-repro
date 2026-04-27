@@ -7,6 +7,10 @@
 import 'package:github_out/messages/hook_response.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/webhook_config.dart';
+import 'package:github_out/models/webhook_config_content_type.dart';
+import 'package:github_out/models/webhook_config_insecure_ssl.dart';
+import 'package:github_out/models/webhook_config_secret.dart';
+import 'package:github_out/models/webhook_config_url.dart';
 import 'package:meta/meta.dart';
 
 /// {@template hook}
@@ -16,7 +20,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Hook {
   /// {@macro hook}
-  const Hook({
+  Hook({
     required this.type,
     required this.id,
     required this.name,
@@ -28,8 +32,8 @@ class Hook {
     required this.url,
     required this.testUrl,
     required this.pingUrl,
-    required this.lastResponse,
     this.deliveriesUrl,
+    required this.lastResponse,
   });
 
   /// Converts a `Map<String, dynamic>` to a [Hook].
@@ -39,7 +43,7 @@ class Hook {
       json,
       () => Hook(
         type: json['type'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         active: json['active'] as bool,
         events: (json['events'] as List).cast<String>(),
@@ -153,18 +157,18 @@ class Hook {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Hook &&
-        type == other.type &&
-        id == other.id &&
-        name == other.name &&
-        active == other.active &&
-        listsEqual(events, other.events) &&
-        config == other.config &&
-        updatedAt == other.updatedAt &&
-        createdAt == other.createdAt &&
-        url == other.url &&
-        testUrl == other.testUrl &&
-        pingUrl == other.pingUrl &&
-        deliveriesUrl == other.deliveriesUrl &&
-        lastResponse == other.lastResponse;
+        this.type == other.type &&
+        this.id == other.id &&
+        this.name == other.name &&
+        this.active == other.active &&
+        listsEqual(this.events, other.events) &&
+        this.config == other.config &&
+        this.updatedAt == other.updatedAt &&
+        this.createdAt == other.createdAt &&
+        this.url == other.url &&
+        this.testUrl == other.testUrl &&
+        this.pingUrl == other.pingUrl &&
+        this.deliveriesUrl == other.deliveriesUrl &&
+        this.lastResponse == other.lastResponse;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -13,38 +9,99 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/messages/code_scanning_alert_create_request.dart';
 import 'package:github_out/messages/code_scanning_autofix_commits_response.dart';
 import 'package:github_out/messages/code_scanning_create_variant_analysis_request.dart';
 import 'package:github_out/messages/code_scanning_default_setup_update_response.dart';
 import 'package:github_out/messages/code_scanning_update_alert_request.dart';
 import 'package:github_out/messages/code_scanning_upload_sarif_request.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
+import 'package:github_out/models/alert_created_at.dart';
+import 'package:github_out/models/alert_dismissed_at.dart';
+import 'package:github_out/models/alert_fixed_at.dart';
+import 'package:github_out/models/alert_html_url.dart';
+import 'package:github_out/models/alert_instances_url.dart';
 import 'package:github_out/models/alert_number.dart';
+import 'package:github_out/models/alert_updated_at.dart';
+import 'package:github_out/models/alert_url.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/code_scanning_alert.dart';
+import 'package:github_out/models/code_scanning_alert_classification.dart';
+import 'package:github_out/models/code_scanning_alert_dismissed_comment.dart';
+import 'package:github_out/models/code_scanning_alert_dismissed_reason.dart';
+import 'package:github_out/models/code_scanning_alert_environment.dart';
 import 'package:github_out/models/code_scanning_alert_instance.dart';
+import 'package:github_out/models/code_scanning_alert_instance_message.dart';
 import 'package:github_out/models/code_scanning_alert_items.dart';
+import 'package:github_out/models/code_scanning_alert_location.dart';
+import 'package:github_out/models/code_scanning_alert_rule.dart';
+import 'package:github_out/models/code_scanning_alert_rule_security_severity_level.dart';
+import 'package:github_out/models/code_scanning_alert_rule_severity.dart';
+import 'package:github_out/models/code_scanning_alert_rule_summary.dart';
+import 'package:github_out/models/code_scanning_alert_rule_summary_security_severity_level.dart';
+import 'package:github_out/models/code_scanning_alert_rule_summary_severity.dart';
+import 'package:github_out/models/code_scanning_alert_set_state.dart';
 import 'package:github_out/models/code_scanning_alert_severity.dart';
+import 'package:github_out/models/code_scanning_alert_state.dart';
 import 'package:github_out/models/code_scanning_alert_state_query.dart';
 import 'package:github_out/models/code_scanning_analysis.dart';
+import 'package:github_out/models/code_scanning_analysis_analysis_key.dart';
+import 'package:github_out/models/code_scanning_analysis_category.dart';
+import 'package:github_out/models/code_scanning_analysis_commit_sha.dart';
+import 'package:github_out/models/code_scanning_analysis_created_at.dart';
 import 'package:github_out/models/code_scanning_analysis_deletion.dart';
+import 'package:github_out/models/code_scanning_analysis_environment.dart';
+import 'package:github_out/models/code_scanning_analysis_sarif_file.dart';
 import 'package:github_out/models/code_scanning_analysis_sarif_id.dart';
+import 'package:github_out/models/code_scanning_analysis_tool.dart';
 import 'package:github_out/models/code_scanning_analysis_tool_guid.dart';
 import 'package:github_out/models/code_scanning_analysis_tool_name.dart';
+import 'package:github_out/models/code_scanning_analysis_tool_version.dart';
+import 'package:github_out/models/code_scanning_analysis_url.dart';
 import 'package:github_out/models/code_scanning_autofix.dart';
 import 'package:github_out/models/code_scanning_autofix_commits.dart';
+import 'package:github_out/models/code_scanning_autofix_description.dart';
+import 'package:github_out/models/code_scanning_autofix_started_at.dart';
+import 'package:github_out/models/code_scanning_autofix_status.dart';
 import 'package:github_out/models/code_scanning_codeql_database.dart';
 import 'package:github_out/models/code_scanning_default_setup.dart';
+import 'package:github_out/models/code_scanning_default_setup_languages_inner.dart';
+import 'package:github_out/models/code_scanning_default_setup_query_suite.dart';
+import 'package:github_out/models/code_scanning_default_setup_runner_type.dart';
+import 'package:github_out/models/code_scanning_default_setup_schedule.dart';
+import 'package:github_out/models/code_scanning_default_setup_state.dart';
+import 'package:github_out/models/code_scanning_default_setup_threat_model.dart';
 import 'package:github_out/models/code_scanning_default_setup_update.dart';
+import 'package:github_out/models/code_scanning_default_setup_update_languages_inner.dart';
+import 'package:github_out/models/code_scanning_default_setup_update_query_suite.dart';
+import 'package:github_out/models/code_scanning_default_setup_update_runner_type.dart';
+import 'package:github_out/models/code_scanning_default_setup_update_state.dart';
+import 'package:github_out/models/code_scanning_default_setup_update_threat_model.dart';
 import 'package:github_out/models/code_scanning_list_alerts_for_org_parameter9.dart';
 import 'package:github_out/models/code_scanning_list_alerts_for_repo_parameter11.dart';
 import 'package:github_out/models/code_scanning_list_recent_analyses_parameter10.dart';
 import 'package:github_out/models/code_scanning_organization_alert_items.dart';
 import 'package:github_out/models/code_scanning_ref.dart';
+import 'package:github_out/models/code_scanning_ref_full.dart';
 import 'package:github_out/models/code_scanning_sarifs_receipt.dart';
 import 'package:github_out/models/code_scanning_sarifs_status.dart';
+import 'package:github_out/models/code_scanning_sarifs_status_processing_status.dart';
 import 'package:github_out/models/code_scanning_variant_analysis.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_failure_reason.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_language.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_repo_task.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_repository.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_scanned_repositories_inner.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_skipped_repo_group.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_skipped_repositories.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_skipped_repositories_not_found_repos.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_status.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_status_1.dart';
 import 'package:github_out/models/direction_param.dart';
 import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/simple_repository.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class CodeScanningUpdateDefaultSetupResponse {
@@ -123,25 +180,25 @@ class CodeScanningApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/code-scanning/alerts'.replaceAll('{org}', org),
+      path: '/orgs/{org}/code-scanning/alerts'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (toolName != null) 'tool_name': [toolName.toJson()],
-        if (toolGuid != null) 'tool_guid': [toolGuid.toJson()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (toolName != null) 'tool_name': [toolName.toJson().toString()],
+        if (toolGuid != null) 'tool_guid': [toolGuid.toJson().toString()],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (state != null) 'state': [state.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (severity != null) 'severity': [severity.toJson()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (severity != null) 'severity': [severity.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -189,28 +246,28 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/alerts'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (toolName != null) 'tool_name': [toolName.toJson()],
-        if (toolGuid != null) 'tool_guid': [toolGuid.toJson()],
+        if (toolName != null) 'tool_name': [toolName.toJson().toString()],
+        if (toolGuid != null) 'tool_guid': [toolGuid.toJson().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (ref != null) 'ref': [ref.toJson()],
+        if (ref != null) 'ref': [ref.toJson().toString()],
         if (pr != null) 'pr': [pr.toString()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (state != null) 'state': [state.toJson()],
-        if (severity != null) 'severity': [severity.toJson()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (severity != null) 'severity': [severity.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -240,15 +297,15 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -276,16 +333,17 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
       body: codeScanningUpdateAlertRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -313,15 +371,15 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/autofix'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -356,15 +414,15 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/autofix'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -396,16 +454,17 @@ class CodeScanningApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/autofix/commits'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
               .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
       body: codeScanningAutofixCommits?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -438,13 +497,13 @@ class CodeScanningApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/code-scanning/alerts/{alert_number}/instances'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
               .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (ref != null) 'ref': [ref.toJson()],
+        if (ref != null) 'ref': [ref.toJson().toString()],
         if (pr != null) 'pr': [pr.toString()],
       },
     );
@@ -452,7 +511,7 @@ class CodeScanningApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -507,25 +566,25 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/analyses'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (toolName != null) 'tool_name': [toolName.toJson()],
-        if (toolGuid != null) 'tool_guid': [toolGuid.toJson()],
+        if (toolName != null) 'tool_name': [toolName.toJson().toString()],
+        if (toolGuid != null) 'tool_guid': [toolGuid.toJson().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (pr != null) 'pr': [pr.toString()],
-        if (ref != null) 'ref': [ref.toJson()],
-        if (sarifId != null) 'sarif_id': [sarifId.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
+        if (ref != null) 'ref': [ref.toJson().toString()],
+        if (sarifId != null) 'sarif_id': [sarifId.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -577,15 +636,15 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{analysis_id}', '$analysisId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{analysis_id}', '${analysisId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -690,18 +749,18 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/code-scanning/analyses/{analysis_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{analysis_id}', '$analysisId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{analysis_id}', '${analysisId}'),
       queryParameters: {
-        if (confirmDelete != null) 'confirm_delete': [confirmDelete],
+        if (confirmDelete != null) 'confirm_delete': [confirmDelete.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -727,14 +786,14 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/codeql/databases'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -775,15 +834,15 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/codeql/databases/{language}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{language}', language),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{language}', '${language}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -810,15 +869,15 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/code-scanning/codeql/databases/{language}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{language}', language),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{language}', '${language}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -847,15 +906,16 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/code-scanning/codeql/variant-analyses'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: codeScanningCreateVariantAnalysisRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -884,18 +944,18 @@ class CodeScanningApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/code-scanning/codeql/variant-analyses/{codeql_variant_analysis_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
               .replaceAll(
                 '{codeql_variant_analysis_id}',
-                '$codeqlVariantAnalysisId',
+                '${codeqlVariantAnalysisId}',
               ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -927,20 +987,20 @@ class CodeScanningApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/code-scanning/codeql/variant-analyses/{codeql_variant_analysis_id}/repos/{repo_owner}/{repo_name}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
               .replaceAll(
                 '{codeql_variant_analysis_id}',
-                '$codeqlVariantAnalysisId',
+                '${codeqlVariantAnalysisId}',
               )
-              .replaceAll('{repo_owner}', repoOwner)
-              .replaceAll('{repo_name}', repoName),
+              .replaceAll('{repo_owner}', '${repoOwner}')
+              .replaceAll('{repo_name}', '${repoName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -966,14 +1026,14 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/default-setup'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1000,20 +1060,21 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/code-scanning/default-setup'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: codeScanningDefaultSetupUpdate.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      200 => const CodeScanningUpdateDefaultSetupResponse200(EmptyObject()),
+      200 => CodeScanningUpdateDefaultSetupResponse200(const EmptyObject()),
       202 => CodeScanningUpdateDefaultSetupResponse202(
         CodeScanningDefaultSetupUpdateResponse.fromJson(
           jsonDecode(response.body) as Map<String, dynamic>,
@@ -1101,15 +1162,16 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/code-scanning/sarifs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: codeScanningUploadSarifRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1140,15 +1202,15 @@ class CodeScanningApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-scanning/sarifs/{sarif_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{sarif_id}', sarifId),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{sarif_id}', '${sarifId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

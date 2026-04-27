@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GlobalAdvisoryCwesInner {
-  const GlobalAdvisoryCwesInner({
+  GlobalAdvisoryCwesInner({
     required this.cweId,
     required this.name,
   });
@@ -53,7 +53,7 @@ class GlobalAdvisoryCwesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GlobalAdvisoryCwesInner &&
-        cweId == other.cweId &&
-        name == other.name;
+        this.cweId == other.cweId &&
+        this.name == other.name;
   }
 }

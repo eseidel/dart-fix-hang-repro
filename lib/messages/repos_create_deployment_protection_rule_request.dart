@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateDeploymentProtectionRuleRequest {
-  const ReposCreateDeploymentProtectionRuleRequest({
+  ReposCreateDeploymentProtectionRuleRequest({
     this.integrationId,
   });
 
@@ -16,7 +16,7 @@ class ReposCreateDeploymentProtectionRuleRequest {
       'ReposCreateDeploymentProtectionRuleRequest',
       json,
       () => ReposCreateDeploymentProtectionRuleRequest(
-        integrationId: json['integration_id'] as int?,
+        integrationId: (json['integration_id'] as int?),
       ),
     );
   }
@@ -50,6 +50,6 @@ class ReposCreateDeploymentProtectionRuleRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateDeploymentProtectionRuleRequest &&
-        integrationId == other.integrationId;
+        this.integrationId == other.integrationId;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/models/dependabot_alert_comma_separated_has_param_one_of_1_inner.dart';
 import 'package:meta/meta.dart';
 
@@ -10,8 +6,8 @@ sealed class DependabotAlertCommaSeparatedHasParam {
 
   factory DependabotAlertCommaSeparatedHasParam.fromJson(dynamic json) {
     return switch (json) {
-      final String v => DependabotAlertCommaSeparatedHasParamString(v),
-      final List<dynamic> v => DependabotAlertCommaSeparatedHasParamList(
+      String v => DependabotAlertCommaSeparatedHasParamString(v),
+      List<dynamic> v => DependabotAlertCommaSeparatedHasParamList(
         v
             .map<DependabotAlertCommaSeparatedHasParamOneOf1Inner>(
               (e) => DependabotAlertCommaSeparatedHasParamOneOf1Inner.fromJson(

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/pulls_create_review_comment_request_side.dart';
 import 'package:github_out/models/pulls_create_review_comment_request_start_side.dart';
@@ -10,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsCreateReviewCommentRequest {
-  const PullsCreateReviewCommentRequest({
+  PullsCreateReviewCommentRequest({
     required this.body,
     required this.commitId,
     required this.path,
@@ -32,16 +28,16 @@ class PullsCreateReviewCommentRequest {
         body: json['body'] as String,
         commitId: json['commit_id'] as String,
         path: json['path'] as String,
-        position: json['position'] as int?,
+        position: (json['position'] as int?),
         side: PullsCreateReviewCommentRequestSide.maybeFromJson(
           json['side'] as String?,
         ),
-        line: json['line'] as int?,
-        startLine: json['start_line'] as int?,
+        line: (json['line'] as int?),
+        startLine: (json['start_line'] as int?),
         startSide: PullsCreateReviewCommentRequestStartSide.maybeFromJson(
           json['start_side'] as String?,
         ),
-        inReplyTo: json['in_reply_to'] as int?,
+        inReplyTo: (json['in_reply_to'] as int?),
         subjectType: PullsCreateReviewCommentRequestSubjectType.maybeFromJson(
           json['subject_type'] as String?,
         ),
@@ -158,15 +154,15 @@ class PullsCreateReviewCommentRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsCreateReviewCommentRequest &&
-        body == other.body &&
-        commitId == other.commitId &&
-        path == other.path &&
-        position == other.position &&
-        side == other.side &&
-        line == other.line &&
-        startLine == other.startLine &&
-        startSide == other.startSide &&
-        inReplyTo == other.inReplyTo &&
-        subjectType == other.subjectType;
+        this.body == other.body &&
+        this.commitId == other.commitId &&
+        this.path == other.path &&
+        this.position == other.position &&
+        this.side == other.side &&
+        this.line == other.line &&
+        this.startLine == other.startLine &&
+        this.startSide == other.startSide &&
+        this.inReplyTo == other.inReplyTo &&
+        this.subjectType == other.subjectType;
   }
 }

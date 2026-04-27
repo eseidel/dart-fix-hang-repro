@@ -1,8 +1,17 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_dotcom_chat.dart';
+import 'package:github_out/models/copilot_dotcom_chat_models_inner.dart';
 import 'package:github_out/models/copilot_dotcom_pull_requests.dart';
+import 'package:github_out/models/copilot_dotcom_pull_requests_repositories_inner.dart';
+import 'package:github_out/models/copilot_dotcom_pull_requests_repositories_inner_models_inner.dart';
 import 'package:github_out/models/copilot_ide_chat.dart';
+import 'package:github_out/models/copilot_ide_chat_editors_inner.dart';
+import 'package:github_out/models/copilot_ide_chat_editors_inner_models_inner.dart';
 import 'package:github_out/models/copilot_ide_code_completions.dart';
+import 'package:github_out/models/copilot_ide_code_completions_editors_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions_editors_inner_models_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions_editors_inner_models_inner_languages_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions_languages_inner.dart';
 import 'package:meta/meta.dart';
 
 /// {@template copilot_usage_metrics_day}
@@ -12,15 +21,15 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotUsageMetricsDay {
   /// {@macro copilot_usage_metrics_day}
-  const CopilotUsageMetricsDay({
+  CopilotUsageMetricsDay({
     required this.date,
-    required this.entries,
     this.totalActiveUsers,
     this.totalEngagedUsers,
     this.copilotIdeCodeCompletions,
     this.copilotIdeChat,
     this.copilotDotcomChat,
     this.copilotDotcomPullRequests,
+    required this.entries,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CopilotUsageMetricsDay].
@@ -30,8 +39,8 @@ class CopilotUsageMetricsDay {
       json,
       () => CopilotUsageMetricsDay(
         date: DateTime.parse(json['date'] as String),
-        totalActiveUsers: json['total_active_users'] as int?,
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalActiveUsers: (json['total_active_users'] as int?),
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
         copilotIdeCodeCompletions: CopilotIdeCodeCompletions.maybeFromJson(
           json['copilot_ide_code_completions'] as Map<String, dynamic>?,
         ),
@@ -44,7 +53,7 @@ class CopilotUsageMetricsDay {
         copilotDotcomPullRequests: CopilotDotcomPullRequests.maybeFromJson(
           json['copilot_dotcom_pull_requests'] as Map<String, dynamic>?,
         ),
-        entries: json.map(MapEntry.new),
+        entries: json.map((key, value) => MapEntry(key, value)),
       ),
     );
   }
@@ -90,7 +99,7 @@ class CopilotUsageMetricsDay {
   final CopilotDotcomPullRequests? copilotDotcomPullRequests;
   final Map<String, dynamic> entries;
 
-  dynamic operator [](String key) => entries[key];
+  dynamic? operator [](String key) => entries[key];
 
   /// Converts a [CopilotUsageMetricsDay] to a `Map<String, dynamic>`.
   Map<String, dynamic> toJson() {
@@ -102,7 +111,7 @@ class CopilotUsageMetricsDay {
       'copilot_ide_chat': copilotIdeChat?.toJson(),
       'copilot_dotcom_chat': copilotDotcomChat?.toJson(),
       'copilot_dotcom_pull_requests': copilotDotcomPullRequests?.toJson(),
-      ...entries.map(MapEntry.new),
+      ...entries.map((key, value) => MapEntry(key, value)),
     };
   }
 
@@ -122,13 +131,13 @@ class CopilotUsageMetricsDay {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotUsageMetricsDay &&
-        date == other.date &&
-        totalActiveUsers == other.totalActiveUsers &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        copilotIdeCodeCompletions == other.copilotIdeCodeCompletions &&
-        copilotIdeChat == other.copilotIdeChat &&
-        copilotDotcomChat == other.copilotDotcomChat &&
-        copilotDotcomPullRequests == other.copilotDotcomPullRequests &&
+        this.date == other.date &&
+        this.totalActiveUsers == other.totalActiveUsers &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        this.copilotIdeCodeCompletions == other.copilotIdeCodeCompletions &&
+        this.copilotIdeChat == other.copilotIdeChat &&
+        this.copilotDotcomChat == other.copilotDotcomChat &&
+        this.copilotDotcomPullRequests == other.copilotDotcomPullRequests &&
         mapsEqual(entries, other.entries);
   }
 }

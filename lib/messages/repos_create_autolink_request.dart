@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateAutolinkRequest {
-  const ReposCreateAutolinkRequest({
+  ReposCreateAutolinkRequest({
     required this.keyPrefix,
     required this.urlTemplate,
     this.isAlphanumeric = true,
@@ -65,8 +65,8 @@ class ReposCreateAutolinkRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateAutolinkRequest &&
-        keyPrefix == other.keyPrefix &&
-        urlTemplate == other.urlTemplate &&
-        isAlphanumeric == other.isAlphanumeric;
+        this.keyPrefix == other.keyPrefix &&
+        this.urlTemplate == other.urlTemplate &&
+        this.isAlphanumeric == other.isAlphanumeric;
   }
 }

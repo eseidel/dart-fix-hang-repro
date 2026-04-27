@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateAttestation201Response {
-  const ReposCreateAttestation201Response({
+  ReposCreateAttestation201Response({
     this.id,
   });
 
@@ -16,7 +16,7 @@ class ReposCreateAttestation201Response {
       'ReposCreateAttestation201Response',
       json,
       () => ReposCreateAttestation201Response(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
       ),
     );
   }
@@ -49,6 +49,6 @@ class ReposCreateAttestation201Response {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ReposCreateAttestation201Response && id == other.id;
+    return other is ReposCreateAttestation201Response && this.id == other.id;
   }
 }

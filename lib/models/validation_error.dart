@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
 import 'package:meta/meta.dart';
 
 /// {@template validation_error}
@@ -9,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ValidationError {
   /// {@macro validation_error}
-  const ValidationError({
+  ValidationError({
     required this.message,
     required this.documentationUrl,
     this.errors,
@@ -67,8 +68,8 @@ class ValidationError {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ValidationError &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl &&
-        listsEqual(errors, other.errors);
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl &&
+        listsEqual(this.errors, other.errors);
   }
 }

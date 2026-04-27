@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Verification {
   /// {@macro verification}
-  const Verification({
+  Verification({
     required this.verified,
     required this.reason,
     required this.payload,
@@ -69,10 +69,10 @@ class Verification {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Verification &&
-        verified == other.verified &&
-        reason == other.reason &&
-        payload == other.payload &&
-        signature == other.signature &&
-        verifiedAt == other.verifiedAt;
+        this.verified == other.verified &&
+        this.reason == other.reason &&
+        this.payload == other.payload &&
+        this.signature == other.signature &&
+        this.verifiedAt == other.verifiedAt;
   }
 }

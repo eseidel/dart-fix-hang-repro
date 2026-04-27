@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsCreateForRepoRequest {
-  const ProjectsCreateForRepoRequest({
+  ProjectsCreateForRepoRequest({
     required this.name,
     this.body,
   });
@@ -55,7 +55,7 @@ class ProjectsCreateForRepoRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectsCreateForRepoRequest &&
-        name == other.name &&
-        body == other.body;
+        this.name == other.name &&
+        this.body == other.body;
   }
 }

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class KeySimple {
   /// {@macro key_simple}
-  const KeySimple({
+  KeySimple({
     required this.id,
     required this.key,
   });
@@ -19,7 +19,7 @@ class KeySimple {
       'KeySimple',
       json,
       () => KeySimple(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         key: json['key'] as String,
       ),
     );
@@ -54,6 +54,6 @@ class KeySimple {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is KeySimple && id == other.id && key == other.key;
+    return other is KeySimple && this.id == other.id && this.key == other.key;
   }
 }

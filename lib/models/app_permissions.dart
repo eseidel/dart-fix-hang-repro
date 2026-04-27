@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/app_permissions_actions.dart';
 import 'package:github_out/models/app_permissions_administration.dart';
@@ -61,7 +57,7 @@ import 'package:meta/meta.dart';
 @immutable
 class AppPermissions {
   /// {@macro app_permissions}
-  const AppPermissions({
+  AppPermissions({
     this.actions,
     this.administration,
     this.checks,
@@ -594,57 +590,59 @@ class AppPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is AppPermissions &&
-        actions == other.actions &&
-        administration == other.administration &&
-        checks == other.checks &&
-        codespaces == other.codespaces &&
-        contents == other.contents &&
-        dependabotSecrets == other.dependabotSecrets &&
-        deployments == other.deployments &&
-        environments == other.environments &&
-        issues == other.issues &&
-        metadata == other.metadata &&
-        packages == other.packages &&
-        pages == other.pages &&
-        pullRequests == other.pullRequests &&
-        repositoryCustomProperties == other.repositoryCustomProperties &&
-        repositoryHooks == other.repositoryHooks &&
-        repositoryProjects == other.repositoryProjects &&
-        secretScanningAlerts == other.secretScanningAlerts &&
-        secrets == other.secrets &&
-        securityEvents == other.securityEvents &&
-        singleFile == other.singleFile &&
-        statuses == other.statuses &&
-        vulnerabilityAlerts == other.vulnerabilityAlerts &&
-        workflows == other.workflows &&
-        members == other.members &&
-        organizationAdministration == other.organizationAdministration &&
-        organizationCustomRoles == other.organizationCustomRoles &&
-        organizationCustomOrgRoles == other.organizationCustomOrgRoles &&
-        organizationCustomProperties == other.organizationCustomProperties &&
-        organizationCopilotSeatManagement ==
+        this.actions == other.actions &&
+        this.administration == other.administration &&
+        this.checks == other.checks &&
+        this.codespaces == other.codespaces &&
+        this.contents == other.contents &&
+        this.dependabotSecrets == other.dependabotSecrets &&
+        this.deployments == other.deployments &&
+        this.environments == other.environments &&
+        this.issues == other.issues &&
+        this.metadata == other.metadata &&
+        this.packages == other.packages &&
+        this.pages == other.pages &&
+        this.pullRequests == other.pullRequests &&
+        this.repositoryCustomProperties == other.repositoryCustomProperties &&
+        this.repositoryHooks == other.repositoryHooks &&
+        this.repositoryProjects == other.repositoryProjects &&
+        this.secretScanningAlerts == other.secretScanningAlerts &&
+        this.secrets == other.secrets &&
+        this.securityEvents == other.securityEvents &&
+        this.singleFile == other.singleFile &&
+        this.statuses == other.statuses &&
+        this.vulnerabilityAlerts == other.vulnerabilityAlerts &&
+        this.workflows == other.workflows &&
+        this.members == other.members &&
+        this.organizationAdministration == other.organizationAdministration &&
+        this.organizationCustomRoles == other.organizationCustomRoles &&
+        this.organizationCustomOrgRoles == other.organizationCustomOrgRoles &&
+        this.organizationCustomProperties ==
+            other.organizationCustomProperties &&
+        this.organizationCopilotSeatManagement ==
             other.organizationCopilotSeatManagement &&
-        organizationAnnouncementBanners ==
+        this.organizationAnnouncementBanners ==
             other.organizationAnnouncementBanners &&
-        organizationEvents == other.organizationEvents &&
-        organizationHooks == other.organizationHooks &&
-        organizationPersonalAccessTokens ==
+        this.organizationEvents == other.organizationEvents &&
+        this.organizationHooks == other.organizationHooks &&
+        this.organizationPersonalAccessTokens ==
             other.organizationPersonalAccessTokens &&
-        organizationPersonalAccessTokenRequests ==
+        this.organizationPersonalAccessTokenRequests ==
             other.organizationPersonalAccessTokenRequests &&
-        organizationPlan == other.organizationPlan &&
-        organizationProjects == other.organizationProjects &&
-        organizationPackages == other.organizationPackages &&
-        organizationSecrets == other.organizationSecrets &&
-        organizationSelfHostedRunners == other.organizationSelfHostedRunners &&
-        organizationUserBlocking == other.organizationUserBlocking &&
-        teamDiscussions == other.teamDiscussions &&
-        emailAddresses == other.emailAddresses &&
-        followers == other.followers &&
-        gitSshKeys == other.gitSshKeys &&
-        gpgKeys == other.gpgKeys &&
-        interactionLimits == other.interactionLimits &&
-        profile == other.profile &&
-        starring == other.starring;
+        this.organizationPlan == other.organizationPlan &&
+        this.organizationProjects == other.organizationProjects &&
+        this.organizationPackages == other.organizationPackages &&
+        this.organizationSecrets == other.organizationSecrets &&
+        this.organizationSelfHostedRunners ==
+            other.organizationSelfHostedRunners &&
+        this.organizationUserBlocking == other.organizationUserBlocking &&
+        this.teamDiscussions == other.teamDiscussions &&
+        this.emailAddresses == other.emailAddresses &&
+        this.followers == other.followers &&
+        this.gitSshKeys == other.gitSshKeys &&
+        this.gpgKeys == other.gpgKeys &&
+        this.interactionLimits == other.interactionLimits &&
+        this.profile == other.profile &&
+        this.starring == other.starring;
   }
 }

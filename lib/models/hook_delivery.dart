@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class HookDelivery {
   /// {@macro hook_delivery}
-  const HookDelivery({
+  HookDelivery({
     required this.id,
     required this.guid,
     required this.deliveredAt,
@@ -22,10 +22,10 @@ class HookDelivery {
     required this.action,
     required this.installationId,
     required this.repositoryId,
-    required this.request,
-    required this.response,
     this.throttledAt,
     this.url,
+    required this.request,
+    required this.response,
   });
 
   /// Converts a `Map<String, dynamic>` to a [HookDelivery].
@@ -34,17 +34,17 @@ class HookDelivery {
       'HookDelivery',
       json,
       () => HookDelivery(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         guid: json['guid'] as String,
         deliveredAt: DateTime.parse(json['delivered_at'] as String),
         redelivery: json['redelivery'] as bool,
         duration: (json['duration'] as num).toDouble(),
         status: json['status'] as String,
-        statusCode: json['status_code'] as int,
+        statusCode: (json['status_code'] as int),
         event: json['event'] as String,
         action: checkedKey(json, 'action') as String?,
-        installationId: checkedKey(json, 'installation_id') as int?,
-        repositoryId: checkedKey(json, 'repository_id') as int?,
+        installationId: (checkedKey(json, 'installation_id') as int?),
+        repositoryId: (checkedKey(json, 'repository_id') as int?),
         throttledAt: maybeParseDateTime(json['throttled_at'] as String?),
         url: json['url'] as String?,
         request: HookDeliveryRequest.fromJson(
@@ -165,20 +165,20 @@ class HookDelivery {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is HookDelivery &&
-        id == other.id &&
-        guid == other.guid &&
-        deliveredAt == other.deliveredAt &&
-        redelivery == other.redelivery &&
-        duration == other.duration &&
-        status == other.status &&
-        statusCode == other.statusCode &&
-        event == other.event &&
-        action == other.action &&
-        installationId == other.installationId &&
-        repositoryId == other.repositoryId &&
-        throttledAt == other.throttledAt &&
-        url == other.url &&
-        request == other.request &&
-        response == other.response;
+        this.id == other.id &&
+        this.guid == other.guid &&
+        this.deliveredAt == other.deliveredAt &&
+        this.redelivery == other.redelivery &&
+        this.duration == other.duration &&
+        this.status == other.status &&
+        this.statusCode == other.statusCode &&
+        this.event == other.event &&
+        this.action == other.action &&
+        this.installationId == other.installationId &&
+        this.repositoryId == other.repositoryId &&
+        this.throttledAt == other.throttledAt &&
+        this.url == other.url &&
+        this.request == other.request &&
+        this.response == other.response;
   }
 }

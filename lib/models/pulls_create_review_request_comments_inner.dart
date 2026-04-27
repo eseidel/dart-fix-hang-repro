@@ -3,10 +3,10 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsCreateReviewRequestCommentsInner {
-  const PullsCreateReviewRequestCommentsInner({
+  PullsCreateReviewRequestCommentsInner({
     required this.path,
-    required this.body,
     this.position,
+    required this.body,
     this.line,
     this.side,
     this.startLine,
@@ -23,11 +23,11 @@ class PullsCreateReviewRequestCommentsInner {
       json,
       () => PullsCreateReviewRequestCommentsInner(
         path: json['path'] as String,
-        position: json['position'] as int?,
+        position: (json['position'] as int?),
         body: json['body'] as String,
-        line: json['line'] as int?,
+        line: (json['line'] as int?),
         side: json['side'] as String?,
-        startLine: json['start_line'] as int?,
+        startLine: (json['start_line'] as int?),
         startSide: json['start_side'] as String?,
       ),
     );
@@ -100,12 +100,12 @@ class PullsCreateReviewRequestCommentsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsCreateReviewRequestCommentsInner &&
-        path == other.path &&
-        position == other.position &&
-        body == other.body &&
-        line == other.line &&
-        side == other.side &&
-        startLine == other.startLine &&
-        startSide == other.startSide;
+        this.path == other.path &&
+        this.position == other.position &&
+        this.body == other.body &&
+        this.line == other.line &&
+        this.side == other.side &&
+        this.startLine == other.startLine &&
+        this.startSide == other.startSide;
   }
 }

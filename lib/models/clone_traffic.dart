@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CloneTraffic {
   /// {@macro clone_traffic}
-  const CloneTraffic({
+  CloneTraffic({
     required this.count,
     required this.uniques,
     required this.clones,
@@ -21,8 +21,8 @@ class CloneTraffic {
       'CloneTraffic',
       json,
       () => CloneTraffic(
-        count: json['count'] as int,
-        uniques: json['uniques'] as int,
+        count: (json['count'] as int),
+        uniques: (json['uniques'] as int),
         clones: (json['clones'] as List)
             .map<Traffic>((e) => Traffic.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -66,8 +66,8 @@ class CloneTraffic {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CloneTraffic &&
-        count == other.count &&
-        uniques == other.uniques &&
-        listsEqual(clones, other.clones);
+        this.count == other.count &&
+        this.uniques == other.uniques &&
+        listsEqual(this.clones, other.clones);
   }
 }

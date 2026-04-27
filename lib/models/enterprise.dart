@@ -8,8 +8,10 @@ import 'package:meta/meta.dart';
 @immutable
 class Enterprise {
   /// {@macro enterprise}
-  const Enterprise({
+  Enterprise({
+    this.description,
     required this.htmlUrl,
+    this.websiteUrl,
     required this.id,
     required this.nodeId,
     required this.name,
@@ -17,8 +19,6 @@ class Enterprise {
     required this.createdAt,
     required this.updatedAt,
     required this.avatarUrl,
-    this.description,
-    this.websiteUrl,
   });
 
   /// Converts a `Map<String, dynamic>` to an [Enterprise].
@@ -30,7 +30,7 @@ class Enterprise {
         description: json['description'] as String?,
         htmlUrl: Uri.parse(json['html_url'] as String),
         websiteUrl: maybeParseUri(json['website_url'] as String?),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         slug: json['slug'] as String,
@@ -119,15 +119,15 @@ class Enterprise {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Enterprise &&
-        description == other.description &&
-        htmlUrl == other.htmlUrl &&
-        websiteUrl == other.websiteUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        slug == other.slug &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        avatarUrl == other.avatarUrl;
+        this.description == other.description &&
+        this.htmlUrl == other.htmlUrl &&
+        this.websiteUrl == other.websiteUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.slug == other.slug &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.avatarUrl == other.avatarUrl;
   }
 }

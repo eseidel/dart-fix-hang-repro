@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ThreadSubject {
-  const ThreadSubject({
+  ThreadSubject({
     required this.title,
     required this.url,
     required this.latestCommentUrl,
@@ -60,9 +60,9 @@ class ThreadSubject {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ThreadSubject &&
-        title == other.title &&
-        url == other.url &&
-        latestCommentUrl == other.latestCommentUrl &&
-        type == other.type;
+        this.title == other.title &&
+        this.url == other.url &&
+        this.latestCommentUrl == other.latestCommentUrl &&
+        this.type == other.type;
   }
 }

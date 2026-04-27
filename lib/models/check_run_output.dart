@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CheckRunOutput {
-  const CheckRunOutput({
+  CheckRunOutput({
     required this.title,
     required this.summary,
     required this.text,
@@ -20,7 +20,7 @@ class CheckRunOutput {
         title: checkedKey(json, 'title') as String?,
         summary: checkedKey(json, 'summary') as String?,
         text: checkedKey(json, 'text') as String?,
-        annotationsCount: json['annotations_count'] as int,
+        annotationsCount: (json['annotations_count'] as int),
         annotationsUrl: Uri.parse(json['annotations_url'] as String),
       ),
     );
@@ -65,10 +65,10 @@ class CheckRunOutput {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CheckRunOutput &&
-        title == other.title &&
-        summary == other.summary &&
-        text == other.text &&
-        annotationsCount == other.annotationsCount &&
-        annotationsUrl == other.annotationsUrl;
+        this.title == other.title &&
+        this.summary == other.summary &&
+        this.text == other.text &&
+        this.annotationsCount == other.annotationsCount &&
+        this.annotationsUrl == other.annotationsUrl;
   }
 }

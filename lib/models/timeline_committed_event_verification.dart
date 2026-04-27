@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TimelineCommittedEventVerification {
-  const TimelineCommittedEventVerification({
+  TimelineCommittedEventVerification({
     required this.verified,
     required this.reason,
     required this.signature,
@@ -71,10 +71,10 @@ class TimelineCommittedEventVerification {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TimelineCommittedEventVerification &&
-        verified == other.verified &&
-        reason == other.reason &&
-        signature == other.signature &&
-        payload == other.payload &&
-        verifiedAt == other.verifiedAt;
+        this.verified == other.verified &&
+        this.reason == other.reason &&
+        this.signature == other.signature &&
+        this.payload == other.payload &&
+        this.verifiedAt == other.verifiedAt;
   }
 }

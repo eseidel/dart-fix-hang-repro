@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/actions_billing_usage_minutes_used_breakdown.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsBillingUsage {
-  const ActionsBillingUsage({
+  ActionsBillingUsage({
     required this.totalMinutesUsed,
     required this.totalPaidMinutesUsed,
     required this.includedMinutes,
@@ -21,9 +17,9 @@ class ActionsBillingUsage {
       'ActionsBillingUsage',
       json,
       () => ActionsBillingUsage(
-        totalMinutesUsed: json['total_minutes_used'] as int,
-        totalPaidMinutesUsed: json['total_paid_minutes_used'] as int,
-        includedMinutes: json['included_minutes'] as int,
+        totalMinutesUsed: (json['total_minutes_used'] as int),
+        totalPaidMinutesUsed: (json['total_paid_minutes_used'] as int),
+        includedMinutes: (json['included_minutes'] as int),
         minutesUsedBreakdown: ActionsBillingUsageMinutesUsedBreakdown.fromJson(
           json['minutes_used_breakdown'] as Map<String, dynamic>,
         ),
@@ -72,9 +68,9 @@ class ActionsBillingUsage {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsBillingUsage &&
-        totalMinutesUsed == other.totalMinutesUsed &&
-        totalPaidMinutesUsed == other.totalPaidMinutesUsed &&
-        includedMinutes == other.includedMinutes &&
-        minutesUsedBreakdown == other.minutesUsedBreakdown;
+        this.totalMinutesUsed == other.totalMinutesUsed &&
+        this.totalPaidMinutesUsed == other.totalPaidMinutesUsed &&
+        this.includedMinutes == other.includedMinutes &&
+        this.minutesUsedBreakdown == other.minutesUsedBreakdown;
   }
 }

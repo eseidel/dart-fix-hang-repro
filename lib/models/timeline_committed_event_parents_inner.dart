@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TimelineCommittedEventParentsInner {
-  const TimelineCommittedEventParentsInner({
+  TimelineCommittedEventParentsInner({
     required this.sha,
     required this.url,
     required this.htmlUrl,
@@ -63,8 +63,8 @@ class TimelineCommittedEventParentsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TimelineCommittedEventParentsInner &&
-        sha == other.sha &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl;
+        this.sha == other.sha &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

@@ -1,13 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/models/gitignore_template.dart';
+import 'package:http/http.dart' as http;
 
 /// View gitignore templates
 class GitignoreApi {
@@ -27,7 +24,7 @@ class GitignoreApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -52,13 +49,13 @@ class GitignoreApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/gitignore/templates/{name}'.replaceAll('{name}', name),
+      path: '/gitignore/templates/{name}'.replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

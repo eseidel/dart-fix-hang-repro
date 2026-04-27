@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -20,14 +16,66 @@ import 'package:github_out/messages/checks_list_for_suite200_response.dart';
 import 'package:github_out/messages/checks_list_suites_for_ref200_response.dart';
 import 'package:github_out/messages/checks_set_suites_preferences_request.dart';
 import 'package:github_out/messages/checks_update_request.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/check_annotation.dart';
 import 'package:github_out/models/check_run.dart';
+import 'package:github_out/models/check_run_check_suite.dart';
+import 'package:github_out/models/check_run_conclusion.dart';
+import 'package:github_out/models/check_run_output.dart';
+import 'package:github_out/models/check_run_status.dart';
 import 'package:github_out/models/check_suite.dart';
+import 'package:github_out/models/check_suite_conclusion.dart';
 import 'package:github_out/models/check_suite_preference.dart';
+import 'package:github_out/models/check_suite_preference_preferences.dart';
+import 'package:github_out/models/check_suite_preference_preferences_auto_trigger_checks_inner.dart';
+import 'package:github_out/models/check_suite_status.dart';
+import 'package:github_out/models/checks_create_request_one_of_0.dart';
+import 'package:github_out/models/checks_create_request_one_of_0_status.dart';
+import 'package:github_out/models/checks_create_request_one_of_1.dart';
+import 'package:github_out/models/checks_create_request_one_of_1_status.dart';
 import 'package:github_out/models/checks_list_for_ref_parameter5.dart';
 import 'package:github_out/models/checks_list_for_suite_parameter5.dart';
+import 'package:github_out/models/checks_set_suites_preferences_request_auto_trigger_checks_inner.dart';
+import 'package:github_out/models/checks_update_request_any_of_0.dart';
+import 'package:github_out/models/checks_update_request_any_of_0_status.dart';
+import 'package:github_out/models/checks_update_request_any_of_1.dart';
+import 'package:github_out/models/checks_update_request_any_of_1_status.dart';
+import 'package:github_out/models/code_of_conduct.dart';
+import 'package:github_out/models/deployment_simple.dart';
 import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/enterprise.dart';
+import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
+import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
+import 'package:github_out/models/pull_request_minimal.dart';
+import 'package:github_out/models/pull_request_minimal_base.dart';
+import 'package:github_out/models/pull_request_minimal_base_repo.dart';
+import 'package:github_out/models/pull_request_minimal_head.dart';
+import 'package:github_out/models/pull_request_minimal_head_repo.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_commit.dart';
+import 'package:github_out/models/simple_commit_author.dart';
+import 'package:github_out/models/simple_commit_committer.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/status_param.dart';
+import 'package:http/http.dart' as http;
 
 /// Rich interactions with checks run by your integrations.
 class ChecksApi {
@@ -57,15 +105,16 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/check-runs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: checksCreateRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -96,15 +145,15 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/check-runs/{check_run_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{check_run_id}', '$checkRunId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{check_run_id}', '${checkRunId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -137,16 +186,17 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/check-runs/{check_run_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{check_run_id}', '$checkRunId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{check_run_id}', '${checkRunId}'),
       body: checksUpdateRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -174,9 +224,9 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/check-runs/{check_run_id}/annotations'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{check_run_id}', '$checkRunId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{check_run_id}', '${checkRunId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -186,7 +236,7 @@ class ChecksApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -226,15 +276,15 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/check-runs/{check_run_id}/rerequest'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{check_run_id}', '$checkRunId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{check_run_id}', '${checkRunId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -269,15 +319,16 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/check-suites'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: checksCreateSuiteRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -306,15 +357,16 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/check-suites/preferences'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: checksSetSuitesPreferencesRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -346,15 +398,15 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/check-suites/{check_suite_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{check_suite_id}', '$checkSuiteId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{check_suite_id}', '${checkSuiteId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -391,13 +443,13 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{check_suite_id}', '$checkSuiteId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{check_suite_id}', '${checkSuiteId}'),
       queryParameters: {
-        if (checkName != null) 'check_name': [checkName],
-        if (status != null) 'status': [status.toJson()],
-        if (filter != null) 'filter': [filter.toJson()],
+        if (checkName != null) 'check_name': [checkName.toString()],
+        if (status != null) 'status': [status.toJson().toString()],
+        if (filter != null) 'filter': [filter.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -406,7 +458,7 @@ class ChecksApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -434,15 +486,15 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{check_suite_id}', '$checkSuiteId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{check_suite_id}', '${checkSuiteId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -489,13 +541,13 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits/{ref}/check-runs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
       queryParameters: {
-        if (checkName != null) 'check_name': [checkName],
-        if (status != null) 'status': [status.toJson()],
-        if (filter != null) 'filter': [filter.toJson()],
+        if (checkName != null) 'check_name': [checkName.toString()],
+        if (status != null) 'status': [status.toJson().toString()],
+        if (filter != null) 'filter': [filter.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
         if (appId != null) 'app_id': [appId.toString()],
@@ -505,7 +557,7 @@ class ChecksApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -542,12 +594,12 @@ class ChecksApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/commits/{ref}/check-suites'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
       queryParameters: {
         if (appId != null) 'app_id': [appId.toString()],
-        if (checkName != null) 'check_name': [checkName],
+        if (checkName != null) 'check_name': [checkName.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -556,7 +608,7 @@ class ChecksApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

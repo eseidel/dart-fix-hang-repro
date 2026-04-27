@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamsAddOrUpdateRepoPermissionsInOrgRequest {
-  const TeamsAddOrUpdateRepoPermissionsInOrgRequest({
+  TeamsAddOrUpdateRepoPermissionsInOrgRequest({
     this.permission,
   });
 
@@ -55,6 +55,6 @@ class TeamsAddOrUpdateRepoPermissionsInOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamsAddOrUpdateRepoPermissionsInOrgRequest &&
-        permission == other.permission;
+        this.permission == other.permission;
   }
 }

@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/code_of_conduct.dart';
+import 'package:http/http.dart' as http;
 
 /// Insight into codes of conduct for your communities.
 class CodesOfConductApi {
@@ -22,7 +24,7 @@ class CodesOfConductApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -44,13 +46,13 @@ class CodesOfConductApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/codes_of_conduct/{key}'.replaceAll('{key}', key),
+      path: '/codes_of_conduct/{key}'.replaceAll('{key}', '${key}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

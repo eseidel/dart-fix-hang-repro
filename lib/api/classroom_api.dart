@@ -3,12 +3,19 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/classroom.dart';
 import 'package:github_out/models/classroom_accepted_assignment.dart';
 import 'package:github_out/models/classroom_assignment.dart';
 import 'package:github_out/models/classroom_assignment_grade.dart';
+import 'package:github_out/models/classroom_assignment_type.dart';
 import 'package:github_out/models/simple_classroom.dart';
 import 'package:github_out/models/simple_classroom_assignment.dart';
+import 'package:github_out/models/simple_classroom_assignment_type.dart';
+import 'package:github_out/models/simple_classroom_organization.dart';
+import 'package:github_out/models/simple_classroom_repository.dart';
+import 'package:github_out/models/simple_classroom_user.dart';
+import 'package:http/http.dart' as http;
 
 /// Interact with GitHub Classroom.
 class ClassroomApi {
@@ -27,14 +34,14 @@ class ClassroomApi {
       method: Method.get,
       path: '/assignments/{assignment_id}'.replaceAll(
         '{assignment_id}',
-        '$assignmentId',
+        '${assignmentId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -62,7 +69,7 @@ class ClassroomApi {
       method: Method.get,
       path: '/assignments/{assignment_id}/accepted_assignments'.replaceAll(
         '{assignment_id}',
-        '$assignmentId',
+        '${assignmentId}',
       ),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
@@ -73,7 +80,7 @@ class ClassroomApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -100,14 +107,14 @@ class ClassroomApi {
       method: Method.get,
       path: '/assignments/{assignment_id}/grades'.replaceAll(
         '{assignment_id}',
-        '$assignmentId',
+        '${assignmentId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -142,7 +149,7 @@ class ClassroomApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -168,14 +175,14 @@ class ClassroomApi {
       method: Method.get,
       path: '/classrooms/{classroom_id}'.replaceAll(
         '{classroom_id}',
-        '$classroomId',
+        '${classroomId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -201,7 +208,7 @@ class ClassroomApi {
       method: Method.get,
       path: '/classrooms/{classroom_id}/assignments'.replaceAll(
         '{classroom_id}',
-        '$classroomId',
+        '${classroomId}',
       ),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
@@ -212,7 +219,7 @@ class ClassroomApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

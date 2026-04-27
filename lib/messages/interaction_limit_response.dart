@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class InteractionLimitResponse {
   /// {@macro interaction_limit_response}
-  const InteractionLimitResponse({
+  InteractionLimitResponse({
     required this.limit,
     required this.origin,
     required this.expiresAt,
@@ -68,8 +68,8 @@ class InteractionLimitResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is InteractionLimitResponse &&
-        limit == other.limit &&
-        origin == other.origin &&
-        expiresAt == other.expiresAt;
+        this.limit == other.limit &&
+        this.origin == other.origin &&
+        this.expiresAt == other.expiresAt;
   }
 }

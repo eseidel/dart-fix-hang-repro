@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/models/repos_remove_status_check_contexts_request_one_of_0.dart';
 import 'package:meta/meta.dart';
 
@@ -10,11 +6,11 @@ sealed class ReposRemoveStatusCheckContextsRequest {
 
   factory ReposRemoveStatusCheckContextsRequest.fromJson(dynamic json) {
     return switch (json) {
-      final Map<String, dynamic> v =>
+      Map<String, dynamic> v =>
         ReposRemoveStatusCheckContextsRequestReposRemoveStatusCheckContextsRequestOneOf0(
           ReposRemoveStatusCheckContextsRequestOneOf0.fromJson(v),
         ),
-      final List<dynamic> v => ReposRemoveStatusCheckContextsRequestList(
+      List<dynamic> v => ReposRemoveStatusCheckContextsRequestList(
         v.cast<String>(),
       ),
       _ => throw FormatException(

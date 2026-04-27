@@ -1,11 +1,18 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/commit.dart';
+import 'package:github_out/models/commit_author.dart';
+import 'package:github_out/models/commit_commit.dart';
+import 'package:github_out/models/commit_commit_tree.dart';
+import 'package:github_out/models/commit_committer.dart';
 import 'package:github_out/models/commit_comparison_status.dart';
+import 'package:github_out/models/commit_parents_inner.dart';
+import 'package:github_out/models/commit_stats.dart';
 import 'package:github_out/models/diff_entry.dart';
+import 'package:github_out/models/diff_entry_status.dart';
+import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/git_user.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/verification.dart';
 import 'package:meta/meta.dart';
 
 /// {@template commit_comparison}
@@ -15,7 +22,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CommitComparison {
   /// {@macro commit_comparison}
-  const CommitComparison({
+  CommitComparison({
     required this.url,
     required this.htmlUrl,
     required this.permalinkUrl,
@@ -49,9 +56,9 @@ class CommitComparison {
           json['merge_base_commit'] as Map<String, dynamic>,
         ),
         status: CommitComparisonStatus.fromJson(json['status'] as String),
-        aheadBy: json['ahead_by'] as int,
-        behindBy: json['behind_by'] as int,
-        totalCommits: json['total_commits'] as int,
+        aheadBy: (json['ahead_by'] as int),
+        behindBy: (json['behind_by'] as int),
+        totalCommits: (json['total_commits'] as int),
         commits: (json['commits'] as List)
             .map<Commit>((e) => Commit.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -155,18 +162,18 @@ class CommitComparison {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitComparison &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        permalinkUrl == other.permalinkUrl &&
-        diffUrl == other.diffUrl &&
-        patchUrl == other.patchUrl &&
-        baseCommit == other.baseCommit &&
-        mergeBaseCommit == other.mergeBaseCommit &&
-        status == other.status &&
-        aheadBy == other.aheadBy &&
-        behindBy == other.behindBy &&
-        totalCommits == other.totalCommits &&
-        listsEqual(commits, other.commits) &&
-        listsEqual(files, other.files);
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.permalinkUrl == other.permalinkUrl &&
+        this.diffUrl == other.diffUrl &&
+        this.patchUrl == other.patchUrl &&
+        this.baseCommit == other.baseCommit &&
+        this.mergeBaseCommit == other.mergeBaseCommit &&
+        this.status == other.status &&
+        this.aheadBy == other.aheadBy &&
+        this.behindBy == other.behindBy &&
+        this.totalCommits == other.totalCommits &&
+        listsEqual(this.commits, other.commits) &&
+        listsEqual(this.files, other.files);
   }
 }

@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/deployment_branch_policy.dart';
+import 'package:github_out/models/deployment_branch_policy_type.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ReposListDeploymentBranchPolicies200Response {
-  const ReposListDeploymentBranchPolicies200Response({
+  ReposListDeploymentBranchPolicies200Response({
     required this.totalCount,
     required this.branchPolicies,
   });
@@ -18,7 +19,7 @@ class ReposListDeploymentBranchPolicies200Response {
       'ReposListDeploymentBranchPolicies200Response',
       json,
       () => ReposListDeploymentBranchPolicies200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         branchPolicies: (json['branch_policies'] as List)
             .map<DeploymentBranchPolicy>(
               (e) => DeploymentBranchPolicy.fromJson(e as Map<String, dynamic>),
@@ -63,7 +64,7 @@ class ReposListDeploymentBranchPolicies200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposListDeploymentBranchPolicies200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(branchPolicies, other.branchPolicies);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.branchPolicies, other.branchPolicies);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ApiOverviewDomainsArtifactAttestations {
-  const ApiOverviewDomainsArtifactAttestations({
+  ApiOverviewDomainsArtifactAttestations({
     this.trustDomain,
     this.services,
   });
@@ -57,7 +57,7 @@ class ApiOverviewDomainsArtifactAttestations {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiOverviewDomainsArtifactAttestations &&
-        trustDomain == other.trustDomain &&
-        listsEqual(services, other.services);
+        this.trustDomain == other.trustDomain &&
+        listsEqual(this.services, other.services);
   }
 }

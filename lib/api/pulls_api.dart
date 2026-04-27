@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -14,12 +10,16 @@ import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/pull_request.dart';
+import 'package:github_out/messages/pull_request_review_comment_links_pull_request.dart';
+import 'package:github_out/messages/pull_request_review_links_pull_request.dart';
 import 'package:github_out/messages/pull_request_review_request.dart';
 import 'package:github_out/messages/pulls_create_reply_for_review_comment_request.dart';
 import 'package:github_out/messages/pulls_create_request.dart';
 import 'package:github_out/messages/pulls_create_review_comment_request.dart';
 import 'package:github_out/messages/pulls_create_review_request.dart';
 import 'package:github_out/messages/pulls_dismiss_review_request.dart';
+import 'package:github_out/messages/pulls_merge405_response.dart';
+import 'package:github_out/messages/pulls_merge409_response.dart';
 import 'package:github_out/messages/pulls_merge_request.dart';
 import 'package:github_out/messages/pulls_remove_requested_reviewers_request.dart';
 import 'package:github_out/messages/pulls_request_reviewers_request.dart';
@@ -29,20 +29,86 @@ import 'package:github_out/messages/pulls_update_branch_request.dart';
 import 'package:github_out/messages/pulls_update_request.dart';
 import 'package:github_out/messages/pulls_update_review_comment_request.dart';
 import 'package:github_out/messages/pulls_update_review_request.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
+import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/auto_merge.dart';
+import 'package:github_out/models/auto_merge_merge_method.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/commit.dart';
+import 'package:github_out/models/commit_author.dart';
+import 'package:github_out/models/commit_commit.dart';
+import 'package:github_out/models/commit_commit_tree.dart';
+import 'package:github_out/models/commit_committer.dart';
+import 'package:github_out/models/commit_parents_inner.dart';
+import 'package:github_out/models/commit_stats.dart';
 import 'package:github_out/models/diff_entry.dart';
+import 'package:github_out/models/diff_entry_status.dart';
+import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/git_user.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/link.dart';
+import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
+import 'package:github_out/models/pull_request_base.dart';
+import 'package:github_out/models/pull_request_head.dart';
+import 'package:github_out/models/pull_request_labels_inner.dart';
+import 'package:github_out/models/pull_request_links.dart';
 import 'package:github_out/models/pull_request_merge_result.dart';
 import 'package:github_out/models/pull_request_review.dart';
 import 'package:github_out/models/pull_request_review_comment.dart';
+import 'package:github_out/models/pull_request_review_comment_links.dart';
+import 'package:github_out/models/pull_request_review_comment_links_html.dart';
+import 'package:github_out/models/pull_request_review_comment_links_self.dart';
+import 'package:github_out/models/pull_request_review_comment_side.dart';
+import 'package:github_out/models/pull_request_review_comment_start_side.dart';
+import 'package:github_out/models/pull_request_review_comment_subject_type.dart';
+import 'package:github_out/models/pull_request_review_links.dart';
+import 'package:github_out/models/pull_request_review_links_html.dart';
 import 'package:github_out/models/pull_request_simple.dart';
+import 'package:github_out/models/pull_request_simple_base.dart';
+import 'package:github_out/models/pull_request_simple_head.dart';
+import 'package:github_out/models/pull_request_simple_labels_inner.dart';
+import 'package:github_out/models/pull_request_simple_links.dart';
+import 'package:github_out/models/pull_request_state.dart';
+import 'package:github_out/models/pulls_create_review_comment_request_side.dart';
+import 'package:github_out/models/pulls_create_review_comment_request_start_side.dart';
+import 'package:github_out/models/pulls_create_review_comment_request_subject_type.dart';
+import 'package:github_out/models/pulls_create_review_request_comments_inner.dart';
+import 'package:github_out/models/pulls_create_review_request_event.dart';
+import 'package:github_out/models/pulls_dismiss_review_request_event.dart';
 import 'package:github_out/models/pulls_list_parameter2.dart';
 import 'package:github_out/models/pulls_list_parameter5.dart';
 import 'package:github_out/models/pulls_list_parameter6.dart';
 import 'package:github_out/models/pulls_list_review_comments_for_repo_parameter2.dart';
 import 'package:github_out/models/pulls_list_review_comments_for_repo_parameter3.dart';
 import 'package:github_out/models/pulls_list_review_comments_parameter4.dart';
+import 'package:github_out/models/pulls_merge_request_merge_method.dart';
+import 'package:github_out/models/pulls_submit_review_request_event.dart';
+import 'package:github_out/models/pulls_update_request_state.dart';
+import 'package:github_out/models/reaction_rollup.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/review_comment.dart';
+import 'package:github_out/models/review_comment_links.dart';
+import 'package:github_out/models/review_comment_side.dart';
+import 'package:github_out/models/review_comment_start_side.dart';
+import 'package:github_out/models/review_comment_subject_type.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/sort_param.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/validation_error_simple.dart';
+import 'package:github_out/models/verification.dart';
+import 'package:http/http.dart' as http;
 
 /// Interact with GitHub Pull Requests.
 class PullsApi {
@@ -90,14 +156,14 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
-        if (head != null) 'head': [head],
-        if (base != null) 'base': [base],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (head != null) 'head': [head.toString()],
+        if (base != null) 'base': [base.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -106,7 +172,7 @@ class PullsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -165,15 +231,16 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pulls'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: pullsCreateRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -217,12 +284,12 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (since != null) 'since': [since.toIso8601String()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -231,7 +298,7 @@ class PullsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -272,15 +339,15 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -303,15 +370,15 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/pulls/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -343,16 +410,17 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/pulls/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       body: pullsUpdateReviewCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -444,15 +512,15 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -502,16 +570,17 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       body: pullsUpdateRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -557,13 +626,13 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       queryParameters: {
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (since != null) 'since': [since.toIso8601String()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -572,7 +641,7 @@ class PullsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -632,16 +701,17 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       body: pullsCreateReviewCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -695,17 +765,18 @@ class PullsApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{pull_number}', '$pullNumber')
-              .replaceAll('{comment_id}', '$commentId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{pull_number}', '${pullNumber}')
+              .replaceAll('{comment_id}', '${commentId}'),
       body: pullsCreateReplyForReviewCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -748,9 +819,9 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/commits'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -760,7 +831,7 @@ class PullsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -804,9 +875,9 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/files'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -816,7 +887,7 @@ class PullsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -841,15 +912,15 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/merge'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -872,16 +943,17 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/merge'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       body: pullsMergeRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -909,15 +981,15 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -949,16 +1021,17 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       body: pullsRequestReviewersRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -983,16 +1056,17 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       body: pullsRemoveRequestedReviewersRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1034,9 +1108,9 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/reviews'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1046,7 +1120,7 @@ class PullsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1117,16 +1191,17 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/reviews'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       body: pullsCreateReviewRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1166,16 +1241,16 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber')
-          .replaceAll('{review_id}', '$reviewId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}')
+          .replaceAll('{review_id}', '${reviewId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1216,17 +1291,18 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber')
-          .replaceAll('{review_id}', '$reviewId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}')
+          .replaceAll('{review_id}', '${reviewId}'),
       body: pullsUpdateReviewRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1267,16 +1343,16 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber')
-          .replaceAll('{review_id}', '$reviewId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}')
+          .replaceAll('{review_id}', '${reviewId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1319,10 +1395,10 @@ class PullsApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/comments'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{pull_number}', '$pullNumber')
-              .replaceAll('{review_id}', '$reviewId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{pull_number}', '${pullNumber}')
+              .replaceAll('{review_id}', '${reviewId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1332,7 +1408,7 @@ class PullsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1382,17 +1458,18 @@ class PullsApi {
       method: Method.put,
       path:
           '/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/dismissals'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{pull_number}', '$pullNumber')
-              .replaceAll('{review_id}', '$reviewId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{pull_number}', '${pullNumber}')
+              .replaceAll('{review_id}', '${reviewId}'),
       body: pullsDismissReviewRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1437,17 +1514,18 @@ class PullsApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/pulls/{pull_number}/reviews/{review_id}/events'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{pull_number}', '$pullNumber')
-              .replaceAll('{review_id}', '$reviewId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{pull_number}', '${pullNumber}')
+              .replaceAll('{review_id}', '${reviewId}'),
       body: pullsSubmitReviewRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1474,16 +1552,17 @@ class PullsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/update-branch'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       body: pullsUpdateBranchRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

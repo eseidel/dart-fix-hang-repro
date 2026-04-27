@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PackageVersionMetadataContainer {
   /// {@macro package_version_metadata_container}
-  const PackageVersionMetadataContainer({
+  PackageVersionMetadataContainer({
     required this.tags,
   });
 
@@ -49,6 +49,6 @@ class PackageVersionMetadataContainer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PackageVersionMetadataContainer &&
-        listsEqual(tags, other.tags);
+        listsEqual(this.tags, other.tags);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AppsDeleteAuthorizationRequest {
-  const AppsDeleteAuthorizationRequest({
+  AppsDeleteAuthorizationRequest({
     required this.accessToken,
   });
 
@@ -46,6 +46,6 @@ class AppsDeleteAuthorizationRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is AppsDeleteAuthorizationRequest &&
-        accessToken == other.accessToken;
+        this.accessToken == other.accessToken;
   }
 }

@@ -1,8 +1,5 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration_installation_request_account.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
@@ -14,12 +11,12 @@ import 'package:meta/meta.dart';
 @immutable
 class IntegrationInstallationRequest {
   /// {@macro integration_installation_request}
-  const IntegrationInstallationRequest({
+  IntegrationInstallationRequest({
     required this.id,
+    this.nodeId,
     required this.account,
     required this.requester,
     required this.createdAt,
-    this.nodeId,
   });
 
   /// Converts a `Map<String, dynamic>` to an [IntegrationInstallationRequest].
@@ -28,7 +25,7 @@ class IntegrationInstallationRequest {
       'IntegrationInstallationRequest',
       json,
       () => IntegrationInstallationRequest(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String?,
         account: IntegrationInstallationRequestAccount.fromJson(
           json['account'] as Map<String, dynamic>,
@@ -91,10 +88,10 @@ class IntegrationInstallationRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IntegrationInstallationRequest &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        account == other.account &&
-        requester == other.requester &&
-        createdAt == other.createdAt;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.account == other.account &&
+        this.requester == other.requester &&
+        this.createdAt == other.createdAt;
   }
 }

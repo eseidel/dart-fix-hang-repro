@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleUpdate {
   /// {@macro repository_rule_update}
-  const RepositoryRuleUpdate({
+  RepositoryRuleUpdate({
     required this.type,
     this.parameters,
   });
@@ -59,7 +59,7 @@ class RepositoryRuleUpdate {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleUpdate &&
-        type == other.type &&
-        parameters == other.parameters;
+        this.type == other.type &&
+        this.parameters == other.parameters;
   }
 }

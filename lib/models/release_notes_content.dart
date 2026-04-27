@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReleaseNotesContent {
   /// {@macro release_notes_content}
-  const ReleaseNotesContent({
+  ReleaseNotesContent({
     required this.name,
     required this.body,
   });
@@ -60,7 +60,7 @@ class ReleaseNotesContent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReleaseNotesContent &&
-        name == other.name &&
-        body == other.body;
+        this.name == other.name &&
+        this.body == other.body;
   }
 }

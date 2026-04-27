@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PublicIp {
   /// {@macro public_ip}
-  const PublicIp({
+  PublicIp({
     this.enabled,
     this.prefix,
     this.length,
@@ -22,7 +22,7 @@ class PublicIp {
       () => PublicIp(
         enabled: json['enabled'] as bool?,
         prefix: json['prefix'] as String?,
-        length: json['length'] as int?,
+        length: (json['length'] as int?),
       ),
     );
   }
@@ -68,8 +68,8 @@ class PublicIp {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PublicIp &&
-        enabled == other.enabled &&
-        prefix == other.prefix &&
-        length == other.length;
+        this.enabled == other.enabled &&
+        this.prefix == other.prefix &&
+        this.length == other.length;
   }
 }

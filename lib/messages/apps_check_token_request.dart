@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class AppsCheckTokenRequest {
-  const AppsCheckTokenRequest({
+  AppsCheckTokenRequest({
     required this.accessToken,
   });
 
@@ -43,6 +43,7 @@ class AppsCheckTokenRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is AppsCheckTokenRequest && accessToken == other.accessToken;
+    return other is AppsCheckTokenRequest &&
+        this.accessToken == other.accessToken;
   }
 }

@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CampaignsUpdateCampaignRequest {
-  const CampaignsUpdateCampaignRequest({
+  CampaignsUpdateCampaignRequest({
     this.name,
     this.description,
     this.managers,
@@ -94,12 +94,12 @@ class CampaignsUpdateCampaignRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CampaignsUpdateCampaignRequest &&
-        name == other.name &&
-        description == other.description &&
-        listsEqual(managers, other.managers) &&
-        listsEqual(teamManagers, other.teamManagers) &&
-        endsAt == other.endsAt &&
-        contactLink == other.contactLink &&
-        state == other.state;
+        this.name == other.name &&
+        this.description == other.description &&
+        listsEqual(this.managers, other.managers) &&
+        listsEqual(this.teamManagers, other.teamManagers) &&
+        this.endsAt == other.endsAt &&
+        this.contactLink == other.contactLink &&
+        this.state == other.state;
   }
 }

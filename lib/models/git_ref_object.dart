@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitRefObject {
-  const GitRefObject({
+  GitRefObject({
     required this.type,
     required this.sha,
     required this.url,
@@ -58,8 +58,8 @@ class GitRefObject {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitRefObject &&
-        type == other.type &&
-        sha == other.sha &&
-        url == other.url;
+        this.type == other.type &&
+        this.sha == other.sha &&
+        this.url == other.url;
   }
 }

@@ -1,10 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/label_search_result_item.dart';
+import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class SearchLabels200Response {
-  const SearchLabels200Response({
+  SearchLabels200Response({
     required this.totalCount,
     required this.incompleteResults,
     required this.items,
@@ -16,7 +18,7 @@ class SearchLabels200Response {
       'SearchLabels200Response',
       json,
       () => SearchLabels200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         incompleteResults: json['incomplete_results'] as bool,
         items: (json['items'] as List)
             .map<LabelSearchResultItem>(
@@ -60,8 +62,8 @@ class SearchLabels200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SearchLabels200Response &&
-        totalCount == other.totalCount &&
-        incompleteResults == other.incompleteResults &&
-        listsEqual(items, other.items);
+        this.totalCount == other.totalCount &&
+        this.incompleteResults == other.incompleteResults &&
+        listsEqual(this.items, other.items);
   }
 }

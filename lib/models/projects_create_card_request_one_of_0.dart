@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsCreateCardRequestOneOf0 {
-  const ProjectsCreateCardRequestOneOf0({
+  ProjectsCreateCardRequestOneOf0({
     required this.note,
   });
 
@@ -46,6 +46,6 @@ class ProjectsCreateCardRequestOneOf0 {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ProjectsCreateCardRequestOneOf0 && note == other.note;
+    return other is ProjectsCreateCardRequestOneOf0 && this.note == other.note;
   }
 }

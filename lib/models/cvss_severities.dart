@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CvssSeverities {
-  const CvssSeverities({
+  CvssSeverities({
     this.cvssV3,
     this.cvssV4,
   });
@@ -56,7 +56,7 @@ class CvssSeverities {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CvssSeverities &&
-        cvssV3 == other.cvssV3 &&
-        cvssV4 == other.cvssV4;
+        this.cvssV3 == other.cvssV3 &&
+        this.cvssV4 == other.cvssV4;
   }
 }

@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Activity {
   /// {@macro activity}
-  const Activity({
+  Activity({
     required this.id,
     required this.nodeId,
     required this.before,
@@ -27,7 +27,7 @@ class Activity {
       'Activity',
       json,
       () => Activity(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         before: json['before'] as String,
         after: json['after'] as String,
@@ -112,13 +112,13 @@ class Activity {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Activity &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        before == other.before &&
-        after == other.after &&
-        ref == other.ref &&
-        timestamp == other.timestamp &&
-        activityType == other.activityType &&
-        actor == other.actor;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.before == other.before &&
+        this.after == other.after &&
+        this.ref == other.ref &&
+        this.timestamp == other.timestamp &&
+        this.activityType == other.activityType &&
+        this.actor == other.actor;
   }
 }

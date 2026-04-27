@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TeamOrganization {
   /// {@macro team_organization}
-  const TeamOrganization({
+  TeamOrganization({
     required this.login,
     required this.id,
     required this.nodeId,
@@ -22,6 +22,13 @@ class TeamOrganization {
     required this.publicMembersUrl,
     required this.avatarUrl,
     required this.description,
+    this.name,
+    this.company,
+    this.blog,
+    this.location,
+    this.email,
+    this.twitterUsername,
+    this.isVerified,
     required this.hasOrganizationProjects,
     required this.hasRepositoryProjects,
     required this.publicRepos,
@@ -31,15 +38,6 @@ class TeamOrganization {
     required this.htmlUrl,
     required this.createdAt,
     required this.type,
-    required this.updatedAt,
-    required this.archivedAt,
-    this.name,
-    this.company,
-    this.blog,
-    this.location,
-    this.email,
-    this.twitterUsername,
-    this.isVerified,
     this.totalPrivateRepos,
     this.ownedPrivateRepos,
     this.privateGists,
@@ -59,6 +57,8 @@ class TeamOrganization {
     this.membersCanCreatePrivatePages,
     this.membersCanForkPrivateRepositories,
     this.webCommitSignoffRequired,
+    required this.updatedAt,
+    required this.archivedAt,
   });
 
   /// Converts a `Map<String, dynamic>` to a [TeamOrganization].
@@ -68,7 +68,7 @@ class TeamOrganization {
       json,
       () => TeamOrganization(
         login: json['login'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         reposUrl: Uri.parse(json['repos_url'] as String),
@@ -88,18 +88,18 @@ class TeamOrganization {
         isVerified: json['is_verified'] as bool?,
         hasOrganizationProjects: json['has_organization_projects'] as bool,
         hasRepositoryProjects: json['has_repository_projects'] as bool,
-        publicRepos: json['public_repos'] as int,
-        publicGists: json['public_gists'] as int,
-        followers: json['followers'] as int,
-        following: json['following'] as int,
+        publicRepos: (json['public_repos'] as int),
+        publicGists: (json['public_gists'] as int),
+        followers: (json['followers'] as int),
+        following: (json['following'] as int),
         htmlUrl: Uri.parse(json['html_url'] as String),
         createdAt: DateTime.parse(json['created_at'] as String),
         type: json['type'] as String,
-        totalPrivateRepos: json['total_private_repos'] as int?,
-        ownedPrivateRepos: json['owned_private_repos'] as int?,
-        privateGists: json['private_gists'] as int?,
-        diskUsage: json['disk_usage'] as int?,
-        collaborators: json['collaborators'] as int?,
+        totalPrivateRepos: (json['total_private_repos'] as int?),
+        ownedPrivateRepos: (json['owned_private_repos'] as int?),
+        privateGists: (json['private_gists'] as int?),
+        diskUsage: (json['disk_usage'] as int?),
+        collaborators: (json['collaborators'] as int?),
         billingEmail: json['billing_email'] as String?,
         plan: TeamOrganizationPlan.maybeFromJson(
           json['plan'] as Map<String, dynamic>?,
@@ -399,59 +399,61 @@ class TeamOrganization {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamOrganization &&
-        login == other.login &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        reposUrl == other.reposUrl &&
-        eventsUrl == other.eventsUrl &&
-        hooksUrl == other.hooksUrl &&
-        issuesUrl == other.issuesUrl &&
-        membersUrl == other.membersUrl &&
-        publicMembersUrl == other.publicMembersUrl &&
-        avatarUrl == other.avatarUrl &&
-        description == other.description &&
-        name == other.name &&
-        company == other.company &&
-        blog == other.blog &&
-        location == other.location &&
-        email == other.email &&
-        twitterUsername == other.twitterUsername &&
-        isVerified == other.isVerified &&
-        hasOrganizationProjects == other.hasOrganizationProjects &&
-        hasRepositoryProjects == other.hasRepositoryProjects &&
-        publicRepos == other.publicRepos &&
-        publicGists == other.publicGists &&
-        followers == other.followers &&
-        following == other.following &&
-        htmlUrl == other.htmlUrl &&
-        createdAt == other.createdAt &&
-        type == other.type &&
-        totalPrivateRepos == other.totalPrivateRepos &&
-        ownedPrivateRepos == other.ownedPrivateRepos &&
-        privateGists == other.privateGists &&
-        diskUsage == other.diskUsage &&
-        collaborators == other.collaborators &&
-        billingEmail == other.billingEmail &&
-        plan == other.plan &&
-        defaultRepositoryPermission == other.defaultRepositoryPermission &&
-        membersCanCreateRepositories == other.membersCanCreateRepositories &&
-        twoFactorRequirementEnabled == other.twoFactorRequirementEnabled &&
-        membersAllowedRepositoryCreationType ==
+        this.login == other.login &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.reposUrl == other.reposUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.hooksUrl == other.hooksUrl &&
+        this.issuesUrl == other.issuesUrl &&
+        this.membersUrl == other.membersUrl &&
+        this.publicMembersUrl == other.publicMembersUrl &&
+        this.avatarUrl == other.avatarUrl &&
+        this.description == other.description &&
+        this.name == other.name &&
+        this.company == other.company &&
+        this.blog == other.blog &&
+        this.location == other.location &&
+        this.email == other.email &&
+        this.twitterUsername == other.twitterUsername &&
+        this.isVerified == other.isVerified &&
+        this.hasOrganizationProjects == other.hasOrganizationProjects &&
+        this.hasRepositoryProjects == other.hasRepositoryProjects &&
+        this.publicRepos == other.publicRepos &&
+        this.publicGists == other.publicGists &&
+        this.followers == other.followers &&
+        this.following == other.following &&
+        this.htmlUrl == other.htmlUrl &&
+        this.createdAt == other.createdAt &&
+        this.type == other.type &&
+        this.totalPrivateRepos == other.totalPrivateRepos &&
+        this.ownedPrivateRepos == other.ownedPrivateRepos &&
+        this.privateGists == other.privateGists &&
+        this.diskUsage == other.diskUsage &&
+        this.collaborators == other.collaborators &&
+        this.billingEmail == other.billingEmail &&
+        this.plan == other.plan &&
+        this.defaultRepositoryPermission == other.defaultRepositoryPermission &&
+        this.membersCanCreateRepositories ==
+            other.membersCanCreateRepositories &&
+        this.twoFactorRequirementEnabled == other.twoFactorRequirementEnabled &&
+        this.membersAllowedRepositoryCreationType ==
             other.membersAllowedRepositoryCreationType &&
-        membersCanCreatePublicRepositories ==
+        this.membersCanCreatePublicRepositories ==
             other.membersCanCreatePublicRepositories &&
-        membersCanCreatePrivateRepositories ==
+        this.membersCanCreatePrivateRepositories ==
             other.membersCanCreatePrivateRepositories &&
-        membersCanCreateInternalRepositories ==
+        this.membersCanCreateInternalRepositories ==
             other.membersCanCreateInternalRepositories &&
-        membersCanCreatePages == other.membersCanCreatePages &&
-        membersCanCreatePublicPages == other.membersCanCreatePublicPages &&
-        membersCanCreatePrivatePages == other.membersCanCreatePrivatePages &&
-        membersCanForkPrivateRepositories ==
+        this.membersCanCreatePages == other.membersCanCreatePages &&
+        this.membersCanCreatePublicPages == other.membersCanCreatePublicPages &&
+        this.membersCanCreatePrivatePages ==
+            other.membersCanCreatePrivatePages &&
+        this.membersCanForkPrivateRepositories ==
             other.membersCanForkPrivateRepositories &&
-        webCommitSignoffRequired == other.webCommitSignoffRequired &&
-        updatedAt == other.updatedAt &&
-        archivedAt == other.archivedAt;
+        this.webCommitSignoffRequired == other.webCommitSignoffRequired &&
+        this.updatedAt == other.updatedAt &&
+        this.archivedAt == other.archivedAt;
   }
 }

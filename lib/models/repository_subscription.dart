@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositorySubscription {
   /// {@macro repository_subscription}
-  const RepositorySubscription({
+  RepositorySubscription({
     required this.subscribed,
     required this.ignored,
     required this.reason,
@@ -85,11 +85,11 @@ class RepositorySubscription {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositorySubscription &&
-        subscribed == other.subscribed &&
-        ignored == other.ignored &&
-        reason == other.reason &&
-        createdAt == other.createdAt &&
-        url == other.url &&
-        repositoryUrl == other.repositoryUrl;
+        this.subscribed == other.subscribed &&
+        this.ignored == other.ignored &&
+        this.reason == other.reason &&
+        this.createdAt == other.createdAt &&
+        this.url == other.url &&
+        this.repositoryUrl == other.repositoryUrl;
   }
 }

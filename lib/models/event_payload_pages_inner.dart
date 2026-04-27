@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class EventPayloadPagesInner {
-  const EventPayloadPagesInner({
+  EventPayloadPagesInner({
     this.pageName,
     this.title,
     this.summary,
@@ -70,11 +70,11 @@ class EventPayloadPagesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is EventPayloadPagesInner &&
-        pageName == other.pageName &&
-        title == other.title &&
-        summary == other.summary &&
-        action == other.action &&
-        sha == other.sha &&
-        htmlUrl == other.htmlUrl;
+        this.pageName == other.pageName &&
+        this.title == other.title &&
+        this.summary == other.summary &&
+        this.action == other.action &&
+        this.sha == other.sha &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesAddSubIssueRequest {
-  const IssuesAddSubIssueRequest({
+  IssuesAddSubIssueRequest({
     required this.subIssueId,
     this.replaceParent,
   });
@@ -14,7 +14,7 @@ class IssuesAddSubIssueRequest {
       'IssuesAddSubIssueRequest',
       json,
       () => IssuesAddSubIssueRequest(
-        subIssueId: json['sub_issue_id'] as int,
+        subIssueId: (json['sub_issue_id'] as int),
         replaceParent: json['replace_parent'] as bool?,
       ),
     );
@@ -55,7 +55,7 @@ class IssuesAddSubIssueRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssuesAddSubIssueRequest &&
-        subIssueId == other.subIssueId &&
-        replaceParent == other.replaceParent;
+        this.subIssueId == other.subIssueId &&
+        this.replaceParent == other.replaceParent;
   }
 }

@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PagesSourceHash {
   /// {@macro pages_source_hash}
-  const PagesSourceHash({
+  PagesSourceHash({
     required this.branch,
     required this.path,
   });
@@ -54,7 +54,7 @@ class PagesSourceHash {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PagesSourceHash &&
-        branch == other.branch &&
-        path == other.path;
+        this.branch == other.branch &&
+        this.path == other.path;
   }
 }

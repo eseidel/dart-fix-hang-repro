@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleParamsStatusCheckConfiguration {
   /// {@macro repository_rule_params_status_check_configuration}
-  const RepositoryRuleParamsStatusCheckConfiguration({
+  RepositoryRuleParamsStatusCheckConfiguration({
     required this.context,
     this.integrationId,
   });
@@ -23,7 +23,7 @@ class RepositoryRuleParamsStatusCheckConfiguration {
       json,
       () => RepositoryRuleParamsStatusCheckConfiguration(
         context: json['context'] as String,
-        integrationId: json['integration_id'] as int?,
+        integrationId: (json['integration_id'] as int?),
       ),
     );
   }
@@ -64,7 +64,7 @@ class RepositoryRuleParamsStatusCheckConfiguration {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleParamsStatusCheckConfiguration &&
-        context == other.context &&
-        integrationId == other.integrationId;
+        this.context == other.context &&
+        this.integrationId == other.integrationId;
   }
 }

@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Milestone {
   /// {@macro milestone}
-  const Milestone({
+  Milestone({
     required this.url,
     required this.htmlUrl,
     required this.labelsUrl,
@@ -38,17 +38,17 @@ class Milestone {
         url: Uri.parse(json['url'] as String),
         htmlUrl: Uri.parse(json['html_url'] as String),
         labelsUrl: Uri.parse(json['labels_url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
-        number: json['number'] as int,
+        number: (json['number'] as int),
         state: MilestoneState.fromJson(json['state'] as String),
         title: json['title'] as String,
         description: checkedKey(json, 'description') as String?,
         creator: SimpleUser.maybeFromJson(
           checkedKey(json, 'creator') as Map<String, dynamic>?,
         ),
-        openIssues: json['open_issues'] as int,
-        closedIssues: json['closed_issues'] as int,
+        openIssues: (json['open_issues'] as int),
+        closedIssues: (json['closed_issues'] as int),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         closedAt: maybeParseDateTime(checkedKey(json, 'closed_at') as String?),
@@ -166,21 +166,21 @@ class Milestone {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Milestone &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        labelsUrl == other.labelsUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        number == other.number &&
-        state == other.state &&
-        title == other.title &&
-        description == other.description &&
-        creator == other.creator &&
-        openIssues == other.openIssues &&
-        closedIssues == other.closedIssues &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        closedAt == other.closedAt &&
-        dueOn == other.dueOn;
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.labelsUrl == other.labelsUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.number == other.number &&
+        this.state == other.state &&
+        this.title == other.title &&
+        this.description == other.description &&
+        this.creator == other.creator &&
+        this.openIssues == other.openIssues &&
+        this.closedIssues == other.closedIssues &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.closedAt == other.closedAt &&
+        this.dueOn == other.dueOn;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesRemoveAssigneesRequest {
-  const IssuesRemoveAssigneesRequest({
+  IssuesRemoveAssigneesRequest({
     this.assignees,
   });
 
@@ -48,6 +48,6 @@ class IssuesRemoveAssigneesRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssuesRemoveAssigneesRequest &&
-        listsEqual(assignees, other.assignees);
+        listsEqual(this.assignees, other.assignees);
   }
 }

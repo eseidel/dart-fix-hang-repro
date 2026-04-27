@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/issues_update_request_labels_inner.dart';
+import 'package:github_out/models/issues_update_request_labels_inner_one_of_1.dart';
 import 'package:github_out/models/issues_update_request_milestone.dart';
 import 'package:github_out/models/issues_update_request_state.dart';
 import 'package:github_out/models/issues_update_request_state_reason.dart';
@@ -8,7 +9,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesUpdateRequest {
-  const IssuesUpdateRequest({
+  IssuesUpdateRequest({
     this.title,
     this.body,
     this.assignee,
@@ -130,14 +131,14 @@ class IssuesUpdateRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssuesUpdateRequest &&
-        title == other.title &&
-        body == other.body &&
-        assignee == other.assignee &&
-        state == other.state &&
-        stateReason == other.stateReason &&
-        milestone == other.milestone &&
-        listsEqual(labels, other.labels) &&
-        listsEqual(assignees, other.assignees) &&
-        type == other.type;
+        this.title == other.title &&
+        this.body == other.body &&
+        this.assignee == other.assignee &&
+        this.state == other.state &&
+        this.stateReason == other.stateReason &&
+        this.milestone == other.milestone &&
+        listsEqual(this.labels, other.labels) &&
+        listsEqual(this.assignees, other.assignees) &&
+        this.type == other.type;
   }
 }

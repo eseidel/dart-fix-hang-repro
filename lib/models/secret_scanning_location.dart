@@ -1,11 +1,24 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/secret_scanning_location_commit.dart';
 import 'package:github_out/models/secret_scanning_location_details.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_body.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_comment.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_title.dart';
+import 'package:github_out/models/secret_scanning_location_issue_body.dart';
+import 'package:github_out/models/secret_scanning_location_issue_comment.dart';
+import 'package:github_out/models/secret_scanning_location_issue_title.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_body.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_comment.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_review.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_review_comment.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_title.dart';
 import 'package:github_out/models/secret_scanning_location_type.dart';
+import 'package:github_out/models/secret_scanning_location_wiki_commit.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class SecretScanningLocation {
-  const SecretScanningLocation({
+  SecretScanningLocation({
     this.type,
     this.details,
   });
@@ -58,7 +71,7 @@ class SecretScanningLocation {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningLocation &&
-        type == other.type &&
-        details == other.details;
+        this.type == other.type &&
+        this.details == other.details;
   }
 }

@@ -8,13 +8,13 @@ import 'package:meta/meta.dart';
 @immutable
 class Actor {
   /// {@macro actor}
-  const Actor({
+  Actor({
     required this.id,
     required this.login,
+    this.displayLogin,
     required this.gravatarId,
     required this.url,
     required this.avatarUrl,
-    this.displayLogin,
   });
 
   /// Converts a `Map<String, dynamic>` to an [Actor].
@@ -23,7 +23,7 @@ class Actor {
       'Actor',
       json,
       () => Actor(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         login: json['login'] as String,
         displayLogin: json['display_login'] as String?,
         gravatarId: checkedKey(json, 'gravatar_id') as String?,
@@ -75,11 +75,11 @@ class Actor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Actor &&
-        id == other.id &&
-        login == other.login &&
-        displayLogin == other.displayLogin &&
-        gravatarId == other.gravatarId &&
-        url == other.url &&
-        avatarUrl == other.avatarUrl;
+        this.id == other.id &&
+        this.login == other.login &&
+        this.displayLogin == other.displayLogin &&
+        this.gravatarId == other.gravatarId &&
+        this.url == other.url &&
+        this.avatarUrl == other.avatarUrl;
   }
 }

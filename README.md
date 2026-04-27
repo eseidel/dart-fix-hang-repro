@@ -38,38 +38,47 @@ hang mode persists intermittently.
 
 ## Reproducing
 
-The hang is **intermittent**. When I last reproduced it, the pattern
-was:
-
-1. Generate this directory fresh from `space_gen`.
-2. `dart pub get` — succeeds.
-3. `dart format .` — succeeds (~2s).
-4. `dart fix . --apply` — succeeds (~30s).
-5. Trigger any subsequent `dart fix . --apply` (with the spec
-   re-generated, or even just rerunning the command). Sometimes it
-   hangs at 0% CPU after the analysis server starts. At that point
-   the only recovery is to kill the process tree and `rm -rf
-   ~/.dartServer`.
-
-Reproduction steps in this snapshot:
+The lib/ in this repo is captured **pre-fix** — straight after
+`dart format` runs, before `dart fix --apply` has had a chance to
+strip unused imports and apply lint fixes. A run of `dart fix`
+should report ~17,000 fixes in ~1,200 files. That's the stage of the
+pipeline where I've seen the hang and the crash.
 
 ```sh
 git clone https://github.com/eseidel/dart-fix-hang-repro
 cd dart-fix-hang-repro
 dart pub get
-dart fix . --apply         # may complete or hang; see notes below
+dart fix . --apply
 ```
 
-If the first run completes, run it again. The hang reproduces more
-reliably on the **second or third** invocation against an existing
-`~/.dartServer` cache.
+Outcomes I've observed (all on Dart SDK 3.11.5, macOS 26.3 ARM64):
 
-To force the deterministic crash mode, run several `dart fix . --apply`
-sessions in parallel against the same directory (e.g. by accidentally
-spawning two regen jobs in different terminals). One of the crashes
-will leave `~/.dartServer` in a state where the next `dart fix` reads
-back a corrupted `LibraryDiagnosticsBundle` and throws the `RangeError`
-above.
+- **Clean success.** ~30s, "17047 fixes made in 1267 files." Most
+  common when `~/.dartServer` is empty.
+- **Clean compute, no exit.** `dart fix` reports the fixes, but the
+  process never terminates — analysis-server child sits at 0% CPU
+  with every thread parked in `__psynch_cvwait` / `kevent`. See
+  [`sample-hung-analyzer.txt`](sample-hung-analyzer.txt) for a
+  capture from one occurrence. Recovery: kill + `rm -rf
+  ~/.dartServer`.
+- **Crash.** Analysis server throws `RangeError ... in
+  ManifestIdTableBuilder.readTable` while reading a
+  `LibraryDiagnosticsBundle` from `~/.dartServer`'s
+  on-disk cache. Stack trace:
+
+  ```
+  Internal error: Failed to handle request: edit.bulkFixes
+  RangeError (length): Invalid value: Not in inclusive range 0..1628: 5969437
+  ManifestIdTableBuilder.readTable
+  BinaryReader._initManifestIdTableAt
+  LibraryDiagnosticsBundle.fromBytes
+  ```
+
+  The two failure modes seem related — running multiple
+  `dart fix . --apply` against the same directory in parallel
+  (which I did by accident) reliably leaves the cache in a state
+  where the next single `dart fix` crashes with the RangeError.
+  After a few crash-recover cycles the hang variant takes over.
 
 ## Recovery when it hangs / crashes
 

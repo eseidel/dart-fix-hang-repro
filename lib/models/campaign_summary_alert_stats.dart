@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CampaignSummaryAlertStats {
-  const CampaignSummaryAlertStats({
+  CampaignSummaryAlertStats({
     required this.openCount,
     required this.closedCount,
     required this.inProgressCount,
@@ -15,9 +15,9 @@ class CampaignSummaryAlertStats {
       'CampaignSummaryAlertStats',
       json,
       () => CampaignSummaryAlertStats(
-        openCount: json['open_count'] as int,
-        closedCount: json['closed_count'] as int,
-        inProgressCount: json['in_progress_count'] as int,
+        openCount: (json['open_count'] as int),
+        closedCount: (json['closed_count'] as int),
+        inProgressCount: (json['in_progress_count'] as int),
       ),
     );
   }
@@ -60,8 +60,8 @@ class CampaignSummaryAlertStats {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CampaignSummaryAlertStats &&
-        openCount == other.openCount &&
-        closedCount == other.closedCount &&
-        inProgressCount == other.inProgressCount;
+        this.openCount == other.openCount &&
+        this.closedCount == other.closedCount &&
+        this.inProgressCount == other.inProgressCount;
   }
 }

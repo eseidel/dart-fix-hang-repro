@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ApiInsightsSummaryStats {
   /// {@macro api_insights_summary_stats}
-  const ApiInsightsSummaryStats({
+  ApiInsightsSummaryStats({
     this.totalRequestCount,
     this.rateLimitedRequestCount,
   });
@@ -19,8 +19,8 @@ class ApiInsightsSummaryStats {
       'ApiInsightsSummaryStats',
       json,
       () => ApiInsightsSummaryStats(
-        totalRequestCount: json['total_request_count'] as int?,
-        rateLimitedRequestCount: json['rate_limited_request_count'] as int?,
+        totalRequestCount: (json['total_request_count'] as int?),
+        rateLimitedRequestCount: (json['rate_limited_request_count'] as int?),
       ),
     );
   }
@@ -59,7 +59,7 @@ class ApiInsightsSummaryStats {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiInsightsSummaryStats &&
-        totalRequestCount == other.totalRequestCount &&
-        rateLimitedRequestCount == other.rateLimitedRequestCount;
+        this.totalRequestCount == other.totalRequestCount &&
+        this.rateLimitedRequestCount == other.rateLimitedRequestCount;
   }
 }

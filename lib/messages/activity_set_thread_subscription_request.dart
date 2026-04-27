@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActivitySetThreadSubscriptionRequest {
-  const ActivitySetThreadSubscriptionRequest({
+  ActivitySetThreadSubscriptionRequest({
     this.ignored = false,
   });
 
@@ -50,6 +50,6 @@ class ActivitySetThreadSubscriptionRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActivitySetThreadSubscriptionRequest &&
-        ignored == other.ignored;
+        this.ignored == other.ignored;
   }
 }

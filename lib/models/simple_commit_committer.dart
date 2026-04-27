@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SimpleCommitCommitter {
   /// {@macro simple_commit_committer}
-  const SimpleCommitCommitter({
+  SimpleCommitCommitter({
     required this.name,
     required this.email,
   });
@@ -59,7 +59,7 @@ class SimpleCommitCommitter {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SimpleCommitCommitter &&
-        name == other.name &&
-        email == other.email;
+        this.name == other.name &&
+        this.email == other.email;
   }
 }

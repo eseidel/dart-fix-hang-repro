@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamsCreateDiscussionInOrgRequest {
-  const TeamsCreateDiscussionInOrgRequest({
+  TeamsCreateDiscussionInOrgRequest({
     required this.title,
     required this.body,
     this.private = false,
@@ -68,8 +68,8 @@ class TeamsCreateDiscussionInOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamsCreateDiscussionInOrgRequest &&
-        title == other.title &&
-        body == other.body &&
-        private == other.private;
+        this.title == other.title &&
+        this.body == other.body &&
+        this.private == other.private;
   }
 }

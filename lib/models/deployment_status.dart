@@ -1,6 +1,9 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/deployment_status_state.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -17,19 +20,19 @@ class DeploymentStatus {
     required this.nodeId,
     required this.state,
     required this.creator,
+    this.description = '',
+    this.environment = '',
+    Uri? targetUrl,
     required this.createdAt,
     required this.updatedAt,
     required this.deploymentUrl,
     required this.repositoryUrl,
-    this.description = '',
-    this.environment = '',
-    Uri? targetUrl,
     Uri? environmentUrl,
     Uri? logUrl,
     this.performedViaGithubApp,
-  }) : targetUrl = targetUrl ?? Uri.parse(''),
-       environmentUrl = environmentUrl ?? Uri.parse(''),
-       logUrl = logUrl ?? Uri.parse('');
+  }) : this.targetUrl = targetUrl ?? Uri.parse(''),
+       this.environmentUrl = environmentUrl ?? Uri.parse(''),
+       this.logUrl = logUrl ?? Uri.parse('');
 
   /// Converts a `Map<String, dynamic>` to a [DeploymentStatus].
   factory DeploymentStatus.fromJson(Map<String, dynamic> json) {
@@ -38,7 +41,7 @@ class DeploymentStatus {
       json,
       () => DeploymentStatus(
         url: Uri.parse(json['url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         state: DeploymentStatusState.fromJson(json['state'] as String),
         creator: SimpleUser.maybeFromJson(
@@ -170,20 +173,20 @@ class DeploymentStatus {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DeploymentStatus &&
-        url == other.url &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        state == other.state &&
-        creator == other.creator &&
-        description == other.description &&
-        environment == other.environment &&
-        targetUrl == other.targetUrl &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        deploymentUrl == other.deploymentUrl &&
-        repositoryUrl == other.repositoryUrl &&
-        environmentUrl == other.environmentUrl &&
-        logUrl == other.logUrl &&
-        performedViaGithubApp == other.performedViaGithubApp;
+        this.url == other.url &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.state == other.state &&
+        this.creator == other.creator &&
+        this.description == other.description &&
+        this.environment == other.environment &&
+        this.targetUrl == other.targetUrl &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.deploymentUrl == other.deploymentUrl &&
+        this.repositoryUrl == other.repositoryUrl &&
+        this.environmentUrl == other.environmentUrl &&
+        this.logUrl == other.logUrl &&
+        this.performedViaGithubApp == other.performedViaGithubApp;
   }
 }

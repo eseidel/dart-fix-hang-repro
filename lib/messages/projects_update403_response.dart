@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsUpdate403Response {
-  const ProjectsUpdate403Response({
+  ProjectsUpdate403Response({
     this.message,
     this.documentationUrl,
     this.errors,
@@ -55,8 +55,8 @@ class ProjectsUpdate403Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectsUpdate403Response &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl &&
-        listsEqual(errors, other.errors);
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl &&
+        listsEqual(this.errors, other.errors);
   }
 }

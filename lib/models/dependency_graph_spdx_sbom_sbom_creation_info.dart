@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class DependencyGraphSpdxSbomSbomCreationInfo {
-  const DependencyGraphSpdxSbomSbomCreationInfo({
+  DependencyGraphSpdxSbomSbomCreationInfo({
     required this.created,
     required this.creators,
   });
@@ -60,7 +60,7 @@ class DependencyGraphSpdxSbomSbomCreationInfo {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependencyGraphSpdxSbomSbomCreationInfo &&
-        created == other.created &&
-        listsEqual(creators, other.creators);
+        this.created == other.created &&
+        listsEqual(this.creators, other.creators);
   }
 }

@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/migrations_start_for_org_request_exclude_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class MigrationsStartForOrgRequest {
-  const MigrationsStartForOrgRequest({
+  MigrationsStartForOrgRequest({
     required this.repositories,
     this.lockRepositories = false,
     this.excludeMetadata = false,
@@ -128,14 +124,14 @@ class MigrationsStartForOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MigrationsStartForOrgRequest &&
-        listsEqual(repositories, other.repositories) &&
-        lockRepositories == other.lockRepositories &&
-        excludeMetadata == other.excludeMetadata &&
-        excludeGitData == other.excludeGitData &&
-        excludeAttachments == other.excludeAttachments &&
-        excludeReleases == other.excludeReleases &&
-        excludeOwnerProjects == other.excludeOwnerProjects &&
-        orgMetadataOnly == other.orgMetadataOnly &&
-        listsEqual(exclude, other.exclude);
+        listsEqual(this.repositories, other.repositories) &&
+        this.lockRepositories == other.lockRepositories &&
+        this.excludeMetadata == other.excludeMetadata &&
+        this.excludeGitData == other.excludeGitData &&
+        this.excludeAttachments == other.excludeAttachments &&
+        this.excludeReleases == other.excludeReleases &&
+        this.excludeOwnerProjects == other.excludeOwnerProjects &&
+        this.orgMetadataOnly == other.orgMetadataOnly &&
+        listsEqual(this.exclude, other.exclude);
   }
 }

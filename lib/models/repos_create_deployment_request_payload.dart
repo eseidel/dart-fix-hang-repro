@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:meta/meta.dart';
 
 sealed class ReposCreateDeploymentRequestPayload {
@@ -9,8 +5,8 @@ sealed class ReposCreateDeploymentRequestPayload {
 
   factory ReposCreateDeploymentRequestPayload.fromJson(dynamic json) {
     return switch (json) {
-      final Map<String, dynamic> v => ReposCreateDeploymentRequestPayloadMap(v),
-      final String v => ReposCreateDeploymentRequestPayloadString(v),
+      Map<String, dynamic> v => ReposCreateDeploymentRequestPayloadMap(v),
+      String v => ReposCreateDeploymentRequestPayloadString(v),
       _ => throw FormatException(
         'Unsupported shape for ReposCreateDeploymentRequestPayload: ${json.runtimeType}',
       ),

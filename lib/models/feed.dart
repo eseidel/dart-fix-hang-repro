@@ -1,9 +1,6 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/feed_links.dart';
+import 'package:github_out/models/link_with_type.dart';
 import 'package:meta/meta.dart';
 
 /// {@template feed}
@@ -13,10 +10,9 @@ import 'package:meta/meta.dart';
 @immutable
 class Feed {
   /// {@macro feed}
-  const Feed({
+  Feed({
     required this.timelineUrl,
     required this.userUrl,
-    required this.links,
     this.currentUserPublicUrl,
     this.currentUserUrl,
     this.currentUserActorUrl,
@@ -25,6 +21,7 @@ class Feed {
     this.securityAdvisoriesUrl,
     this.repositoryDiscussionsUrl,
     this.repositoryDiscussionsCategoryUrl,
+    required this.links,
   });
 
   /// Converts a `Map<String, dynamic>` to a [Feed].
@@ -133,20 +130,20 @@ class Feed {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Feed &&
-        timelineUrl == other.timelineUrl &&
-        userUrl == other.userUrl &&
-        currentUserPublicUrl == other.currentUserPublicUrl &&
-        currentUserUrl == other.currentUserUrl &&
-        currentUserActorUrl == other.currentUserActorUrl &&
-        currentUserOrganizationUrl == other.currentUserOrganizationUrl &&
+        this.timelineUrl == other.timelineUrl &&
+        this.userUrl == other.userUrl &&
+        this.currentUserPublicUrl == other.currentUserPublicUrl &&
+        this.currentUserUrl == other.currentUserUrl &&
+        this.currentUserActorUrl == other.currentUserActorUrl &&
+        this.currentUserOrganizationUrl == other.currentUserOrganizationUrl &&
         listsEqual(
-          currentUserOrganizationUrls,
+          this.currentUserOrganizationUrls,
           other.currentUserOrganizationUrls,
         ) &&
-        securityAdvisoriesUrl == other.securityAdvisoriesUrl &&
-        repositoryDiscussionsUrl == other.repositoryDiscussionsUrl &&
-        repositoryDiscussionsCategoryUrl ==
+        this.securityAdvisoriesUrl == other.securityAdvisoriesUrl &&
+        this.repositoryDiscussionsUrl == other.repositoryDiscussionsUrl &&
+        this.repositoryDiscussionsCategoryUrl ==
             other.repositoryDiscussionsCategoryUrl &&
-        links == other.links;
+        this.links == other.links;
   }
 }

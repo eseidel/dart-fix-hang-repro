@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProtectedBranchBlockCreations {
-  const ProtectedBranchBlockCreations({
+  ProtectedBranchBlockCreations({
     required this.enabled,
   });
 
@@ -44,6 +44,7 @@ class ProtectedBranchBlockCreations {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ProtectedBranchBlockCreations && enabled == other.enabled;
+    return other is ProtectedBranchBlockCreations &&
+        this.enabled == other.enabled;
   }
 }

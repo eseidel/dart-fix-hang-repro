@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class OrgsUpdatePatAccessRequest {
-  const OrgsUpdatePatAccessRequest({
+  OrgsUpdatePatAccessRequest({
     required this.action,
   });
 
@@ -46,6 +46,6 @@ class OrgsUpdatePatAccessRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is OrgsUpdatePatAccessRequest && action == other.action;
+    return other is OrgsUpdatePatAccessRequest && this.action == other.action;
   }
 }

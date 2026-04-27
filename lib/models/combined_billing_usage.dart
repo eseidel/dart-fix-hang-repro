@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CombinedBillingUsage {
-  const CombinedBillingUsage({
+  CombinedBillingUsage({
     required this.daysLeftInBillingCycle,
     required this.estimatedPaidStorageForMonth,
     required this.estimatedStorageForMonth,
@@ -15,10 +15,10 @@ class CombinedBillingUsage {
       'CombinedBillingUsage',
       json,
       () => CombinedBillingUsage(
-        daysLeftInBillingCycle: json['days_left_in_billing_cycle'] as int,
+        daysLeftInBillingCycle: (json['days_left_in_billing_cycle'] as int),
         estimatedPaidStorageForMonth:
-            json['estimated_paid_storage_for_month'] as int,
-        estimatedStorageForMonth: json['estimated_storage_for_month'] as int,
+            (json['estimated_paid_storage_for_month'] as int),
+        estimatedStorageForMonth: (json['estimated_storage_for_month'] as int),
       ),
     );
   }
@@ -61,8 +61,9 @@ class CombinedBillingUsage {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CombinedBillingUsage &&
-        daysLeftInBillingCycle == other.daysLeftInBillingCycle &&
-        estimatedPaidStorageForMonth == other.estimatedPaidStorageForMonth &&
-        estimatedStorageForMonth == other.estimatedStorageForMonth;
+        this.daysLeftInBillingCycle == other.daysLeftInBillingCycle &&
+        this.estimatedPaidStorageForMonth ==
+            other.estimatedPaidStorageForMonth &&
+        this.estimatedStorageForMonth == other.estimatedStorageForMonth;
   }
 }

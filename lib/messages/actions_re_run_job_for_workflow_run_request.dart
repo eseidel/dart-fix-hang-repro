@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsReRunJobForWorkflowRunRequest {
-  const ActionsReRunJobForWorkflowRunRequest({
+  ActionsReRunJobForWorkflowRunRequest({
     this.enableDebugLogging = false,
   });
 
@@ -50,6 +50,6 @@ class ActionsReRunJobForWorkflowRunRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsReRunJobForWorkflowRunRequest &&
-        enableDebugLogging == other.enableDebugLogging;
+        this.enableDebugLogging == other.enableDebugLogging;
   }
 }

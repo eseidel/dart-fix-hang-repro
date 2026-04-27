@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SocialAccount {
   /// {@macro social_account}
-  const SocialAccount({
+  SocialAccount({
     required this.provider,
     required this.url,
   });
@@ -58,7 +58,7 @@ class SocialAccount {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SocialAccount &&
-        provider == other.provider &&
-        url == other.url;
+        this.provider == other.provider &&
+        this.url == other.url;
   }
 }

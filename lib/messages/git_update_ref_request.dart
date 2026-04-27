@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitUpdateRefRequest {
-  const GitUpdateRefRequest({
+  GitUpdateRefRequest({
     required this.sha,
     this.force = false,
   });
@@ -55,7 +55,7 @@ class GitUpdateRefRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitUpdateRefRequest &&
-        sha == other.sha &&
-        force == other.force;
+        this.sha == other.sha &&
+        this.force == other.force;
   }
 }

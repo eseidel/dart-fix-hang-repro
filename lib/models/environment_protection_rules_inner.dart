@@ -1,10 +1,14 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
+import 'package:github_out/models/deployment_reviewer_type.dart';
 import 'package:github_out/models/environment_protection_rules_inner_any_of_0.dart';
 import 'package:github_out/models/environment_protection_rules_inner_any_of_1.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1_reviewers_inner.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1_reviewers_inner_reviewer.dart';
 import 'package:github_out/models/environment_protection_rules_inner_any_of_2.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:github_out/models/wait_timer.dart';
 import 'package:meta/meta.dart';
 
 sealed class EnvironmentProtectionRulesInner {

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsCacheUsageByRepository {
   /// {@macro actions_cache_usage_by_repository}
-  const ActionsCacheUsageByRepository({
+  ActionsCacheUsageByRepository({
     required this.fullName,
     required this.activeCachesSizeInBytes,
     required this.activeCachesCount,
@@ -21,8 +21,8 @@ class ActionsCacheUsageByRepository {
       json,
       () => ActionsCacheUsageByRepository(
         fullName: json['full_name'] as String,
-        activeCachesSizeInBytes: json['active_caches_size_in_bytes'] as int,
-        activeCachesCount: json['active_caches_count'] as int,
+        activeCachesSizeInBytes: (json['active_caches_size_in_bytes'] as int),
+        activeCachesCount: (json['active_caches_count'] as int),
       ),
     );
   }
@@ -71,8 +71,8 @@ class ActionsCacheUsageByRepository {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsCacheUsageByRepository &&
-        fullName == other.fullName &&
-        activeCachesSizeInBytes == other.activeCachesSizeInBytes &&
-        activeCachesCount == other.activeCachesCount;
+        this.fullName == other.fullName &&
+        this.activeCachesSizeInBytes == other.activeCachesSizeInBytes &&
+        this.activeCachesCount == other.activeCachesCount;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/models/repos_set_team_access_restrictions_request_one_of_0.dart';
 import 'package:meta/meta.dart';
 
@@ -10,11 +6,11 @@ sealed class ReposSetTeamAccessRestrictionsRequest {
 
   factory ReposSetTeamAccessRestrictionsRequest.fromJson(dynamic json) {
     return switch (json) {
-      final Map<String, dynamic> v =>
+      Map<String, dynamic> v =>
         ReposSetTeamAccessRestrictionsRequestReposSetTeamAccessRestrictionsRequestOneOf0(
           ReposSetTeamAccessRestrictionsRequestOneOf0.fromJson(v),
         ),
-      final List<dynamic> v => ReposSetTeamAccessRestrictionsRequestList(
+      List<dynamic> v => ReposSetTeamAccessRestrictionsRequestList(
         v.cast<String>(),
       ),
       _ => throw FormatException(

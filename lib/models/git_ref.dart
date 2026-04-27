@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GitRef {
   /// {@macro git_ref}
-  const GitRef({
+  GitRef({
     required this.ref,
     required this.nodeId,
     required this.url,
@@ -66,9 +66,9 @@ class GitRef {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitRef &&
-        ref == other.ref &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        object == other.object;
+        this.ref == other.ref &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.object == other.object;
   }
 }

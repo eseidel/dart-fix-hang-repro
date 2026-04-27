@@ -1,14 +1,12 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle_dsse_envelope.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle_verification_material.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrgsListAttestationsBulk200ResponseAttestationsSubjectDigestsInner {
-  const OrgsListAttestationsBulk200ResponseAttestationsSubjectDigestsInner({
+  OrgsListAttestationsBulk200ResponseAttestationsSubjectDigestsInner({
     this.bundle,
     this.repositoryId,
     this.bundleUrl,
@@ -27,7 +25,7 @@ class OrgsListAttestationsBulk200ResponseAttestationsSubjectDigestsInner {
             OrgsListAttestationsBulk200ResponseAttestationsSubjectDigestsInnerBundle.maybeFromJson(
               json['bundle'] as Map<String, dynamic>?,
             ),
-        repositoryId: json['repository_id'] as int?,
+        repositoryId: (json['repository_id'] as int?),
         bundleUrl: json['bundle_url'] as String?,
       ),
     );
@@ -73,8 +71,8 @@ class OrgsListAttestationsBulk200ResponseAttestationsSubjectDigestsInner {
     if (identical(this, other)) return true;
     return other
             is OrgsListAttestationsBulk200ResponseAttestationsSubjectDigestsInner &&
-        bundle == other.bundle &&
-        repositoryId == other.repositoryId &&
-        bundleUrl == other.bundleUrl;
+        this.bundle == other.bundle &&
+        this.repositoryId == other.repositoryId &&
+        this.bundleUrl == other.bundleUrl;
   }
 }

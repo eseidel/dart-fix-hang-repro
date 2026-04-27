@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsSetGithubActionsPermissionsRepositoryRequest {
-  const ActionsSetGithubActionsPermissionsRepositoryRequest({
+  ActionsSetGithubActionsPermissionsRepositoryRequest({
     required this.enabled,
     this.allowedActions,
   });
@@ -64,7 +64,7 @@ class ActionsSetGithubActionsPermissionsRepositoryRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsSetGithubActionsPermissionsRepositoryRequest &&
-        enabled == other.enabled &&
-        allowedActions == other.allowedActions;
+        this.enabled == other.enabled &&
+        this.allowedActions == other.allowedActions;
   }
 }

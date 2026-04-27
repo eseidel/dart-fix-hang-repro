@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProtectedBranchRequiredStatusCheckChecksInner {
-  const ProtectedBranchRequiredStatusCheckChecksInner({
+  ProtectedBranchRequiredStatusCheckChecksInner({
     required this.context,
     required this.appId,
   });
@@ -18,7 +18,7 @@ class ProtectedBranchRequiredStatusCheckChecksInner {
       json,
       () => ProtectedBranchRequiredStatusCheckChecksInner(
         context: json['context'] as String,
-        appId: checkedKey(json, 'app_id') as int?,
+        appId: (checkedKey(json, 'app_id') as int?),
       ),
     );
   }
@@ -56,7 +56,7 @@ class ProtectedBranchRequiredStatusCheckChecksInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProtectedBranchRequiredStatusCheckChecksInner &&
-        context == other.context &&
-        appId == other.appId;
+        this.context == other.context &&
+        this.appId == other.appId;
   }
 }

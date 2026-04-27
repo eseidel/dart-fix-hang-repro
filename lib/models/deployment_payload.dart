@@ -5,8 +5,8 @@ sealed class DeploymentPayload {
 
   factory DeploymentPayload.fromJson(dynamic json) {
     return switch (json) {
-      final Map<String, dynamic> v => DeploymentPayloadMap(v),
-      final String v => DeploymentPayloadString(v),
+      Map<String, dynamic> v => DeploymentPayloadMap(v),
+      String v => DeploymentPayloadString(v),
       _ => throw FormatException(
         'Unsupported shape for DeploymentPayload: ${json.runtimeType}',
       ),

@@ -1,10 +1,29 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/codespace_git_status.dart';
 import 'package:github_out/models/codespace_location.dart';
 import 'package:github_out/models/codespace_machine.dart';
+import 'package:github_out/models/codespace_machine_prebuild_availability.dart';
 import 'package:github_out/models/codespace_runtime_constraints.dart';
 import 'package:github_out/models/codespace_state.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -15,14 +34,16 @@ import 'package:meta/meta.dart';
 @immutable
 class Codespace {
   /// {@macro codespace}
-  const Codespace({
+  Codespace({
     required this.id,
     required this.name,
+    this.displayName,
     required this.environmentId,
     required this.owner,
     required this.billableOwner,
     required this.repository,
     required this.machine,
+    this.devcontainerPath,
     required this.prebuild,
     required this.createdAt,
     required this.updatedAt,
@@ -36,11 +57,9 @@ class Codespace {
     required this.machinesUrl,
     required this.startUrl,
     required this.stopUrl,
+    this.publishUrl,
     required this.pullsUrl,
     required this.recentFolders,
-    this.displayName,
-    this.devcontainerPath,
-    this.publishUrl,
     this.runtimeConstraints,
     this.pendingOperation,
     this.pendingOperationDisabledReason,
@@ -56,7 +75,7 @@ class Codespace {
       'Codespace',
       json,
       () => Codespace(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         displayName: json['display_name'] as String?,
         environmentId: checkedKey(json, 'environment_id') as String?,
@@ -81,7 +100,7 @@ class Codespace {
           json['git_status'] as Map<String, dynamic>,
         ),
         location: CodespaceLocation.fromJson(json['location'] as String),
-        idleTimeoutMinutes: checkedKey(json, 'idle_timeout_minutes') as int?,
+        idleTimeoutMinutes: (checkedKey(json, 'idle_timeout_minutes') as int?),
         webUrl: Uri.parse(json['web_url'] as String),
         machinesUrl: Uri.parse(json['machines_url'] as String),
         startUrl: Uri.parse(json['start_url'] as String),
@@ -96,7 +115,7 @@ class Codespace {
         pendingOperationDisabledReason:
             json['pending_operation_disabled_reason'] as String?,
         idleTimeoutNotice: json['idle_timeout_notice'] as String?,
-        retentionPeriodMinutes: json['retention_period_minutes'] as int?,
+        retentionPeriodMinutes: (json['retention_period_minutes'] as int?),
         retentionExpiresAt: maybeParseDateTime(
           json['retention_expires_at'] as String?,
         ),
@@ -307,38 +326,38 @@ class Codespace {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Codespace &&
-        id == other.id &&
-        name == other.name &&
-        displayName == other.displayName &&
-        environmentId == other.environmentId &&
-        owner == other.owner &&
-        billableOwner == other.billableOwner &&
-        repository == other.repository &&
-        machine == other.machine &&
-        devcontainerPath == other.devcontainerPath &&
-        prebuild == other.prebuild &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        lastUsedAt == other.lastUsedAt &&
-        state == other.state &&
-        url == other.url &&
-        gitStatus == other.gitStatus &&
-        location == other.location &&
-        idleTimeoutMinutes == other.idleTimeoutMinutes &&
-        webUrl == other.webUrl &&
-        machinesUrl == other.machinesUrl &&
-        startUrl == other.startUrl &&
-        stopUrl == other.stopUrl &&
-        publishUrl == other.publishUrl &&
-        pullsUrl == other.pullsUrl &&
-        listsEqual(recentFolders, other.recentFolders) &&
-        runtimeConstraints == other.runtimeConstraints &&
-        pendingOperation == other.pendingOperation &&
-        pendingOperationDisabledReason ==
+        this.id == other.id &&
+        this.name == other.name &&
+        this.displayName == other.displayName &&
+        this.environmentId == other.environmentId &&
+        this.owner == other.owner &&
+        this.billableOwner == other.billableOwner &&
+        this.repository == other.repository &&
+        this.machine == other.machine &&
+        this.devcontainerPath == other.devcontainerPath &&
+        this.prebuild == other.prebuild &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.lastUsedAt == other.lastUsedAt &&
+        this.state == other.state &&
+        this.url == other.url &&
+        this.gitStatus == other.gitStatus &&
+        this.location == other.location &&
+        this.idleTimeoutMinutes == other.idleTimeoutMinutes &&
+        this.webUrl == other.webUrl &&
+        this.machinesUrl == other.machinesUrl &&
+        this.startUrl == other.startUrl &&
+        this.stopUrl == other.stopUrl &&
+        this.publishUrl == other.publishUrl &&
+        this.pullsUrl == other.pullsUrl &&
+        listsEqual(this.recentFolders, other.recentFolders) &&
+        this.runtimeConstraints == other.runtimeConstraints &&
+        this.pendingOperation == other.pendingOperation &&
+        this.pendingOperationDisabledReason ==
             other.pendingOperationDisabledReason &&
-        idleTimeoutNotice == other.idleTimeoutNotice &&
-        retentionPeriodMinutes == other.retentionPeriodMinutes &&
-        retentionExpiresAt == other.retentionExpiresAt &&
-        lastKnownStopNotice == other.lastKnownStopNotice;
+        this.idleTimeoutNotice == other.idleTimeoutNotice &&
+        this.retentionPeriodMinutes == other.retentionPeriodMinutes &&
+        this.retentionExpiresAt == other.retentionExpiresAt &&
+        this.lastKnownStopNotice == other.lastKnownStopNotice;
   }
 }

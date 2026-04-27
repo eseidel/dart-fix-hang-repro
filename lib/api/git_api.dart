@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -13,18 +9,46 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/messages/git_create_blob422_response.dart';
 import 'package:github_out/messages/git_create_blob_request.dart';
 import 'package:github_out/messages/git_create_commit_request.dart';
 import 'package:github_out/messages/git_create_ref_request.dart';
 import 'package:github_out/messages/git_create_tag_request.dart';
 import 'package:github_out/messages/git_create_tree_request.dart';
 import 'package:github_out/messages/git_update_ref_request.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/blob.dart';
 import 'package:github_out/models/git_commit.dart';
+import 'package:github_out/models/git_commit_author.dart';
+import 'package:github_out/models/git_commit_committer.dart';
+import 'package:github_out/models/git_commit_parents_inner.dart';
+import 'package:github_out/models/git_commit_tree.dart';
+import 'package:github_out/models/git_commit_verification.dart';
+import 'package:github_out/models/git_create_commit_request_author.dart';
+import 'package:github_out/models/git_create_commit_request_committer.dart';
+import 'package:github_out/models/git_create_tag_request_tagger.dart';
+import 'package:github_out/models/git_create_tag_request_type.dart';
+import 'package:github_out/models/git_create_tree_request_tree_inner.dart';
+import 'package:github_out/models/git_create_tree_request_tree_inner_mode.dart';
+import 'package:github_out/models/git_create_tree_request_tree_inner_type.dart';
 import 'package:github_out/models/git_ref.dart';
+import 'package:github_out/models/git_ref_object.dart';
 import 'package:github_out/models/git_tag.dart';
+import 'package:github_out/models/git_tag_object.dart';
+import 'package:github_out/models/git_tag_tagger.dart';
 import 'package:github_out/models/git_tree.dart';
+import 'package:github_out/models/git_tree_tree_inner.dart';
+import 'package:github_out/models/repository_rule_violation_error.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata_secret_scanning.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata_secret_scanning_bypass_placeholders_inner.dart';
+import 'package:github_out/models/secret_scanning_push_protection_bypass_placeholder_id.dart';
 import 'package:github_out/models/short_blob.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/verification.dart';
+import 'package:http/http.dart' as http;
 
 /// Raw Git functionality.
 class GitApi {
@@ -42,15 +66,16 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/git/blobs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: gitCreateBlobRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -84,15 +109,15 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/git/blobs/{file_sha}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{file_sha}', fileSha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{file_sha}', '${fileSha}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -161,15 +186,16 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/git/commits'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: gitCreateCommitRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -243,15 +269,15 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/git/commits/{commit_sha}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{commit_sha}', commitSha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{commit_sha}', '${commitSha}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -295,15 +321,15 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/git/matching-refs/{ref}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -336,15 +362,15 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/git/ref/{ref}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -367,15 +393,16 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/git/refs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: gitCreateRefRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -396,15 +423,15 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/git/refs/{ref}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -423,16 +450,17 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/git/refs/{ref}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ref}', ref),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ref}', '${ref}'),
       body: gitUpdateRefRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -507,15 +535,16 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/git/tags'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: gitCreateTagRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -581,15 +610,15 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/git/tags/{tag_sha}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{tag_sha}', tagSha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{tag_sha}', '${tagSha}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -622,15 +651,16 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/git/trees'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: gitCreateTreeRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -663,18 +693,18 @@ class GitApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/git/trees/{tree_sha}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{tree_sha}', treeSha),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{tree_sha}', '${treeSha}'),
       queryParameters: {
-        if (recursive != null) 'recursive': [recursive],
+        if (recursive != null) 'recursive': [recursive.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

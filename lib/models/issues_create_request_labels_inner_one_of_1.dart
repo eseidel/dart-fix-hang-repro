@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesCreateRequestLabelsInnerOneOf1 {
-  const IssuesCreateRequestLabelsInnerOneOf1({
+  IssuesCreateRequestLabelsInnerOneOf1({
     this.id,
     this.name,
     this.description,
@@ -19,7 +19,7 @@ class IssuesCreateRequestLabelsInnerOneOf1 {
       'IssuesCreateRequestLabelsInnerOneOf1',
       json,
       () => IssuesCreateRequestLabelsInnerOneOf1(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         name: json['name'] as String?,
         description: json['description'] as String?,
         color: json['color'] as String?,
@@ -66,9 +66,9 @@ class IssuesCreateRequestLabelsInnerOneOf1 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssuesCreateRequestLabelsInnerOneOf1 &&
-        id == other.id &&
-        name == other.name &&
-        description == other.description &&
-        color == other.color;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.color == other.color;
   }
 }

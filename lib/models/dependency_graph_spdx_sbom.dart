@@ -1,5 +1,9 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/dependency_graph_spdx_sbom_sbom.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_creation_info.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_packages_inner.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_packages_inner_external_refs_inner.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_relationships_inner.dart';
 import 'package:meta/meta.dart';
 
 /// {@template dependency_graph_spdx_sbom}
@@ -9,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependencyGraphSpdxSbom {
   /// {@macro dependency_graph_spdx_sbom}
-  const DependencyGraphSpdxSbom({
+  DependencyGraphSpdxSbom({
     required this.sbom,
   });
 
@@ -50,6 +54,6 @@ class DependencyGraphSpdxSbom {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is DependencyGraphSpdxSbom && sbom == other.sbom;
+    return other is DependencyGraphSpdxSbom && this.sbom == other.sbom;
   }
 }

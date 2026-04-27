@@ -8,10 +8,10 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleParamsWorkflowFileReference {
   /// {@macro repository_rule_params_workflow_file_reference}
-  const RepositoryRuleParamsWorkflowFileReference({
+  RepositoryRuleParamsWorkflowFileReference({
     required this.path,
-    required this.repositoryId,
     this.ref,
+    required this.repositoryId,
     this.sha,
   });
 
@@ -26,7 +26,7 @@ class RepositoryRuleParamsWorkflowFileReference {
       () => RepositoryRuleParamsWorkflowFileReference(
         path: json['path'] as String,
         ref: json['ref'] as String?,
-        repositoryId: json['repository_id'] as int,
+        repositoryId: (json['repository_id'] as int),
         sha: json['sha'] as String?,
       ),
     );
@@ -78,9 +78,9 @@ class RepositoryRuleParamsWorkflowFileReference {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleParamsWorkflowFileReference &&
-        path == other.path &&
-        ref == other.ref &&
-        repositoryId == other.repositoryId &&
-        sha == other.sha;
+        this.path == other.path &&
+        this.ref == other.ref &&
+        this.repositoryId == other.repositoryId &&
+        this.sha == other.sha;
   }
 }

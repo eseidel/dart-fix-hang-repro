@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PageBuildError {
-  const PageBuildError({
+  PageBuildError({
     required this.message,
   });
 
@@ -42,6 +42,6 @@ class PageBuildError {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is PageBuildError && message == other.message;
+    return other is PageBuildError && this.message == other.message;
   }
 }

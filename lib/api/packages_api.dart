@@ -1,21 +1,45 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
+import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/package.dart';
+import 'package:github_out/models/package_package_type.dart';
 import 'package:github_out/models/package_type_param.dart';
 import 'package:github_out/models/package_version.dart';
+import 'package:github_out/models/package_version_metadata.dart';
+import 'package:github_out/models/package_version_metadata_container.dart';
+import 'package:github_out/models/package_version_metadata_docker.dart';
+import 'package:github_out/models/package_version_metadata_package_type.dart';
+import 'package:github_out/models/package_visibility.dart';
 import 'package:github_out/models/package_visibility_param.dart';
 import 'package:github_out/models/packages_get_all_package_versions_for_package_owned_by_authenticated_user_parameter4.dart';
 import 'package:github_out/models/packages_get_all_package_versions_for_package_owned_by_org_parameter5.dart';
 import 'package:github_out/models/packages_list_packages_for_authenticated_user_parameter0.dart';
 import 'package:github_out/models/packages_list_packages_for_organization_parameter0.dart';
 import 'package:github_out/models/packages_list_packages_for_user_parameter0.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:http/http.dart' as http;
 
 /// Manage packages for authenticated users and organizations.
 class PackagesApi {
@@ -36,13 +60,13 @@ class PackagesApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/docker/conflicts'.replaceAll('{org}', org),
+      path: '/orgs/{org}/docker/conflicts'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -71,10 +95,10 @@ class PackagesApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/packages'.replaceAll('{org}', org),
+      path: '/orgs/{org}/packages'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        'package_type': [packageType.toJson()],
-        if (visibility != null) 'visibility': [visibility.toJson()],
+        'package_type': [packageType.toJson().toString()],
+        if (visibility != null) 'visibility': [visibility.toJson().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
       },
@@ -83,7 +107,7 @@ class PackagesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -111,15 +135,15 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/packages/{package_type}/{package_name}'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName)
-          .replaceAll('{org}', org),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}')
+          .replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -156,15 +180,15 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/packages/{package_type}/{package_name}'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName)
-          .replaceAll('{org}', org),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}')
+          .replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -200,18 +224,18 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/packages/{package_type}/{package_name}/restore'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName)
-          .replaceAll('{org}', org),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}')
+          .replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (token != null) 'token': [token],
+        if (token != null) 'token': [token.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -234,20 +258,20 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/packages/{package_type}/{package_name}/versions'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName)
-          .replaceAll('{org}', org),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}')
+          .replaceAll('{org}', '${org}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (state != null) 'state': [state.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -279,16 +303,16 @@ class PackagesApi {
       method: Method.get,
       path:
           '/orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{org}', org)
-              .replaceAll('{package_version_id}', '$packageVersionId'),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{package_version_id}', '${packageVersionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -328,16 +352,16 @@ class PackagesApi {
       method: Method.delete,
       path:
           '/orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{org}', org)
-              .replaceAll('{package_version_id}', '$packageVersionId'),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{package_version_id}', '${packageVersionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -374,16 +398,16 @@ class PackagesApi {
       method: Method.post,
       path:
           '/orgs/{org}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{org}', org)
-              .replaceAll('{package_version_id}', '$packageVersionId'),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{package_version_id}', '${packageVersionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -406,7 +430,7 @@ class PackagesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -437,8 +461,8 @@ class PackagesApi {
       method: Method.get,
       path: '/user/packages',
       queryParameters: {
-        'package_type': [packageType.toJson()],
-        if (visibility != null) 'visibility': [visibility.toJson()],
+        'package_type': [packageType.toJson().toString()],
+        if (visibility != null) 'visibility': [visibility.toJson().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
       },
@@ -447,7 +471,7 @@ class PackagesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -474,14 +498,14 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/user/packages/{package_type}/{package_name}'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -511,14 +535,14 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/user/packages/{package_type}/{package_name}'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -546,17 +570,17 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/user/packages/{package_type}/{package_name}/restore'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}'),
       queryParameters: {
-        if (token != null) 'token': [token],
+        if (token != null) 'token': [token.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -580,19 +604,19 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/user/packages/{package_type}/{package_name}/versions'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (state != null) 'state': [state.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -624,15 +648,15 @@ class PackagesApi {
       method: Method.get,
       path:
           '/user/packages/{package_type}/{package_name}/versions/{package_version_id}'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{package_version_id}', '$packageVersionId'),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{package_version_id}', '${packageVersionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -667,15 +691,15 @@ class PackagesApi {
       method: Method.delete,
       path:
           '/user/packages/{package_type}/{package_name}/versions/{package_version_id}'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{package_version_id}', '$packageVersionId'),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{package_version_id}', '${packageVersionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -705,15 +729,15 @@ class PackagesApi {
       method: Method.post,
       path:
           '/user/packages/{package_type}/{package_name}/versions/{package_version_id}/restore'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{package_version_id}', '$packageVersionId'),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{package_version_id}', '${packageVersionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -732,14 +756,14 @@ class PackagesApi {
       method: Method.get,
       path: '/users/{username}/docker/conflicts'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -771,11 +795,11 @@ class PackagesApi {
       method: Method.get,
       path: '/users/{username}/packages'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
-        'package_type': [packageType.toJson()],
-        if (visibility != null) 'visibility': [visibility.toJson()],
+        'package_type': [packageType.toJson().toString()],
+        if (visibility != null) 'visibility': [visibility.toJson().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
       },
@@ -784,7 +808,7 @@ class PackagesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -812,15 +836,15 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/users/{username}/packages/{package_type}/{package_name}'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName)
-          .replaceAll('{username}', username),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -856,15 +880,15 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/users/{username}/packages/{package_type}/{package_name}'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName)
-          .replaceAll('{username}', username),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -899,18 +923,18 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/users/{username}/packages/{package_type}/{package_name}/restore'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName)
-          .replaceAll('{username}', username),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}')
+          .replaceAll('{username}', '${username}'),
       queryParameters: {
-        if (token != null) 'token': [token],
+        if (token != null) 'token': [token.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -930,15 +954,15 @@ class PackagesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/users/{username}/packages/{package_type}/{package_name}/versions'
-          .replaceAll('{package_type}', packageType.toJson())
-          .replaceAll('{package_name}', packageName)
-          .replaceAll('{username}', username),
+          .replaceAll('{package_type}', '${packageType.toJson()}')
+          .replaceAll('{package_name}', '${packageName}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -971,16 +995,16 @@ class PackagesApi {
       method: Method.get,
       path:
           '/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{package_version_id}', '$packageVersionId')
-              .replaceAll('{username}', username),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{package_version_id}', '${packageVersionId}')
+              .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1019,16 +1043,16 @@ class PackagesApi {
       method: Method.delete,
       path:
           '/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{username}', username)
-              .replaceAll('{package_version_id}', '$packageVersionId'),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{username}', '${username}')
+              .replaceAll('{package_version_id}', '${packageVersionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1064,16 +1088,16 @@ class PackagesApi {
       method: Method.post,
       path:
           '/users/{username}/packages/{package_type}/{package_name}/versions/{package_version_id}/restore'
-              .replaceAll('{package_type}', packageType.toJson())
-              .replaceAll('{package_name}', packageName)
-              .replaceAll('{username}', username)
-              .replaceAll('{package_version_id}', '$packageVersionId'),
+              .replaceAll('{package_type}', '${packageType.toJson()}')
+              .replaceAll('{package_name}', '${packageName}')
+              .replaceAll('{username}', '${username}')
+              .replaceAll('{package_version_id}', '${packageVersionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }

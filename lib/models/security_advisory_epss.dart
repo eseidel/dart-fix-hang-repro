@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SecurityAdvisoryEpss {
   /// {@macro security_advisory_epss}
-  const SecurityAdvisoryEpss({
+  SecurityAdvisoryEpss({
     this.percentage,
     this.percentile,
   });
@@ -55,7 +55,7 @@ class SecurityAdvisoryEpss {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecurityAdvisoryEpss &&
-        percentage == other.percentage &&
-        percentile == other.percentile;
+        this.percentage == other.percentage &&
+        this.percentile == other.percentile;
   }
 }

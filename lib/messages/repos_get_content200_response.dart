@@ -1,11 +1,15 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/models/content_directory_inner.dart';
+import 'package:github_out/models/content_directory_inner_links.dart';
+import 'package:github_out/models/content_directory_inner_type.dart';
 import 'package:github_out/models/content_file.dart';
+import 'package:github_out/models/content_file_links.dart';
+import 'package:github_out/models/content_file_type.dart';
 import 'package:github_out/models/content_submodule.dart';
+import 'package:github_out/models/content_submodule_links.dart';
+import 'package:github_out/models/content_submodule_type.dart';
 import 'package:github_out/models/content_symlink.dart';
+import 'package:github_out/models/content_symlink_links.dart';
+import 'package:github_out/models/content_symlink_type.dart';
 import 'package:meta/meta.dart';
 
 sealed class ReposGetContent200Response {

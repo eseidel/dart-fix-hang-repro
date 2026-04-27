@@ -13,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GitCommit {
   /// {@macro git_commit}
-  const GitCommit({
+  GitCommit({
     required this.sha,
     required this.nodeId,
     required this.url,
@@ -119,15 +119,15 @@ class GitCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCommit &&
-        sha == other.sha &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        author == other.author &&
-        committer == other.committer &&
-        message == other.message &&
-        tree == other.tree &&
-        listsEqual(parents, other.parents) &&
-        verification == other.verification &&
-        htmlUrl == other.htmlUrl;
+        this.sha == other.sha &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.author == other.author &&
+        this.committer == other.committer &&
+        this.message == other.message &&
+        this.tree == other.tree &&
+        listsEqual(this.parents, other.parents) &&
+        this.verification == other.verification &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

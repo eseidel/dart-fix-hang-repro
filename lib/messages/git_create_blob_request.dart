@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitCreateBlobRequest {
-  const GitCreateBlobRequest({
+  GitCreateBlobRequest({
     required this.content,
     this.encoding = 'utf-8',
   });
@@ -54,7 +54,7 @@ class GitCreateBlobRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCreateBlobRequest &&
-        content == other.content &&
-        encoding == other.encoding;
+        this.content == other.content &&
+        this.encoding == other.encoding;
   }
 }

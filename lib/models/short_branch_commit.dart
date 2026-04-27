@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ShortBranchCommit {
-  const ShortBranchCommit({
+  ShortBranchCommit({
     required this.sha,
     required this.url,
   });
@@ -49,6 +49,8 @@ class ShortBranchCommit {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ShortBranchCommit && sha == other.sha && url == other.url;
+    return other is ShortBranchCommit &&
+        this.sha == other.sha &&
+        this.url == other.url;
   }
 }

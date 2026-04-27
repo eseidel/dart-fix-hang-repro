@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_params_code_scanning_tool_alerts_threshold.dart';
 import 'package:github_out/models/repository_rule_params_code_scanning_tool_security_alerts_threshold.dart';
@@ -14,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleParamsCodeScanningTool {
   /// {@macro repository_rule_params_code_scanning_tool}
-  const RepositoryRuleParamsCodeScanningTool({
+  RepositoryRuleParamsCodeScanningTool({
     required this.alertsThreshold,
     required this.securityAlertsThreshold,
     required this.tool,
@@ -90,8 +86,8 @@ class RepositoryRuleParamsCodeScanningTool {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleParamsCodeScanningTool &&
-        alertsThreshold == other.alertsThreshold &&
-        securityAlertsThreshold == other.securityAlertsThreshold &&
-        tool == other.tool;
+        this.alertsThreshold == other.alertsThreshold &&
+        this.securityAlertsThreshold == other.securityAlertsThreshold &&
+        this.tool == other.tool;
   }
 }

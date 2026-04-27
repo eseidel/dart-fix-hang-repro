@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -24,20 +20,104 @@ import 'package:github_out/messages/apps_list_repos_accessible_to_installation20
 import 'package:github_out/messages/apps_reset_token_request.dart';
 import 'package:github_out/messages/apps_scope_token_request.dart';
 import 'package:github_out/messages/apps_update_webhook_config_for_app_request.dart';
+import 'package:github_out/messages/hook_delivery_request.dart';
+import 'package:github_out/messages/hook_delivery_response.dart';
 import 'package:github_out/messages/integration_installation_request.dart';
+import 'package:github_out/models/app_permissions.dart';
+import 'package:github_out/models/app_permissions_actions.dart';
+import 'package:github_out/models/app_permissions_administration.dart';
+import 'package:github_out/models/app_permissions_checks.dart';
+import 'package:github_out/models/app_permissions_codespaces.dart';
+import 'package:github_out/models/app_permissions_contents.dart';
+import 'package:github_out/models/app_permissions_dependabot_secrets.dart';
+import 'package:github_out/models/app_permissions_deployments.dart';
+import 'package:github_out/models/app_permissions_email_addresses.dart';
+import 'package:github_out/models/app_permissions_environments.dart';
+import 'package:github_out/models/app_permissions_followers.dart';
+import 'package:github_out/models/app_permissions_git_ssh_keys.dart';
+import 'package:github_out/models/app_permissions_gpg_keys.dart';
+import 'package:github_out/models/app_permissions_interaction_limits.dart';
+import 'package:github_out/models/app_permissions_issues.dart';
+import 'package:github_out/models/app_permissions_members.dart';
+import 'package:github_out/models/app_permissions_metadata.dart';
+import 'package:github_out/models/app_permissions_organization_administration.dart';
+import 'package:github_out/models/app_permissions_organization_announcement_banners.dart';
+import 'package:github_out/models/app_permissions_organization_copilot_seat_management.dart';
+import 'package:github_out/models/app_permissions_organization_custom_org_roles.dart';
+import 'package:github_out/models/app_permissions_organization_custom_properties.dart';
+import 'package:github_out/models/app_permissions_organization_custom_roles.dart';
+import 'package:github_out/models/app_permissions_organization_events.dart';
+import 'package:github_out/models/app_permissions_organization_hooks.dart';
+import 'package:github_out/models/app_permissions_organization_packages.dart';
+import 'package:github_out/models/app_permissions_organization_personal_access_token_requests.dart';
+import 'package:github_out/models/app_permissions_organization_personal_access_tokens.dart';
+import 'package:github_out/models/app_permissions_organization_plan.dart';
+import 'package:github_out/models/app_permissions_organization_projects.dart';
+import 'package:github_out/models/app_permissions_organization_secrets.dart';
+import 'package:github_out/models/app_permissions_organization_self_hosted_runners.dart';
+import 'package:github_out/models/app_permissions_organization_user_blocking.dart';
+import 'package:github_out/models/app_permissions_packages.dart';
+import 'package:github_out/models/app_permissions_pages.dart';
+import 'package:github_out/models/app_permissions_profile.dart';
+import 'package:github_out/models/app_permissions_pull_requests.dart';
+import 'package:github_out/models/app_permissions_repository_custom_properties.dart';
+import 'package:github_out/models/app_permissions_repository_hooks.dart';
+import 'package:github_out/models/app_permissions_repository_projects.dart';
+import 'package:github_out/models/app_permissions_secret_scanning_alerts.dart';
+import 'package:github_out/models/app_permissions_secrets.dart';
+import 'package:github_out/models/app_permissions_security_events.dart';
+import 'package:github_out/models/app_permissions_single_file.dart';
+import 'package:github_out/models/app_permissions_starring.dart';
+import 'package:github_out/models/app_permissions_statuses.dart';
+import 'package:github_out/models/app_permissions_team_discussions.dart';
+import 'package:github_out/models/app_permissions_vulnerability_alerts.dart';
+import 'package:github_out/models/app_permissions_workflows.dart';
 import 'package:github_out/models/apps_list_accounts_for_plan_parameter2.dart';
 import 'package:github_out/models/apps_list_accounts_for_plan_stubbed_parameter2.dart';
 import 'package:github_out/models/authorization.dart';
+import 'package:github_out/models/authorization_app.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/hook_delivery.dart';
 import 'package:github_out/models/hook_delivery_item.dart';
 import 'package:github_out/models/installation.dart';
+import 'package:github_out/models/installation_account.dart';
+import 'package:github_out/models/installation_repository_selection.dart';
 import 'package:github_out/models/installation_token.dart';
+import 'package:github_out/models/installation_token_repository_selection.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_installation_request_account.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/marketplace_account.dart';
 import 'package:github_out/models/marketplace_listing_plan.dart';
+import 'package:github_out/models/marketplace_listing_plan_price_model.dart';
 import 'package:github_out/models/marketplace_purchase.dart';
+import 'package:github_out/models/marketplace_purchase_marketplace_pending_change.dart';
+import 'package:github_out/models/marketplace_purchase_marketplace_purchase.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/scoped_installation.dart';
+import 'package:github_out/models/scoped_installation_repository_selection.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/sort_param.dart';
 import 'package:github_out/models/user_marketplace_purchase.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/validation_error_simple.dart';
 import 'package:github_out/models/webhook_config.dart';
+import 'package:github_out/models/webhook_config_content_type.dart';
+import 'package:github_out/models/webhook_config_insecure_ssl.dart';
+import 'package:github_out/models/webhook_config_secret.dart';
+import 'package:github_out/models/webhook_config_url.dart';
+import 'package:http/http.dart' as http;
 
 /// Information for integrations and installations.
 class AppsApi {
@@ -66,7 +146,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -91,13 +171,13 @@ class AppsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/app-manifests/{code}/conversions'.replaceAll('{code}', code),
+      path: '/app-manifests/{code}/conversions'.replaceAll('{code}', '${code}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -127,7 +207,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -155,12 +235,13 @@ class AppsApi {
       method: Method.patch,
       path: '/app/hook/config',
       body: appsUpdateWebhookConfigForAppRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -189,14 +270,14 @@ class AppsApi {
       path: '/app/hook/deliveries',
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (cursor != null) 'cursor': [cursor],
+        if (cursor != null) 'cursor': [cursor.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -224,14 +305,14 @@ class AppsApi {
       method: Method.get,
       path: '/app/hook/deliveries/{delivery_id}'.replaceAll(
         '{delivery_id}',
-        '$deliveryId',
+        '${deliveryId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -257,14 +338,14 @@ class AppsApi {
       method: Method.post,
       path: '/app/hook/deliveries/{delivery_id}/attempts'.replaceAll(
         '{delivery_id}',
-        '$deliveryId',
+        '${deliveryId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -295,7 +376,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -331,15 +412,15 @@ class AppsApi {
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (since != null) 'since': [since.toIso8601String()],
-        if (outdated != null) 'outdated': [outdated],
+        if (since != null) 'since': [since.toIso8601String().toString()],
+        if (outdated != null) 'outdated': [outdated.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -368,14 +449,14 @@ class AppsApi {
       method: Method.get,
       path: '/app/installations/{installation_id}'.replaceAll(
         '{installation_id}',
-        '$installationId',
+        '${installationId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -405,14 +486,14 @@ class AppsApi {
       method: Method.delete,
       path: '/app/installations/{installation_id}'.replaceAll(
         '{installation_id}',
-        '$installationId',
+        '${installationId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -453,15 +534,16 @@ class AppsApi {
       method: Method.post,
       path: '/app/installations/{installation_id}/access_tokens'.replaceAll(
         '{installation_id}',
-        '$installationId',
+        '${installationId}',
       ),
       body: appsCreateInstallationAccessTokenRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -490,14 +572,14 @@ class AppsApi {
       method: Method.put,
       path: '/app/installations/{installation_id}/suspended'.replaceAll(
         '{installation_id}',
-        '$installationId',
+        '${installationId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -515,14 +597,14 @@ class AppsApi {
       method: Method.delete,
       path: '/app/installations/{installation_id}/suspended'.replaceAll(
         '{installation_id}',
-        '$installationId',
+        '${installationId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -545,15 +627,16 @@ class AppsApi {
       method: Method.delete,
       path: '/applications/{client_id}/grant'.replaceAll(
         '{client_id}',
-        clientId,
+        '${clientId}',
       ),
       body: appsDeleteAuthorizationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -572,15 +655,16 @@ class AppsApi {
       method: Method.post,
       path: '/applications/{client_id}/token'.replaceAll(
         '{client_id}',
-        clientId,
+        '${clientId}',
       ),
       body: appsCheckTokenRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -604,15 +688,16 @@ class AppsApi {
       method: Method.delete,
       path: '/applications/{client_id}/token'.replaceAll(
         '{client_id}',
-        clientId,
+        '${clientId}',
       ),
       body: appsDeleteTokenRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -630,15 +715,16 @@ class AppsApi {
       method: Method.patch,
       path: '/applications/{client_id}/token'.replaceAll(
         '{client_id}',
-        clientId,
+        '${clientId}',
       ),
       body: appsResetTokenRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -667,15 +753,16 @@ class AppsApi {
       method: Method.post,
       path: '/applications/{client_id}/token/scoped'.replaceAll(
         '{client_id}',
-        clientId,
+        '${clientId}',
       ),
       body: appsScopeTokenRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -698,13 +785,13 @@ class AppsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/apps/{app_slug}'.replaceAll('{app_slug}', appSlug),
+      path: '/apps/{app_slug}'.replaceAll('{app_slug}', '${appSlug}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -736,7 +823,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -768,7 +855,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -791,14 +878,14 @@ class AppsApi {
       method: Method.get,
       path: '/marketplace_listing/accounts/{account_id}'.replaceAll(
         '{account_id}',
-        '$accountId',
+        '${accountId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -835,7 +922,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -874,11 +961,11 @@ class AppsApi {
       method: Method.get,
       path: '/marketplace_listing/plans/{plan_id}/accounts'.replaceAll(
         '{plan_id}',
-        '$planId',
+        '${planId}',
       ),
       queryParameters: {
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -887,7 +974,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -920,14 +1007,14 @@ class AppsApi {
       method: Method.get,
       path: '/marketplace_listing/stubbed/accounts/{account_id}'.replaceAll(
         '{account_id}',
-        '$accountId',
+        '${accountId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -964,7 +1051,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1003,11 +1090,11 @@ class AppsApi {
       method: Method.get,
       path: '/marketplace_listing/stubbed/plans/{plan_id}/accounts'.replaceAll(
         '{plan_id}',
-        '$planId',
+        '${planId}',
       ),
       queryParameters: {
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1016,7 +1103,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1043,13 +1130,13 @@ class AppsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/installation'.replaceAll('{org}', org),
+      path: '/orgs/{org}/installation'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1078,14 +1165,14 @@ class AppsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/installation'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1125,7 +1212,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1158,7 +1245,7 @@ class AppsApi {
       method: Method.get,
       path: '/user/installations/{installation_id}/repositories'.replaceAll(
         '{installation_id}',
-        '$installationId',
+        '${installationId}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1169,7 +1256,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1194,14 +1281,14 @@ class AppsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/user/installations/{installation_id}/repositories/{repository_id}'
-          .replaceAll('{installation_id}', '$installationId')
-          .replaceAll('{repository_id}', '$repositoryId'),
+          .replaceAll('{installation_id}', '${installationId}')
+          .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1219,14 +1306,14 @@ class AppsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/user/installations/{installation_id}/repositories/{repository_id}'
-          .replaceAll('{installation_id}', '$installationId')
-          .replaceAll('{repository_id}', '$repositoryId'),
+          .replaceAll('{installation_id}', '${installationId}')
+          .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1249,7 +1336,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1283,7 +1370,7 @@ class AppsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1312,14 +1399,14 @@ class AppsApi {
       method: Method.get,
       path: '/users/{username}/installation'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

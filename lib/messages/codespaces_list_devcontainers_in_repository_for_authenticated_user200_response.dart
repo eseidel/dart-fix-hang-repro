@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/codespaces_list_devcontainers_in_repository_for_authenticated_user200_response_devcontainers_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesListDevcontainersInRepositoryForAuthenticatedUser200Response {
-  const CodespacesListDevcontainersInRepositoryForAuthenticatedUser200Response({
+  CodespacesListDevcontainersInRepositoryForAuthenticatedUser200Response({
     required this.totalCount,
     required this.devcontainers,
   });
@@ -22,7 +18,7 @@ class CodespacesListDevcontainersInRepositoryForAuthenticatedUser200Response {
       'CodespacesListDevcontainersInRepositoryForAuthenticatedUser200Response',
       json,
       () => CodespacesListDevcontainersInRepositoryForAuthenticatedUser200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         devcontainers: (json['devcontainers'] as List)
             .map<
               CodespacesListDevcontainersInRepositoryForAuthenticatedUser200ResponseDevcontainersInner
@@ -75,7 +71,7 @@ class CodespacesListDevcontainersInRepositoryForAuthenticatedUser200Response {
     if (identical(this, other)) return true;
     return other
             is CodespacesListDevcontainersInRepositoryForAuthenticatedUser200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(devcontainers, other.devcontainers);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.devcontainers, other.devcontainers);
   }
 }

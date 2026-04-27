@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestReviewCommentLinksPullRequest {
-  const PullRequestReviewCommentLinksPullRequest({
+  PullRequestReviewCommentLinksPullRequest({
     required this.href,
   });
 
@@ -50,6 +50,6 @@ class PullRequestReviewCommentLinksPullRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestReviewCommentLinksPullRequest &&
-        href == other.href;
+        this.href == other.href;
   }
 }

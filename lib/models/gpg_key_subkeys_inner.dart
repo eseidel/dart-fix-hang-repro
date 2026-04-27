@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GpgKeySubkeysInner {
-  const GpgKeySubkeysInner({
+  GpgKeySubkeysInner({
     this.id,
     this.primaryKeyId,
     this.keyId,
@@ -27,8 +27,8 @@ class GpgKeySubkeysInner {
       'GpgKeySubkeysInner',
       json,
       () => GpgKeySubkeysInner(
-        id: json['id'] as int?,
-        primaryKeyId: json['primary_key_id'] as int?,
+        id: (json['id'] as int?),
+        primaryKeyId: (json['primary_key_id'] as int?),
         keyId: json['key_id'] as String?,
         publicKey: json['public_key'] as String?,
         emails: (json['emails'] as List?)
@@ -117,19 +117,19 @@ class GpgKeySubkeysInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GpgKeySubkeysInner &&
-        id == other.id &&
-        primaryKeyId == other.primaryKeyId &&
-        keyId == other.keyId &&
-        publicKey == other.publicKey &&
-        listsEqual(emails, other.emails) &&
-        listsEqual(subkeys, other.subkeys) &&
-        canSign == other.canSign &&
-        canEncryptComms == other.canEncryptComms &&
-        canEncryptStorage == other.canEncryptStorage &&
-        canCertify == other.canCertify &&
-        createdAt == other.createdAt &&
-        expiresAt == other.expiresAt &&
-        rawKey == other.rawKey &&
-        revoked == other.revoked;
+        this.id == other.id &&
+        this.primaryKeyId == other.primaryKeyId &&
+        this.keyId == other.keyId &&
+        this.publicKey == other.publicKey &&
+        listsEqual(this.emails, other.emails) &&
+        listsEqual(this.subkeys, other.subkeys) &&
+        this.canSign == other.canSign &&
+        this.canEncryptComms == other.canEncryptComms &&
+        this.canEncryptStorage == other.canEncryptStorage &&
+        this.canCertify == other.canCertify &&
+        this.createdAt == other.createdAt &&
+        this.expiresAt == other.expiresAt &&
+        this.rawKey == other.rawKey &&
+        this.revoked == other.revoked;
   }
 }

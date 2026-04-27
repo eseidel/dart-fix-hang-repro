@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PagesHealthCheck {
   /// {@macro pages_health_check}
-  const PagesHealthCheck({
+  PagesHealthCheck({
     this.domain,
     this.altDomain,
   });
@@ -61,7 +61,7 @@ class PagesHealthCheck {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PagesHealthCheck &&
-        domain == other.domain &&
-        altDomain == other.altDomain;
+        this.domain == other.domain &&
+        this.altDomain == other.altDomain;
   }
 }

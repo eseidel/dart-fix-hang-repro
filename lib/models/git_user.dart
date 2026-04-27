@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GitUser {
   /// {@macro git_user}
-  const GitUser({
+  GitUser({
     this.name,
     this.email,
     this.date,
@@ -65,8 +65,8 @@ class GitUser {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitUser &&
-        name == other.name &&
-        email == other.email &&
-        date == other.date;
+        this.name == other.name &&
+        this.email == other.email &&
+        this.date == other.date;
   }
 }

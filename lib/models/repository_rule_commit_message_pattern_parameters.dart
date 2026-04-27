@@ -1,18 +1,14 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_commit_message_pattern_parameters_operator.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleCommitMessagePatternParameters {
-  const RepositoryRuleCommitMessagePatternParameters({
-    required this.operator_,
-    required this.pattern,
+  RepositoryRuleCommitMessagePatternParameters({
     this.name,
     this.negate,
+    required this.operator_,
+    required this.pattern,
   });
 
   /// Converts a `Map<String, dynamic>` to a
@@ -81,9 +77,9 @@ class RepositoryRuleCommitMessagePatternParameters {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleCommitMessagePatternParameters &&
-        name == other.name &&
-        negate == other.negate &&
-        operator_ == other.operator_ &&
-        pattern == other.pattern;
+        this.name == other.name &&
+        this.negate == other.negate &&
+        this.operator_ == other.operator_ &&
+        this.pattern == other.pattern;
   }
 }

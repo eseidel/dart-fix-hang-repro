@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_ruleset_bypass_actor_actor_type.dart';
 import 'package:github_out/models/repository_ruleset_bypass_actor_bypass_mode.dart';
@@ -14,9 +10,9 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRulesetBypassActor {
   /// {@macro repository_ruleset_bypass_actor}
-  const RepositoryRulesetBypassActor({
-    required this.actorType,
+  RepositoryRulesetBypassActor({
     this.actorId,
+    required this.actorType,
     this.bypassMode,
   });
 
@@ -26,7 +22,7 @@ class RepositoryRulesetBypassActor {
       'RepositoryRulesetBypassActor',
       json,
       () => RepositoryRulesetBypassActor(
-        actorId: json['actor_id'] as int?,
+        actorId: (json['actor_id'] as int?),
         actorType: RepositoryRulesetBypassActorActorType.fromJson(
           json['actor_type'] as String,
         ),
@@ -83,8 +79,8 @@ class RepositoryRulesetBypassActor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRulesetBypassActor &&
-        actorId == other.actorId &&
-        actorType == other.actorType &&
-        bypassMode == other.bypassMode;
+        this.actorId == other.actorId &&
+        this.actorType == other.actorType &&
+        this.bypassMode == other.bypassMode;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 export 'package:github_out/api/actions_api.dart';
 export 'package:github_out/api/activity_api.dart';
 export 'package:github_out/api/apps_api.dart';

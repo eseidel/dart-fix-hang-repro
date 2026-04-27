@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repos_update_status_check_protection_request_checks_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ReposUpdateStatusCheckProtectionRequest {
-  const ReposUpdateStatusCheckProtectionRequest({
+  ReposUpdateStatusCheckProtectionRequest({
     this.strict,
     @deprecated this.contexts,
     this.checks,
@@ -83,8 +79,8 @@ class ReposUpdateStatusCheckProtectionRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposUpdateStatusCheckProtectionRequest &&
-        strict == other.strict &&
-        listsEqual(contexts, other.contexts) &&
-        listsEqual(checks, other.checks);
+        this.strict == other.strict &&
+        listsEqual(this.contexts, other.contexts) &&
+        listsEqual(this.checks, other.checks);
   }
 }

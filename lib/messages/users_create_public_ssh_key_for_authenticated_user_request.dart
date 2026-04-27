@@ -3,9 +3,9 @@ import 'package:meta/meta.dart';
 
 @immutable
 class UsersCreatePublicSshKeyForAuthenticatedUserRequest {
-  const UsersCreatePublicSshKeyForAuthenticatedUserRequest({
-    required this.key,
+  UsersCreatePublicSshKeyForAuthenticatedUserRequest({
     this.title,
+    required this.key,
   });
 
   /// Converts a `Map<String, dynamic>` to a
@@ -60,7 +60,7 @@ class UsersCreatePublicSshKeyForAuthenticatedUserRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UsersCreatePublicSshKeyForAuthenticatedUserRequest &&
-        title == other.title &&
-        key == other.key;
+        this.title == other.title &&
+        this.key == other.key;
   }
 }

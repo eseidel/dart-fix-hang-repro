@@ -1,5 +1,13 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template starred_repository}
@@ -9,7 +17,7 @@ import 'package:meta/meta.dart';
 @immutable
 class StarredRepository {
   /// {@macro starred_repository}
-  const StarredRepository({
+  StarredRepository({
     required this.starredAt,
     required this.repo,
   });
@@ -59,7 +67,7 @@ class StarredRepository {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is StarredRepository &&
-        starredAt == other.starredAt &&
-        repo == other.repo;
+        this.starredAt == other.starredAt &&
+        this.repo == other.repo;
   }
 }

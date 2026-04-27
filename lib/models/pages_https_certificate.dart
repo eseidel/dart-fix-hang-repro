@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PagesHttpsCertificate {
   /// {@macro pages_https_certificate}
-  const PagesHttpsCertificate({
+  PagesHttpsCertificate({
     required this.state,
     required this.description,
     required this.domains,
@@ -72,9 +72,9 @@ class PagesHttpsCertificate {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PagesHttpsCertificate &&
-        state == other.state &&
-        description == other.description &&
-        listsEqual(domains, other.domains) &&
-        expiresAt == other.expiresAt;
+        this.state == other.state &&
+        this.description == other.description &&
+        listsEqual(this.domains, other.domains) &&
+        this.expiresAt == other.expiresAt;
   }
 }

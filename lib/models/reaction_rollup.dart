@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReactionRollup {
   /// {@macro reaction_rollup}
-  const ReactionRollup({
+  ReactionRollup({
     required this.url,
     required this.totalCount,
     required this.plus1,
@@ -27,15 +27,15 @@ class ReactionRollup {
       json,
       () => ReactionRollup(
         url: Uri.parse(json['url'] as String),
-        totalCount: json['total_count'] as int,
-        plus1: json['+1'] as int,
-        minus1: json['-1'] as int,
-        laugh: json['laugh'] as int,
-        confused: json['confused'] as int,
-        heart: json['heart'] as int,
-        hooray: json['hooray'] as int,
-        eyes: json['eyes'] as int,
-        rocket: json['rocket'] as int,
+        totalCount: (json['total_count'] as int),
+        plus1: (json['+1'] as int),
+        minus1: (json['-1'] as int),
+        laugh: (json['laugh'] as int),
+        confused: (json['confused'] as int),
+        heart: (json['heart'] as int),
+        hooray: (json['hooray'] as int),
+        eyes: (json['eyes'] as int),
+        rocket: (json['rocket'] as int),
       ),
     );
   }
@@ -94,15 +94,15 @@ class ReactionRollup {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReactionRollup &&
-        url == other.url &&
-        totalCount == other.totalCount &&
-        plus1 == other.plus1 &&
-        minus1 == other.minus1 &&
-        laugh == other.laugh &&
-        confused == other.confused &&
-        heart == other.heart &&
-        hooray == other.hooray &&
-        eyes == other.eyes &&
-        rocket == other.rocket;
+        this.url == other.url &&
+        this.totalCount == other.totalCount &&
+        this.plus1 == other.plus1 &&
+        this.minus1 == other.minus1 &&
+        this.laugh == other.laugh &&
+        this.confused == other.confused &&
+        this.heart == other.heart &&
+        this.hooray == other.hooray &&
+        this.eyes == other.eyes &&
+        this.rocket == other.rocket;
   }
 }

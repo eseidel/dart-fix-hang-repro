@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ContentSymlink {
   /// {@macro content_symlink}
-  const ContentSymlink({
+  ContentSymlink({
     required this.type,
     required this.target,
     required this.size,
@@ -32,7 +32,7 @@ class ContentSymlink {
       () => ContentSymlink(
         type: ContentSymlinkType.fromJson(json['type'] as String),
         target: json['target'] as String,
-        size: json['size'] as int,
+        size: (json['size'] as int),
         name: json['name'] as String,
         path: json['path'] as String,
         sha: json['sha'] as String,
@@ -104,16 +104,16 @@ class ContentSymlink {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ContentSymlink &&
-        type == other.type &&
-        target == other.target &&
-        size == other.size &&
-        name == other.name &&
-        path == other.path &&
-        sha == other.sha &&
-        url == other.url &&
-        gitUrl == other.gitUrl &&
-        htmlUrl == other.htmlUrl &&
-        downloadUrl == other.downloadUrl &&
-        links == other.links;
+        this.type == other.type &&
+        this.target == other.target &&
+        this.size == other.size &&
+        this.name == other.name &&
+        this.path == other.path &&
+        this.sha == other.sha &&
+        this.url == other.url &&
+        this.gitUrl == other.gitUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.downloadUrl == other.downloadUrl &&
+        this.links == other.links;
   }
 }

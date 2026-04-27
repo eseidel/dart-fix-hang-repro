@@ -1,9 +1,7 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_ruleset_conditions_ref_name.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_property_spec.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_property_spec_source.dart';
 import 'package:github_out/models/repository_ruleset_conditions_repository_property_target_repository_property.dart';
 import 'package:meta/meta.dart';
 
@@ -14,9 +12,9 @@ import 'package:meta/meta.dart';
 @immutable
 class OrgRulesetConditionsOneOf2 {
   /// {@macro org_ruleset_conditions_one_of_2}
-  const OrgRulesetConditionsOneOf2({
-    required this.repositoryProperty,
+  OrgRulesetConditionsOneOf2({
     this.refName,
+    required this.repositoryProperty,
   });
 
   /// Converts a `Map<String, dynamic>` to an [OrgRulesetConditionsOneOf2].
@@ -67,7 +65,7 @@ class OrgRulesetConditionsOneOf2 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgRulesetConditionsOneOf2 &&
-        refName == other.refName &&
-        repositoryProperty == other.repositoryProperty;
+        this.refName == other.refName &&
+        this.repositoryProperty == other.repositoryProperty;
   }
 }

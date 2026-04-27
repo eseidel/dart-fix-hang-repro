@@ -1,10 +1,17 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/deployment_branch_policy_settings.dart';
+import 'package:github_out/models/deployment_reviewer_type.dart';
 import 'package:github_out/models/environment_protection_rules_inner.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_0.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1_reviewers_inner.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1_reviewers_inner_reviewer.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_2.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:github_out/models/wait_timer.dart';
 import 'package:meta/meta.dart';
 
 /// {@template environment}
@@ -14,7 +21,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Environment {
   /// {@macro environment}
-  const Environment({
+  Environment({
     required this.id,
     required this.nodeId,
     required this.name,
@@ -32,7 +39,7 @@ class Environment {
       'Environment',
       json,
       () => Environment(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         url: json['url'] as String,
@@ -128,14 +135,14 @@ class Environment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Environment &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        listsEqual(protectionRules, other.protectionRules) &&
-        deploymentBranchPolicy == other.deploymentBranchPolicy;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        listsEqual(this.protectionRules, other.protectionRules) &&
+        this.deploymentBranchPolicy == other.deploymentBranchPolicy;
   }
 }

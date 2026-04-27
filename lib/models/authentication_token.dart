@@ -1,10 +1,14 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/authentication_token_repository_selection.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template authentication_token}
@@ -14,7 +18,7 @@ import 'package:meta/meta.dart';
 @immutable
 class AuthenticationToken {
   /// {@macro authentication_token}
-  const AuthenticationToken({
+  AuthenticationToken({
     required this.token,
     required this.expiresAt,
     this.permissions,
@@ -64,7 +68,7 @@ class AuthenticationToken {
   final DateTime expiresAt;
 
   /// example: `{issues: read, deployments: write}`
-  final dynamic permissions;
+  final dynamic? permissions;
 
   /// The repositories this token has access to
   final List<Repository>? repositories;
@@ -102,11 +106,11 @@ class AuthenticationToken {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is AuthenticationToken &&
-        token == other.token &&
-        expiresAt == other.expiresAt &&
-        permissions == other.permissions &&
-        listsEqual(repositories, other.repositories) &&
-        singleFile == other.singleFile &&
-        repositorySelection == other.repositorySelection;
+        this.token == other.token &&
+        this.expiresAt == other.expiresAt &&
+        this.permissions == other.permissions &&
+        listsEqual(this.repositories, other.repositories) &&
+        this.singleFile == other.singleFile &&
+        this.repositorySelection == other.repositorySelection;
   }
 }

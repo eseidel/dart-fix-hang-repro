@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsMerge405Response {
-  const PullsMerge405Response({
+  PullsMerge405Response({
     this.message,
     this.documentationUrl,
   });
@@ -50,7 +50,7 @@ class PullsMerge405Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsMerge405Response &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl;
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl;
   }
 }

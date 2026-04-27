@@ -1,5 +1,8 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/author_association.dart';
 import 'package:github_out/models/commit_comment.dart';
+import 'package:github_out/models/reaction_rollup.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template timeline_commit_commented_event}
@@ -9,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TimelineCommitCommentedEvent {
   /// {@macro timeline_commit_commented_event}
-  const TimelineCommitCommentedEvent({
+  TimelineCommitCommentedEvent({
     this.event,
     this.nodeId,
     this.commitId,
@@ -72,9 +75,9 @@ class TimelineCommitCommentedEvent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TimelineCommitCommentedEvent &&
-        event == other.event &&
-        nodeId == other.nodeId &&
-        commitId == other.commitId &&
-        listsEqual(comments, other.comments);
+        this.event == other.event &&
+        this.nodeId == other.nodeId &&
+        this.commitId == other.commitId &&
+        listsEqual(this.comments, other.comments);
   }
 }

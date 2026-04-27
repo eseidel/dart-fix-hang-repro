@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -18,11 +14,121 @@ import 'package:github_out/messages/code_security_set_configuration_as_default_f
 import 'package:github_out/messages/code_security_set_configuration_as_default_request.dart';
 import 'package:github_out/messages/code_security_update_configuration_request.dart';
 import 'package:github_out/messages/code_security_update_enterprise_configuration_request.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_scanning_default_setup_options.dart';
+import 'package:github_out/models/code_scanning_default_setup_options_runner_type.dart';
+import 'package:github_out/models/code_security_attach_configuration_request_scope.dart';
+import 'package:github_out/models/code_security_attach_enterprise_configuration_request_scope.dart';
 import 'package:github_out/models/code_security_configuration.dart';
+import 'package:github_out/models/code_security_configuration_advanced_security.dart';
+import 'package:github_out/models/code_security_configuration_code_scanning_default_setup.dart';
+import 'package:github_out/models/code_security_configuration_code_scanning_default_setup_options.dart';
+import 'package:github_out/models/code_security_configuration_code_scanning_default_setup_options_runner_type.dart';
+import 'package:github_out/models/code_security_configuration_code_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_configuration_dependabot_alerts.dart';
+import 'package:github_out/models/code_security_configuration_dependabot_security_updates.dart';
+import 'package:github_out/models/code_security_configuration_dependency_graph.dart';
+import 'package:github_out/models/code_security_configuration_dependency_graph_autosubmit_action.dart';
+import 'package:github_out/models/code_security_configuration_dependency_graph_autosubmit_action_options.dart';
+import 'package:github_out/models/code_security_configuration_enforcement.dart';
 import 'package:github_out/models/code_security_configuration_for_repository.dart';
+import 'package:github_out/models/code_security_configuration_for_repository_status.dart';
+import 'package:github_out/models/code_security_configuration_private_vulnerability_reporting.dart';
 import 'package:github_out/models/code_security_configuration_repositories.dart';
+import 'package:github_out/models/code_security_configuration_repositories_status.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_bypass.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_bypass_options.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_bypass_options_reviewers_inner.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_bypass_options_reviewers_inner_reviewer_type.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_generic_secrets.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_push_protection.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_validity_checks.dart';
+import 'package:github_out/models/code_security_configuration_target_type.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_advanced_security.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_code_scanning_default_setup.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_code_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_dependabot_alerts.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_dependabot_security_updates.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_dependency_graph.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_dependency_graph_autosubmit_action.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_dependency_graph_autosubmit_action_options.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_enforcement.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_private_vulnerability_reporting.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_secret_scanning.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_secret_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_secret_scanning_generic_secrets.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_secret_scanning_push_protection.dart';
+import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_secret_scanning_validity_checks.dart';
+import 'package:github_out/models/code_security_create_configuration_request_advanced_security.dart';
+import 'package:github_out/models/code_security_create_configuration_request_code_scanning_default_setup.dart';
+import 'package:github_out/models/code_security_create_configuration_request_code_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_create_configuration_request_dependabot_alerts.dart';
+import 'package:github_out/models/code_security_create_configuration_request_dependabot_security_updates.dart';
+import 'package:github_out/models/code_security_create_configuration_request_dependency_graph.dart';
+import 'package:github_out/models/code_security_create_configuration_request_dependency_graph_autosubmit_action.dart';
+import 'package:github_out/models/code_security_create_configuration_request_dependency_graph_autosubmit_action_options.dart';
+import 'package:github_out/models/code_security_create_configuration_request_enforcement.dart';
+import 'package:github_out/models/code_security_create_configuration_request_private_vulnerability_reporting.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_delegated_bypass.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_delegated_bypass_options.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_delegated_bypass_options_reviewers_inner.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_delegated_bypass_options_reviewers_inner_reviewer_type.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_generic_secrets.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_push_protection.dart';
+import 'package:github_out/models/code_security_create_configuration_request_secret_scanning_validity_checks.dart';
 import 'package:github_out/models/code_security_default_configurations_inner.dart';
+import 'package:github_out/models/code_security_default_configurations_inner_default_for_new_repos.dart';
 import 'package:github_out/models/code_security_get_configurations_for_org_parameter1.dart';
+import 'package:github_out/models/code_security_set_configuration_as_default200_response_default_for_new_repos.dart';
+import 'package:github_out/models/code_security_set_configuration_as_default_for_enterprise200_response_default_for_new_repos.dart';
+import 'package:github_out/models/code_security_set_configuration_as_default_for_enterprise_request_default_for_new_repos.dart';
+import 'package:github_out/models/code_security_set_configuration_as_default_request_default_for_new_repos.dart';
+import 'package:github_out/models/code_security_update_configuration_request_advanced_security.dart';
+import 'package:github_out/models/code_security_update_configuration_request_code_scanning_default_setup.dart';
+import 'package:github_out/models/code_security_update_configuration_request_code_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_update_configuration_request_dependabot_alerts.dart';
+import 'package:github_out/models/code_security_update_configuration_request_dependabot_security_updates.dart';
+import 'package:github_out/models/code_security_update_configuration_request_dependency_graph.dart';
+import 'package:github_out/models/code_security_update_configuration_request_dependency_graph_autosubmit_action.dart';
+import 'package:github_out/models/code_security_update_configuration_request_dependency_graph_autosubmit_action_options.dart';
+import 'package:github_out/models/code_security_update_configuration_request_enforcement.dart';
+import 'package:github_out/models/code_security_update_configuration_request_private_vulnerability_reporting.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_delegated_bypass.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_delegated_bypass_options.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_delegated_bypass_options_reviewers_inner.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_delegated_bypass_options_reviewers_inner_reviewer_type.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_generic_secrets.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_push_protection.dart';
+import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_validity_checks.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_advanced_security.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_code_scanning_default_setup.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_code_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_dependabot_alerts.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_dependabot_security_updates.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_dependency_graph.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_dependency_graph_autosubmit_action.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_dependency_graph_autosubmit_action_options.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_enforcement.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_private_vulnerability_reporting.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_secret_scanning.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_secret_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_secret_scanning_generic_secrets.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_secret_scanning_push_protection.dart';
+import 'package:github_out/models/code_security_update_enterprise_configuration_request_secret_scanning_validity_checks.dart';
+import 'package:github_out/models/simple_repository.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class CodeSecurityUpdateConfigurationResponse {
@@ -120,19 +226,19 @@ class CodeSecurityApi {
       method: Method.get,
       path: '/enterprises/{enterprise}/code-security/configurations'.replaceAll(
         '{enterprise}',
-        enterprise,
+        '${enterprise}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -166,15 +272,16 @@ class CodeSecurityApi {
       method: Method.post,
       path: '/enterprises/{enterprise}/code-security/configurations'.replaceAll(
         '{enterprise}',
-        enterprise,
+        '${enterprise}',
       ),
       body: codeSecurityCreateConfigurationForEnterpriseRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -202,13 +309,13 @@ class CodeSecurityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/enterprises/{enterprise}/code-security/configurations/defaults'
-          .replaceAll('{enterprise}', enterprise),
+          .replaceAll('{enterprise}', '${enterprise}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -242,14 +349,14 @@ class CodeSecurityApi {
       method: Method.get,
       path:
           '/enterprises/{enterprise}/code-security/configurations/{configuration_id}'
-              .replaceAll('{enterprise}', enterprise)
-              .replaceAll('{configuration_id}', '$configurationId'),
+              .replaceAll('{enterprise}', '${enterprise}')
+              .replaceAll('{configuration_id}', '${configurationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -281,14 +388,14 @@ class CodeSecurityApi {
       method: Method.delete,
       path:
           '/enterprises/{enterprise}/code-security/configurations/{configuration_id}'
-              .replaceAll('{enterprise}', enterprise)
-              .replaceAll('{configuration_id}', '$configurationId'),
+              .replaceAll('{enterprise}', '${enterprise}')
+              .replaceAll('{configuration_id}', '${configurationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -311,15 +418,16 @@ class CodeSecurityApi {
       method: Method.patch,
       path:
           '/enterprises/{enterprise}/code-security/configurations/{configuration_id}'
-              .replaceAll('{enterprise}', enterprise)
-              .replaceAll('{configuration_id}', '$configurationId'),
+              .replaceAll('{enterprise}', '${enterprise}')
+              .replaceAll('{configuration_id}', '${configurationId}'),
       body: codeSecurityUpdateEnterpriseConfigurationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -355,15 +463,16 @@ class CodeSecurityApi {
       method: Method.post,
       path:
           '/enterprises/{enterprise}/code-security/configurations/{configuration_id}/attach'
-              .replaceAll('{enterprise}', enterprise)
-              .replaceAll('{configuration_id}', '$configurationId'),
+              .replaceAll('{enterprise}', '${enterprise}')
+              .replaceAll('{configuration_id}', '${configurationId}'),
       body: codeSecurityAttachEnterpriseConfigurationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -398,15 +507,16 @@ class CodeSecurityApi {
       method: Method.put,
       path:
           '/enterprises/{enterprise}/code-security/configurations/{configuration_id}/defaults'
-              .replaceAll('{enterprise}', enterprise)
-              .replaceAll('{configuration_id}', '$configurationId'),
+              .replaceAll('{enterprise}', '${enterprise}')
+              .replaceAll('{configuration_id}', '${configurationId}'),
       body: codeSecuritySetConfigurationAsDefaultForEnterpriseRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -442,20 +552,20 @@ class CodeSecurityApi {
       method: Method.get,
       path:
           '/enterprises/{enterprise}/code-security/configurations/{configuration_id}/repositories'
-              .replaceAll('{enterprise}', enterprise)
-              .replaceAll('{configuration_id}', '$configurationId'),
+              .replaceAll('{enterprise}', '${enterprise}')
+              .replaceAll('{configuration_id}', '${configurationId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (status != null) 'status': [status],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (status != null) 'status': [status.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -491,20 +601,20 @@ class CodeSecurityApi {
       method: Method.get,
       path: '/orgs/{org}/code-security/configurations'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
-        if (targetType != null) 'target_type': [targetType.toJson()],
+        if (targetType != null) 'target_type': [targetType.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -537,15 +647,16 @@ class CodeSecurityApi {
       method: Method.post,
       path: '/orgs/{org}/code-security/configurations'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: codeSecurityCreateConfigurationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -574,14 +685,14 @@ class CodeSecurityApi {
       method: Method.get,
       path: '/orgs/{org}/code-security/configurations/defaults'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -617,15 +728,16 @@ class CodeSecurityApi {
       method: Method.delete,
       path: '/orgs/{org}/code-security/configurations/detach'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: codeSecurityDetachConfigurationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -645,14 +757,14 @@ class CodeSecurityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/code-security/configurations/{configuration_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{configuration_id}', '$configurationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{configuration_id}', '${configurationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -683,14 +795,14 @@ class CodeSecurityApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/code-security/configurations/{configuration_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{configuration_id}', '$configurationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{configuration_id}', '${configurationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -713,15 +825,16 @@ class CodeSecurityApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/code-security/configurations/{configuration_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{configuration_id}', '$configurationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{configuration_id}', '${configurationId}'),
       body: codeSecurityUpdateConfigurationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -758,15 +871,16 @@ class CodeSecurityApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/code-security/configurations/{configuration_id}/attach'
-          .replaceAll('{org}', org)
-          .replaceAll('{configuration_id}', '$configurationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{configuration_id}', '${configurationId}'),
       body: codeSecurityAttachConfigurationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -800,15 +914,16 @@ class CodeSecurityApi {
       method: Method.put,
       path:
           '/orgs/{org}/code-security/configurations/{configuration_id}/defaults'
-              .replaceAll('{org}', org)
-              .replaceAll('{configuration_id}', '$configurationId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{configuration_id}', '${configurationId}'),
       body: codeSecuritySetConfigurationAsDefaultRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -843,20 +958,20 @@ class CodeSecurityApi {
       method: Method.get,
       path:
           '/orgs/{org}/code-security/configurations/{configuration_id}/repositories'
-              .replaceAll('{org}', org)
-              .replaceAll('{configuration_id}', '$configurationId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{configuration_id}', '${configurationId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (status != null) 'status': [status],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (status != null) 'status': [status.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -890,14 +1005,14 @@ class CodeSecurityApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/code-security-configuration'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GpgKeyEmailsInner {
-  const GpgKeyEmailsInner({
+  GpgKeyEmailsInner({
     this.email,
     this.verified,
   });
@@ -50,7 +50,7 @@ class GpgKeyEmailsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GpgKeyEmailsInner &&
-        email == other.email &&
-        verified == other.verified;
+        this.email == other.email &&
+        this.verified == other.verified;
   }
 }

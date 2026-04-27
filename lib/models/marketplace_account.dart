@@ -7,12 +7,12 @@ import 'package:meta/meta.dart';
 @immutable
 class MarketplaceAccount {
   /// {@macro marketplace_account}
-  const MarketplaceAccount({
+  MarketplaceAccount({
     required this.url,
     required this.id,
     required this.type,
-    required this.login,
     this.nodeId,
+    required this.login,
     this.email,
     this.organizationBillingEmail,
   });
@@ -24,7 +24,7 @@ class MarketplaceAccount {
       json,
       () => MarketplaceAccount(
         url: Uri.parse(json['url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         type: json['type'] as String,
         nodeId: json['node_id'] as String?,
         login: json['login'] as String,
@@ -79,12 +79,12 @@ class MarketplaceAccount {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MarketplaceAccount &&
-        url == other.url &&
-        id == other.id &&
-        type == other.type &&
-        nodeId == other.nodeId &&
-        login == other.login &&
-        email == other.email &&
-        organizationBillingEmail == other.organizationBillingEmail;
+        this.url == other.url &&
+        this.id == other.id &&
+        this.type == other.type &&
+        this.nodeId == other.nodeId &&
+        this.login == other.login &&
+        this.email == other.email &&
+        this.organizationBillingEmail == other.organizationBillingEmail;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsSetRepoAccessToSelfHostedRunnerGroupInOrgRequest {
-  const ActionsSetRepoAccessToSelfHostedRunnerGroupInOrgRequest({
+  ActionsSetRepoAccessToSelfHostedRunnerGroupInOrgRequest({
     required this.selectedRepositoryIds,
   });
 
@@ -53,6 +53,6 @@ class ActionsSetRepoAccessToSelfHostedRunnerGroupInOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsSetRepoAccessToSelfHostedRunnerGroupInOrgRequest &&
-        listsEqual(selectedRepositoryIds, other.selectedRepositoryIds);
+        listsEqual(this.selectedRepositoryIds, other.selectedRepositoryIds);
   }
 }

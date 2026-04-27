@@ -1,10 +1,14 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/job.dart';
+import 'package:github_out/models/job_conclusion.dart';
+import 'package:github_out/models/job_status.dart';
+import 'package:github_out/models/job_steps_inner.dart';
+import 'package:github_out/models/job_steps_inner_status.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListJobsForWorkflowRun200Response {
-  const ActionsListJobsForWorkflowRun200Response({
+  ActionsListJobsForWorkflowRun200Response({
     required this.totalCount,
     required this.jobs,
   });
@@ -18,7 +22,7 @@ class ActionsListJobsForWorkflowRun200Response {
       'ActionsListJobsForWorkflowRun200Response',
       json,
       () => ActionsListJobsForWorkflowRun200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         jobs: (json['jobs'] as List)
             .map<Job>((e) => Job.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -59,7 +63,7 @@ class ActionsListJobsForWorkflowRun200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListJobsForWorkflowRun200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(jobs, other.jobs);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.jobs, other.jobs);
   }
 }

@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsHostedRunnerPoolImage {
   /// {@macro actions_hosted_runner_pool_image}
-  const ActionsHostedRunnerPoolImage({
+  ActionsHostedRunnerPoolImage({
     required this.id,
     required this.sizeGb,
     required this.displayName,
@@ -23,7 +23,7 @@ class ActionsHostedRunnerPoolImage {
       json,
       () => ActionsHostedRunnerPoolImage(
         id: json['id'] as String,
-        sizeGb: json['size_gb'] as int,
+        sizeGb: (json['size_gb'] as int),
         displayName: json['display_name'] as String,
         source: ActionsHostedRunnerPoolImageSource.fromJson(
           json['source'] as String,
@@ -81,9 +81,9 @@ class ActionsHostedRunnerPoolImage {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsHostedRunnerPoolImage &&
-        id == other.id &&
-        sizeGb == other.sizeGb &&
-        displayName == other.displayName &&
-        source == other.source;
+        this.id == other.id &&
+        this.sizeGb == other.sizeGb &&
+        this.displayName == other.displayName &&
+        this.source == other.source;
   }
 }

@@ -3,11 +3,11 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryPermissions {
-  const RepositoryPermissions({
+  RepositoryPermissions({
     required this.admin,
     required this.pull,
-    required this.push,
     this.triage,
+    required this.push,
     this.maintain,
   });
 
@@ -65,10 +65,10 @@ class RepositoryPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryPermissions &&
-        admin == other.admin &&
-        pull == other.pull &&
-        triage == other.triage &&
-        push == other.push &&
-        maintain == other.maintain;
+        this.admin == other.admin &&
+        this.pull == other.pull &&
+        this.triage == other.triage &&
+        this.push == other.push &&
+        this.maintain == other.maintain;
   }
 }

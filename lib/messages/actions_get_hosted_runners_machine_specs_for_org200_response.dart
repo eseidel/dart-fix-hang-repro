@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsGetHostedRunnersMachineSpecsForOrg200Response {
-  const ActionsGetHostedRunnersMachineSpecsForOrg200Response({
+  ActionsGetHostedRunnersMachineSpecsForOrg200Response({
     required this.totalCount,
     required this.machineSpecs,
   });
@@ -18,7 +18,7 @@ class ActionsGetHostedRunnersMachineSpecsForOrg200Response {
       'ActionsGetHostedRunnersMachineSpecsForOrg200Response',
       json,
       () => ActionsGetHostedRunnersMachineSpecsForOrg200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         machineSpecs: (json['machine_specs'] as List)
             .map<ActionsHostedRunnerMachineSpec>(
               (e) => ActionsHostedRunnerMachineSpec.fromJson(
@@ -63,7 +63,7 @@ class ActionsGetHostedRunnersMachineSpecsForOrg200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsGetHostedRunnersMachineSpecsForOrg200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(machineSpecs, other.machineSpecs);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.machineSpecs, other.machineSpecs);
   }
 }

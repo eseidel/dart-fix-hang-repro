@@ -1,12 +1,22 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/minimal_repository_license.dart';
 import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -17,7 +27,7 @@ import 'package:meta/meta.dart';
 @immutable
 class MinimalRepository {
   /// {@macro minimal_repository}
-  const MinimalRepository({
+  MinimalRepository({
     required this.id,
     required this.nodeId,
     required this.name,
@@ -45,6 +55,7 @@ class MinimalRepository {
     required this.gitCommitsUrl,
     required this.gitRefsUrl,
     required this.gitTagsUrl,
+    this.gitUrl,
     required this.issueCommentUrl,
     required this.issueEventsUrl,
     required this.issuesUrl,
@@ -56,6 +67,7 @@ class MinimalRepository {
     required this.notificationsUrl,
     required this.pullsUrl,
     required this.releasesUrl,
+    this.sshUrl,
     required this.stargazersUrl,
     required this.statusesUrl,
     required this.subscribersUrl,
@@ -63,11 +75,9 @@ class MinimalRepository {
     required this.tagsUrl,
     required this.teamsUrl,
     required this.treesUrl,
-    required this.hooksUrl,
-    this.gitUrl,
-    this.sshUrl,
     this.cloneUrl,
     this.mirrorUrl,
+    required this.hooksUrl,
     this.svnUrl,
     this.homepage,
     this.language,
@@ -114,7 +124,7 @@ class MinimalRepository {
       'MinimalRepository',
       json,
       () => MinimalRepository(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         fullName: json['full_name'] as String,
@@ -167,12 +177,12 @@ class MinimalRepository {
         svnUrl: json['svn_url'] as String?,
         homepage: json['homepage'] as String?,
         language: json['language'] as String?,
-        forksCount: json['forks_count'] as int?,
-        stargazersCount: json['stargazers_count'] as int?,
-        watchersCount: json['watchers_count'] as int?,
-        size: json['size'] as int?,
+        forksCount: (json['forks_count'] as int?),
+        stargazersCount: (json['stargazers_count'] as int?),
+        watchersCount: (json['watchers_count'] as int?),
+        size: (json['size'] as int?),
         defaultBranch: json['default_branch'] as String?,
-        openIssuesCount: json['open_issues_count'] as int?,
+        openIssuesCount: (json['open_issues_count'] as int?),
         isTemplate: json['is_template'] as bool?,
         topics: (json['topics'] as List?)?.cast<String>(),
         hasIssues: json['has_issues'] as bool?,
@@ -193,24 +203,24 @@ class MinimalRepository {
         roleName: json['role_name'] as String?,
         tempCloneToken: json['temp_clone_token'] as String?,
         deleteBranchOnMerge: json['delete_branch_on_merge'] as bool?,
-        subscribersCount: json['subscribers_count'] as int?,
-        networkCount: json['network_count'] as int?,
+        subscribersCount: (json['subscribers_count'] as int?),
+        networkCount: (json['network_count'] as int?),
         codeOfConduct: CodeOfConduct.maybeFromJson(
           json['code_of_conduct'] as Map<String, dynamic>?,
         ),
         license: MinimalRepositoryLicense.maybeFromJson(
           json['license'] as Map<String, dynamic>?,
         ),
-        forks: json['forks'] as int?,
-        openIssues: json['open_issues'] as int?,
-        watchers: json['watchers'] as int?,
+        forks: (json['forks'] as int?),
+        openIssues: (json['open_issues'] as int?),
+        watchers: (json['watchers'] as int?),
         allowForking: json['allow_forking'] as bool?,
         webCommitSignoffRequired: json['web_commit_signoff_required'] as bool?,
         securityAndAnalysis: SecurityAndAnalysis.maybeFromJson(
           json['security_and_analysis'] as Map<String, dynamic>?,
         ),
         customProperties: (json['custom_properties'] as Map<String, dynamic>?)
-            ?.map(MapEntry.new),
+            ?.map((key, value) => MapEntry(key, value)),
       ),
     );
   }
@@ -642,93 +652,93 @@ class MinimalRepository {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MinimalRepository &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        fullName == other.fullName &&
-        owner == other.owner &&
-        private == other.private &&
-        htmlUrl == other.htmlUrl &&
-        description == other.description &&
-        fork == other.fork &&
-        url == other.url &&
-        archiveUrl == other.archiveUrl &&
-        assigneesUrl == other.assigneesUrl &&
-        blobsUrl == other.blobsUrl &&
-        branchesUrl == other.branchesUrl &&
-        collaboratorsUrl == other.collaboratorsUrl &&
-        commentsUrl == other.commentsUrl &&
-        commitsUrl == other.commitsUrl &&
-        compareUrl == other.compareUrl &&
-        contentsUrl == other.contentsUrl &&
-        contributorsUrl == other.contributorsUrl &&
-        deploymentsUrl == other.deploymentsUrl &&
-        downloadsUrl == other.downloadsUrl &&
-        eventsUrl == other.eventsUrl &&
-        forksUrl == other.forksUrl &&
-        gitCommitsUrl == other.gitCommitsUrl &&
-        gitRefsUrl == other.gitRefsUrl &&
-        gitTagsUrl == other.gitTagsUrl &&
-        gitUrl == other.gitUrl &&
-        issueCommentUrl == other.issueCommentUrl &&
-        issueEventsUrl == other.issueEventsUrl &&
-        issuesUrl == other.issuesUrl &&
-        keysUrl == other.keysUrl &&
-        labelsUrl == other.labelsUrl &&
-        languagesUrl == other.languagesUrl &&
-        mergesUrl == other.mergesUrl &&
-        milestonesUrl == other.milestonesUrl &&
-        notificationsUrl == other.notificationsUrl &&
-        pullsUrl == other.pullsUrl &&
-        releasesUrl == other.releasesUrl &&
-        sshUrl == other.sshUrl &&
-        stargazersUrl == other.stargazersUrl &&
-        statusesUrl == other.statusesUrl &&
-        subscribersUrl == other.subscribersUrl &&
-        subscriptionUrl == other.subscriptionUrl &&
-        tagsUrl == other.tagsUrl &&
-        teamsUrl == other.teamsUrl &&
-        treesUrl == other.treesUrl &&
-        cloneUrl == other.cloneUrl &&
-        mirrorUrl == other.mirrorUrl &&
-        hooksUrl == other.hooksUrl &&
-        svnUrl == other.svnUrl &&
-        homepage == other.homepage &&
-        language == other.language &&
-        forksCount == other.forksCount &&
-        stargazersCount == other.stargazersCount &&
-        watchersCount == other.watchersCount &&
-        size == other.size &&
-        defaultBranch == other.defaultBranch &&
-        openIssuesCount == other.openIssuesCount &&
-        isTemplate == other.isTemplate &&
-        listsEqual(topics, other.topics) &&
-        hasIssues == other.hasIssues &&
-        hasProjects == other.hasProjects &&
-        hasWiki == other.hasWiki &&
-        hasPages == other.hasPages &&
-        hasDownloads == other.hasDownloads &&
-        hasDiscussions == other.hasDiscussions &&
-        archived == other.archived &&
-        disabled == other.disabled &&
-        visibility == other.visibility &&
-        pushedAt == other.pushedAt &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        permissions == other.permissions &&
-        roleName == other.roleName &&
-        tempCloneToken == other.tempCloneToken &&
-        deleteBranchOnMerge == other.deleteBranchOnMerge &&
-        subscribersCount == other.subscribersCount &&
-        networkCount == other.networkCount &&
-        codeOfConduct == other.codeOfConduct &&
-        license == other.license &&
-        forks == other.forks &&
-        openIssues == other.openIssues &&
-        watchers == other.watchers &&
-        allowForking == other.allowForking &&
-        webCommitSignoffRequired == other.webCommitSignoffRequired &&
-        securityAndAnalysis == other.securityAndAnalysis &&
-        mapsEqual(customProperties, other.customProperties);
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.fullName == other.fullName &&
+        this.owner == other.owner &&
+        this.private == other.private &&
+        this.htmlUrl == other.htmlUrl &&
+        this.description == other.description &&
+        this.fork == other.fork &&
+        this.url == other.url &&
+        this.archiveUrl == other.archiveUrl &&
+        this.assigneesUrl == other.assigneesUrl &&
+        this.blobsUrl == other.blobsUrl &&
+        this.branchesUrl == other.branchesUrl &&
+        this.collaboratorsUrl == other.collaboratorsUrl &&
+        this.commentsUrl == other.commentsUrl &&
+        this.commitsUrl == other.commitsUrl &&
+        this.compareUrl == other.compareUrl &&
+        this.contentsUrl == other.contentsUrl &&
+        this.contributorsUrl == other.contributorsUrl &&
+        this.deploymentsUrl == other.deploymentsUrl &&
+        this.downloadsUrl == other.downloadsUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.forksUrl == other.forksUrl &&
+        this.gitCommitsUrl == other.gitCommitsUrl &&
+        this.gitRefsUrl == other.gitRefsUrl &&
+        this.gitTagsUrl == other.gitTagsUrl &&
+        this.gitUrl == other.gitUrl &&
+        this.issueCommentUrl == other.issueCommentUrl &&
+        this.issueEventsUrl == other.issueEventsUrl &&
+        this.issuesUrl == other.issuesUrl &&
+        this.keysUrl == other.keysUrl &&
+        this.labelsUrl == other.labelsUrl &&
+        this.languagesUrl == other.languagesUrl &&
+        this.mergesUrl == other.mergesUrl &&
+        this.milestonesUrl == other.milestonesUrl &&
+        this.notificationsUrl == other.notificationsUrl &&
+        this.pullsUrl == other.pullsUrl &&
+        this.releasesUrl == other.releasesUrl &&
+        this.sshUrl == other.sshUrl &&
+        this.stargazersUrl == other.stargazersUrl &&
+        this.statusesUrl == other.statusesUrl &&
+        this.subscribersUrl == other.subscribersUrl &&
+        this.subscriptionUrl == other.subscriptionUrl &&
+        this.tagsUrl == other.tagsUrl &&
+        this.teamsUrl == other.teamsUrl &&
+        this.treesUrl == other.treesUrl &&
+        this.cloneUrl == other.cloneUrl &&
+        this.mirrorUrl == other.mirrorUrl &&
+        this.hooksUrl == other.hooksUrl &&
+        this.svnUrl == other.svnUrl &&
+        this.homepage == other.homepage &&
+        this.language == other.language &&
+        this.forksCount == other.forksCount &&
+        this.stargazersCount == other.stargazersCount &&
+        this.watchersCount == other.watchersCount &&
+        this.size == other.size &&
+        this.defaultBranch == other.defaultBranch &&
+        this.openIssuesCount == other.openIssuesCount &&
+        this.isTemplate == other.isTemplate &&
+        listsEqual(this.topics, other.topics) &&
+        this.hasIssues == other.hasIssues &&
+        this.hasProjects == other.hasProjects &&
+        this.hasWiki == other.hasWiki &&
+        this.hasPages == other.hasPages &&
+        this.hasDownloads == other.hasDownloads &&
+        this.hasDiscussions == other.hasDiscussions &&
+        this.archived == other.archived &&
+        this.disabled == other.disabled &&
+        this.visibility == other.visibility &&
+        this.pushedAt == other.pushedAt &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.permissions == other.permissions &&
+        this.roleName == other.roleName &&
+        this.tempCloneToken == other.tempCloneToken &&
+        this.deleteBranchOnMerge == other.deleteBranchOnMerge &&
+        this.subscribersCount == other.subscribersCount &&
+        this.networkCount == other.networkCount &&
+        this.codeOfConduct == other.codeOfConduct &&
+        this.license == other.license &&
+        this.forks == other.forks &&
+        this.openIssues == other.openIssues &&
+        this.watchers == other.watchers &&
+        this.allowForking == other.allowForking &&
+        this.webCommitSignoffRequired == other.webCommitSignoffRequired &&
+        this.securityAndAnalysis == other.securityAndAnalysis &&
+        mapsEqual(this.customProperties, other.customProperties);
   }
 }

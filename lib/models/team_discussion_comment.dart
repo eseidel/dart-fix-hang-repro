@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/simple_user.dart';
@@ -14,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TeamDiscussionComment {
   /// {@macro team_discussion_comment}
-  const TeamDiscussionComment({
+  TeamDiscussionComment({
     required this.author,
     required this.body,
     required this.bodyHtml,
@@ -49,7 +45,7 @@ class TeamDiscussionComment {
         discussionUrl: Uri.parse(json['discussion_url'] as String),
         htmlUrl: Uri.parse(json['html_url'] as String),
         nodeId: json['node_id'] as String,
-        number: json['number'] as int,
+        number: (json['number'] as int),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         url: Uri.parse(json['url'] as String),
         reactions: ReactionRollup.maybeFromJson(
@@ -154,18 +150,18 @@ class TeamDiscussionComment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamDiscussionComment &&
-        author == other.author &&
-        body == other.body &&
-        bodyHtml == other.bodyHtml &&
-        bodyVersion == other.bodyVersion &&
-        createdAt == other.createdAt &&
-        lastEditedAt == other.lastEditedAt &&
-        discussionUrl == other.discussionUrl &&
-        htmlUrl == other.htmlUrl &&
-        nodeId == other.nodeId &&
-        number == other.number &&
-        updatedAt == other.updatedAt &&
-        url == other.url &&
-        reactions == other.reactions;
+        this.author == other.author &&
+        this.body == other.body &&
+        this.bodyHtml == other.bodyHtml &&
+        this.bodyVersion == other.bodyVersion &&
+        this.createdAt == other.createdAt &&
+        this.lastEditedAt == other.lastEditedAt &&
+        this.discussionUrl == other.discussionUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.nodeId == other.nodeId &&
+        this.number == other.number &&
+        this.updatedAt == other.updatedAt &&
+        this.url == other.url &&
+        this.reactions == other.reactions;
   }
 }

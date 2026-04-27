@@ -1,8 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_seat_details_assigning_team.dart';
 import 'package:github_out/models/copilot_seat_details_plan_type.dart';
+import 'package:github_out/models/enterprise_team.dart';
 import 'package:github_out/models/organization_simple.dart';
 import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 /// {@template copilot_seat_details}
@@ -13,14 +17,14 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotSeatDetails {
   /// {@macro copilot_seat_details}
-  const CopilotSeatDetails({
-    required this.createdAt,
+  CopilotSeatDetails({
     this.assignee,
     this.organization,
     this.assigningTeam,
     this.pendingCancellationDate,
     this.lastActivityAt,
     this.lastActivityEditor,
+    required this.createdAt,
     @deprecated this.updatedAt,
     this.planType,
   });
@@ -136,14 +140,14 @@ class CopilotSeatDetails {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotSeatDetails &&
-        assignee == other.assignee &&
-        organization == other.organization &&
-        assigningTeam == other.assigningTeam &&
-        pendingCancellationDate == other.pendingCancellationDate &&
-        lastActivityAt == other.lastActivityAt &&
-        lastActivityEditor == other.lastActivityEditor &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        planType == other.planType;
+        this.assignee == other.assignee &&
+        this.organization == other.organization &&
+        this.assigningTeam == other.assigningTeam &&
+        this.pendingCancellationDate == other.pendingCancellationDate &&
+        this.lastActivityAt == other.lastActivityAt &&
+        this.lastActivityEditor == other.lastActivityEditor &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.planType == other.planType;
   }
 }

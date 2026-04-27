@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/commit_commit_tree.dart';
 import 'package:github_out/models/git_user.dart';
@@ -10,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CommitCommit {
-  const CommitCommit({
+  CommitCommit({
     required this.url,
     required this.author,
     required this.committer,
@@ -34,7 +30,7 @@ class CommitCommit {
           checkedKey(json, 'committer') as Map<String, dynamic>?,
         ),
         message: json['message'] as String,
-        commentCount: json['comment_count'] as int,
+        commentCount: (json['comment_count'] as int),
         tree: CommitCommitTree.fromJson(json['tree'] as Map<String, dynamic>),
         verification: Verification.maybeFromJson(
           json['verification'] as Map<String, dynamic>?,
@@ -102,12 +98,12 @@ class CommitCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitCommit &&
-        url == other.url &&
-        author == other.author &&
-        committer == other.committer &&
-        message == other.message &&
-        commentCount == other.commentCount &&
-        tree == other.tree &&
-        verification == other.verification;
+        this.url == other.url &&
+        this.author == other.author &&
+        this.committer == other.committer &&
+        this.message == other.message &&
+        this.commentCount == other.commentCount &&
+        this.tree == other.tree &&
+        this.verification == other.verification;
   }
 }

@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeScanningDefaultSetupUpdateResponse {
   /// {@macro code_scanning_default_setup_update_response}
-  const CodeScanningDefaultSetupUpdateResponse({
+  CodeScanningDefaultSetupUpdateResponse({
     this.runId,
     this.runUrl,
   });
@@ -23,7 +23,7 @@ class CodeScanningDefaultSetupUpdateResponse {
       'CodeScanningDefaultSetupUpdateResponse',
       json,
       () => CodeScanningDefaultSetupUpdateResponse(
-        runId: json['run_id'] as int?,
+        runId: (json['run_id'] as int?),
         runUrl: json['run_url'] as String?,
       ),
     );
@@ -65,7 +65,7 @@ class CodeScanningDefaultSetupUpdateResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningDefaultSetupUpdateResponse &&
-        runId == other.runId &&
-        runUrl == other.runUrl;
+        this.runId == other.runId &&
+        this.runUrl == other.runUrl;
   }
 }

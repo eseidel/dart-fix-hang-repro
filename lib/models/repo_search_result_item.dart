@@ -2,6 +2,7 @@ import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/repo_search_result_item_permissions.dart';
 import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -12,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepoSearchResultItem {
   /// {@macro repo_search_result_item}
-  const RepoSearchResultItem({
+  RepoSearchResultItem({
     required this.id,
     required this.nodeId,
     required this.name,
@@ -33,6 +34,7 @@ class RepoSearchResultItem {
     required this.language,
     required this.forksCount,
     required this.openIssuesCount,
+    this.masterBranch,
     required this.defaultBranch,
     required this.score,
     required this.forksUrl,
@@ -78,19 +80,18 @@ class RepoSearchResultItem {
     required this.forks,
     required this.openIssues,
     required this.watchers,
+    this.topics,
     required this.mirrorUrl,
     required this.hasIssues,
     required this.hasProjects,
     required this.hasPages,
     required this.hasWiki,
     required this.hasDownloads,
+    this.hasDiscussions,
     required this.archived,
     required this.disabled,
-    required this.license,
-    this.masterBranch,
-    this.topics,
-    this.hasDiscussions,
     this.visibility,
+    required this.license,
     this.permissions,
     this.textMatches,
     this.tempCloneToken,
@@ -110,7 +111,7 @@ class RepoSearchResultItem {
       'RepoSearchResultItem',
       json,
       () => RepoSearchResultItem(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         fullName: json['full_name'] as String,
@@ -126,12 +127,12 @@ class RepoSearchResultItem {
         updatedAt: DateTime.parse(json['updated_at'] as String),
         pushedAt: DateTime.parse(json['pushed_at'] as String),
         homepage: maybeParseUri(checkedKey(json, 'homepage') as String?),
-        size: json['size'] as int,
-        stargazersCount: json['stargazers_count'] as int,
-        watchersCount: json['watchers_count'] as int,
+        size: (json['size'] as int),
+        stargazersCount: (json['stargazers_count'] as int),
+        watchersCount: (json['watchers_count'] as int),
         language: checkedKey(json, 'language') as String?,
-        forksCount: json['forks_count'] as int,
-        openIssuesCount: json['open_issues_count'] as int,
+        forksCount: (json['forks_count'] as int),
+        openIssuesCount: (json['open_issues_count'] as int),
         masterBranch: json['master_branch'] as String?,
         defaultBranch: json['default_branch'] as String,
         score: (json['score'] as num).toDouble(),
@@ -175,9 +176,9 @@ class RepoSearchResultItem {
         sshUrl: json['ssh_url'] as String,
         cloneUrl: json['clone_url'] as String,
         svnUrl: Uri.parse(json['svn_url'] as String),
-        forks: json['forks'] as int,
-        openIssues: json['open_issues'] as int,
-        watchers: json['watchers'] as int,
+        forks: (json['forks'] as int),
+        openIssues: (json['open_issues'] as int),
+        watchers: (json['watchers'] as int),
         topics: (json['topics'] as List?)?.cast<String>(),
         mirrorUrl: maybeParseUri(checkedKey(json, 'mirror_url') as String?),
         hasIssues: json['has_issues'] as bool,
@@ -520,94 +521,94 @@ class RepoSearchResultItem {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepoSearchResultItem &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        fullName == other.fullName &&
-        owner == other.owner &&
-        private == other.private &&
-        htmlUrl == other.htmlUrl &&
-        description == other.description &&
-        fork == other.fork &&
-        url == other.url &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        pushedAt == other.pushedAt &&
-        homepage == other.homepage &&
-        size == other.size &&
-        stargazersCount == other.stargazersCount &&
-        watchersCount == other.watchersCount &&
-        language == other.language &&
-        forksCount == other.forksCount &&
-        openIssuesCount == other.openIssuesCount &&
-        masterBranch == other.masterBranch &&
-        defaultBranch == other.defaultBranch &&
-        score == other.score &&
-        forksUrl == other.forksUrl &&
-        keysUrl == other.keysUrl &&
-        collaboratorsUrl == other.collaboratorsUrl &&
-        teamsUrl == other.teamsUrl &&
-        hooksUrl == other.hooksUrl &&
-        issueEventsUrl == other.issueEventsUrl &&
-        eventsUrl == other.eventsUrl &&
-        assigneesUrl == other.assigneesUrl &&
-        branchesUrl == other.branchesUrl &&
-        tagsUrl == other.tagsUrl &&
-        blobsUrl == other.blobsUrl &&
-        gitTagsUrl == other.gitTagsUrl &&
-        gitRefsUrl == other.gitRefsUrl &&
-        treesUrl == other.treesUrl &&
-        statusesUrl == other.statusesUrl &&
-        languagesUrl == other.languagesUrl &&
-        stargazersUrl == other.stargazersUrl &&
-        contributorsUrl == other.contributorsUrl &&
-        subscribersUrl == other.subscribersUrl &&
-        subscriptionUrl == other.subscriptionUrl &&
-        commitsUrl == other.commitsUrl &&
-        gitCommitsUrl == other.gitCommitsUrl &&
-        commentsUrl == other.commentsUrl &&
-        issueCommentUrl == other.issueCommentUrl &&
-        contentsUrl == other.contentsUrl &&
-        compareUrl == other.compareUrl &&
-        mergesUrl == other.mergesUrl &&
-        archiveUrl == other.archiveUrl &&
-        downloadsUrl == other.downloadsUrl &&
-        issuesUrl == other.issuesUrl &&
-        pullsUrl == other.pullsUrl &&
-        milestonesUrl == other.milestonesUrl &&
-        notificationsUrl == other.notificationsUrl &&
-        labelsUrl == other.labelsUrl &&
-        releasesUrl == other.releasesUrl &&
-        deploymentsUrl == other.deploymentsUrl &&
-        gitUrl == other.gitUrl &&
-        sshUrl == other.sshUrl &&
-        cloneUrl == other.cloneUrl &&
-        svnUrl == other.svnUrl &&
-        forks == other.forks &&
-        openIssues == other.openIssues &&
-        watchers == other.watchers &&
-        listsEqual(topics, other.topics) &&
-        mirrorUrl == other.mirrorUrl &&
-        hasIssues == other.hasIssues &&
-        hasProjects == other.hasProjects &&
-        hasPages == other.hasPages &&
-        hasWiki == other.hasWiki &&
-        hasDownloads == other.hasDownloads &&
-        hasDiscussions == other.hasDiscussions &&
-        archived == other.archived &&
-        disabled == other.disabled &&
-        visibility == other.visibility &&
-        license == other.license &&
-        permissions == other.permissions &&
-        listsEqual(textMatches, other.textMatches) &&
-        tempCloneToken == other.tempCloneToken &&
-        allowMergeCommit == other.allowMergeCommit &&
-        allowSquashMerge == other.allowSquashMerge &&
-        allowRebaseMerge == other.allowRebaseMerge &&
-        allowAutoMerge == other.allowAutoMerge &&
-        deleteBranchOnMerge == other.deleteBranchOnMerge &&
-        allowForking == other.allowForking &&
-        isTemplate == other.isTemplate &&
-        webCommitSignoffRequired == other.webCommitSignoffRequired;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.fullName == other.fullName &&
+        this.owner == other.owner &&
+        this.private == other.private &&
+        this.htmlUrl == other.htmlUrl &&
+        this.description == other.description &&
+        this.fork == other.fork &&
+        this.url == other.url &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.pushedAt == other.pushedAt &&
+        this.homepage == other.homepage &&
+        this.size == other.size &&
+        this.stargazersCount == other.stargazersCount &&
+        this.watchersCount == other.watchersCount &&
+        this.language == other.language &&
+        this.forksCount == other.forksCount &&
+        this.openIssuesCount == other.openIssuesCount &&
+        this.masterBranch == other.masterBranch &&
+        this.defaultBranch == other.defaultBranch &&
+        this.score == other.score &&
+        this.forksUrl == other.forksUrl &&
+        this.keysUrl == other.keysUrl &&
+        this.collaboratorsUrl == other.collaboratorsUrl &&
+        this.teamsUrl == other.teamsUrl &&
+        this.hooksUrl == other.hooksUrl &&
+        this.issueEventsUrl == other.issueEventsUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.assigneesUrl == other.assigneesUrl &&
+        this.branchesUrl == other.branchesUrl &&
+        this.tagsUrl == other.tagsUrl &&
+        this.blobsUrl == other.blobsUrl &&
+        this.gitTagsUrl == other.gitTagsUrl &&
+        this.gitRefsUrl == other.gitRefsUrl &&
+        this.treesUrl == other.treesUrl &&
+        this.statusesUrl == other.statusesUrl &&
+        this.languagesUrl == other.languagesUrl &&
+        this.stargazersUrl == other.stargazersUrl &&
+        this.contributorsUrl == other.contributorsUrl &&
+        this.subscribersUrl == other.subscribersUrl &&
+        this.subscriptionUrl == other.subscriptionUrl &&
+        this.commitsUrl == other.commitsUrl &&
+        this.gitCommitsUrl == other.gitCommitsUrl &&
+        this.commentsUrl == other.commentsUrl &&
+        this.issueCommentUrl == other.issueCommentUrl &&
+        this.contentsUrl == other.contentsUrl &&
+        this.compareUrl == other.compareUrl &&
+        this.mergesUrl == other.mergesUrl &&
+        this.archiveUrl == other.archiveUrl &&
+        this.downloadsUrl == other.downloadsUrl &&
+        this.issuesUrl == other.issuesUrl &&
+        this.pullsUrl == other.pullsUrl &&
+        this.milestonesUrl == other.milestonesUrl &&
+        this.notificationsUrl == other.notificationsUrl &&
+        this.labelsUrl == other.labelsUrl &&
+        this.releasesUrl == other.releasesUrl &&
+        this.deploymentsUrl == other.deploymentsUrl &&
+        this.gitUrl == other.gitUrl &&
+        this.sshUrl == other.sshUrl &&
+        this.cloneUrl == other.cloneUrl &&
+        this.svnUrl == other.svnUrl &&
+        this.forks == other.forks &&
+        this.openIssues == other.openIssues &&
+        this.watchers == other.watchers &&
+        listsEqual(this.topics, other.topics) &&
+        this.mirrorUrl == other.mirrorUrl &&
+        this.hasIssues == other.hasIssues &&
+        this.hasProjects == other.hasProjects &&
+        this.hasPages == other.hasPages &&
+        this.hasWiki == other.hasWiki &&
+        this.hasDownloads == other.hasDownloads &&
+        this.hasDiscussions == other.hasDiscussions &&
+        this.archived == other.archived &&
+        this.disabled == other.disabled &&
+        this.visibility == other.visibility &&
+        this.license == other.license &&
+        this.permissions == other.permissions &&
+        listsEqual(this.textMatches, other.textMatches) &&
+        this.tempCloneToken == other.tempCloneToken &&
+        this.allowMergeCommit == other.allowMergeCommit &&
+        this.allowSquashMerge == other.allowSquashMerge &&
+        this.allowRebaseMerge == other.allowRebaseMerge &&
+        this.allowAutoMerge == other.allowAutoMerge &&
+        this.deleteBranchOnMerge == other.deleteBranchOnMerge &&
+        this.allowForking == other.allowForking &&
+        this.isTemplate == other.isTemplate &&
+        this.webCommitSignoffRequired == other.webCommitSignoffRequired;
   }
 }

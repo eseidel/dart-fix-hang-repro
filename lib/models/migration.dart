@@ -1,5 +1,12 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -10,7 +17,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Migration {
   /// {@macro migration}
-  const Migration({
+  Migration({
     required this.id,
     required this.owner,
     required this.guid,
@@ -37,7 +44,7 @@ class Migration {
       'Migration',
       json,
       () => Migration(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         owner: SimpleUser.maybeFromJson(
           checkedKey(json, 'owner') as Map<String, dynamic>?,
         ),
@@ -166,23 +173,23 @@ class Migration {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Migration &&
-        id == other.id &&
-        owner == other.owner &&
-        guid == other.guid &&
-        state == other.state &&
-        lockRepositories == other.lockRepositories &&
-        excludeMetadata == other.excludeMetadata &&
-        excludeGitData == other.excludeGitData &&
-        excludeAttachments == other.excludeAttachments &&
-        excludeReleases == other.excludeReleases &&
-        excludeOwnerProjects == other.excludeOwnerProjects &&
-        orgMetadataOnly == other.orgMetadataOnly &&
-        listsEqual(repositories, other.repositories) &&
-        url == other.url &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        nodeId == other.nodeId &&
-        archiveUrl == other.archiveUrl &&
-        listsEqual(exclude, other.exclude);
+        this.id == other.id &&
+        this.owner == other.owner &&
+        this.guid == other.guid &&
+        this.state == other.state &&
+        this.lockRepositories == other.lockRepositories &&
+        this.excludeMetadata == other.excludeMetadata &&
+        this.excludeGitData == other.excludeGitData &&
+        this.excludeAttachments == other.excludeAttachments &&
+        this.excludeReleases == other.excludeReleases &&
+        this.excludeOwnerProjects == other.excludeOwnerProjects &&
+        this.orgMetadataOnly == other.orgMetadataOnly &&
+        listsEqual(this.repositories, other.repositories) &&
+        this.url == other.url &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.nodeId == other.nodeId &&
+        this.archiveUrl == other.archiveUrl &&
+        listsEqual(this.exclude, other.exclude);
   }
 }

@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ProjectCollaboratorPermission {
   /// {@macro project_collaborator_permission}
-  const ProjectCollaboratorPermission({
+  ProjectCollaboratorPermission({
     required this.permission,
     required this.user,
   });
@@ -63,7 +63,7 @@ class ProjectCollaboratorPermission {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectCollaboratorPermission &&
-        permission == other.permission &&
-        user == other.user;
+        this.permission == other.permission &&
+        this.user == other.user;
   }
 }

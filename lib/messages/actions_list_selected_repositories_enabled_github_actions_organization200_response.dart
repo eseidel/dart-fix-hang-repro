@@ -1,14 +1,18 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListSelectedRepositoriesEnabledGithubActionsOrganization200Response {
-  const ActionsListSelectedRepositoriesEnabledGithubActionsOrganization200Response({
+  ActionsListSelectedRepositoriesEnabledGithubActionsOrganization200Response({
     required this.totalCount,
     required this.repositories,
   });
@@ -68,7 +72,7 @@ class ActionsListSelectedRepositoriesEnabledGithubActionsOrganization200Response
     if (identical(this, other)) return true;
     return other
             is ActionsListSelectedRepositoriesEnabledGithubActionsOrganization200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(repositories, other.repositories);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.repositories, other.repositories);
   }
 }

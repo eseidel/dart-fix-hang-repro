@@ -3,6 +3,8 @@ import 'package:github_out/models/campaign_state.dart';
 import 'package:github_out/models/campaign_summary_alert_stats.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 /// {@template campaign_summary}
@@ -12,19 +14,19 @@ import 'package:meta/meta.dart';
 @immutable
 class CampaignSummary {
   /// {@macro campaign_summary}
-  const CampaignSummary({
+  CampaignSummary({
     required this.number,
     required this.createdAt,
     required this.updatedAt,
+    this.name,
     required this.description,
     required this.managers,
-    required this.endsAt,
-    required this.state,
-    required this.contactLink,
-    this.name,
     this.teamManagers,
     this.publishedAt,
+    required this.endsAt,
     this.closedAt,
+    required this.state,
+    required this.contactLink,
     this.alertStats,
   });
 
@@ -34,7 +36,7 @@ class CampaignSummary {
       'CampaignSummary',
       json,
       () => CampaignSummary(
-        number: json['number'] as int,
+        number: (json['number'] as int),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         name: json['name'] as String?,
@@ -151,18 +153,18 @@ class CampaignSummary {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CampaignSummary &&
-        number == other.number &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        name == other.name &&
-        description == other.description &&
-        listsEqual(managers, other.managers) &&
-        listsEqual(teamManagers, other.teamManagers) &&
-        publishedAt == other.publishedAt &&
-        endsAt == other.endsAt &&
-        closedAt == other.closedAt &&
-        state == other.state &&
-        contactLink == other.contactLink &&
-        alertStats == other.alertStats;
+        this.number == other.number &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.name == other.name &&
+        this.description == other.description &&
+        listsEqual(this.managers, other.managers) &&
+        listsEqual(this.teamManagers, other.teamManagers) &&
+        this.publishedAt == other.publishedAt &&
+        this.endsAt == other.endsAt &&
+        this.closedAt == other.closedAt &&
+        this.state == other.state &&
+        this.contactLink == other.contactLink &&
+        this.alertStats == other.alertStats;
   }
 }

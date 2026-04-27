@@ -12,11 +12,11 @@ import 'package:meta/meta.dart';
 @immutable
 class CustomProperty {
   /// {@macro custom_property}
-  const CustomProperty({
+  CustomProperty({
     required this.propertyName,
-    required this.valueType,
     this.url,
     this.sourceType,
+    required this.valueType,
     this.required_,
     this.defaultValue,
     this.description,
@@ -124,14 +124,14 @@ class CustomProperty {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CustomProperty &&
-        propertyName == other.propertyName &&
-        url == other.url &&
-        sourceType == other.sourceType &&
-        valueType == other.valueType &&
-        required_ == other.required_ &&
-        defaultValue == other.defaultValue &&
-        description == other.description &&
-        listsEqual(allowedValues, other.allowedValues) &&
-        valuesEditableBy == other.valuesEditableBy;
+        this.propertyName == other.propertyName &&
+        this.url == other.url &&
+        this.sourceType == other.sourceType &&
+        this.valueType == other.valueType &&
+        this.required_ == other.required_ &&
+        this.defaultValue == other.defaultValue &&
+        this.description == other.description &&
+        listsEqual(this.allowedValues, other.allowedValues) &&
+        this.valuesEditableBy == other.valuesEditableBy;
   }
 }

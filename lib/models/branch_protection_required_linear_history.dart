@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BranchProtectionRequiredLinearHistory {
-  const BranchProtectionRequiredLinearHistory({
+  BranchProtectionRequiredLinearHistory({
     this.enabled,
   });
 
@@ -49,6 +49,6 @@ class BranchProtectionRequiredLinearHistory {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchProtectionRequiredLinearHistory &&
-        enabled == other.enabled;
+        this.enabled == other.enabled;
   }
 }

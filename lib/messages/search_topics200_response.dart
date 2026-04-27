@@ -1,10 +1,16 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
 import 'package:github_out/models/topic_search_result_item.dart';
+import 'package:github_out/models/topic_search_result_item_aliases_inner.dart';
+import 'package:github_out/models/topic_search_result_item_aliases_inner_topic_relation.dart';
+import 'package:github_out/models/topic_search_result_item_related_inner.dart';
+import 'package:github_out/models/topic_search_result_item_related_inner_topic_relation.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class SearchTopics200Response {
-  const SearchTopics200Response({
+  SearchTopics200Response({
     required this.totalCount,
     required this.incompleteResults,
     required this.items,
@@ -16,7 +22,7 @@ class SearchTopics200Response {
       'SearchTopics200Response',
       json,
       () => SearchTopics200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         incompleteResults: json['incomplete_results'] as bool,
         items: (json['items'] as List)
             .map<TopicSearchResultItem>(
@@ -60,8 +66,8 @@ class SearchTopics200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SearchTopics200Response &&
-        totalCount == other.totalCount &&
-        incompleteResults == other.incompleteResults &&
-        listsEqual(items, other.items);
+        this.totalCount == other.totalCount &&
+        this.incompleteResults == other.incompleteResults &&
+        listsEqual(this.items, other.items);
   }
 }

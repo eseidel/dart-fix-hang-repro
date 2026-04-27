@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ThreadSubscription {
   /// {@macro thread_subscription}
-  const ThreadSubscription({
+  ThreadSubscription({
     required this.subscribed,
     required this.ignored,
     required this.reason,
@@ -91,12 +91,12 @@ class ThreadSubscription {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ThreadSubscription &&
-        subscribed == other.subscribed &&
-        ignored == other.ignored &&
-        reason == other.reason &&
-        createdAt == other.createdAt &&
-        url == other.url &&
-        threadUrl == other.threadUrl &&
-        repositoryUrl == other.repositoryUrl;
+        this.subscribed == other.subscribed &&
+        this.ignored == other.ignored &&
+        this.reason == other.reason &&
+        this.createdAt == other.createdAt &&
+        this.url == other.url &&
+        this.threadUrl == other.threadUrl &&
+        this.repositoryUrl == other.repositoryUrl;
   }
 }

@@ -1,21 +1,17 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/campaigns_create_campaign_request_code_scanning_alerts_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CampaignsCreateCampaignRequest {
-  const CampaignsCreateCampaignRequest({
+  CampaignsCreateCampaignRequest({
     required this.name,
     required this.description,
-    required this.endsAt,
-    required this.codeScanningAlerts,
     this.managers,
     this.teamManagers,
+    required this.endsAt,
     this.contactLink,
+    required this.codeScanningAlerts,
     this.generateIssues = false,
   });
 
@@ -114,13 +110,13 @@ class CampaignsCreateCampaignRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CampaignsCreateCampaignRequest &&
-        name == other.name &&
-        description == other.description &&
-        listsEqual(managers, other.managers) &&
-        listsEqual(teamManagers, other.teamManagers) &&
-        endsAt == other.endsAt &&
-        contactLink == other.contactLink &&
-        listsEqual(codeScanningAlerts, other.codeScanningAlerts) &&
-        generateIssues == other.generateIssues;
+        this.name == other.name &&
+        this.description == other.description &&
+        listsEqual(this.managers, other.managers) &&
+        listsEqual(this.teamManagers, other.teamManagers) &&
+        this.endsAt == other.endsAt &&
+        this.contactLink == other.contactLink &&
+        listsEqual(this.codeScanningAlerts, other.codeScanningAlerts) &&
+        this.generateIssues == other.generateIssues;
   }
 }

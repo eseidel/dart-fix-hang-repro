@@ -1,6 +1,25 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/simple_commit_status.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template combined_commit_status}
@@ -10,7 +29,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CombinedCommitStatus {
   /// {@macro combined_commit_status}
-  const CombinedCommitStatus({
+  CombinedCommitStatus({
     required this.state,
     required this.statuses,
     required this.sha,
@@ -33,7 +52,7 @@ class CombinedCommitStatus {
             )
             .toList(),
         sha: json['sha'] as String,
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         repository: MinimalRepository.fromJson(
           json['repository'] as Map<String, dynamic>,
         ),
@@ -91,12 +110,12 @@ class CombinedCommitStatus {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CombinedCommitStatus &&
-        state == other.state &&
-        listsEqual(statuses, other.statuses) &&
-        sha == other.sha &&
-        totalCount == other.totalCount &&
-        repository == other.repository &&
-        commitUrl == other.commitUrl &&
-        url == other.url;
+        this.state == other.state &&
+        listsEqual(this.statuses, other.statuses) &&
+        this.sha == other.sha &&
+        this.totalCount == other.totalCount &&
+        this.repository == other.repository &&
+        this.commitUrl == other.commitUrl &&
+        this.url == other.url;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ContentDirectoryInnerLinks {
-  const ContentDirectoryInnerLinks({
+  ContentDirectoryInnerLinks({
     required this.git,
     required this.html,
     required this.self,
@@ -55,8 +55,8 @@ class ContentDirectoryInnerLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ContentDirectoryInnerLinks &&
-        git == other.git &&
-        html == other.html &&
-        self == other.self;
+        this.git == other.git &&
+        this.html == other.html &&
+        this.self == other.self;
   }
 }

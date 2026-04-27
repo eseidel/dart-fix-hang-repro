@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsCreateCard503ResponseErrorsInner {
-  const ProjectsCreateCard503ResponseErrorsInner({
+  ProjectsCreateCard503ResponseErrorsInner({
     this.code,
     this.message,
   });
@@ -56,7 +56,7 @@ class ProjectsCreateCard503ResponseErrorsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectsCreateCard503ResponseErrorsInner &&
-        code == other.code &&
-        message == other.message;
+        this.code == other.code &&
+        this.message == other.message;
   }
 }

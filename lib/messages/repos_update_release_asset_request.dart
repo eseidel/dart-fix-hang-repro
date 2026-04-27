@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposUpdateReleaseAssetRequest {
-  const ReposUpdateReleaseAssetRequest({
+  ReposUpdateReleaseAssetRequest({
     this.name,
     this.label,
     this.state,
@@ -63,8 +63,8 @@ class ReposUpdateReleaseAssetRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposUpdateReleaseAssetRequest &&
-        name == other.name &&
-        label == other.label &&
-        state == other.state;
+        this.name == other.name &&
+        this.label == other.label &&
+        this.state == other.state;
   }
 }

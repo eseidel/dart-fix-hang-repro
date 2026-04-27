@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -9,6 +5,7 @@ import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/codespaces_codespace_machines_for_authenticated_user200_response.dart';
 import 'package:github_out/messages/codespaces_create_for_authenticated_user_request.dart';
+import 'package:github_out/messages/codespaces_create_for_authenticated_user_request_one_of_1_pull_request.dart';
 import 'package:github_out/messages/codespaces_create_or_update_org_secret_request.dart';
 import 'package:github_out/messages/codespaces_create_or_update_repo_secret_request.dart';
 import 'package:github_out/messages/codespaces_create_or_update_secret_for_authenticated_user_request.dart';
@@ -33,16 +30,80 @@ import 'package:github_out/messages/codespaces_set_codespaces_access_users_reque
 import 'package:github_out/messages/codespaces_set_repositories_for_secret_for_authenticated_user_request.dart';
 import 'package:github_out/messages/codespaces_set_selected_repos_for_org_secret_request.dart';
 import 'package:github_out/messages/codespaces_update_for_authenticated_user_request.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
+import 'package:github_out/models/code_of_conduct_simple.dart';
 import 'package:github_out/models/codespace.dart';
 import 'package:github_out/models/codespace_export_details.dart';
+import 'package:github_out/models/codespace_git_status.dart';
+import 'package:github_out/models/codespace_location.dart';
+import 'package:github_out/models/codespace_machine.dart';
+import 'package:github_out/models/codespace_machine_prebuild_availability.dart';
+import 'package:github_out/models/codespace_runtime_constraints.dart';
+import 'package:github_out/models/codespace_state.dart';
 import 'package:github_out/models/codespace_with_full_repository.dart';
+import 'package:github_out/models/codespace_with_full_repository_git_status.dart';
+import 'package:github_out/models/codespace_with_full_repository_location.dart';
+import 'package:github_out/models/codespace_with_full_repository_runtime_constraints.dart';
+import 'package:github_out/models/codespace_with_full_repository_state.dart';
+import 'package:github_out/models/codespaces_create_for_authenticated_user_request_one_of_0.dart';
+import 'package:github_out/models/codespaces_create_for_authenticated_user_request_one_of_0_geo.dart';
+import 'package:github_out/models/codespaces_create_for_authenticated_user_request_one_of_1.dart';
+import 'package:github_out/models/codespaces_create_for_authenticated_user_request_one_of_1_geo.dart';
+import 'package:github_out/models/codespaces_create_or_update_org_secret_request_visibility.dart';
+import 'package:github_out/models/codespaces_create_or_update_secret_for_authenticated_user_request_selected_repository_ids_inner.dart';
+import 'package:github_out/models/codespaces_create_with_pr_for_authenticated_user_request_geo.dart';
+import 'package:github_out/models/codespaces_create_with_repo_for_authenticated_user_request_geo.dart';
+import 'package:github_out/models/codespaces_list_devcontainers_in_repository_for_authenticated_user200_response_devcontainers_inner.dart';
 import 'package:github_out/models/codespaces_org_secret.dart';
+import 'package:github_out/models/codespaces_org_secret_visibility.dart';
 import 'package:github_out/models/codespaces_permissions_check_for_devcontainer.dart';
+import 'package:github_out/models/codespaces_pre_flight_with_repo_for_authenticated_user200_response_defaults.dart';
 import 'package:github_out/models/codespaces_public_key.dart';
 import 'package:github_out/models/codespaces_secret.dart';
+import 'package:github_out/models/codespaces_secret_visibility.dart';
+import 'package:github_out/models/codespaces_set_codespaces_access_request_visibility.dart';
 import 'package:github_out/models/codespaces_user_public_key.dart';
 import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/full_repository.dart';
+import 'package:github_out/models/full_repository_merge_commit_message.dart';
+import 'package:github_out/models/full_repository_merge_commit_title.dart';
+import 'package:github_out/models/full_repository_permissions.dart';
+import 'package:github_out/models/full_repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/full_repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/repo_codespaces_secret.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class CodespacesCreateOrUpdateOrgSecretResponse {
@@ -171,7 +232,7 @@ class CodespacesApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/codespaces'.replaceAll('{org}', org),
+      path: '/orgs/{org}/codespaces'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -181,7 +242,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -206,14 +267,15 @@ class CodespacesApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.put,
-      path: '/orgs/{org}/codespaces/access'.replaceAll('{org}', org),
+      path: '/orgs/{org}/codespaces/access'.replaceAll('{org}', '${org}'),
       body: codespacesSetCodespacesAccessRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -238,15 +300,16 @@ class CodespacesApi {
       method: Method.post,
       path: '/orgs/{org}/codespaces/access/selected_users'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: codespacesSetCodespacesAccessUsersRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -272,15 +335,16 @@ class CodespacesApi {
       method: Method.delete,
       path: '/orgs/{org}/codespaces/access/selected_users'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: codespacesDeleteCodespacesAccessUsersRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -299,7 +363,7 @@ class CodespacesApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/codespaces/secrets'.replaceAll('{org}', org),
+      path: '/orgs/{org}/codespaces/secrets'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -309,7 +373,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -335,14 +399,14 @@ class CodespacesApi {
       method: Method.get,
       path: '/orgs/{org}/codespaces/secrets/public-key'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -368,14 +432,14 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/codespaces/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -406,20 +470,21 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/codespaces/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: codespacesCreateOrUpdateOrgSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      201 => const CodespacesCreateOrUpdateOrgSecretResponse201(EmptyObject()),
+      201 => CodespacesCreateOrUpdateOrgSecretResponse201(const EmptyObject()),
       204 => const CodespacesCreateOrUpdateOrgSecretResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
     };
@@ -438,14 +503,14 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/codespaces/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -466,8 +531,8 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/codespaces/secrets/{secret_name}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -477,7 +542,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -509,15 +574,16 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/codespaces/secrets/{secret_name}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: codespacesSetSelectedReposForOrgSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -538,15 +604,15 @@ class CodespacesApi {
       method: Method.put,
       path:
           '/orgs/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{secret_name}', secretName)
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{secret_name}', '${secretName}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -570,15 +636,15 @@ class CodespacesApi {
       method: Method.delete,
       path:
           '/orgs/{org}/codespaces/secrets/{secret_name}/repositories/{repository_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{secret_name}', secretName)
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{secret_name}', '${secretName}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -599,8 +665,8 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/members/{username}/codespaces'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -610,7 +676,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -636,15 +702,15 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/members/{username}/codespaces/{codespace_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username)
-          .replaceAll('{codespace_name}', codespaceName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{codespace_name}', '${codespaceName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -668,15 +734,15 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/members/{username}/codespaces/{codespace_name}/stop'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username)
-          .replaceAll('{codespace_name}', codespaceName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{codespace_name}', '${codespaceName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -705,8 +771,8 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codespaces'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -716,7 +782,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -744,15 +810,16 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/codespaces'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: codespacesCreateWithRepoForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -784,8 +851,8 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codespaces/devcontainers'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -795,7 +862,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -825,19 +892,19 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codespaces/machines'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (location != null) 'location': [location],
-        if (clientIp != null) 'client_ip': [clientIp],
-        if (ref != null) 'ref': [ref],
+        if (location != null) 'location': [location.toString()],
+        if (clientIp != null) 'client_ip': [clientIp.toString()],
+        if (ref != null) 'ref': [ref.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -866,18 +933,18 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codespaces/new'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (ref != null) 'ref': [ref],
-        if (clientIp != null) 'client_ip': [clientIp],
+        if (ref != null) 'ref': [ref.toString()],
+        if (clientIp != null) 'client_ip': [clientIp.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -907,18 +974,18 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codespaces/permissions_check'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        'ref': [ref],
-        'devcontainer_path': [devcontainerPath],
+        'ref': [ref.toString()],
+        'devcontainer_path': [devcontainerPath.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -947,8 +1014,8 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codespaces/secrets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -958,7 +1025,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -984,14 +1051,14 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codespaces/secrets/public-key'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1018,15 +1085,15 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/codespaces/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1059,21 +1126,22 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/codespaces/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: codespacesCreateOrUpdateRepoSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      201 => const CodespacesCreateOrUpdateRepoSecretResponse201(EmptyObject()),
+      201 => CodespacesCreateOrUpdateRepoSecretResponse201(const EmptyObject()),
       204 => const CodespacesCreateOrUpdateRepoSecretResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
     };
@@ -1094,15 +1162,15 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/codespaces/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1123,16 +1191,17 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pulls/{pull_number}/codespaces'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{pull_number}', '$pullNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{pull_number}', '${pullNumber}'),
       body: codespacesCreateWithPrForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1169,7 +1238,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1198,12 +1267,13 @@ class CodespacesApi {
       method: Method.post,
       path: '/user/codespaces',
       body: codespacesCreateForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1242,7 +1312,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1272,7 +1342,7 @@ class CodespacesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1300,14 +1370,14 @@ class CodespacesApi {
       method: Method.get,
       path: '/user/codespaces/secrets/{secret_name}'.replaceAll(
         '{secret_name}',
-        secretName,
+        '${secretName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1341,23 +1411,23 @@ class CodespacesApi {
       method: Method.put,
       path: '/user/codespaces/secrets/{secret_name}'.replaceAll(
         '{secret_name}',
-        secretName,
+        '${secretName}',
       ),
       body: codespacesCreateOrUpdateSecretForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      201 =>
-        const CodespacesCreateOrUpdateSecretForAuthenticatedUserResponse201(
-          EmptyObject(),
-        ),
+      201 => CodespacesCreateOrUpdateSecretForAuthenticatedUserResponse201(
+        const EmptyObject(),
+      ),
       204 =>
         const CodespacesCreateOrUpdateSecretForAuthenticatedUserResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
@@ -1380,14 +1450,14 @@ class CodespacesApi {
       method: Method.delete,
       path: '/user/codespaces/secrets/{secret_name}'.replaceAll(
         '{secret_name}',
-        secretName,
+        '${secretName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1408,14 +1478,14 @@ class CodespacesApi {
       method: Method.get,
       path: '/user/codespaces/secrets/{secret_name}/repositories'.replaceAll(
         '{secret_name}',
-        secretName,
+        '${secretName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1445,16 +1515,17 @@ class CodespacesApi {
       method: Method.put,
       path: '/user/codespaces/secrets/{secret_name}/repositories'.replaceAll(
         '{secret_name}',
-        secretName,
+        '${secretName}',
       ),
       body: codespacesSetRepositoriesForSecretForAuthenticatedUserRequest
           .toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1475,14 +1546,14 @@ class CodespacesApi {
       method: Method.put,
       path:
           '/user/codespaces/secrets/{secret_name}/repositories/{repository_id}'
-              .replaceAll('{secret_name}', secretName)
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{secret_name}', '${secretName}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1503,14 +1574,14 @@ class CodespacesApi {
       method: Method.delete,
       path:
           '/user/codespaces/secrets/{secret_name}/repositories/{repository_id}'
-              .replaceAll('{secret_name}', secretName)
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{secret_name}', '${secretName}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1527,14 +1598,14 @@ class CodespacesApi {
       method: Method.get,
       path: '/user/codespaces/{codespace_name}'.replaceAll(
         '{codespace_name}',
-        codespaceName,
+        '${codespaceName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1559,14 +1630,14 @@ class CodespacesApi {
       method: Method.delete,
       path: '/user/codespaces/{codespace_name}'.replaceAll(
         '{codespace_name}',
-        codespaceName,
+        '${codespaceName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1596,15 +1667,16 @@ class CodespacesApi {
       method: Method.patch,
       path: '/user/codespaces/{codespace_name}'.replaceAll(
         '{codespace_name}',
-        codespaceName,
+        '${codespaceName}',
       ),
       body: codespacesUpdateForAuthenticatedUserRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1633,14 +1705,14 @@ class CodespacesApi {
       method: Method.post,
       path: '/user/codespaces/{codespace_name}/exports'.replaceAll(
         '{codespace_name}',
-        codespaceName,
+        '${codespaceName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1665,14 +1737,14 @@ class CodespacesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/user/codespaces/{codespace_name}/exports/{export_id}'
-          .replaceAll('{codespace_name}', codespaceName)
-          .replaceAll('{export_id}', exportId),
+          .replaceAll('{codespace_name}', '${codespaceName}')
+          .replaceAll('{export_id}', '${exportId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1698,14 +1770,14 @@ class CodespacesApi {
       method: Method.get,
       path: '/user/codespaces/{codespace_name}/machines'.replaceAll(
         '{codespace_name}',
-        codespaceName,
+        '${codespaceName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1739,15 +1811,16 @@ class CodespacesApi {
       method: Method.post,
       path: '/user/codespaces/{codespace_name}/publish'.replaceAll(
         '{codespace_name}',
-        codespaceName,
+        '${codespaceName}',
       ),
       body: codespacesPublishForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1772,14 +1845,14 @@ class CodespacesApi {
       method: Method.post,
       path: '/user/codespaces/{codespace_name}/start'.replaceAll(
         '{codespace_name}',
-        codespaceName,
+        '${codespaceName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1804,14 +1877,14 @@ class CodespacesApi {
       method: Method.post,
       path: '/user/codespaces/{codespace_name}/stop'.replaceAll(
         '{codespace_name}',
-        codespaceName,
+        '${codespaceName}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

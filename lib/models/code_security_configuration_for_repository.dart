@@ -1,10 +1,29 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_security_configuration.dart';
+import 'package:github_out/models/code_security_configuration_advanced_security.dart';
+import 'package:github_out/models/code_security_configuration_code_scanning_default_setup.dart';
+import 'package:github_out/models/code_security_configuration_code_scanning_default_setup_options.dart';
+import 'package:github_out/models/code_security_configuration_code_scanning_default_setup_options_runner_type.dart';
+import 'package:github_out/models/code_security_configuration_code_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_configuration_dependabot_alerts.dart';
+import 'package:github_out/models/code_security_configuration_dependabot_security_updates.dart';
+import 'package:github_out/models/code_security_configuration_dependency_graph.dart';
+import 'package:github_out/models/code_security_configuration_dependency_graph_autosubmit_action.dart';
+import 'package:github_out/models/code_security_configuration_dependency_graph_autosubmit_action_options.dart';
+import 'package:github_out/models/code_security_configuration_enforcement.dart';
 import 'package:github_out/models/code_security_configuration_for_repository_status.dart';
+import 'package:github_out/models/code_security_configuration_private_vulnerability_reporting.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_alert_dismissal.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_bypass.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_bypass_options.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_bypass_options_reviewers_inner.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_delegated_bypass_options_reviewers_inner_reviewer_type.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_generic_secrets.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_push_protection.dart';
+import 'package:github_out/models/code_security_configuration_secret_scanning_validity_checks.dart';
+import 'package:github_out/models/code_security_configuration_target_type.dart';
 import 'package:meta/meta.dart';
 
 /// {@template code_security_configuration_for_repository}
@@ -14,7 +33,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeSecurityConfigurationForRepository {
   /// {@macro code_security_configuration_for_repository}
-  const CodeSecurityConfigurationForRepository({
+  CodeSecurityConfigurationForRepository({
     this.status,
     this.configuration,
   });
@@ -75,7 +94,7 @@ class CodeSecurityConfigurationForRepository {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeSecurityConfigurationForRepository &&
-        status == other.status &&
-        configuration == other.configuration;
+        this.status == other.status &&
+        this.configuration == other.configuration;
   }
 }

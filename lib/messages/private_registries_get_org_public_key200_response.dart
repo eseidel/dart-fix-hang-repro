@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PrivateRegistriesGetOrgPublicKey200Response {
-  const PrivateRegistriesGetOrgPublicKey200Response({
+  PrivateRegistriesGetOrgPublicKey200Response({
     required this.keyId,
     required this.key,
   });
@@ -61,7 +61,7 @@ class PrivateRegistriesGetOrgPublicKey200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PrivateRegistriesGetOrgPublicKey200Response &&
-        keyId == other.keyId &&
-        key == other.key;
+        this.keyId == other.keyId &&
+        this.key == other.key;
   }
 }

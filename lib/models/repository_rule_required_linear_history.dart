@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_required_linear_history_type.dart';
 import 'package:meta/meta.dart';
@@ -13,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleRequiredLinearHistory {
   /// {@macro repository_rule_required_linear_history}
-  const RepositoryRuleRequiredLinearHistory({
+  RepositoryRuleRequiredLinearHistory({
     required this.type,
   });
 
@@ -60,6 +56,7 @@ class RepositoryRuleRequiredLinearHistory {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RepositoryRuleRequiredLinearHistory && type == other.type;
+    return other is RepositoryRuleRequiredLinearHistory &&
+        this.type == other.type;
   }
 }

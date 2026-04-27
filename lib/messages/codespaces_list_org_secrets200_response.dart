@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/codespaces_org_secret.dart';
+import 'package:github_out/models/codespaces_org_secret_visibility.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesListOrgSecrets200Response {
-  const CodespacesListOrgSecrets200Response({
+  CodespacesListOrgSecrets200Response({
     required this.totalCount,
     required this.secrets,
   });
@@ -18,7 +19,7 @@ class CodespacesListOrgSecrets200Response {
       'CodespacesListOrgSecrets200Response',
       json,
       () => CodespacesListOrgSecrets200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         secrets: (json['secrets'] as List)
             .map<CodespacesOrgSecret>(
               (e) => CodespacesOrgSecret.fromJson(e as Map<String, dynamic>),
@@ -61,7 +62,7 @@ class CodespacesListOrgSecrets200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesListOrgSecrets200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(secrets, other.secrets);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.secrets, other.secrets);
   }
 }

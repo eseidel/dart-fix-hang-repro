@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_packages_inner_external_refs_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class DependencyGraphSpdxSbomSbomPackagesInner {
-  const DependencyGraphSpdxSbomSbomPackagesInner({
+  DependencyGraphSpdxSbomSbomPackagesInner({
     this.spdxid,
     this.name,
     this.versionInfo,
@@ -144,15 +140,15 @@ class DependencyGraphSpdxSbomSbomPackagesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependencyGraphSpdxSbomSbomPackagesInner &&
-        spdxid == other.spdxid &&
-        name == other.name &&
-        versionInfo == other.versionInfo &&
-        downloadLocation == other.downloadLocation &&
-        filesAnalyzed == other.filesAnalyzed &&
-        licenseConcluded == other.licenseConcluded &&
-        licenseDeclared == other.licenseDeclared &&
-        supplier == other.supplier &&
-        copyrightText == other.copyrightText &&
-        listsEqual(externalRefs, other.externalRefs);
+        this.spdxid == other.spdxid &&
+        this.name == other.name &&
+        this.versionInfo == other.versionInfo &&
+        this.downloadLocation == other.downloadLocation &&
+        this.filesAnalyzed == other.filesAnalyzed &&
+        this.licenseConcluded == other.licenseConcluded &&
+        this.licenseDeclared == other.licenseDeclared &&
+        this.supplier == other.supplier &&
+        this.copyrightText == other.copyrightText &&
+        listsEqual(this.externalRefs, other.externalRefs);
   }
 }

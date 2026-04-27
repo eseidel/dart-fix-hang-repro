@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotAlertSecurityAdvisoryCvss {
   /// {@macro dependabot_alert_security_advisory_cvss}
-  const DependabotAlertSecurityAdvisoryCvss({
+  DependabotAlertSecurityAdvisoryCvss({
     required this.score,
     required this.vectorString,
   });
@@ -64,7 +64,7 @@ class DependabotAlertSecurityAdvisoryCvss {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotAlertSecurityAdvisoryCvss &&
-        score == other.score &&
-        vectorString == other.vectorString;
+        this.score == other.score &&
+        this.vectorString == other.vectorString;
   }
 }

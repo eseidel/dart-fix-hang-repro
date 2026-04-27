@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RateLimit {
   /// {@macro rate_limit}
-  const RateLimit({
+  RateLimit({
     required this.limit,
     required this.remaining,
     required this.reset,
@@ -20,10 +20,10 @@ class RateLimit {
       'RateLimit',
       json,
       () => RateLimit(
-        limit: json['limit'] as int,
-        remaining: json['remaining'] as int,
-        reset: json['reset'] as int,
-        used: json['used'] as int,
+        limit: (json['limit'] as int),
+        remaining: (json['remaining'] as int),
+        reset: (json['reset'] as int),
+        used: (json['used'] as int),
       ),
     );
   }
@@ -64,9 +64,9 @@ class RateLimit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RateLimit &&
-        limit == other.limit &&
-        remaining == other.remaining &&
-        reset == other.reset &&
-        used == other.used;
+        this.limit == other.limit &&
+        this.remaining == other.remaining &&
+        this.reset == other.reset &&
+        this.used == other.used;
   }
 }

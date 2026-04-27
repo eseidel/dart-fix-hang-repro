@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReposDeleteFileRequestAuthor {
   /// {@macro repos_delete_file_request_author}
-  const ReposDeleteFileRequestAuthor({
+  ReposDeleteFileRequestAuthor({
     this.name,
     this.email,
   });
@@ -59,7 +59,7 @@ class ReposDeleteFileRequestAuthor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposDeleteFileRequestAuthor &&
-        name == other.name &&
-        email == other.email;
+        this.name == other.name &&
+        this.email == other.email;
   }
 }

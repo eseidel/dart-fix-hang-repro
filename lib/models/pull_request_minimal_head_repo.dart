@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestMinimalHeadRepo {
-  const PullRequestMinimalHeadRepo({
+  PullRequestMinimalHeadRepo({
     required this.id,
     required this.url,
     required this.name,
@@ -15,7 +15,7 @@ class PullRequestMinimalHeadRepo {
       'PullRequestMinimalHeadRepo',
       json,
       () => PullRequestMinimalHeadRepo(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         url: json['url'] as String,
         name: json['name'] as String,
       ),
@@ -55,8 +55,8 @@ class PullRequestMinimalHeadRepo {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestMinimalHeadRepo &&
-        id == other.id &&
-        url == other.url &&
-        name == other.name;
+        this.id == other.id &&
+        this.url == other.url &&
+        this.name == other.name;
   }
 }

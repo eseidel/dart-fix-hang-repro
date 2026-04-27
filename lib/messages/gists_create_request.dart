@@ -1,13 +1,14 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/gists_create_request_files.dart';
 import 'package:github_out/models/gists_create_request_public.dart';
+import 'package:github_out/models/gists_create_request_public_one_of_1.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class GistsCreateRequest {
-  const GistsCreateRequest({
-    required this.files,
+  GistsCreateRequest({
     this.description,
+    required this.files,
     this.public,
   });
 
@@ -69,8 +70,8 @@ class GistsCreateRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistsCreateRequest &&
-        description == other.description &&
-        mapsEqual(files, other.files) &&
-        public == other.public;
+        this.description == other.description &&
+        mapsEqual(this.files, other.files) &&
+        this.public == other.public;
   }
 }

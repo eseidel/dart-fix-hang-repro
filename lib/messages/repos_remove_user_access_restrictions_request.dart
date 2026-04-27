@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 /// example: `{users: [mona]}`
 @immutable
 class ReposRemoveUserAccessRestrictionsRequest {
-  const ReposRemoveUserAccessRestrictionsRequest({
+  ReposRemoveUserAccessRestrictionsRequest({
     required this.users,
   });
 
@@ -57,6 +57,6 @@ class ReposRemoveUserAccessRestrictionsRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposRemoveUserAccessRestrictionsRequest &&
-        listsEqual(users, other.users);
+        listsEqual(this.users, other.users);
   }
 }

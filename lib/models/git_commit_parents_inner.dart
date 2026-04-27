@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitCommitParentsInner {
-  const GitCommitParentsInner({
+  GitCommitParentsInner({
     required this.sha,
     required this.url,
     required this.htmlUrl,
@@ -57,8 +57,8 @@ class GitCommitParentsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCommitParentsInner &&
-        sha == other.sha &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl;
+        this.sha == other.sha &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

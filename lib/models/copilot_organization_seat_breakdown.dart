@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotOrganizationSeatBreakdown {
   /// {@macro copilot_organization_seat_breakdown}
-  const CopilotOrganizationSeatBreakdown({
+  CopilotOrganizationSeatBreakdown({
     this.total,
     this.addedThisCycle,
     this.pendingCancellation,
@@ -23,12 +23,12 @@ class CopilotOrganizationSeatBreakdown {
       'CopilotOrganizationSeatBreakdown',
       json,
       () => CopilotOrganizationSeatBreakdown(
-        total: json['total'] as int?,
-        addedThisCycle: json['added_this_cycle'] as int?,
-        pendingCancellation: json['pending_cancellation'] as int?,
-        pendingInvitation: json['pending_invitation'] as int?,
-        activeThisCycle: json['active_this_cycle'] as int?,
-        inactiveThisCycle: json['inactive_this_cycle'] as int?,
+        total: (json['total'] as int?),
+        addedThisCycle: (json['added_this_cycle'] as int?),
+        pendingCancellation: (json['pending_cancellation'] as int?),
+        pendingInvitation: (json['pending_invitation'] as int?),
+        activeThisCycle: (json['active_this_cycle'] as int?),
+        inactiveThisCycle: (json['inactive_this_cycle'] as int?),
       ),
     );
   }
@@ -93,11 +93,11 @@ class CopilotOrganizationSeatBreakdown {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotOrganizationSeatBreakdown &&
-        total == other.total &&
-        addedThisCycle == other.addedThisCycle &&
-        pendingCancellation == other.pendingCancellation &&
-        pendingInvitation == other.pendingInvitation &&
-        activeThisCycle == other.activeThisCycle &&
-        inactiveThisCycle == other.inactiveThisCycle;
+        this.total == other.total &&
+        this.addedThisCycle == other.addedThisCycle &&
+        this.pendingCancellation == other.pendingCancellation &&
+        this.pendingInvitation == other.pendingInvitation &&
+        this.activeThisCycle == other.activeThisCycle &&
+        this.inactiveThisCycle == other.inactiveThisCycle;
   }
 }

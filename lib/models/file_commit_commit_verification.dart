@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class FileCommitCommitVerification {
-  const FileCommitCommitVerification({
+  FileCommitCommitVerification({
     this.verified,
     this.reason,
     this.signature,
@@ -67,10 +67,10 @@ class FileCommitCommitVerification {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is FileCommitCommitVerification &&
-        verified == other.verified &&
-        reason == other.reason &&
-        signature == other.signature &&
-        payload == other.payload &&
-        verifiedAt == other.verifiedAt;
+        this.verified == other.verified &&
+        this.reason == other.reason &&
+        this.signature == other.signature &&
+        this.payload == other.payload &&
+        this.verifiedAt == other.verifiedAt;
   }
 }

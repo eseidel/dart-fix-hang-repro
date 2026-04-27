@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 /// CodeQL query suite to be used. If you specify the `query_suite` parameter,
 /// the default setup will be configured with this query suite only on all
 /// repositories that didn't have default setup already configured. It will not

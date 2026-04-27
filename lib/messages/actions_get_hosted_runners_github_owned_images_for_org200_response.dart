@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/actions_hosted_runner_image.dart';
+import 'package:github_out/models/actions_hosted_runner_image_source.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsGetHostedRunnersGithubOwnedImagesForOrg200Response {
-  const ActionsGetHostedRunnersGithubOwnedImagesForOrg200Response({
+  ActionsGetHostedRunnersGithubOwnedImagesForOrg200Response({
     required this.totalCount,
     required this.images,
   });
@@ -18,7 +19,7 @@ class ActionsGetHostedRunnersGithubOwnedImagesForOrg200Response {
       'ActionsGetHostedRunnersGithubOwnedImagesForOrg200Response',
       json,
       () => ActionsGetHostedRunnersGithubOwnedImagesForOrg200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         images: (json['images'] as List)
             .map<ActionsHostedRunnerImage>(
               (e) =>
@@ -63,7 +64,7 @@ class ActionsGetHostedRunnersGithubOwnedImagesForOrg200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsGetHostedRunnersGithubOwnedImagesForOrg200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(images, other.images);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.images, other.images);
   }
 }

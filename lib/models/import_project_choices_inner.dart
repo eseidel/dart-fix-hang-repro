@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ImportProjectChoicesInner {
-  const ImportProjectChoicesInner({
+  ImportProjectChoicesInner({
     this.vcs,
     this.tfvcProject,
     this.humanName,
@@ -55,8 +55,8 @@ class ImportProjectChoicesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ImportProjectChoicesInner &&
-        vcs == other.vcs &&
-        tfvcProject == other.tfvcProject &&
-        humanName == other.humanName;
+        this.vcs == other.vcs &&
+        this.tfvcProject == other.tfvcProject &&
+        this.humanName == other.humanName;
   }
 }

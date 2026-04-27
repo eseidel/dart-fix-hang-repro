@@ -1,16 +1,15 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/code_scanning_ref.dart';
 import 'package:github_out/models/license.dart';
 import 'package:github_out/models/license_content.dart';
+import 'package:github_out/models/license_content_links.dart';
 import 'package:github_out/models/license_simple.dart';
+import 'package:http/http.dart' as http;
 
 /// View various OSS licenses.
 class LicensesApi {
@@ -40,7 +39,7 @@ class LicensesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -64,13 +63,13 @@ class LicensesApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/licenses/{license}'.replaceAll('{license}', license),
+      path: '/licenses/{license}'.replaceAll('{license}', '${license}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -104,17 +103,17 @@ class LicensesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/license'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (ref != null) 'ref': [ref.toJson()],
+        if (ref != null) 'ref': [ref.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

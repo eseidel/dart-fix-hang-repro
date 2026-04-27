@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TeamSimple {
   /// {@macro team_simple}
-  const TeamSimple({
+  TeamSimple({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -17,11 +17,11 @@ class TeamSimple {
     required this.name,
     required this.description,
     required this.permission,
+    this.privacy,
+    this.notificationSetting,
     required this.htmlUrl,
     required this.repositoriesUrl,
     required this.slug,
-    this.privacy,
-    this.notificationSetting,
     this.ldapDn,
   });
 
@@ -31,7 +31,7 @@ class TeamSimple {
       'TeamSimple',
       json,
       () => TeamSimple(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         membersUrl: json['members_url'] as String,
@@ -145,18 +145,18 @@ class TeamSimple {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamSimple &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        membersUrl == other.membersUrl &&
-        name == other.name &&
-        description == other.description &&
-        permission == other.permission &&
-        privacy == other.privacy &&
-        notificationSetting == other.notificationSetting &&
-        htmlUrl == other.htmlUrl &&
-        repositoriesUrl == other.repositoriesUrl &&
-        slug == other.slug &&
-        ldapDn == other.ldapDn;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.membersUrl == other.membersUrl &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.permission == other.permission &&
+        this.privacy == other.privacy &&
+        this.notificationSetting == other.notificationSetting &&
+        this.htmlUrl == other.htmlUrl &&
+        this.repositoriesUrl == other.repositoriesUrl &&
+        this.slug == other.slug &&
+        this.ldapDn == other.ldapDn;
   }
 }

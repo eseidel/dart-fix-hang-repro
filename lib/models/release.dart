@@ -1,6 +1,7 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/release_asset.dart';
+import 'package:github_out/models/release_asset_state.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Release {
   /// {@macro release}
-  const Release({
+  Release({
     required this.url,
     required this.htmlUrl,
     required this.assetsUrl,
@@ -23,13 +24,13 @@ class Release {
     required this.tagName,
     required this.targetCommitish,
     required this.name,
+    this.body,
     required this.draft,
     required this.prerelease,
     required this.createdAt,
     required this.publishedAt,
     required this.author,
     required this.assets,
-    this.body,
     this.bodyHtml,
     this.bodyText,
     this.mentionsCount,
@@ -49,7 +50,7 @@ class Release {
         uploadUrl: json['upload_url'] as String,
         tarballUrl: maybeParseUri(checkedKey(json, 'tarball_url') as String?),
         zipballUrl: maybeParseUri(checkedKey(json, 'zipball_url') as String?),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         tagName: json['tag_name'] as String,
         targetCommitish: json['target_commitish'] as String,
@@ -69,7 +70,7 @@ class Release {
             .toList(),
         bodyHtml: json['body_html'] as String?,
         bodyText: json['body_text'] as String?,
-        mentionsCount: json['mentions_count'] as int?,
+        mentionsCount: (json['mentions_count'] as int?),
         discussionUrl: maybeParseUri(json['discussion_url'] as String?),
         reactions: ReactionRollup.maybeFromJson(
           json['reactions'] as Map<String, dynamic>?,
@@ -192,28 +193,28 @@ class Release {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Release &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        assetsUrl == other.assetsUrl &&
-        uploadUrl == other.uploadUrl &&
-        tarballUrl == other.tarballUrl &&
-        zipballUrl == other.zipballUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        tagName == other.tagName &&
-        targetCommitish == other.targetCommitish &&
-        name == other.name &&
-        body == other.body &&
-        draft == other.draft &&
-        prerelease == other.prerelease &&
-        createdAt == other.createdAt &&
-        publishedAt == other.publishedAt &&
-        author == other.author &&
-        listsEqual(assets, other.assets) &&
-        bodyHtml == other.bodyHtml &&
-        bodyText == other.bodyText &&
-        mentionsCount == other.mentionsCount &&
-        discussionUrl == other.discussionUrl &&
-        reactions == other.reactions;
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.assetsUrl == other.assetsUrl &&
+        this.uploadUrl == other.uploadUrl &&
+        this.tarballUrl == other.tarballUrl &&
+        this.zipballUrl == other.zipballUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.tagName == other.tagName &&
+        this.targetCommitish == other.targetCommitish &&
+        this.name == other.name &&
+        this.body == other.body &&
+        this.draft == other.draft &&
+        this.prerelease == other.prerelease &&
+        this.createdAt == other.createdAt &&
+        this.publishedAt == other.publishedAt &&
+        this.author == other.author &&
+        listsEqual(this.assets, other.assets) &&
+        this.bodyHtml == other.bodyHtml &&
+        this.bodyText == other.bodyText &&
+        this.mentionsCount == other.mentionsCount &&
+        this.discussionUrl == other.discussionUrl &&
+        this.reactions == other.reactions;
   }
 }

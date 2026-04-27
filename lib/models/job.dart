@@ -2,6 +2,7 @@ import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/job_conclusion.dart';
 import 'package:github_out/models/job_status.dart';
 import 'package:github_out/models/job_steps_inner.dart';
+import 'package:github_out/models/job_steps_inner_status.dart';
 import 'package:meta/meta.dart';
 
 /// {@template job}
@@ -11,10 +12,11 @@ import 'package:meta/meta.dart';
 @immutable
 class Job {
   /// {@macro job}
-  const Job({
+  Job({
     required this.id,
     required this.runId,
     required this.runUrl,
+    this.runAttempt,
     required this.nodeId,
     required this.headSha,
     required this.url,
@@ -25,6 +27,7 @@ class Job {
     required this.startedAt,
     required this.completedAt,
     required this.name,
+    this.steps,
     required this.checkRunUrl,
     required this.labels,
     required this.runnerId,
@@ -33,8 +36,6 @@ class Job {
     required this.runnerGroupName,
     required this.workflowName,
     required this.headBranch,
-    this.runAttempt,
-    this.steps,
   });
 
   /// Converts a `Map<String, dynamic>` to a [Job].
@@ -43,10 +44,10 @@ class Job {
       'Job',
       json,
       () => Job(
-        id: json['id'] as int,
-        runId: json['run_id'] as int,
+        id: (json['id'] as int),
+        runId: (json['run_id'] as int),
         runUrl: json['run_url'] as String,
-        runAttempt: json['run_attempt'] as int?,
+        runAttempt: (json['run_attempt'] as int?),
         nodeId: json['node_id'] as String,
         headSha: json['head_sha'] as String,
         url: json['url'] as String,
@@ -68,9 +69,9 @@ class Job {
             .toList(),
         checkRunUrl: json['check_run_url'] as String,
         labels: (json['labels'] as List).cast<String>(),
-        runnerId: checkedKey(json, 'runner_id') as int?,
+        runnerId: (checkedKey(json, 'runner_id') as int?),
         runnerName: checkedKey(json, 'runner_name') as String?,
-        runnerGroupId: checkedKey(json, 'runner_group_id') as int?,
+        runnerGroupId: (checkedKey(json, 'runner_group_id') as int?),
         runnerGroupName: checkedKey(json, 'runner_group_name') as String?,
         workflowName: checkedKey(json, 'workflow_name') as String?,
         headBranch: checkedKey(json, 'head_branch') as String?,
@@ -244,28 +245,28 @@ class Job {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Job &&
-        id == other.id &&
-        runId == other.runId &&
-        runUrl == other.runUrl &&
-        runAttempt == other.runAttempt &&
-        nodeId == other.nodeId &&
-        headSha == other.headSha &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        status == other.status &&
-        conclusion == other.conclusion &&
-        createdAt == other.createdAt &&
-        startedAt == other.startedAt &&
-        completedAt == other.completedAt &&
-        name == other.name &&
-        listsEqual(steps, other.steps) &&
-        checkRunUrl == other.checkRunUrl &&
-        listsEqual(labels, other.labels) &&
-        runnerId == other.runnerId &&
-        runnerName == other.runnerName &&
-        runnerGroupId == other.runnerGroupId &&
-        runnerGroupName == other.runnerGroupName &&
-        workflowName == other.workflowName &&
-        headBranch == other.headBranch;
+        this.id == other.id &&
+        this.runId == other.runId &&
+        this.runUrl == other.runUrl &&
+        this.runAttempt == other.runAttempt &&
+        this.nodeId == other.nodeId &&
+        this.headSha == other.headSha &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.status == other.status &&
+        this.conclusion == other.conclusion &&
+        this.createdAt == other.createdAt &&
+        this.startedAt == other.startedAt &&
+        this.completedAt == other.completedAt &&
+        this.name == other.name &&
+        listsEqual(this.steps, other.steps) &&
+        this.checkRunUrl == other.checkRunUrl &&
+        listsEqual(this.labels, other.labels) &&
+        this.runnerId == other.runnerId &&
+        this.runnerName == other.runnerName &&
+        this.runnerGroupId == other.runnerGroupId &&
+        this.runnerGroupName == other.runnerGroupName &&
+        this.workflowName == other.workflowName &&
+        this.headBranch == other.headBranch;
   }
 }

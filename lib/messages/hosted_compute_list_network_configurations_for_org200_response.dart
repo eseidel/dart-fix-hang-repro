@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/network_configuration.dart';
+import 'package:github_out/models/network_configuration_compute_service.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class HostedComputeListNetworkConfigurationsForOrg200Response {
-  const HostedComputeListNetworkConfigurationsForOrg200Response({
+  HostedComputeListNetworkConfigurationsForOrg200Response({
     required this.totalCount,
     required this.networkConfigurations,
   });
@@ -18,7 +19,7 @@ class HostedComputeListNetworkConfigurationsForOrg200Response {
       'HostedComputeListNetworkConfigurationsForOrg200Response',
       json,
       () => HostedComputeListNetworkConfigurationsForOrg200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         networkConfigurations: (json['network_configurations'] as List)
             .map<NetworkConfiguration>(
               (e) => NetworkConfiguration.fromJson(e as Map<String, dynamic>),
@@ -65,7 +66,7 @@ class HostedComputeListNetworkConfigurationsForOrg200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is HostedComputeListNetworkConfigurationsForOrg200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(networkConfigurations, other.networkConfigurations);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.networkConfigurations, other.networkConfigurations);
   }
 }

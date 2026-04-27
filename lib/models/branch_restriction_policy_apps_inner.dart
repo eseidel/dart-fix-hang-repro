@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/branch_restriction_policy_apps_inner_owner.dart';
 import 'package:github_out/models/branch_restriction_policy_apps_inner_permissions.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BranchRestrictionPolicyAppsInner {
-  const BranchRestrictionPolicyAppsInner({
+  BranchRestrictionPolicyAppsInner({
     this.id,
     this.slug,
     this.nodeId,
@@ -31,7 +27,7 @@ class BranchRestrictionPolicyAppsInner {
       'BranchRestrictionPolicyAppsInner',
       json,
       () => BranchRestrictionPolicyAppsInner(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         slug: json['slug'] as String?,
         nodeId: json['node_id'] as String?,
         owner: BranchRestrictionPolicyAppsInnerOwner.maybeFromJson(
@@ -117,18 +113,18 @@ class BranchRestrictionPolicyAppsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchRestrictionPolicyAppsInner &&
-        id == other.id &&
-        slug == other.slug &&
-        nodeId == other.nodeId &&
-        owner == other.owner &&
-        name == other.name &&
-        clientId == other.clientId &&
-        description == other.description &&
-        externalUrl == other.externalUrl &&
-        htmlUrl == other.htmlUrl &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        permissions == other.permissions &&
-        listsEqual(events, other.events);
+        this.id == other.id &&
+        this.slug == other.slug &&
+        this.nodeId == other.nodeId &&
+        this.owner == other.owner &&
+        this.name == other.name &&
+        this.clientId == other.clientId &&
+        this.description == other.description &&
+        this.externalUrl == other.externalUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.permissions == other.permissions &&
+        listsEqual(this.events, other.events);
   }
 }

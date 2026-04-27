@@ -1,4 +1,5 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/repository_rule_params_workflow_file_reference.dart';
 import 'package:github_out/models/repository_rule_workflows_parameters.dart';
 import 'package:github_out/models/repository_rule_workflows_type.dart';
 import 'package:meta/meta.dart';
@@ -11,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleWorkflows {
   /// {@macro repository_rule_workflows}
-  const RepositoryRuleWorkflows({
+  RepositoryRuleWorkflows({
     required this.type,
     this.parameters,
   });
@@ -60,7 +61,7 @@ class RepositoryRuleWorkflows {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleWorkflows &&
-        type == other.type &&
-        parameters == other.parameters;
+        this.type == other.type &&
+        this.parameters == other.parameters;
   }
 }

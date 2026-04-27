@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GitignoreTemplate {
   /// {@macro gitignore_template}
-  const GitignoreTemplate({
+  GitignoreTemplate({
     required this.name,
     required this.source,
   });
@@ -75,7 +75,7 @@ class GitignoreTemplate {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitignoreTemplate &&
-        name == other.name &&
-        source == other.source;
+        this.name == other.name &&
+        this.source == other.source;
   }
 }

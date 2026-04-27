@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateCommitCommentRequest {
-  const ReposCreateCommitCommentRequest({
+  ReposCreateCommitCommentRequest({
     required this.body,
     this.path,
     this.position,
@@ -18,8 +18,8 @@ class ReposCreateCommitCommentRequest {
       () => ReposCreateCommitCommentRequest(
         body: json['body'] as String,
         path: json['path'] as String?,
-        position: json['position'] as int?,
-        line: json['line'] as int?,
+        position: (json['position'] as int?),
+        line: (json['line'] as int?),
       ),
     );
   }
@@ -70,9 +70,9 @@ class ReposCreateCommitCommentRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateCommitCommentRequest &&
-        body == other.body &&
-        path == other.path &&
-        position == other.position &&
-        line == other.line;
+        this.body == other.body &&
+        this.path == other.path &&
+        this.position == other.position &&
+        this.line == other.line;
   }
 }

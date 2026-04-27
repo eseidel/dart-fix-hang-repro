@@ -7,18 +7,18 @@ import 'package:meta/meta.dart';
 @immutable
 class SimpleCommitStatus {
   /// {@macro simple_commit_status}
-  const SimpleCommitStatus({
+  SimpleCommitStatus({
     required this.description,
     required this.id,
     required this.nodeId,
     required this.state,
     required this.context,
     required this.targetUrl,
+    this.required_,
     required this.avatarUrl,
     required this.url,
     required this.createdAt,
     required this.updatedAt,
-    this.required_,
   });
 
   /// Converts a `Map<String, dynamic>` to a [SimpleCommitStatus].
@@ -28,7 +28,7 @@ class SimpleCommitStatus {
       json,
       () => SimpleCommitStatus(
         description: checkedKey(json, 'description') as String?,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         state: json['state'] as String,
         context: json['context'] as String,
@@ -99,16 +99,16 @@ class SimpleCommitStatus {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SimpleCommitStatus &&
-        description == other.description &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        state == other.state &&
-        context == other.context &&
-        targetUrl == other.targetUrl &&
-        required_ == other.required_ &&
-        avatarUrl == other.avatarUrl &&
-        url == other.url &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.description == other.description &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.state == other.state &&
+        this.context == other.context &&
+        this.targetUrl == other.targetUrl &&
+        this.required_ == other.required_ &&
+        this.avatarUrl == other.avatarUrl &&
+        this.url == other.url &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

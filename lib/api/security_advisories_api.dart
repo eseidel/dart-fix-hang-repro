@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -13,13 +9,65 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct_simple.dart';
+import 'package:github_out/models/cvss_severities.dart';
+import 'package:github_out/models/cvss_severities_cvss_v3.dart';
+import 'package:github_out/models/cvss_severities_cvss_v4.dart';
 import 'package:github_out/models/direction_param.dart';
 import 'package:github_out/models/full_repository.dart';
+import 'package:github_out/models/full_repository_merge_commit_message.dart';
+import 'package:github_out/models/full_repository_merge_commit_title.dart';
+import 'package:github_out/models/full_repository_permissions.dart';
+import 'package:github_out/models/full_repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/full_repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/global_advisory.dart';
+import 'package:github_out/models/global_advisory_credits_inner.dart';
+import 'package:github_out/models/global_advisory_cvss.dart';
+import 'package:github_out/models/global_advisory_cwes_inner.dart';
+import 'package:github_out/models/global_advisory_identifiers_inner.dart';
+import 'package:github_out/models/global_advisory_identifiers_inner_type.dart';
+import 'package:github_out/models/global_advisory_severity.dart';
+import 'package:github_out/models/global_advisory_type.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/private_vulnerability_report_create.dart';
+import 'package:github_out/models/private_vulnerability_report_create_severity.dart';
+import 'package:github_out/models/private_vulnerability_report_create_vulnerabilities_inner.dart';
+import 'package:github_out/models/private_vulnerability_report_create_vulnerabilities_inner_package.dart';
+import 'package:github_out/models/repository.dart';
 import 'package:github_out/models/repository_advisory.dart';
+import 'package:github_out/models/repository_advisory_author.dart';
 import 'package:github_out/models/repository_advisory_create.dart';
+import 'package:github_out/models/repository_advisory_create_credits_inner.dart';
+import 'package:github_out/models/repository_advisory_create_severity.dart';
+import 'package:github_out/models/repository_advisory_create_vulnerabilities_inner.dart';
+import 'package:github_out/models/repository_advisory_create_vulnerabilities_inner_package.dart';
+import 'package:github_out/models/repository_advisory_credit.dart';
+import 'package:github_out/models/repository_advisory_credit_state.dart';
+import 'package:github_out/models/repository_advisory_credits_inner.dart';
+import 'package:github_out/models/repository_advisory_cvss.dart';
+import 'package:github_out/models/repository_advisory_cwes_inner.dart';
+import 'package:github_out/models/repository_advisory_identifiers_inner.dart';
+import 'package:github_out/models/repository_advisory_identifiers_inner_type.dart';
+import 'package:github_out/models/repository_advisory_private_fork.dart';
+import 'package:github_out/models/repository_advisory_publisher.dart';
+import 'package:github_out/models/repository_advisory_severity.dart';
+import 'package:github_out/models/repository_advisory_state.dart';
+import 'package:github_out/models/repository_advisory_submission.dart';
 import 'package:github_out/models/repository_advisory_update.dart';
+import 'package:github_out/models/repository_advisory_update_credits_inner.dart';
+import 'package:github_out/models/repository_advisory_update_severity.dart';
+import 'package:github_out/models/repository_advisory_update_state.dart';
+import 'package:github_out/models/repository_advisory_update_vulnerabilities_inner.dart';
+import 'package:github_out/models/repository_advisory_update_vulnerabilities_inner_package.dart';
+import 'package:github_out/models/repository_advisory_vulnerability.dart';
+import 'package:github_out/models/repository_advisory_vulnerability_package.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/security_advisories_list_global_advisories_parameter1.dart';
 import 'package:github_out/models/security_advisories_list_global_advisories_parameter17.dart';
 import 'package:github_out/models/security_advisories_list_global_advisories_parameter4.dart';
@@ -29,7 +77,35 @@ import 'package:github_out/models/security_advisories_list_org_repository_adviso
 import 'package:github_out/models/security_advisories_list_org_repository_advisories_parameter6.dart';
 import 'package:github_out/models/security_advisories_list_repository_advisories_parameter3.dart';
 import 'package:github_out/models/security_advisories_list_repository_advisories_parameter7.dart';
+import 'package:github_out/models/security_advisory_credit_types.dart';
 import 'package:github_out/models/security_advisory_ecosystems.dart';
+import 'package:github_out/models/security_advisory_epss.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/validation_error_simple.dart';
+import 'package:github_out/models/vulnerability.dart';
+import 'package:github_out/models/vulnerability_package.dart';
+import 'package:http/http.dart' as http;
 
 /// Manage security advisories.
 class SecurityAdvisoriesApi {
@@ -75,31 +151,33 @@ class SecurityAdvisoriesApi {
       method: Method.get,
       path: '/advisories',
       queryParameters: {
-        if (ghsaId != null) 'ghsa_id': [ghsaId],
-        if (type != null) 'type': [type.toJson()],
-        if (cveId != null) 'cve_id': [cveId],
-        if (ecosystem != null) 'ecosystem': [ecosystem.toJson()],
-        if (severity != null) 'severity': [severity.toJson()],
+        if (ghsaId != null) 'ghsa_id': [ghsaId.toString()],
+        if (type != null) 'type': [type.toJson().toString()],
+        if (cveId != null) 'cve_id': [cveId.toString()],
+        if (ecosystem != null) 'ecosystem': [ecosystem.toJson().toString()],
+        if (severity != null) 'severity': [severity.toJson().toString()],
         if (cwes != null) 'cwes': [cwes.toJson().toString()],
         if (isWithdrawn != null) 'is_withdrawn': [isWithdrawn.toString()],
         if (affects != null) 'affects': [affects.toJson().toString()],
-        if (published != null) 'published': [published],
-        if (updated != null) 'updated': [updated],
-        if (modified != null) 'modified': [modified],
-        if (epssPercentage != null) 'epss_percentage': [epssPercentage],
-        if (epssPercentile != null) 'epss_percentile': [epssPercentile],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (published != null) 'published': [published.toString()],
+        if (updated != null) 'updated': [updated.toString()],
+        if (modified != null) 'modified': [modified.toString()],
+        if (epssPercentage != null)
+          'epss_percentage': [epssPercentage.toString()],
+        if (epssPercentile != null)
+          'epss_percentile': [epssPercentile.toString()],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (sort != null) 'sort': [sort.toJson()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -122,13 +200,13 @@ class SecurityAdvisoriesApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/advisories/{ghsa_id}'.replaceAll('{ghsa_id}', ghsaId),
+      path: '/advisories/{ghsa_id}'.replaceAll('{ghsa_id}', '${ghsaId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -164,21 +242,21 @@ class SecurityAdvisoriesApi {
 
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/security-advisories'.replaceAll('{org}', org),
+      path: '/orgs/{org}/security-advisories'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (direction != null) 'direction': [direction.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (state != null) 'state': [state.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -220,22 +298,22 @@ class SecurityAdvisoriesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/security-advisories'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (direction != null) 'direction': [direction.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (state != null) 'state': [state.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -267,15 +345,16 @@ class SecurityAdvisoriesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/security-advisories'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: repositoryAdvisoryCreate.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -301,15 +380,16 @@ class SecurityAdvisoriesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/security-advisories/reports'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: privateVulnerabilityReportCreate.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -346,15 +426,15 @@ class SecurityAdvisoriesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/security-advisories/{ghsa_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ghsa_id}', ghsaId),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ghsa_id}', '${ghsaId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -386,16 +466,17 @@ class SecurityAdvisoriesApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/security-advisories/{ghsa_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ghsa_id}', ghsaId),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ghsa_id}', '${ghsaId}'),
       body: repositoryAdvisoryUpdate.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -432,15 +513,15 @@ class SecurityAdvisoriesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/security-advisories/{ghsa_id}/cve'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ghsa_id}', ghsaId),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ghsa_id}', '${ghsaId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -466,15 +547,15 @@ class SecurityAdvisoriesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/security-advisories/{ghsa_id}/forks'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{ghsa_id}', ghsaId),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{ghsa_id}', '${ghsaId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

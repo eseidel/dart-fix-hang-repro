@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BranchProtectionAllowDeletions {
-  const BranchProtectionAllowDeletions({
+  BranchProtectionAllowDeletions({
     this.enabled,
   });
 
@@ -44,6 +44,7 @@ class BranchProtectionAllowDeletions {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is BranchProtectionAllowDeletions && enabled == other.enabled;
+    return other is BranchProtectionAllowDeletions &&
+        this.enabled == other.enabled;
   }
 }

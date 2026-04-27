@@ -1,5 +1,8 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -10,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class AssignedIssueEvent {
   /// {@macro assigned_issue_event}
-  const AssignedIssueEvent({
+  AssignedIssueEvent({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -30,7 +33,7 @@ class AssignedIssueEvent {
       'AssignedIssueEvent',
       json,
       () => AssignedIssueEvent(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: json['url'] as String,
         actor: SimpleUser.fromJson(json['actor'] as Map<String, dynamic>),
@@ -119,16 +122,16 @@ class AssignedIssueEvent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is AssignedIssueEvent &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        actor == other.actor &&
-        event == other.event &&
-        commitId == other.commitId &&
-        commitUrl == other.commitUrl &&
-        createdAt == other.createdAt &&
-        performedViaGithubApp == other.performedViaGithubApp &&
-        assignee == other.assignee &&
-        assigner == other.assigner;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.actor == other.actor &&
+        this.event == other.event &&
+        this.commitId == other.commitId &&
+        this.commitUrl == other.commitUrl &&
+        this.createdAt == other.createdAt &&
+        this.performedViaGithubApp == other.performedViaGithubApp &&
+        this.assignee == other.assignee &&
+        this.assigner == other.assigner;
   }
 }

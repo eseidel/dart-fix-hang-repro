@@ -1,8 +1,6 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/marketplace_listing_plan.dart';
+import 'package:github_out/models/marketplace_listing_plan_price_model.dart';
 import 'package:github_out/models/marketplace_purchase_marketplace_pending_change.dart';
 import 'package:github_out/models/marketplace_purchase_marketplace_purchase.dart';
 import 'package:meta/meta.dart';
@@ -14,15 +12,15 @@ import 'package:meta/meta.dart';
 @immutable
 class MarketplacePurchase {
   /// {@macro marketplace_purchase}
-  const MarketplacePurchase({
+  MarketplacePurchase({
     required this.url,
     required this.type,
     required this.id,
     required this.login,
-    required this.marketplacePurchase,
     this.organizationBillingEmail,
     this.email,
     this.marketplacePendingChange,
+    required this.marketplacePurchase,
   });
 
   /// Converts a `Map<String, dynamic>` to a [MarketplacePurchase].
@@ -33,7 +31,7 @@ class MarketplacePurchase {
       () => MarketplacePurchase(
         url: json['url'] as String,
         type: json['type'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         login: json['login'] as String,
         organizationBillingEmail: json['organization_billing_email'] as String?,
         email: json['email'] as String?,
@@ -96,13 +94,13 @@ class MarketplacePurchase {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MarketplacePurchase &&
-        url == other.url &&
-        type == other.type &&
-        id == other.id &&
-        login == other.login &&
-        organizationBillingEmail == other.organizationBillingEmail &&
-        email == other.email &&
-        marketplacePendingChange == other.marketplacePendingChange &&
-        marketplacePurchase == other.marketplacePurchase;
+        this.url == other.url &&
+        this.type == other.type &&
+        this.id == other.id &&
+        this.login == other.login &&
+        this.organizationBillingEmail == other.organizationBillingEmail &&
+        this.email == other.email &&
+        this.marketplacePendingChange == other.marketplacePendingChange &&
+        this.marketplacePurchase == other.marketplacePurchase;
   }
 }

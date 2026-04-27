@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GlobalAdvisoryIdentifiersInner {
-  const GlobalAdvisoryIdentifiersInner({
+  GlobalAdvisoryIdentifiersInner({
     required this.type,
     required this.value,
   });
@@ -58,7 +58,7 @@ class GlobalAdvisoryIdentifiersInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GlobalAdvisoryIdentifiersInner &&
-        type == other.type &&
-        value == other.value;
+        this.type == other.type &&
+        this.value == other.value;
   }
 }

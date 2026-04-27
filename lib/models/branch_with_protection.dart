@@ -1,7 +1,46 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/branch_protection.dart';
+import 'package:github_out/models/branch_protection_allow_deletions.dart';
+import 'package:github_out/models/branch_protection_allow_force_pushes.dart';
+import 'package:github_out/models/branch_protection_allow_fork_syncing.dart';
+import 'package:github_out/models/branch_protection_block_creations.dart';
+import 'package:github_out/models/branch_protection_lock_branch.dart';
+import 'package:github_out/models/branch_protection_required_conversation_resolution.dart';
+import 'package:github_out/models/branch_protection_required_linear_history.dart';
+import 'package:github_out/models/branch_protection_required_signatures.dart';
+import 'package:github_out/models/branch_restriction_policy.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner_owner.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner_permissions.dart';
+import 'package:github_out/models/branch_restriction_policy_teams_inner.dart';
+import 'package:github_out/models/branch_restriction_policy_users_inner.dart';
 import 'package:github_out/models/branch_with_protection_links.dart';
 import 'package:github_out/models/commit.dart';
+import 'package:github_out/models/commit_author.dart';
+import 'package:github_out/models/commit_commit.dart';
+import 'package:github_out/models/commit_commit_tree.dart';
+import 'package:github_out/models/commit_committer.dart';
+import 'package:github_out/models/commit_parents_inner.dart';
+import 'package:github_out/models/commit_stats.dart';
+import 'package:github_out/models/diff_entry.dart';
+import 'package:github_out/models/diff_entry_status.dart';
+import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/enterprise.dart';
+import 'package:github_out/models/git_user.dart';
+import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
+import 'package:github_out/models/protected_branch_admin_enforced.dart';
+import 'package:github_out/models/protected_branch_pull_request_review.dart';
+import 'package:github_out/models/protected_branch_pull_request_review_bypass_pull_request_allowances.dart';
+import 'package:github_out/models/protected_branch_pull_request_review_dismissal_restrictions.dart';
+import 'package:github_out/models/protected_branch_required_status_check.dart';
+import 'package:github_out/models/protected_branch_required_status_check_checks_inner.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:github_out/models/verification.dart';
 import 'package:meta/meta.dart';
 
 /// {@template branch_with_protection}
@@ -11,7 +50,7 @@ import 'package:meta/meta.dart';
 @immutable
 class BranchWithProtection {
   /// {@macro branch_with_protection}
-  const BranchWithProtection({
+  BranchWithProtection({
     required this.name,
     required this.commit,
     required this.links,
@@ -40,7 +79,7 @@ class BranchWithProtection {
         protectionUrl: Uri.parse(json['protection_url'] as String),
         pattern: json['pattern'] as String?,
         requiredApprovingReviewCount:
-            json['required_approving_review_count'] as int?,
+            (json['required_approving_review_count'] as int?),
       ),
     );
   }
@@ -103,13 +142,13 @@ class BranchWithProtection {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchWithProtection &&
-        name == other.name &&
-        commit == other.commit &&
-        links == other.links &&
-        protected == other.protected &&
-        protection == other.protection &&
-        protectionUrl == other.protectionUrl &&
-        pattern == other.pattern &&
-        requiredApprovingReviewCount == other.requiredApprovingReviewCount;
+        this.name == other.name &&
+        this.commit == other.commit &&
+        this.links == other.links &&
+        this.protected == other.protected &&
+        this.protection == other.protection &&
+        this.protectionUrl == other.protectionUrl &&
+        this.pattern == other.pattern &&
+        this.requiredApprovingReviewCount == other.requiredApprovingReviewCount;
   }
 }

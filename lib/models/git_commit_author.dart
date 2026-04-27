@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GitCommitAuthor {
   /// {@macro git_commit_author}
-  const GitCommitAuthor({
+  GitCommitAuthor({
     required this.date,
     required this.email,
     required this.name,
@@ -67,8 +67,8 @@ class GitCommitAuthor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCommitAuthor &&
-        date == other.date &&
-        email == other.email &&
-        name == other.name;
+        this.date == other.date &&
+        this.email == other.email &&
+        this.name == other.name;
   }
 }

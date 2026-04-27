@@ -4,9 +4,9 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ChecksUpdateRequestAnyOf0 {
-  const ChecksUpdateRequestAnyOf0({
-    required this.entries,
+  ChecksUpdateRequestAnyOf0({
     this.status,
+    required this.entries,
   });
 
   /// Converts a `Map<String, dynamic>` to a [ChecksUpdateRequestAnyOf0].
@@ -18,7 +18,7 @@ class ChecksUpdateRequestAnyOf0 {
         status: ChecksUpdateRequestAnyOf0Status.maybeFromJson(
           json['status'] as String?,
         ),
-        entries: json.map(MapEntry.new),
+        entries: json.map((key, value) => MapEntry(key, value)),
       ),
     );
   }
@@ -35,13 +35,13 @@ class ChecksUpdateRequestAnyOf0 {
   final ChecksUpdateRequestAnyOf0Status? status;
   final Map<String, dynamic> entries;
 
-  dynamic operator [](String key) => entries[key];
+  dynamic? operator [](String key) => entries[key];
 
   /// Converts a [ChecksUpdateRequestAnyOf0] to a `Map<String, dynamic>`.
   Map<String, dynamic> toJson() {
     return {
       'status': status?.toJson(),
-      ...entries.map(MapEntry.new),
+      ...entries.map((key, value) => MapEntry(key, value)),
     };
   }
 
@@ -55,7 +55,7 @@ class ChecksUpdateRequestAnyOf0 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ChecksUpdateRequestAnyOf0 &&
-        status == other.status &&
+        this.status == other.status &&
         mapsEqual(entries, other.entries);
   }
 }

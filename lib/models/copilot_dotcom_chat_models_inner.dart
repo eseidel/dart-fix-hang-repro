@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CopilotDotcomChatModelsInner {
-  const CopilotDotcomChatModelsInner({
+  CopilotDotcomChatModelsInner({
     this.name,
     this.isCustomModel,
     this.customModelTrainingDate,
@@ -20,8 +20,8 @@ class CopilotDotcomChatModelsInner {
         name: json['name'] as String?,
         isCustomModel: json['is_custom_model'] as bool?,
         customModelTrainingDate: json['custom_model_training_date'] as String?,
-        totalEngagedUsers: json['total_engaged_users'] as int?,
-        totalChats: json['total_chats'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
+        totalChats: (json['total_chats'] as int?),
       ),
     );
   }
@@ -78,10 +78,10 @@ class CopilotDotcomChatModelsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotDotcomChatModelsInner &&
-        name == other.name &&
-        isCustomModel == other.isCustomModel &&
-        customModelTrainingDate == other.customModelTrainingDate &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        totalChats == other.totalChats;
+        this.name == other.name &&
+        this.isCustomModel == other.isCustomModel &&
+        this.customModelTrainingDate == other.customModelTrainingDate &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        this.totalChats == other.totalChats;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class DependencyGraphCreateRepositorySnapshot201Response {
-  const DependencyGraphCreateRepositorySnapshot201Response({
+  DependencyGraphCreateRepositorySnapshot201Response({
     required this.id,
     required this.createdAt,
     required this.result,
@@ -19,7 +19,7 @@ class DependencyGraphCreateRepositorySnapshot201Response {
       'DependencyGraphCreateRepositorySnapshot201Response',
       json,
       () => DependencyGraphCreateRepositorySnapshot201Response(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         createdAt: json['created_at'] as String,
         result: json['result'] as String,
         message: json['message'] as String,
@@ -78,9 +78,9 @@ class DependencyGraphCreateRepositorySnapshot201Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependencyGraphCreateRepositorySnapshot201Response &&
-        id == other.id &&
-        createdAt == other.createdAt &&
-        result == other.result &&
-        message == other.message;
+        this.id == other.id &&
+        this.createdAt == other.createdAt &&
+        this.result == other.result &&
+        this.message == other.message;
   }
 }

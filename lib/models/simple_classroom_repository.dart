@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SimpleClassroomRepository {
   /// {@macro simple_classroom_repository}
-  const SimpleClassroomRepository({
+  SimpleClassroomRepository({
     required this.id,
     required this.fullName,
     required this.htmlUrl,
@@ -23,7 +23,7 @@ class SimpleClassroomRepository {
       'SimpleClassroomRepository',
       json,
       () => SimpleClassroomRepository(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         fullName: json['full_name'] as String,
         htmlUrl: Uri.parse(json['html_url'] as String),
         nodeId: json['node_id'] as String,
@@ -91,11 +91,11 @@ class SimpleClassroomRepository {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SimpleClassroomRepository &&
-        id == other.id &&
-        fullName == other.fullName &&
-        htmlUrl == other.htmlUrl &&
-        nodeId == other.nodeId &&
-        private == other.private &&
-        defaultBranch == other.defaultBranch;
+        this.id == other.id &&
+        this.fullName == other.fullName &&
+        this.htmlUrl == other.htmlUrl &&
+        this.nodeId == other.nodeId &&
+        this.private == other.private &&
+        this.defaultBranch == other.defaultBranch;
   }
 }

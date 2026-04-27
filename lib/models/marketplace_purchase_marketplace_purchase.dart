@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/marketplace_listing_plan.dart';
+import 'package:github_out/models/marketplace_listing_plan_price_model.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class MarketplacePurchaseMarketplacePurchase {
-  const MarketplacePurchaseMarketplacePurchase({
+  MarketplacePurchaseMarketplacePurchase({
     this.billingCycle,
     this.nextBillingDate,
     this.isInstalled,
@@ -27,7 +28,7 @@ class MarketplacePurchaseMarketplacePurchase {
         billingCycle: json['billing_cycle'] as String?,
         nextBillingDate: json['next_billing_date'] as String?,
         isInstalled: json['is_installed'] as bool?,
-        unitCount: json['unit_count'] as int?,
+        unitCount: (json['unit_count'] as int?),
         onFreeTrial: json['on_free_trial'] as bool?,
         freeTrialEndsOn: json['free_trial_ends_on'] as String?,
         updatedAt: json['updated_at'] as String?,
@@ -92,13 +93,13 @@ class MarketplacePurchaseMarketplacePurchase {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MarketplacePurchaseMarketplacePurchase &&
-        billingCycle == other.billingCycle &&
-        nextBillingDate == other.nextBillingDate &&
-        isInstalled == other.isInstalled &&
-        unitCount == other.unitCount &&
-        onFreeTrial == other.onFreeTrial &&
-        freeTrialEndsOn == other.freeTrialEndsOn &&
-        updatedAt == other.updatedAt &&
-        plan == other.plan;
+        this.billingCycle == other.billingCycle &&
+        this.nextBillingDate == other.nextBillingDate &&
+        this.isInstalled == other.isInstalled &&
+        this.unitCount == other.unitCount &&
+        this.onFreeTrial == other.onFreeTrial &&
+        this.freeTrialEndsOn == other.freeTrialEndsOn &&
+        this.updatedAt == other.updatedAt &&
+        this.plan == other.plan;
   }
 }

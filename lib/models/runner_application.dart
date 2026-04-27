@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RunnerApplication {
   /// {@macro runner_application}
-  const RunnerApplication({
+  RunnerApplication({
     required this.os,
     required this.architecture,
     required this.downloadUrl,
@@ -77,11 +77,11 @@ class RunnerApplication {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RunnerApplication &&
-        os == other.os &&
-        architecture == other.architecture &&
-        downloadUrl == other.downloadUrl &&
-        filename == other.filename &&
-        tempDownloadToken == other.tempDownloadToken &&
-        sha256Checksum == other.sha256Checksum;
+        this.os == other.os &&
+        this.architecture == other.architecture &&
+        this.downloadUrl == other.downloadUrl &&
+        this.filename == other.filename &&
+        this.tempDownloadToken == other.tempDownloadToken &&
+        this.sha256Checksum == other.sha256Checksum;
   }
 }

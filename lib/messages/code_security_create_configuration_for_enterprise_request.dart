@@ -1,9 +1,6 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_scanning_default_setup_options.dart';
+import 'package:github_out/models/code_scanning_default_setup_options_runner_type.dart';
 import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_advanced_security.dart';
 import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_code_scanning_default_setup.dart';
 import 'package:github_out/models/code_security_create_configuration_for_enterprise_request_code_scanning_delegated_alert_dismissal.dart';
@@ -24,7 +21,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeSecurityCreateConfigurationForEnterpriseRequest {
-  const CodeSecurityCreateConfigurationForEnterpriseRequest({
+  CodeSecurityCreateConfigurationForEnterpriseRequest({
     required this.name,
     required this.description,
     this.advancedSecurity,
@@ -277,30 +274,34 @@ class CodeSecurityCreateConfigurationForEnterpriseRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeSecurityCreateConfigurationForEnterpriseRequest &&
-        name == other.name &&
-        description == other.description &&
-        advancedSecurity == other.advancedSecurity &&
-        dependencyGraph == other.dependencyGraph &&
-        dependencyGraphAutosubmitAction ==
+        this.name == other.name &&
+        this.description == other.description &&
+        this.advancedSecurity == other.advancedSecurity &&
+        this.dependencyGraph == other.dependencyGraph &&
+        this.dependencyGraphAutosubmitAction ==
             other.dependencyGraphAutosubmitAction &&
-        dependencyGraphAutosubmitActionOptions ==
+        this.dependencyGraphAutosubmitActionOptions ==
             other.dependencyGraphAutosubmitActionOptions &&
-        dependabotAlerts == other.dependabotAlerts &&
-        dependabotSecurityUpdates == other.dependabotSecurityUpdates &&
-        codeScanningDefaultSetup == other.codeScanningDefaultSetup &&
-        codeScanningDefaultSetupOptions ==
+        this.dependabotAlerts == other.dependabotAlerts &&
+        this.dependabotSecurityUpdates == other.dependabotSecurityUpdates &&
+        this.codeScanningDefaultSetup == other.codeScanningDefaultSetup &&
+        this.codeScanningDefaultSetupOptions ==
             other.codeScanningDefaultSetupOptions &&
-        codeScanningDelegatedAlertDismissal ==
+        this.codeScanningDelegatedAlertDismissal ==
             other.codeScanningDelegatedAlertDismissal &&
-        secretScanning == other.secretScanning &&
-        secretScanningPushProtection == other.secretScanningPushProtection &&
-        secretScanningValidityChecks == other.secretScanningValidityChecks &&
-        secretScanningNonProviderPatterns ==
+        this.secretScanning == other.secretScanning &&
+        this.secretScanningPushProtection ==
+            other.secretScanningPushProtection &&
+        this.secretScanningValidityChecks ==
+            other.secretScanningValidityChecks &&
+        this.secretScanningNonProviderPatterns ==
             other.secretScanningNonProviderPatterns &&
-        secretScanningGenericSecrets == other.secretScanningGenericSecrets &&
-        secretScanningDelegatedAlertDismissal ==
+        this.secretScanningGenericSecrets ==
+            other.secretScanningGenericSecrets &&
+        this.secretScanningDelegatedAlertDismissal ==
             other.secretScanningDelegatedAlertDismissal &&
-        privateVulnerabilityReporting == other.privateVulnerabilityReporting &&
-        enforcement == other.enforcement;
+        this.privateVulnerabilityReporting ==
+            other.privateVulnerabilityReporting &&
+        this.enforcement == other.enforcement;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BranchRestrictionPolicyAppsInnerPermissions {
-  const BranchRestrictionPolicyAppsInnerPermissions({
+  BranchRestrictionPolicyAppsInnerPermissions({
     this.metadata,
     this.contents,
     this.issues,
@@ -66,9 +66,9 @@ class BranchRestrictionPolicyAppsInnerPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchRestrictionPolicyAppsInnerPermissions &&
-        metadata == other.metadata &&
-        contents == other.contents &&
-        issues == other.issues &&
-        singleFile == other.singleFile;
+        this.metadata == other.metadata &&
+        this.contents == other.contents &&
+        this.issues == other.issues &&
+        this.singleFile == other.singleFile;
   }
 }

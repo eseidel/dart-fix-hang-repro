@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReposUpdateBranchProtectionRequestRestrictions {
   /// {@macro repos_update_branch_protection_request_restrictions}
-  const ReposUpdateBranchProtectionRequestRestrictions({
+  ReposUpdateBranchProtectionRequestRestrictions({
     required this.users,
     required this.teams,
     this.apps,
@@ -72,8 +72,8 @@ class ReposUpdateBranchProtectionRequestRestrictions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposUpdateBranchProtectionRequestRestrictions &&
-        listsEqual(users, other.users) &&
-        listsEqual(teams, other.teams) &&
-        listsEqual(apps, other.apps);
+        listsEqual(this.users, other.users) &&
+        listsEqual(this.teams, other.teams) &&
+        listsEqual(this.apps, other.apps);
   }
 }

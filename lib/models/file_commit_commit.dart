@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class FileCommitCommit {
-  const FileCommitCommit({
+  FileCommitCommit({
     this.sha,
     this.nodeId,
     this.url,
@@ -109,15 +109,15 @@ class FileCommitCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is FileCommitCommit &&
-        sha == other.sha &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        author == other.author &&
-        committer == other.committer &&
-        message == other.message &&
-        tree == other.tree &&
-        listsEqual(parents, other.parents) &&
-        verification == other.verification;
+        this.sha == other.sha &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.author == other.author &&
+        this.committer == other.committer &&
+        this.message == other.message &&
+        this.tree == other.tree &&
+        listsEqual(this.parents, other.parents) &&
+        this.verification == other.verification;
   }
 }

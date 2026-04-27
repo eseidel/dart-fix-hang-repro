@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ValidationErrorSimple {
   /// {@macro validation_error_simple}
-  const ValidationErrorSimple({
+  ValidationErrorSimple({
     required this.message,
     required this.documentationUrl,
     this.errors,
@@ -60,8 +60,8 @@ class ValidationErrorSimple {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ValidationErrorSimple &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl &&
-        listsEqual(errors, other.errors);
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl &&
+        listsEqual(this.errors, other.errors);
   }
 }

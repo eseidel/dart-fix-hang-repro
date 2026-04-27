@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PorterAuthor {
   /// {@macro porter_author}
-  const PorterAuthor({
+  PorterAuthor({
     required this.id,
     required this.remoteId,
     required this.remoteName,
@@ -24,7 +24,7 @@ class PorterAuthor {
       'PorterAuthor',
       json,
       () => PorterAuthor(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         remoteId: json['remote_id'] as String,
         remoteName: json['remote_name'] as String,
         email: json['email'] as String,
@@ -80,12 +80,12 @@ class PorterAuthor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PorterAuthor &&
-        id == other.id &&
-        remoteId == other.remoteId &&
-        remoteName == other.remoteName &&
-        email == other.email &&
-        name == other.name &&
-        url == other.url &&
-        importUrl == other.importUrl;
+        this.id == other.id &&
+        this.remoteId == other.remoteId &&
+        this.remoteName == other.remoteName &&
+        this.email == other.email &&
+        this.name == other.name &&
+        this.url == other.url &&
+        this.importUrl == other.importUrl;
   }
 }

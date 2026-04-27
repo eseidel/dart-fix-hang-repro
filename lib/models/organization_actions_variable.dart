@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/organization_actions_variable_visibility.dart';
 import 'package:meta/meta.dart';
@@ -13,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OrganizationActionsVariable {
   /// {@macro organization_actions_variable}
-  const OrganizationActionsVariable({
+  OrganizationActionsVariable({
     required this.name,
     required this.value,
     required this.createdAt,
@@ -104,11 +100,11 @@ class OrganizationActionsVariable {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrganizationActionsVariable &&
-        name == other.name &&
-        value == other.value &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        visibility == other.visibility &&
-        selectedRepositoriesUrl == other.selectedRepositoriesUrl;
+        this.name == other.name &&
+        this.value == other.value &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.visibility == other.visibility &&
+        this.selectedRepositoriesUrl == other.selectedRepositoriesUrl;
   }
 }

@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Traffic {
   /// {@macro traffic}
-  const Traffic({
+  Traffic({
     required this.timestamp,
     required this.uniques,
     required this.count,
@@ -20,8 +20,8 @@ class Traffic {
       json,
       () => Traffic(
         timestamp: DateTime.parse(json['timestamp'] as String),
-        uniques: json['uniques'] as int,
-        count: json['count'] as int,
+        uniques: (json['uniques'] as int),
+        count: (json['count'] as int),
       ),
     );
   }
@@ -59,8 +59,8 @@ class Traffic {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Traffic &&
-        timestamp == other.timestamp &&
-        uniques == other.uniques &&
-        count == other.count;
+        this.timestamp == other.timestamp &&
+        this.uniques == other.uniques &&
+        this.count == other.count;
   }
 }

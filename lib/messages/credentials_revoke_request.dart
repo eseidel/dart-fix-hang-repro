@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CredentialsRevokeRequest {
-  const CredentialsRevokeRequest({
+  CredentialsRevokeRequest({
     required this.credentials,
   });
 
@@ -44,6 +44,6 @@ class CredentialsRevokeRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CredentialsRevokeRequest &&
-        listsEqual(credentials, other.credentials);
+        listsEqual(this.credentials, other.credentials);
   }
 }

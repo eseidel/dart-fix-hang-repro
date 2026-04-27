@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/private_registries_update_org_private_registry_request_registry_type.dart';
 import 'package:github_out/models/private_registries_update_org_private_registry_request_visibility.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PrivateRegistriesUpdateOrgPrivateRegistryRequest {
-  const PrivateRegistriesUpdateOrgPrivateRegistryRequest({
+  PrivateRegistriesUpdateOrgPrivateRegistryRequest({
     this.registryType,
     this.username,
     this.encryptedValue,
@@ -113,11 +109,11 @@ class PrivateRegistriesUpdateOrgPrivateRegistryRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PrivateRegistriesUpdateOrgPrivateRegistryRequest &&
-        registryType == other.registryType &&
-        username == other.username &&
-        encryptedValue == other.encryptedValue &&
-        keyId == other.keyId &&
-        visibility == other.visibility &&
-        listsEqual(selectedRepositoryIds, other.selectedRepositoryIds);
+        this.registryType == other.registryType &&
+        this.username == other.username &&
+        this.encryptedValue == other.encryptedValue &&
+        this.keyId == other.keyId &&
+        this.visibility == other.visibility &&
+        listsEqual(this.selectedRepositoryIds, other.selectedRepositoryIds);
   }
 }

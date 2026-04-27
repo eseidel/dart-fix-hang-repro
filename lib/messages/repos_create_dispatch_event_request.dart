@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateDispatchEventRequest {
-  const ReposCreateDispatchEventRequest({
+  ReposCreateDispatchEventRequest({
     required this.eventType,
     this.clientPayload,
   });
@@ -16,7 +16,7 @@ class ReposCreateDispatchEventRequest {
       () => ReposCreateDispatchEventRequest(
         eventType: json['event_type'] as String,
         clientPayload: (json['client_payload'] as Map<String, dynamic>?)?.map(
-          MapEntry.new,
+          (key, value) => MapEntry(key, value),
         ),
       ),
     );
@@ -59,7 +59,7 @@ class ReposCreateDispatchEventRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateDispatchEventRequest &&
-        eventType == other.eventType &&
-        mapsEqual(clientPayload, other.clientPayload);
+        this.eventType == other.eventType &&
+        mapsEqual(this.clientPayload, other.clientPayload);
   }
 }

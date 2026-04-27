@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class LabeledIssueEventLabel {
-  const LabeledIssueEventLabel({
+  LabeledIssueEventLabel({
     required this.name,
     required this.color,
   });
@@ -50,7 +50,7 @@ class LabeledIssueEventLabel {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is LabeledIssueEventLabel &&
-        name == other.name &&
-        color == other.color;
+        this.name == other.name &&
+        this.color == other.color;
   }
 }

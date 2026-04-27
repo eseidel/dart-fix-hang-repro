@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RemovedFromProjectIssueEventProjectCard {
-  const RemovedFromProjectIssueEventProjectCard({
+  RemovedFromProjectIssueEventProjectCard({
     required this.id,
     required this.url,
     required this.projectId,
@@ -21,9 +21,9 @@ class RemovedFromProjectIssueEventProjectCard {
       'RemovedFromProjectIssueEventProjectCard',
       json,
       () => RemovedFromProjectIssueEventProjectCard(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         url: Uri.parse(json['url'] as String),
-        projectId: json['project_id'] as int,
+        projectId: (json['project_id'] as int),
         projectUrl: Uri.parse(json['project_url'] as String),
         columnName: json['column_name'] as String,
         previousColumnName: json['previous_column_name'] as String?,
@@ -76,11 +76,11 @@ class RemovedFromProjectIssueEventProjectCard {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RemovedFromProjectIssueEventProjectCard &&
-        id == other.id &&
-        url == other.url &&
-        projectId == other.projectId &&
-        projectUrl == other.projectUrl &&
-        columnName == other.columnName &&
-        previousColumnName == other.previousColumnName;
+        this.id == other.id &&
+        this.url == other.url &&
+        this.projectId == other.projectId &&
+        this.projectUrl == other.projectUrl &&
+        this.columnName == other.columnName &&
+        this.previousColumnName == other.previousColumnName;
   }
 }

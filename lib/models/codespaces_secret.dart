@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodespacesSecret {
   /// {@macro codespaces_secret}
-  const CodespacesSecret({
+  CodespacesSecret({
     required this.name,
     required this.createdAt,
     required this.updatedAt,
@@ -91,10 +91,10 @@ class CodespacesSecret {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesSecret &&
-        name == other.name &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        visibility == other.visibility &&
-        selectedRepositoriesUrl == other.selectedRepositoriesUrl;
+        this.name == other.name &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.visibility == other.visibility &&
+        this.selectedRepositoriesUrl == other.selectedRepositoriesUrl;
   }
 }

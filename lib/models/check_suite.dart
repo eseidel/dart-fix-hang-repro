@@ -1,10 +1,38 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/check_suite_conclusion.dart';
 import 'package:github_out/models/check_suite_status.dart';
+import 'package:github_out/models/code_of_conduct.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/pull_request_minimal.dart';
+import 'package:github_out/models/pull_request_minimal_base.dart';
+import 'package:github_out/models/pull_request_minimal_base_repo.dart';
+import 'package:github_out/models/pull_request_minimal_head.dart';
+import 'package:github_out/models/pull_request_minimal_head_repo.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/simple_commit.dart';
+import 'package:github_out/models/simple_commit_author.dart';
+import 'package:github_out/models/simple_commit_committer.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template check_suite}
@@ -14,7 +42,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CheckSuite {
   /// {@macro check_suite}
-  const CheckSuite({
+  CheckSuite({
     required this.id,
     required this.nodeId,
     required this.headBranch,
@@ -42,7 +70,7 @@ class CheckSuite {
       'CheckSuite',
       json,
       () => CheckSuite(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         headBranch: checkedKey(json, 'head_branch') as String?,
         headSha: json['head_sha'] as String,
@@ -75,7 +103,7 @@ class CheckSuite {
         headCommit: SimpleCommit.fromJson(
           json['head_commit'] as Map<String, dynamic>,
         ),
-        latestCheckRunsCount: json['latest_check_runs_count'] as int,
+        latestCheckRunsCount: (json['latest_check_runs_count'] as int),
         checkRunsUrl: json['check_runs_url'] as String,
         rerequestable: json['rerequestable'] as bool?,
         runsRerequestable: json['runs_rerequestable'] as bool?,
@@ -198,24 +226,24 @@ class CheckSuite {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CheckSuite &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        headBranch == other.headBranch &&
-        headSha == other.headSha &&
-        status == other.status &&
-        conclusion == other.conclusion &&
-        url == other.url &&
-        before == other.before &&
-        after == other.after &&
-        listsEqual(pullRequests, other.pullRequests) &&
-        app == other.app &&
-        repository == other.repository &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        headCommit == other.headCommit &&
-        latestCheckRunsCount == other.latestCheckRunsCount &&
-        checkRunsUrl == other.checkRunsUrl &&
-        rerequestable == other.rerequestable &&
-        runsRerequestable == other.runsRerequestable;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.headBranch == other.headBranch &&
+        this.headSha == other.headSha &&
+        this.status == other.status &&
+        this.conclusion == other.conclusion &&
+        this.url == other.url &&
+        this.before == other.before &&
+        this.after == other.after &&
+        listsEqual(this.pullRequests, other.pullRequests) &&
+        this.app == other.app &&
+        this.repository == other.repository &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.headCommit == other.headCommit &&
+        this.latestCheckRunsCount == other.latestCheckRunsCount &&
+        this.checkRunsUrl == other.checkRunsUrl &&
+        this.rerequestable == other.rerequestable &&
+        this.runsRerequestable == other.runsRerequestable;
   }
 }

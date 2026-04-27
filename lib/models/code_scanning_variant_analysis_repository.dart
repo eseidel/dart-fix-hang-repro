@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeScanningVariantAnalysisRepository {
   /// {@macro code_scanning_variant_analysis_repository}
-  const CodeScanningVariantAnalysisRepository({
+  CodeScanningVariantAnalysisRepository({
     required this.id,
     required this.name,
     required this.fullName,
@@ -26,11 +26,11 @@ class CodeScanningVariantAnalysisRepository {
       'CodeScanningVariantAnalysisRepository',
       json,
       () => CodeScanningVariantAnalysisRepository(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         fullName: json['full_name'] as String,
         private: json['private'] as bool,
-        stargazersCount: json['stargazers_count'] as int,
+        stargazersCount: (json['stargazers_count'] as int),
         updatedAt: maybeParseDateTime(
           checkedKey(json, 'updated_at') as String?,
         ),
@@ -97,11 +97,11 @@ class CodeScanningVariantAnalysisRepository {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningVariantAnalysisRepository &&
-        id == other.id &&
-        name == other.name &&
-        fullName == other.fullName &&
-        private == other.private &&
-        stargazersCount == other.stargazersCount &&
-        updatedAt == other.updatedAt;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.fullName == other.fullName &&
+        this.private == other.private &&
+        this.stargazersCount == other.stargazersCount &&
+        this.updatedAt == other.updatedAt;
   }
 }

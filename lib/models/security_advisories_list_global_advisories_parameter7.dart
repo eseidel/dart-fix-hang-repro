@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:meta/meta.dart';
 
 sealed class SecurityAdvisoriesListGlobalAdvisoriesParameter7 {
@@ -11,13 +7,10 @@ sealed class SecurityAdvisoriesListGlobalAdvisoriesParameter7 {
     dynamic json,
   ) {
     return switch (json) {
-      final String v => SecurityAdvisoriesListGlobalAdvisoriesParameter7String(
-        v,
+      String v => SecurityAdvisoriesListGlobalAdvisoriesParameter7String(v),
+      List<dynamic> v => SecurityAdvisoriesListGlobalAdvisoriesParameter7List(
+        v.cast<String>(),
       ),
-      final List<dynamic> v =>
-        SecurityAdvisoriesListGlobalAdvisoriesParameter7List(
-          v.cast<String>(),
-        ),
       _ => throw FormatException(
         'Unsupported shape for SecurityAdvisoriesListGlobalAdvisoriesParameter7: ${json.runtimeType}',
       ),

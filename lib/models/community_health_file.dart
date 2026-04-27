@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CommunityHealthFile {
   /// {@macro community_health_file}
-  const CommunityHealthFile({
+  CommunityHealthFile({
     required this.url,
     required this.htmlUrl,
   });
@@ -54,7 +54,7 @@ class CommunityHealthFile {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommunityHealthFile &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl;
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

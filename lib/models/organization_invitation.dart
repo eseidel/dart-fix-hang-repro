@@ -9,18 +9,18 @@ import 'package:meta/meta.dart';
 @immutable
 class OrganizationInvitation {
   /// {@macro organization_invitation}
-  const OrganizationInvitation({
+  OrganizationInvitation({
     required this.id,
     required this.login,
     required this.email,
     required this.role,
     required this.createdAt,
+    this.failedAt,
+    this.failedReason,
     required this.inviter,
     required this.teamCount,
     required this.nodeId,
     required this.invitationTeamsUrl,
-    this.failedAt,
-    this.failedReason,
     this.invitationSource,
   });
 
@@ -30,7 +30,7 @@ class OrganizationInvitation {
       'OrganizationInvitation',
       json,
       () => OrganizationInvitation(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         login: checkedKey(json, 'login') as String?,
         email: checkedKey(json, 'email') as String?,
         role: json['role'] as String,
@@ -38,7 +38,7 @@ class OrganizationInvitation {
         failedAt: json['failed_at'] as String?,
         failedReason: json['failed_reason'] as String?,
         inviter: SimpleUser.fromJson(json['inviter'] as Map<String, dynamic>),
-        teamCount: json['team_count'] as int,
+        teamCount: (json['team_count'] as int),
         nodeId: json['node_id'] as String,
         invitationTeamsUrl: json['invitation_teams_url'] as String,
         invitationSource: json['invitation_source'] as String?,
@@ -116,17 +116,17 @@ class OrganizationInvitation {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrganizationInvitation &&
-        id == other.id &&
-        login == other.login &&
-        email == other.email &&
-        role == other.role &&
-        createdAt == other.createdAt &&
-        failedAt == other.failedAt &&
-        failedReason == other.failedReason &&
-        inviter == other.inviter &&
-        teamCount == other.teamCount &&
-        nodeId == other.nodeId &&
-        invitationTeamsUrl == other.invitationTeamsUrl &&
-        invitationSource == other.invitationSource;
+        this.id == other.id &&
+        this.login == other.login &&
+        this.email == other.email &&
+        this.role == other.role &&
+        this.createdAt == other.createdAt &&
+        this.failedAt == other.failedAt &&
+        this.failedReason == other.failedReason &&
+        this.inviter == other.inviter &&
+        this.teamCount == other.teamCount &&
+        this.nodeId == other.nodeId &&
+        this.invitationTeamsUrl == other.invitationTeamsUrl &&
+        this.invitationSource == other.invitationSource;
   }
 }

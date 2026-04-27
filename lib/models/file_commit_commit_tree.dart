@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class FileCommitCommitTree {
-  const FileCommitCommitTree({
+  FileCommitCommitTree({
     this.url,
     this.sha,
   });
@@ -50,7 +50,7 @@ class FileCommitCommitTree {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is FileCommitCommitTree &&
-        url == other.url &&
-        sha == other.sha;
+        this.url == other.url &&
+        this.sha == other.sha;
   }
 }

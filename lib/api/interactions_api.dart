@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -11,7 +7,16 @@ import 'package:github_out/messages/interaction_limit_response.dart';
 import 'package:github_out/messages/interactions_get_restrictions_for_authenticated_user200_response.dart';
 import 'package:github_out/messages/interactions_get_restrictions_for_org200_response.dart';
 import 'package:github_out/messages/interactions_get_restrictions_for_repo200_response.dart';
+import 'package:github_out/models/interaction_expiry.dart';
+import 'package:github_out/models/interaction_group.dart';
 import 'package:github_out/models/interaction_limit.dart';
+import 'package:github_out/models/interactions_get_restrictions_for_authenticated_user200_response_any_of_1.dart';
+import 'package:github_out/models/interactions_get_restrictions_for_org200_response_any_of_1.dart';
+import 'package:github_out/models/interactions_get_restrictions_for_repo200_response_any_of_1.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class InteractionsGetRestrictionsForAuthenticatedUserResponse {
@@ -65,13 +70,13 @@ class InteractionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/interaction-limits'.replaceAll('{org}', org),
+      path: '/orgs/{org}/interaction-limits'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -96,14 +101,15 @@ class InteractionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.put,
-      path: '/orgs/{org}/interaction-limits'.replaceAll('{org}', org),
+      path: '/orgs/{org}/interaction-limits'.replaceAll('{org}', '${org}'),
       body: interactionLimit.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -125,13 +131,13 @@ class InteractionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.delete,
-      path: '/orgs/{org}/interaction-limits'.replaceAll('{org}', org),
+      path: '/orgs/{org}/interaction-limits'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -147,14 +153,14 @@ class InteractionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/interaction-limits'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -182,15 +188,16 @@ class InteractionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/interaction-limits'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: interactionLimit.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -216,14 +223,14 @@ class InteractionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/interaction-limits'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -241,7 +248,7 @@ class InteractionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -268,12 +275,13 @@ class InteractionsApi {
       method: Method.put,
       path: '/user/interaction-limits',
       body: interactionLimit.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -297,7 +305,7 @@ class InteractionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }

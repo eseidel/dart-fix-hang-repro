@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/collaborator.dart';
+import 'package:github_out/models/collaborator_permissions.dart';
 import 'package:meta/meta.dart';
 
 /// {@template repository_collaborator_permission}
@@ -9,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryCollaboratorPermission {
   /// {@macro repository_collaborator_permission}
-  const RepositoryCollaboratorPermission({
+  RepositoryCollaboratorPermission({
     required this.permission,
     required this.roleName,
     required this.user,
@@ -70,8 +71,8 @@ class RepositoryCollaboratorPermission {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryCollaboratorPermission &&
-        permission == other.permission &&
-        roleName == other.roleName &&
-        user == other.user;
+        this.permission == other.permission &&
+        this.roleName == other.roleName &&
+        this.user == other.user;
   }
 }

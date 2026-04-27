@@ -11,16 +11,16 @@ import 'package:meta/meta.dart';
 @immutable
 class OrganizationRole {
   /// {@macro organization_role}
-  const OrganizationRole({
+  OrganizationRole({
     required this.id,
     required this.name,
+    this.description,
+    this.baseRole,
+    this.source,
     required this.permissions,
     required this.organization,
     required this.createdAt,
     required this.updatedAt,
-    this.description,
-    this.baseRole,
-    this.source,
   });
 
   /// Converts a `Map<String, dynamic>` to an [OrganizationRole].
@@ -29,7 +29,7 @@ class OrganizationRole {
       'OrganizationRole',
       json,
       () => OrganizationRole(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         description: json['description'] as String?,
         baseRole: OrganizationRoleBaseRole.maybeFromJson(
@@ -116,14 +116,14 @@ class OrganizationRole {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrganizationRole &&
-        id == other.id &&
-        name == other.name &&
-        description == other.description &&
-        baseRole == other.baseRole &&
-        source == other.source &&
-        listsEqual(permissions, other.permissions) &&
-        organization == other.organization &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.baseRole == other.baseRole &&
+        this.source == other.source &&
+        listsEqual(this.permissions, other.permissions) &&
+        this.organization == other.organization &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

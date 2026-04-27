@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -22,9 +18,39 @@ import 'package:github_out/messages/copilot_cancel_copilot_seat_assignment_for_t
 import 'package:github_out/messages/copilot_cancel_copilot_seat_assignment_for_users200_response.dart';
 import 'package:github_out/messages/copilot_cancel_copilot_seat_assignment_for_users_request.dart';
 import 'package:github_out/messages/copilot_list_copilot_seats200_response.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/copilot_dotcom_chat.dart';
+import 'package:github_out/models/copilot_dotcom_chat_models_inner.dart';
+import 'package:github_out/models/copilot_dotcom_pull_requests.dart';
+import 'package:github_out/models/copilot_dotcom_pull_requests_repositories_inner.dart';
+import 'package:github_out/models/copilot_dotcom_pull_requests_repositories_inner_models_inner.dart';
+import 'package:github_out/models/copilot_ide_chat.dart';
+import 'package:github_out/models/copilot_ide_chat_editors_inner.dart';
+import 'package:github_out/models/copilot_ide_chat_editors_inner_models_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions.dart';
+import 'package:github_out/models/copilot_ide_code_completions_editors_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions_editors_inner_models_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions_editors_inner_models_inner_languages_inner.dart';
+import 'package:github_out/models/copilot_ide_code_completions_languages_inner.dart';
 import 'package:github_out/models/copilot_organization_details.dart';
+import 'package:github_out/models/copilot_organization_details_cli.dart';
+import 'package:github_out/models/copilot_organization_details_ide_chat.dart';
+import 'package:github_out/models/copilot_organization_details_plan_type.dart';
+import 'package:github_out/models/copilot_organization_details_platform_chat.dart';
+import 'package:github_out/models/copilot_organization_details_public_code_suggestions.dart';
+import 'package:github_out/models/copilot_organization_details_seat_management_setting.dart';
+import 'package:github_out/models/copilot_organization_seat_breakdown.dart';
 import 'package:github_out/models/copilot_seat_details.dart';
+import 'package:github_out/models/copilot_seat_details_assigning_team.dart';
+import 'package:github_out/models/copilot_seat_details_plan_type.dart';
 import 'package:github_out/models/copilot_usage_metrics_day.dart';
+import 'package:github_out/models/enterprise_team.dart';
+import 'package:github_out/models/organization_simple.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:http/http.dart' as http;
 
 /// Endpoints to manage Copilot using the REST API.
 class CopilotApi {
@@ -53,13 +79,13 @@ class CopilotApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/copilot/billing'.replaceAll('{org}', org),
+      path: '/orgs/{org}/copilot/billing'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -96,7 +122,7 @@ class CopilotApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/copilot/billing/seats'.replaceAll('{org}', org),
+      path: '/orgs/{org}/copilot/billing/seats'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -106,7 +132,7 @@ class CopilotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -154,15 +180,16 @@ class CopilotApi {
       method: Method.post,
       path: '/orgs/{org}/copilot/billing/selected_teams'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: copilotAddCopilotSeatsForTeamsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -206,15 +233,16 @@ class CopilotApi {
       method: Method.delete,
       path: '/orgs/{org}/copilot/billing/selected_teams'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: copilotCancelCopilotSeatAssignmentForTeamsRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -261,15 +289,16 @@ class CopilotApi {
       method: Method.post,
       path: '/orgs/{org}/copilot/billing/selected_users'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: copilotAddCopilotSeatsForUsersRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -312,15 +341,16 @@ class CopilotApi {
       method: Method.delete,
       path: '/orgs/{org}/copilot/billing/selected_users'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: copilotCancelCopilotSeatAssignmentForUsersRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -366,10 +396,10 @@ class CopilotApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/copilot/metrics'.replaceAll('{org}', org),
+      path: '/orgs/{org}/copilot/metrics'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (since != null) 'since': [since],
-        if (until != null) 'until': [until],
+        if (since != null) 'since': [since.toString()],
+        if (until != null) 'until': [until.toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
       },
@@ -378,7 +408,7 @@ class CopilotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -419,14 +449,14 @@ class CopilotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/members/{username}/copilot'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -475,11 +505,11 @@ class CopilotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/team/{team_slug}/copilot/metrics'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       queryParameters: {
-        if (since != null) 'since': [since],
-        if (until != null) 'until': [until],
+        if (since != null) 'since': [since.toString()],
+        if (until != null) 'until': [until.toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
       },
@@ -488,7 +518,7 @@ class CopilotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

@@ -8,7 +8,9 @@ import 'package:meta/meta.dart';
 @immutable
 class SimpleUser {
   /// {@macro simple_user}
-  const SimpleUser({
+  SimpleUser({
+    this.name,
+    this.email,
     required this.login,
     required this.id,
     required this.nodeId,
@@ -27,8 +29,6 @@ class SimpleUser {
     required this.receivedEventsUrl,
     required this.type,
     required this.siteAdmin,
-    this.name,
-    this.email,
     this.starredAt,
     this.userViewType,
   });
@@ -42,7 +42,7 @@ class SimpleUser {
         name: json['name'] as String?,
         email: json['email'] as String?,
         login: json['login'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         avatarUrl: Uri.parse(json['avatar_url'] as String),
         gravatarId: checkedKey(json, 'gravatar_id') as String?,
@@ -193,27 +193,27 @@ class SimpleUser {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SimpleUser &&
-        name == other.name &&
-        email == other.email &&
-        login == other.login &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        avatarUrl == other.avatarUrl &&
-        gravatarId == other.gravatarId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        followersUrl == other.followersUrl &&
-        followingUrl == other.followingUrl &&
-        gistsUrl == other.gistsUrl &&
-        starredUrl == other.starredUrl &&
-        subscriptionsUrl == other.subscriptionsUrl &&
-        organizationsUrl == other.organizationsUrl &&
-        reposUrl == other.reposUrl &&
-        eventsUrl == other.eventsUrl &&
-        receivedEventsUrl == other.receivedEventsUrl &&
-        type == other.type &&
-        siteAdmin == other.siteAdmin &&
-        starredAt == other.starredAt &&
-        userViewType == other.userViewType;
+        this.name == other.name &&
+        this.email == other.email &&
+        this.login == other.login &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.avatarUrl == other.avatarUrl &&
+        this.gravatarId == other.gravatarId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.followersUrl == other.followersUrl &&
+        this.followingUrl == other.followingUrl &&
+        this.gistsUrl == other.gistsUrl &&
+        this.starredUrl == other.starredUrl &&
+        this.subscriptionsUrl == other.subscriptionsUrl &&
+        this.organizationsUrl == other.organizationsUrl &&
+        this.reposUrl == other.reposUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.receivedEventsUrl == other.receivedEventsUrl &&
+        this.type == other.type &&
+        this.siteAdmin == other.siteAdmin &&
+        this.starredAt == other.starredAt &&
+        this.userViewType == other.userViewType;
   }
 }

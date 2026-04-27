@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsUpdateCardRequest {
-  const ProjectsUpdateCardRequest({
+  ProjectsUpdateCardRequest({
     this.note,
     this.archived,
   });
@@ -55,7 +55,7 @@ class ProjectsUpdateCardRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectsUpdateCardRequest &&
-        note == other.note &&
-        archived == other.archived;
+        this.note == other.note &&
+        this.archived == other.archived;
   }
 }

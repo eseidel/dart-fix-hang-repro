@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ContributorActivity {
   /// {@macro contributor_activity}
-  const ContributorActivity({
+  ContributorActivity({
     required this.author,
     required this.total,
     required this.weeks,
@@ -25,7 +25,7 @@ class ContributorActivity {
         author: SimpleUser.maybeFromJson(
           checkedKey(json, 'author') as Map<String, dynamic>?,
         ),
-        total: json['total'] as int,
+        total: (json['total'] as int),
         weeks: (json['weeks'] as List)
             .map<ContributorActivityWeeksInner>(
               (e) => ContributorActivityWeeksInner.fromJson(
@@ -76,8 +76,8 @@ class ContributorActivity {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ContributorActivity &&
-        author == other.author &&
-        total == other.total &&
-        listsEqual(weeks, other.weeks);
+        this.author == other.author &&
+        this.total == other.total &&
+        listsEqual(this.weeks, other.weeks);
   }
 }

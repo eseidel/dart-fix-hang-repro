@@ -7,12 +7,12 @@ import 'package:meta/meta.dart';
 @immutable
 class ReposCreatePagesDeploymentRequest {
   /// {@macro repos_create_pages_deployment_request}
-  const ReposCreatePagesDeploymentRequest({
-    required this.oidcToken,
+  ReposCreatePagesDeploymentRequest({
     this.artifactId,
     this.artifactUrl,
     this.environment = 'github-pages',
     this.pagesBuildVersion = 'GITHUB_SHA',
+    required this.oidcToken,
   });
 
   /// Converts a `Map<String, dynamic>` to a
@@ -90,10 +90,10 @@ class ReposCreatePagesDeploymentRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreatePagesDeploymentRequest &&
-        artifactId == other.artifactId &&
-        artifactUrl == other.artifactUrl &&
-        environment == other.environment &&
-        pagesBuildVersion == other.pagesBuildVersion &&
-        oidcToken == other.oidcToken;
+        this.artifactId == other.artifactId &&
+        this.artifactUrl == other.artifactUrl &&
+        this.environment == other.environment &&
+        this.pagesBuildVersion == other.pagesBuildVersion &&
+        this.oidcToken == other.oidcToken;
   }
 }

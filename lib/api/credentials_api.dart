@@ -10,6 +10,9 @@ import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/credentials_revoke_request.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/validation_error_simple.dart';
+import 'package:http/http.dart' as http;
 
 /// Revoke compromised or leaked GitHub credentials.
 class CredentialsApi {
@@ -46,12 +49,13 @@ class CredentialsApi {
       method: Method.post,
       path: '/credentials/revoke',
       body: credentialsRevokeRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

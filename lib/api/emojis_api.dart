@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:http/http.dart' as http;
 
 /// List emojis available to use on GitHub.
 class EmojisApi {
@@ -21,7 +22,7 @@ class EmojisApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Email {
   /// {@macro email}
-  const Email({
+  Email({
     required this.email,
     required this.primary,
     required this.verified,
@@ -72,9 +72,9 @@ class Email {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Email &&
-        email == other.email &&
-        primary == other.primary &&
-        verified == other.verified &&
-        visibility == other.visibility;
+        this.email == other.email &&
+        this.primary == other.primary &&
+        this.verified == other.verified &&
+        this.visibility == other.visibility;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -80,41 +76,144 @@ import 'package:github_out/messages/actions_update_org_variable_request.dart';
 import 'package:github_out/messages/actions_update_repo_variable_request.dart';
 import 'package:github_out/messages/actions_update_self_hosted_runner_group_for_org_request.dart';
 import 'package:github_out/models/actions_cache_list.dart';
+import 'package:github_out/models/actions_cache_list_actions_caches_inner.dart';
 import 'package:github_out/models/actions_cache_list_sort_param.dart';
 import 'package:github_out/models/actions_cache_usage_by_repository.dart';
 import 'package:github_out/models/actions_cache_usage_org_enterprise.dart';
+import 'package:github_out/models/actions_can_approve_pull_request_reviews.dart';
+import 'package:github_out/models/actions_create_hosted_runner_for_org_request_image.dart';
+import 'package:github_out/models/actions_create_hosted_runner_for_org_request_image_source.dart';
+import 'package:github_out/models/actions_create_or_update_org_secret_request_visibility.dart';
+import 'package:github_out/models/actions_create_org_variable_request_visibility.dart';
+import 'package:github_out/models/actions_create_self_hosted_runner_group_for_org_request_visibility.dart';
+import 'package:github_out/models/actions_default_workflow_permissions.dart';
+import 'package:github_out/models/actions_enabled.dart';
 import 'package:github_out/models/actions_get_default_workflow_permissions.dart';
 import 'package:github_out/models/actions_hosted_runner.dart';
+import 'package:github_out/models/actions_hosted_runner_image.dart';
+import 'package:github_out/models/actions_hosted_runner_image_source.dart';
 import 'package:github_out/models/actions_hosted_runner_limits.dart';
+import 'package:github_out/models/actions_hosted_runner_limits_public_ips.dart';
+import 'package:github_out/models/actions_hosted_runner_machine_spec.dart';
+import 'package:github_out/models/actions_hosted_runner_pool_image.dart';
+import 'package:github_out/models/actions_hosted_runner_pool_image_source.dart';
+import 'package:github_out/models/actions_hosted_runner_status.dart';
 import 'package:github_out/models/actions_list_jobs_for_workflow_run_parameter3.dart';
 import 'package:github_out/models/actions_organization_permissions.dart';
 import 'package:github_out/models/actions_public_key.dart';
 import 'package:github_out/models/actions_repository_permissions.dart';
+import 'package:github_out/models/actions_review_pending_deployments_for_run_request_state.dart';
 import 'package:github_out/models/actions_secret.dart';
 import 'package:github_out/models/actions_set_default_workflow_permissions.dart';
+import 'package:github_out/models/actions_update_org_variable_request_visibility.dart';
+import 'package:github_out/models/actions_update_self_hosted_runner_group_for_org_request_visibility.dart';
 import 'package:github_out/models/actions_variable.dart';
 import 'package:github_out/models/actions_workflow_access_to_repository.dart';
+import 'package:github_out/models/actions_workflow_access_to_repository_access_level.dart';
+import 'package:github_out/models/allowed_actions.dart';
 import 'package:github_out/models/artifact.dart';
+import 'package:github_out/models/artifact_workflow_run.dart';
 import 'package:github_out/models/authentication_token.dart';
+import 'package:github_out/models/authentication_token_repository_selection.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/deployment.dart';
+import 'package:github_out/models/deployment_payload.dart';
+import 'package:github_out/models/deployment_reviewer_type.dart';
 import 'package:github_out/models/direction_param.dart';
 import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/enabled_repositories.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/environment_approvals.dart';
+import 'package:github_out/models/environment_approvals_environments_inner.dart';
+import 'package:github_out/models/environment_approvals_state.dart';
+import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/job.dart';
+import 'package:github_out/models/job_conclusion.dart';
+import 'package:github_out/models/job_status.dart';
+import 'package:github_out/models/job_steps_inner.dart';
+import 'package:github_out/models/job_steps_inner_status.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/oidc_custom_sub_repo.dart';
 import 'package:github_out/models/organization_actions_secret.dart';
+import 'package:github_out/models/organization_actions_secret_visibility.dart';
 import 'package:github_out/models/organization_actions_variable.dart';
+import 'package:github_out/models/organization_actions_variable_visibility.dart';
 import 'package:github_out/models/pending_deployment.dart';
+import 'package:github_out/models/pending_deployment_environment.dart';
+import 'package:github_out/models/pending_deployment_reviewers_inner.dart';
+import 'package:github_out/models/pending_deployment_reviewers_inner_reviewer.dart';
+import 'package:github_out/models/public_ip.dart';
+import 'package:github_out/models/pull_request_minimal.dart';
+import 'package:github_out/models/pull_request_minimal_base.dart';
+import 'package:github_out/models/pull_request_minimal_base_repo.dart';
+import 'package:github_out/models/pull_request_minimal_head.dart';
+import 'package:github_out/models/pull_request_minimal_head_repo.dart';
+import 'package:github_out/models/referenced_workflow.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/review_custom_gates_comment_required.dart';
+import 'package:github_out/models/review_custom_gates_state_required.dart';
+import 'package:github_out/models/review_custom_gates_state_required_state.dart';
 import 'package:github_out/models/runner.dart';
 import 'package:github_out/models/runner_application.dart';
 import 'package:github_out/models/runner_groups_org.dart';
+import 'package:github_out/models/runner_label.dart';
+import 'package:github_out/models/runner_label_type.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/selected_actions.dart';
+import 'package:github_out/models/selected_actions_url.dart';
+import 'package:github_out/models/simple_commit.dart';
+import 'package:github_out/models/simple_commit_author.dart';
+import 'package:github_out/models/simple_commit_committer.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:github_out/models/validation_error_simple.dart';
 import 'package:github_out/models/workflow.dart';
 import 'package:github_out/models/workflow_id_param.dart';
 import 'package:github_out/models/workflow_run.dart';
 import 'package:github_out/models/workflow_run_status_param.dart';
 import 'package:github_out/models/workflow_run_usage.dart';
+import 'package:github_out/models/workflow_run_usage_billable.dart';
+import 'package:github_out/models/workflow_run_usage_billable_m_a_c_o_s.dart';
+import 'package:github_out/models/workflow_run_usage_billable_m_a_c_o_s_job_runs_inner.dart';
+import 'package:github_out/models/workflow_run_usage_billable_u_b_u_n_t_u.dart';
+import 'package:github_out/models/workflow_run_usage_billable_u_b_u_n_t_u_job_runs_inner.dart';
+import 'package:github_out/models/workflow_run_usage_billable_w_i_n_d_o_w_s.dart';
+import 'package:github_out/models/workflow_run_usage_billable_w_i_n_d_o_w_s_job_runs_inner.dart';
+import 'package:github_out/models/workflow_state.dart';
 import 'package:github_out/models/workflow_usage.dart';
+import 'package:github_out/models/workflow_usage_billable.dart';
+import 'package:github_out/models/workflow_usage_billable_m_a_c_o_s.dart';
+import 'package:github_out/models/workflow_usage_billable_u_b_u_n_t_u.dart';
+import 'package:github_out/models/workflow_usage_billable_w_i_n_d_o_w_s.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class ActionsCreateOrUpdateOrgSecretResponse {
@@ -241,13 +340,13 @@ class ActionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/actions/cache/usage'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/cache/usage'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -279,7 +378,7 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/cache/usage-by-repository'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -290,7 +389,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -315,7 +414,7 @@ class ActionsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/actions/hosted-runners'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/hosted-runners'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -325,7 +424,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -349,14 +448,15 @@ class ActionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/actions/hosted-runners'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/hosted-runners'.replaceAll('{org}', '${org}'),
       body: actionsCreateHostedRunnerForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -380,14 +480,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/hosted-runners/images/github-owned'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -411,14 +511,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/hosted-runners/images/partner'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -440,14 +540,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/hosted-runners/limits'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -471,14 +571,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/hosted-runners/machine-sizes'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -502,14 +602,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/hosted-runners/platforms'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -534,14 +634,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/hosted-runners/{hosted_runner_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{hosted_runner_id}', '$hostedRunnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hosted_runner_id}', '${hostedRunnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -563,14 +663,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/hosted-runners/{hosted_runner_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{hosted_runner_id}', '$hostedRunnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hosted_runner_id}', '${hostedRunnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -596,15 +696,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/actions/hosted-runners/{hosted_runner_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{hosted_runner_id}', '$hostedRunnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hosted_runner_id}', '${hostedRunnerId}'),
       body: actionsUpdateHostedRunnerForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -629,13 +730,13 @@ class ActionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/actions/permissions'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/permissions'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -661,14 +762,15 @@ class ActionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.put,
-      path: '/orgs/{org}/actions/permissions'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/permissions'.replaceAll('{org}', '${org}'),
       body: actionsSetGithubActionsPermissionsOrganizationRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -694,7 +796,7 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/permissions/repositories'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -705,7 +807,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -738,17 +840,18 @@ class ActionsApi {
       method: Method.put,
       path: '/orgs/{org}/actions/permissions/repositories'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body:
           actionsSetSelectedRepositoriesEnabledGithubActionsOrganizationRequest
               .toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -770,14 +873,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/actions/permissions/repositories/{repository_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{repository_id}', '$repositoryId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -799,14 +902,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/permissions/repositories/{repository_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{repository_id}', '$repositoryId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -827,14 +930,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/permissions/selected-actions'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -864,15 +967,16 @@ class ActionsApi {
       method: Method.put,
       path: '/orgs/{org}/actions/permissions/selected-actions'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: selectedActions?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -895,14 +999,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/permissions/workflow'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -932,15 +1036,16 @@ class ActionsApi {
       method: Method.put,
       path: '/orgs/{org}/actions/permissions/workflow'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: actionsSetDefaultWorkflowPermissions?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -960,19 +1065,19 @@ class ActionsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/actions/runner-groups'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/runner-groups'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
         if (visibleToRepository != null)
-          'visible_to_repository': [visibleToRepository],
+          'visible_to_repository': [visibleToRepository.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -997,14 +1102,15 @@ class ActionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/actions/runner-groups'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/runner-groups'.replaceAll('{org}', '${org}'),
       body: actionsCreateSelfHostedRunnerGroupForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1029,14 +1135,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/runner-groups/{runner_group_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_group_id}', '$runnerGroupId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_group_id}', '${runnerGroupId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1061,14 +1167,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/runner-groups/{runner_group_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_group_id}', '$runnerGroupId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_group_id}', '${runnerGroupId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1088,15 +1194,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/actions/runner-groups/{runner_group_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_group_id}', '$runnerGroupId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_group_id}', '${runnerGroupId}'),
       body: actionsUpdateSelfHostedRunnerGroupForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1124,8 +1231,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/runner-groups/{runner_group_id}/hosted-runners'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_group_id}', '$runnerGroupId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_group_id}', '${runnerGroupId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1135,7 +1242,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1164,8 +1271,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_group_id}', '$runnerGroupId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_group_id}', '${runnerGroupId}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1175,7 +1282,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1203,15 +1310,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_group_id}', '$runnerGroupId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_group_id}', '${runnerGroupId}'),
       body: actionsSetRepoAccessToSelfHostedRunnerGroupInOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1234,15 +1342,15 @@ class ActionsApi {
       method: Method.put,
       path:
           '/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{runner_group_id}', '$runnerGroupId')
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{runner_group_id}', '${runnerGroupId}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1266,15 +1374,15 @@ class ActionsApi {
       method: Method.delete,
       path:
           '/orgs/{org}/actions/runner-groups/{runner_group_id}/repositories/{repository_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{runner_group_id}', '$runnerGroupId')
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{runner_group_id}', '${runnerGroupId}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1294,8 +1402,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/runner-groups/{runner_group_id}/runners'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_group_id}', '$runnerGroupId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_group_id}', '${runnerGroupId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1305,7 +1413,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1333,15 +1441,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/actions/runner-groups/{runner_group_id}/runners'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_group_id}', '$runnerGroupId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_group_id}', '${runnerGroupId}'),
       body: actionsSetSelfHostedRunnersInGroupForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1361,15 +1470,15 @@ class ActionsApi {
       method: Method.put,
       path:
           '/orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{runner_group_id}', '$runnerGroupId')
-              .replaceAll('{runner_id}', '$runnerId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{runner_group_id}', '${runnerGroupId}')
+              .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1389,15 +1498,15 @@ class ActionsApi {
       method: Method.delete,
       path:
           '/orgs/{org}/actions/runner-groups/{runner_group_id}/runners/{runner_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{runner_group_id}', '$runnerGroupId')
-              .replaceAll('{runner_id}', '$runnerId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{runner_group_id}', '${runnerGroupId}')
+              .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1420,9 +1529,9 @@ class ActionsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/actions/runners'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/runners'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (name != null) 'name': [name],
+        if (name != null) 'name': [name.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1431,7 +1540,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1460,14 +1569,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/runners/downloads'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1501,15 +1610,16 @@ class ActionsApi {
       method: Method.post,
       path: '/orgs/{org}/actions/runners/generate-jitconfig'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: actionsGenerateRunnerJitconfigForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1548,14 +1658,14 @@ class ActionsApi {
       method: Method.post,
       path: '/orgs/{org}/actions/runners/registration-token'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1595,14 +1705,14 @@ class ActionsApi {
       method: Method.post,
       path: '/orgs/{org}/actions/runners/remove-token'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1631,14 +1741,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/runners/{runner_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1668,14 +1778,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/runners/{runner_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1696,14 +1806,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/runners/{runner_id}/labels'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1734,15 +1844,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/actions/runners/{runner_id}/labels'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_id}', '${runnerId}'),
       body: actionsAddCustomLabelsToSelfHostedRunnerForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1775,15 +1886,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/actions/runners/{runner_id}/labels'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_id}', '${runnerId}'),
       body: actionsSetCustomLabelsForSelfHostedRunnerForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1814,14 +1926,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/runners/{runner_id}/labels'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1857,15 +1969,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/runners/{runner_id}/labels/{name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{runner_id}', '$runnerId')
-          .replaceAll('{name}', name),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{runner_id}', '${runnerId}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1895,7 +2007,7 @@ class ActionsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/actions/secrets'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/secrets'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1905,7 +2017,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1936,14 +2048,14 @@ class ActionsApi {
       method: Method.get,
       path: '/orgs/{org}/actions/secrets/public-key'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1973,14 +2085,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2015,20 +2127,21 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/actions/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: actionsCreateOrUpdateOrgSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      201 => const ActionsCreateOrUpdateOrgSecretResponse201(EmptyObject()),
+      201 => ActionsCreateOrUpdateOrgSecretResponse201(const EmptyObject()),
       204 => const ActionsCreateOrUpdateOrgSecretResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
     };
@@ -2051,14 +2164,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2083,8 +2196,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/secrets/{secret_name}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -2094,7 +2207,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2130,15 +2243,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/actions/secrets/{secret_name}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: actionsSetSelectedReposForOrgSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2166,15 +2280,15 @@ class ActionsApi {
       method: Method.put,
       path:
           '/orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{secret_name}', secretName)
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{secret_name}', '${secretName}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2201,15 +2315,15 @@ class ActionsApi {
       method: Method.delete,
       path:
           '/orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{secret_name}', secretName)
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{secret_name}', '${secretName}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2230,7 +2344,7 @@ class ActionsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/actions/variables'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/variables'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2240,7 +2354,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2270,14 +2384,15 @@ class ActionsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/actions/variables'.replaceAll('{org}', org),
+      path: '/orgs/{org}/actions/variables'.replaceAll('{org}', '${org}'),
       body: actionsCreateOrgVariableRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2305,14 +2420,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/variables/{name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{name}', name),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2342,14 +2457,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/variables/{name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{name}', name),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2372,15 +2487,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/actions/variables/{name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{name}', name),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{name}', '${name}'),
       body: actionsUpdateOrgVariableRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2405,8 +2521,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/actions/variables/{name}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{name}', name),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{name}', '${name}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -2416,7 +2532,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2450,15 +2566,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/actions/variables/{name}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{name}', name),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{name}', '${name}'),
       body: actionsSetSelectedReposForOrgVariableRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2484,15 +2601,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/actions/variables/{name}/repositories/{repository_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{name}', name)
-          .replaceAll('{repository_id}', '$repositoryId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{name}', '${name}')
+          .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2517,15 +2634,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/actions/variables/{name}/repositories/{repository_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{name}', name)
-          .replaceAll('{repository_id}', '$repositoryId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{name}', '${name}')
+          .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2547,19 +2664,19 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/artifacts'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (name != null) 'name': [name],
+        if (name != null) 'name': [name.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2587,15 +2704,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/artifacts/{artifact_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{artifact_id}', '$artifactId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{artifact_id}', '${artifactId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2620,15 +2737,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/artifacts/{artifact_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{artifact_id}', '$artifactId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{artifact_id}', '${artifactId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2651,16 +2768,16 @@ class ActionsApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{artifact_id}', '$artifactId')
-              .replaceAll('{archive_format}', archiveFormat),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{artifact_id}', '${artifactId}')
+              .replaceAll('{archive_format}', '${archiveFormat}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2682,14 +2799,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/cache/usage'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2720,22 +2837,22 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/caches'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (ref != null) 'ref': [ref],
-        if (key != null) 'key': [key],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (ref != null) 'ref': [ref.toString()],
+        if (key != null) 'key': [key.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2765,18 +2882,18 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/caches'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        'key': [key],
-        if (ref != null) 'ref': [ref],
+        'key': [key.toString()],
+        if (ref != null) 'ref': [ref.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2802,15 +2919,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/caches/{cache_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{cache_id}', '$cacheId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{cache_id}', '${cacheId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2830,15 +2947,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/jobs/{job_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{job_id}', '$jobId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{job_id}', '${jobId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2866,15 +2983,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/jobs/{job_id}/logs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{job_id}', '$jobId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{job_id}', '${jobId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2893,16 +3010,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/jobs/{job_id}/rerun'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{job_id}', '$jobId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{job_id}', '${jobId}'),
       body: actionsReRunJobForWorkflowRunRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2927,14 +3045,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/oidc/customization/sub'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2963,15 +3081,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/oidc/customization/sub'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: actionsSetCustomOidcSubClaimForRepoRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3002,8 +3121,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/organization-secrets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -3013,7 +3132,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3044,8 +3163,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/organization-variables'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -3055,7 +3174,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3082,14 +3201,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/permissions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3117,15 +3236,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/permissions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: actionsSetGithubActionsPermissionsRepositoryRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3146,14 +3266,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/permissions/access'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3183,15 +3303,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/permissions/access'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: actionsWorkflowAccessToRepository.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3212,14 +3333,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/permissions/selected-actions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3249,15 +3370,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/permissions/selected-actions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: selectedActions?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3280,14 +3402,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/permissions/workflow'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3318,15 +3440,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/permissions/workflow'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: actionsSetDefaultWorkflowPermissions.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3350,10 +3473,10 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runners'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (name != null) 'name': [name],
+        if (name != null) 'name': [name.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -3362,7 +3485,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3390,14 +3513,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runners/downloads'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3429,15 +3552,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runners/generate-jitconfig'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: actionsGenerateRunnerJitconfigForRepoRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3474,14 +3598,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runners/registration-token'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3518,14 +3642,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runners/remove-token'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3554,15 +3678,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runners/{runner_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3591,15 +3715,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/runners/{runner_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3620,15 +3744,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runners/{runner_id}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3659,16 +3783,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runners/{runner_id}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{runner_id}', '${runnerId}'),
       body: actionsAddCustomLabelsToSelfHostedRunnerForRepoRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3701,16 +3826,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/runners/{runner_id}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{runner_id}', '${runnerId}'),
       body: actionsSetCustomLabelsForSelfHostedRunnerForRepoRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3741,15 +3867,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/runners/{runner_id}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{runner_id}', '$runnerId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{runner_id}', '${runnerId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3785,16 +3911,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/runners/{runner_id}/labels/{name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{runner_id}', '$runnerId')
-          .replaceAll('{name}', name),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{runner_id}', '${runnerId}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3838,27 +3964,27 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (actor != null) 'actor': [actor],
-        if (branch != null) 'branch': [branch],
-        if (event != null) 'event': [event],
-        if (status != null) 'status': [status.toJson()],
+        if (actor != null) 'actor': [actor.toString()],
+        if (branch != null) 'branch': [branch.toString()],
+        if (event != null) 'event': [event.toString()],
+        if (status != null) 'status': [status.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (created != null) 'created': [created.toIso8601String()],
+        if (created != null) 'created': [created.toIso8601String().toString()],
         if (excludePullRequests != null)
           'exclude_pull_requests': [excludePullRequests.toString()],
         if (checkSuiteId != null) 'check_suite_id': [checkSuiteId.toString()],
-        if (headSha != null) 'head_sha': [headSha],
+        if (headSha != null) 'head_sha': [headSha.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3887,9 +4013,9 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
       queryParameters: {
         if (excludePullRequests != null)
           'exclude_pull_requests': [excludePullRequests.toString()],
@@ -3899,7 +4025,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3927,15 +4053,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3953,15 +4079,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/approvals'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3992,15 +4118,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/approve'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4029,20 +4155,20 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/artifacts'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (name != null) 'name': [name],
+        if (name != null) 'name': [name.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4073,10 +4199,10 @@ class ActionsApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{run_id}', '$runId')
-              .replaceAll('{attempt_number}', '$attemptNumber'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{run_id}', '${runId}')
+              .replaceAll('{attempt_number}', '${attemptNumber}'),
       queryParameters: {
         if (excludePullRequests != null)
           'exclude_pull_requests': [excludePullRequests.toString()],
@@ -4086,7 +4212,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4122,10 +4248,10 @@ class ActionsApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/jobs'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{run_id}', '$runId')
-              .replaceAll('{attempt_number}', '$attemptNumber'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{run_id}', '${runId}')
+              .replaceAll('{attempt_number}', '${attemptNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -4135,7 +4261,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4168,16 +4294,16 @@ class ActionsApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/actions/runs/{run_id}/attempts/{attempt_number}/logs'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{run_id}', '$runId')
-              .replaceAll('{attempt_number}', '$attemptNumber'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{run_id}', '${runId}')
+              .replaceAll('{attempt_number}', '${attemptNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4195,15 +4321,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/cancel'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4237,16 +4363,17 @@ class ActionsApi {
       method: Method.post,
       path:
           '/repos/{owner}/{repo}/actions/runs/{run_id}/deployment_protection_rule'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{run_id}', '$runId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{run_id}', '${runId}'),
       body: actionsReviewCustomGatesForRunRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4268,15 +4395,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/force-cancel'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4308,11 +4435,11 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/jobs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
       queryParameters: {
-        if (filter != null) 'filter': [filter.toJson()],
+        if (filter != null) 'filter': [filter.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -4321,7 +4448,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4351,15 +4478,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/logs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4377,15 +4504,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/logs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4406,15 +4533,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4448,16 +4575,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/pending_deployments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
       body: actionsReviewPendingDeploymentsForRunRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4486,16 +4614,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/rerun'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
       body: actionsReRunWorkflowRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4522,16 +4651,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/rerun-failed-jobs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
       body: actionsReRunWorkflowFailedJobsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4571,15 +4701,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/runs/{run_id}/timing'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{run_id}', '$runId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{run_id}', '${runId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4611,8 +4741,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/secrets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -4622,7 +4752,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4650,14 +4780,14 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/secrets/public-key'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4686,15 +4816,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4729,21 +4859,22 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: actionsCreateOrUpdateRepoSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      201 => const ActionsCreateOrUpdateRepoSecretResponse201(EmptyObject()),
+      201 => ActionsCreateOrUpdateRepoSecretResponse201(const EmptyObject()),
       204 => const ActionsCreateOrUpdateRepoSecretResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
     };
@@ -4765,15 +4896,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4795,8 +4926,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/variables'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -4806,7 +4937,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4836,15 +4967,16 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/variables'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: actionsCreateRepoVariableRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4871,15 +5003,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/variables/{name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{name}', name),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -4908,15 +5040,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/actions/variables/{name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{name}', name),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4939,16 +5071,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/actions/variables/{name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{name}', name),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{name}', '${name}'),
       body: actionsUpdateRepoVariableRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -4969,8 +5102,8 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/workflows'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -4980,7 +5113,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5010,15 +5143,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/workflows/{workflow_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{workflow_id}', '${workflowId.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5046,15 +5179,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/workflows/{workflow_id}/disable'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{workflow_id}', '${workflowId.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5083,16 +5216,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{workflow_id}', '${workflowId.toJson()}'),
       body: actionsCreateWorkflowDispatchRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5112,15 +5246,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/actions/workflows/{workflow_id}/enable'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{workflow_id}', '${workflowId.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5158,28 +5292,28 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{workflow_id}', '${workflowId.toJson()}'),
       queryParameters: {
-        if (actor != null) 'actor': [actor],
-        if (branch != null) 'branch': [branch],
-        if (event != null) 'event': [event],
-        if (status != null) 'status': [status.toJson()],
+        if (actor != null) 'actor': [actor.toString()],
+        if (branch != null) 'branch': [branch.toString()],
+        if (event != null) 'event': [event.toString()],
+        if (status != null) 'status': [status.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (created != null) 'created': [created.toIso8601String()],
+        if (created != null) 'created': [created.toIso8601String().toString()],
         if (excludePullRequests != null)
           'exclude_pull_requests': [excludePullRequests.toString()],
         if (checkSuiteId != null) 'check_suite_id': [checkSuiteId.toString()],
-        if (headSha != null) 'head_sha': [headSha],
+        if (headSha != null) 'head_sha': [headSha.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5224,15 +5358,15 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{workflow_id}', '${workflowId.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5264,9 +5398,9 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/environments/{environment_name}/secrets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{environment_name}', environmentName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{environment_name}', '${environmentName}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -5276,7 +5410,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5308,15 +5442,15 @@ class ActionsApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/secrets/public-key'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5347,16 +5481,16 @@ class ActionsApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{secret_name}', secretName),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5394,23 +5528,24 @@ class ActionsApi {
       method: Method.put,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{secret_name}', secretName),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{secret_name}', '${secretName}'),
       body: actionsCreateOrUpdateEnvironmentSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      201 => const ActionsCreateOrUpdateEnvironmentSecretResponse201(
-        EmptyObject(),
+      201 => ActionsCreateOrUpdateEnvironmentSecretResponse201(
+        const EmptyObject(),
       ),
       204 => const ActionsCreateOrUpdateEnvironmentSecretResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
@@ -5435,16 +5570,16 @@ class ActionsApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/secrets/{secret_name}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{secret_name}', secretName),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5467,9 +5602,9 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/environments/{environment_name}/variables'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{environment_name}', environmentName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{environment_name}', '${environmentName}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -5479,7 +5614,7 @@ class ActionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5511,16 +5646,17 @@ class ActionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/environments/{environment_name}/variables'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{environment_name}', environmentName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{environment_name}', '${environmentName}'),
       body: actionsCreateEnvironmentVariableRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5549,16 +5685,16 @@ class ActionsApi {
       method: Method.get,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/variables/{name}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{environment_name}', environmentName)
-              .replaceAll('{name}', name),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{environment_name}', '${environmentName}')
+              .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -5589,16 +5725,16 @@ class ActionsApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/variables/{name}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{name}', name)
-              .replaceAll('{environment_name}', environmentName),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{name}', '${name}')
+              .replaceAll('{environment_name}', '${environmentName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -5624,17 +5760,18 @@ class ActionsApi {
       method: Method.patch,
       path:
           '/repos/{owner}/{repo}/environments/{environment_name}/variables/{name}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{name}', name)
-              .replaceAll('{environment_name}', environmentName),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{name}', '${name}')
+              .replaceAll('{environment_name}', '${environmentName}'),
       body: actionsUpdateEnvironmentVariableRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }

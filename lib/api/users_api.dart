@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -21,17 +17,38 @@ import 'package:github_out/messages/users_get_by_username200_response.dart';
 import 'package:github_out/messages/users_list_attestations200_response.dart';
 import 'package:github_out/messages/users_set_primary_email_visibility_for_authenticated_user_request.dart';
 import 'package:github_out/messages/users_update_authenticated_request.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/email.dart';
 import 'package:github_out/models/empty_object.dart';
 import 'package:github_out/models/gpg_key.dart';
+import 'package:github_out/models/gpg_key_emails_inner.dart';
+import 'package:github_out/models/gpg_key_subkeys_inner.dart';
+import 'package:github_out/models/gpg_key_subkeys_inner_emails_inner.dart';
 import 'package:github_out/models/hovercard.dart';
+import 'package:github_out/models/hovercard_contexts_inner.dart';
 import 'package:github_out/models/key.dart';
 import 'package:github_out/models/key_simple.dart';
 import 'package:github_out/models/private_user.dart';
+import 'package:github_out/models/private_user_plan.dart';
+import 'package:github_out/models/public_user.dart';
+import 'package:github_out/models/public_user_plan.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/social_account.dart';
 import 'package:github_out/models/ssh_signing_key.dart';
+import 'package:github_out/models/users_add_email_for_authenticated_user_request_one_of_0.dart';
+import 'package:github_out/models/users_delete_attestations_bulk_request_one_of_0.dart';
+import 'package:github_out/models/users_delete_attestations_bulk_request_one_of_1.dart';
+import 'package:github_out/models/users_delete_email_for_authenticated_user_request_one_of_0.dart';
 import 'package:github_out/models/users_get_context_for_user_parameter1.dart';
+import 'package:github_out/models/users_list_attestations200_response_attestations_inner.dart';
+import 'package:github_out/models/users_list_attestations200_response_attestations_inner_bundle.dart';
+import 'package:github_out/models/users_list_attestations200_response_attestations_inner_bundle_dsse_envelope.dart';
+import 'package:github_out/models/users_list_attestations200_response_attestations_inner_bundle_verification_material.dart';
+import 'package:github_out/models/users_set_primary_email_visibility_for_authenticated_user_request_visibility.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class UsersListAttestationsResponse {
@@ -102,7 +119,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -127,12 +144,13 @@ class UsersApi {
       method: Method.patch,
       path: '/user',
       body: usersUpdateAuthenticatedRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -163,7 +181,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -188,13 +206,13 @@ class UsersApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/user/blocks/{username}'.replaceAll('{username}', username),
+      path: '/user/blocks/{username}'.replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -207,13 +225,13 @@ class UsersApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.put,
-      path: '/user/blocks/{username}'.replaceAll('{username}', username),
+      path: '/user/blocks/{username}'.replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -225,13 +243,13 @@ class UsersApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.delete,
-      path: '/user/blocks/{username}'.replaceAll('{username}', username),
+      path: '/user/blocks/{username}'.replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -246,12 +264,13 @@ class UsersApi {
       method: Method.patch,
       path: '/user/email/visibility',
       body: usersSetPrimaryEmailVisibilityForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -286,7 +305,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -310,12 +329,13 @@ class UsersApi {
       method: Method.post,
       path: '/user/emails',
       body: usersAddEmailForAuthenticatedUserRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -339,12 +359,13 @@ class UsersApi {
       method: Method.delete,
       path: '/user/emails',
       body: usersDeleteEmailForAuthenticatedUserRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -367,7 +388,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -400,7 +421,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -424,14 +445,14 @@ class UsersApi {
       method: Method.get,
       path: '/user/following/{username}'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -450,14 +471,14 @@ class UsersApi {
       method: Method.put,
       path: '/user/following/{username}'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -472,14 +493,14 @@ class UsersApi {
       method: Method.delete,
       path: '/user/following/{username}'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -505,7 +526,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -531,12 +552,13 @@ class UsersApi {
       method: Method.post,
       path: '/user/gpg_keys',
       body: usersCreateGpgKeyForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -559,14 +581,14 @@ class UsersApi {
       method: Method.get,
       path: '/user/gpg_keys/{gpg_key_id}'.replaceAll(
         '{gpg_key_id}',
-        '$gpgKeyId',
+        '${gpgKeyId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -589,14 +611,14 @@ class UsersApi {
       method: Method.delete,
       path: '/user/gpg_keys/{gpg_key_id}'.replaceAll(
         '{gpg_key_id}',
-        '$gpgKeyId',
+        '${gpgKeyId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -622,7 +644,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -648,12 +670,13 @@ class UsersApi {
       method: Method.post,
       path: '/user/keys',
       body: usersCreatePublicSshKeyForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -674,13 +697,13 @@ class UsersApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/user/keys/{key_id}'.replaceAll('{key_id}', '$keyId'),
+      path: '/user/keys/{key_id}'.replaceAll('{key_id}', '${keyId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -701,13 +724,13 @@ class UsersApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.delete,
-      path: '/user/keys/{key_id}'.replaceAll('{key_id}', '$keyId'),
+      path: '/user/keys/{key_id}'.replaceAll('{key_id}', '${keyId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -736,7 +759,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -767,7 +790,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -795,12 +818,13 @@ class UsersApi {
       method: Method.post,
       path: '/user/social_accounts',
       body: usersAddSocialAccountForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -829,12 +853,13 @@ class UsersApi {
       method: Method.delete,
       path: '/user/social_accounts',
       body: usersDeleteSocialAccountForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -860,7 +885,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -888,12 +913,13 @@ class UsersApi {
       method: Method.post,
       path: '/user/ssh_signing_keys',
       body: usersCreateSshSigningKeyForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -918,14 +944,14 @@ class UsersApi {
       method: Method.get,
       path: '/user/ssh_signing_keys/{ssh_signing_key_id}'.replaceAll(
         '{ssh_signing_key_id}',
-        '$sshSigningKeyId',
+        '${sshSigningKeyId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -950,14 +976,14 @@ class UsersApi {
       method: Method.delete,
       path: '/user/ssh_signing_keys/{ssh_signing_key_id}'.replaceAll(
         '{ssh_signing_key_id}',
-        '$sshSigningKeyId',
+        '${sshSigningKeyId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -993,13 +1019,13 @@ class UsersApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/user/{account_id}'.replaceAll('{account_id}', '$accountId'),
+      path: '/user/{account_id}'.replaceAll('{account_id}', '${accountId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1036,7 +1062,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1081,13 +1107,13 @@ class UsersApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/users/{username}'.replaceAll('{username}', username),
+      path: '/users/{username}'.replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1111,15 +1137,16 @@ class UsersApi {
       method: Method.post,
       path: '/users/{username}/attestations/delete-request'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       body: usersDeleteAttestationsBulkRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1133,14 +1160,14 @@ class UsersApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/users/{username}/attestations/digest/{subject_digest}'
-          .replaceAll('{username}', username)
-          .replaceAll('{subject_digest}', subjectDigest),
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{subject_digest}', '${subjectDigest}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1155,14 +1182,14 @@ class UsersApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/users/{username}/attestations/{attestation_id}'
-          .replaceAll('{username}', username)
-          .replaceAll('{attestation_id}', '$attestationId'),
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{attestation_id}', '${attestationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1198,20 +1225,20 @@ class UsersApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/users/{username}/attestations/{subject_digest}'
-          .replaceAll('{username}', username)
-          .replaceAll('{subject_digest}', subjectDigest),
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{subject_digest}', '${subjectDigest}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (predicateType != null) 'predicate_type': [predicateType],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (predicateType != null) 'predicate_type': [predicateType.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1221,7 +1248,7 @@ class UsersApi {
           jsonDecode(response.body) as Map<String, dynamic>,
         ),
       ),
-      201 => const UsersListAttestationsResponse201(EmptyObject()),
+      201 => UsersListAttestationsResponse201(const EmptyObject()),
       204 => const UsersListAttestationsResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
     };
@@ -1238,7 +1265,7 @@ class UsersApi {
       method: Method.get,
       path: '/users/{username}/followers'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1249,7 +1276,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1275,7 +1302,7 @@ class UsersApi {
       method: Method.get,
       path: '/users/{username}/following'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1286,7 +1313,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1310,14 +1337,14 @@ class UsersApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/users/{username}/following/{target_user}'
-          .replaceAll('{username}', username)
-          .replaceAll('{target_user}', targetUser),
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{target_user}', '${targetUser}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1333,7 +1360,7 @@ class UsersApi {
       method: Method.get,
       path: '/users/{username}/gpg_keys'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1344,7 +1371,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1380,18 +1407,19 @@ class UsersApi {
       method: Method.get,
       path: '/users/{username}/hovercard'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
-        if (subjectType != null) 'subject_type': [subjectType.toJson()],
-        if (subjectId != null) 'subject_id': [subjectId],
+        if (subjectType != null)
+          'subject_type': [subjectType.toJson().toString()],
+        if (subjectId != null) 'subject_id': [subjectId.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1414,7 +1442,7 @@ class UsersApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/users/{username}/keys'.replaceAll('{username}', username),
+      path: '/users/{username}/keys'.replaceAll('{username}', '${username}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1424,7 +1452,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1449,7 +1477,7 @@ class UsersApi {
       method: Method.get,
       path: '/users/{username}/social_accounts'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1460,7 +1488,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1487,7 +1515,7 @@ class UsersApi {
       method: Method.get,
       path: '/users/{username}/ssh_signing_keys'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -1498,7 +1526,7 @@ class UsersApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class WorkflowUsageBillableUBUNTU {
-  const WorkflowUsageBillableUBUNTU({
+  WorkflowUsageBillableUBUNTU({
     this.totalMs,
   });
 
@@ -13,7 +13,7 @@ class WorkflowUsageBillableUBUNTU {
       'WorkflowUsageBillableUBUNTU',
       json,
       () => WorkflowUsageBillableUBUNTU(
-        totalMs: json['total_ms'] as int?,
+        totalMs: (json['total_ms'] as int?),
       ),
     );
   }
@@ -44,6 +44,7 @@ class WorkflowUsageBillableUBUNTU {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is WorkflowUsageBillableUBUNTU && totalMs == other.totalMs;
+    return other is WorkflowUsageBillableUBUNTU &&
+        this.totalMs == other.totalMs;
   }
 }

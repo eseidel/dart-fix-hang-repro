@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class FileCommitCommitAuthor {
-  const FileCommitCommitAuthor({
+  FileCommitCommitAuthor({
     this.date,
     this.name,
     this.email,
@@ -55,8 +55,8 @@ class FileCommitCommitAuthor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is FileCommitCommitAuthor &&
-        date == other.date &&
-        name == other.name &&
-        email == other.email;
+        this.date == other.date &&
+        this.name == other.name &&
+        this.email == other.email;
   }
 }

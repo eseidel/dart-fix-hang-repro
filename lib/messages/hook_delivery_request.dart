@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class HookDeliveryRequest {
-  const HookDeliveryRequest({
+  HookDeliveryRequest({
     required this.headers,
     required this.payload,
   });
@@ -15,10 +15,10 @@ class HookDeliveryRequest {
       json,
       () => HookDeliveryRequest(
         headers: (checkedKey(json, 'headers') as Map<String, dynamic>?)?.map(
-          MapEntry.new,
+          (key, value) => MapEntry(key, value),
         ),
         payload: (checkedKey(json, 'payload') as Map<String, dynamic>?)?.map(
-          MapEntry.new,
+          (key, value) => MapEntry(key, value),
         ),
       ),
     );
@@ -57,7 +57,7 @@ class HookDeliveryRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is HookDeliveryRequest &&
-        mapsEqual(headers, other.headers) &&
-        mapsEqual(payload, other.payload);
+        mapsEqual(this.headers, other.headers) &&
+        mapsEqual(this.payload, other.payload);
   }
 }

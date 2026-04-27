@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsMoveCardRequest {
-  const ProjectsMoveCardRequest({
+  ProjectsMoveCardRequest({
     required this.position,
     this.columnId,
   });
@@ -15,7 +15,7 @@ class ProjectsMoveCardRequest {
       json,
       () => ProjectsMoveCardRequest(
         position: json['position'] as String,
-        columnId: json['column_id'] as int?,
+        columnId: (json['column_id'] as int?),
       ),
     );
   }
@@ -56,7 +56,7 @@ class ProjectsMoveCardRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectsMoveCardRequest &&
-        position == other.position &&
-        columnId == other.columnId;
+        this.position == other.position &&
+        this.columnId == other.columnId;
   }
 }

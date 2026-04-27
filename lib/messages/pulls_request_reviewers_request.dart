@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsRequestReviewersRequest {
-  const PullsRequestReviewersRequest({
+  PullsRequestReviewersRequest({
     this.reviewers,
     this.teamReviewers,
   });
@@ -55,7 +55,7 @@ class PullsRequestReviewersRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsRequestReviewersRequest &&
-        listsEqual(reviewers, other.reviewers) &&
-        listsEqual(teamReviewers, other.teamReviewers);
+        listsEqual(this.reviewers, other.reviewers) &&
+        listsEqual(this.teamReviewers, other.teamReviewers);
   }
 }

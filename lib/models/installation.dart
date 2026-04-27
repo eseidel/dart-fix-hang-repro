@@ -1,9 +1,54 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/app_permissions.dart';
+import 'package:github_out/models/app_permissions_actions.dart';
+import 'package:github_out/models/app_permissions_administration.dart';
+import 'package:github_out/models/app_permissions_checks.dart';
+import 'package:github_out/models/app_permissions_codespaces.dart';
+import 'package:github_out/models/app_permissions_contents.dart';
+import 'package:github_out/models/app_permissions_dependabot_secrets.dart';
+import 'package:github_out/models/app_permissions_deployments.dart';
+import 'package:github_out/models/app_permissions_email_addresses.dart';
+import 'package:github_out/models/app_permissions_environments.dart';
+import 'package:github_out/models/app_permissions_followers.dart';
+import 'package:github_out/models/app_permissions_git_ssh_keys.dart';
+import 'package:github_out/models/app_permissions_gpg_keys.dart';
+import 'package:github_out/models/app_permissions_interaction_limits.dart';
+import 'package:github_out/models/app_permissions_issues.dart';
+import 'package:github_out/models/app_permissions_members.dart';
+import 'package:github_out/models/app_permissions_metadata.dart';
+import 'package:github_out/models/app_permissions_organization_administration.dart';
+import 'package:github_out/models/app_permissions_organization_announcement_banners.dart';
+import 'package:github_out/models/app_permissions_organization_copilot_seat_management.dart';
+import 'package:github_out/models/app_permissions_organization_custom_org_roles.dart';
+import 'package:github_out/models/app_permissions_organization_custom_properties.dart';
+import 'package:github_out/models/app_permissions_organization_custom_roles.dart';
+import 'package:github_out/models/app_permissions_organization_events.dart';
+import 'package:github_out/models/app_permissions_organization_hooks.dart';
+import 'package:github_out/models/app_permissions_organization_packages.dart';
+import 'package:github_out/models/app_permissions_organization_personal_access_token_requests.dart';
+import 'package:github_out/models/app_permissions_organization_personal_access_tokens.dart';
+import 'package:github_out/models/app_permissions_organization_plan.dart';
+import 'package:github_out/models/app_permissions_organization_projects.dart';
+import 'package:github_out/models/app_permissions_organization_secrets.dart';
+import 'package:github_out/models/app_permissions_organization_self_hosted_runners.dart';
+import 'package:github_out/models/app_permissions_organization_user_blocking.dart';
+import 'package:github_out/models/app_permissions_packages.dart';
+import 'package:github_out/models/app_permissions_pages.dart';
+import 'package:github_out/models/app_permissions_profile.dart';
+import 'package:github_out/models/app_permissions_pull_requests.dart';
+import 'package:github_out/models/app_permissions_repository_custom_properties.dart';
+import 'package:github_out/models/app_permissions_repository_hooks.dart';
+import 'package:github_out/models/app_permissions_repository_projects.dart';
+import 'package:github_out/models/app_permissions_secret_scanning_alerts.dart';
+import 'package:github_out/models/app_permissions_secrets.dart';
+import 'package:github_out/models/app_permissions_security_events.dart';
+import 'package:github_out/models/app_permissions_single_file.dart';
+import 'package:github_out/models/app_permissions_starring.dart';
+import 'package:github_out/models/app_permissions_statuses.dart';
+import 'package:github_out/models/app_permissions_team_discussions.dart';
+import 'package:github_out/models/app_permissions_vulnerability_alerts.dart';
+import 'package:github_out/models/app_permissions_workflows.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/installation_account.dart';
 import 'package:github_out/models/installation_repository_selection.dart';
 import 'package:github_out/models/simple_user.dart';
@@ -16,7 +61,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Installation {
   /// {@macro installation}
-  const Installation({
+  Installation({
     required this.id,
     required this.account,
     required this.repositorySelection,
@@ -31,11 +76,11 @@ class Installation {
     required this.createdAt,
     required this.updatedAt,
     required this.singleFileName,
+    this.hasMultipleSingleFiles,
+    this.singleFilePaths,
     required this.appSlug,
     required this.suspendedBy,
     required this.suspendedAt,
-    this.hasMultipleSingleFiles,
-    this.singleFilePaths,
     this.contactEmail,
   });
 
@@ -45,7 +90,7 @@ class Installation {
       'Installation',
       json,
       () => Installation(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         account: InstallationAccount.maybeFromJson(
           checkedKey(json, 'account') as Map<String, dynamic>,
         ),
@@ -55,8 +100,8 @@ class Installation {
         accessTokensUrl: Uri.parse(json['access_tokens_url'] as String),
         repositoriesUrl: Uri.parse(json['repositories_url'] as String),
         htmlUrl: Uri.parse(json['html_url'] as String),
-        appId: json['app_id'] as int,
-        targetId: json['target_id'] as int,
+        appId: (json['app_id'] as int),
+        targetId: (json['target_id'] as int),
         targetType: json['target_type'] as String,
         permissions: AppPermissions.fromJson(
           json['permissions'] as Map<String, dynamic>,
@@ -199,25 +244,25 @@ class Installation {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Installation &&
-        id == other.id &&
-        account == other.account &&
-        repositorySelection == other.repositorySelection &&
-        accessTokensUrl == other.accessTokensUrl &&
-        repositoriesUrl == other.repositoriesUrl &&
-        htmlUrl == other.htmlUrl &&
-        appId == other.appId &&
-        targetId == other.targetId &&
-        targetType == other.targetType &&
-        permissions == other.permissions &&
-        listsEqual(events, other.events) &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        singleFileName == other.singleFileName &&
-        hasMultipleSingleFiles == other.hasMultipleSingleFiles &&
-        listsEqual(singleFilePaths, other.singleFilePaths) &&
-        appSlug == other.appSlug &&
-        suspendedBy == other.suspendedBy &&
-        suspendedAt == other.suspendedAt &&
-        contactEmail == other.contactEmail;
+        this.id == other.id &&
+        this.account == other.account &&
+        this.repositorySelection == other.repositorySelection &&
+        this.accessTokensUrl == other.accessTokensUrl &&
+        this.repositoriesUrl == other.repositoriesUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.appId == other.appId &&
+        this.targetId == other.targetId &&
+        this.targetType == other.targetType &&
+        this.permissions == other.permissions &&
+        listsEqual(this.events, other.events) &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.singleFileName == other.singleFileName &&
+        this.hasMultipleSingleFiles == other.hasMultipleSingleFiles &&
+        listsEqual(this.singleFilePaths, other.singleFilePaths) &&
+        this.appSlug == other.appSlug &&
+        this.suspendedBy == other.suspendedBy &&
+        this.suspendedAt == other.suspendedAt &&
+        this.contactEmail == other.contactEmail;
   }
 }

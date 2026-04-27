@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/runner_label.dart';
+import 'package:github_out/models/runner_label_type.dart';
 import 'package:meta/meta.dart';
 
 /// {@template runner}
@@ -9,14 +10,14 @@ import 'package:meta/meta.dart';
 @immutable
 class Runner {
   /// {@macro runner}
-  const Runner({
+  Runner({
     required this.id,
+    this.runnerGroupId,
     required this.name,
     required this.os,
     required this.status,
     required this.busy,
     required this.labels,
-    this.runnerGroupId,
     this.ephemeral,
   });
 
@@ -26,8 +27,8 @@ class Runner {
       'Runner',
       json,
       () => Runner(
-        id: json['id'] as int,
-        runnerGroupId: json['runner_group_id'] as int?,
+        id: (json['id'] as int),
+        runnerGroupId: (json['runner_group_id'] as int?),
         name: json['name'] as String,
         os: json['os'] as String,
         status: json['status'] as String,
@@ -104,13 +105,13 @@ class Runner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Runner &&
-        id == other.id &&
-        runnerGroupId == other.runnerGroupId &&
-        name == other.name &&
-        os == other.os &&
-        status == other.status &&
-        busy == other.busy &&
-        listsEqual(labels, other.labels) &&
-        ephemeral == other.ephemeral;
+        this.id == other.id &&
+        this.runnerGroupId == other.runnerGroupId &&
+        this.name == other.name &&
+        this.os == other.os &&
+        this.status == other.status &&
+        this.busy == other.busy &&
+        listsEqual(this.labels, other.labels) &&
+        this.ephemeral == other.ephemeral;
   }
 }

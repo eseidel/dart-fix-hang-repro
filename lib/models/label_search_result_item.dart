@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
 import 'package:meta/meta.dart';
 
 /// {@template label_search_result_item}
@@ -9,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class LabelSearchResultItem {
   /// {@macro label_search_result_item}
-  const LabelSearchResultItem({
+  LabelSearchResultItem({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -27,7 +28,7 @@ class LabelSearchResultItem {
       'LabelSearchResultItem',
       json,
       () => LabelSearchResultItem(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         name: json['name'] as String,
@@ -99,14 +100,14 @@ class LabelSearchResultItem {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is LabelSearchResultItem &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        name == other.name &&
-        color == other.color &&
-        default_ == other.default_ &&
-        description == other.description &&
-        score == other.score &&
-        listsEqual(textMatches, other.textMatches);
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.name == other.name &&
+        this.color == other.color &&
+        this.default_ == other.default_ &&
+        this.description == other.description &&
+        this.score == other.score &&
+        listsEqual(this.textMatches, other.textMatches);
   }
 }

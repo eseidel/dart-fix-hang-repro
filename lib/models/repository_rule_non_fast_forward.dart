@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleNonFastForward {
   /// {@macro repository_rule_non_fast_forward}
-  const RepositoryRuleNonFastForward({
+  RepositoryRuleNonFastForward({
     required this.type,
   });
 
@@ -50,6 +50,6 @@ class RepositoryRuleNonFastForward {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RepositoryRuleNonFastForward && type == other.type;
+    return other is RepositoryRuleNonFastForward && this.type == other.type;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateForkRequest {
-  const ReposCreateForkRequest({
+  ReposCreateForkRequest({
     this.organization,
     this.name,
     this.defaultBranchOnly,
@@ -62,8 +62,8 @@ class ReposCreateForkRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateForkRequest &&
-        organization == other.organization &&
-        name == other.name &&
-        defaultBranchOnly == other.defaultBranchOnly;
+        this.organization == other.organization &&
+        this.name == other.name &&
+        this.defaultBranchOnly == other.defaultBranchOnly;
   }
 }

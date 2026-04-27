@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotAlertPackage {
   /// {@macro dependabot_alert_package}
-  const DependabotAlertPackage({
+  DependabotAlertPackage({
     required this.ecosystem,
     required this.name,
   });
@@ -57,7 +57,7 @@ class DependabotAlertPackage {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotAlertPackage &&
-        ecosystem == other.ecosystem &&
-        name == other.name;
+        this.ecosystem == other.ecosystem &&
+        this.name == other.name;
   }
 }

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Topic {
   /// {@macro topic}
-  const Topic({
+  Topic({
     required this.names,
   });
 
@@ -47,6 +47,6 @@ class Topic {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Topic && listsEqual(names, other.names);
+    return other is Topic && listsEqual(this.names, other.names);
   }
 }

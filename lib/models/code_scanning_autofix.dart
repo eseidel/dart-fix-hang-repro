@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningAutofix {
-  const CodeScanningAutofix({
+  CodeScanningAutofix({
     required this.status,
     required this.description,
     required this.startedAt,
@@ -67,8 +67,8 @@ class CodeScanningAutofix {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningAutofix &&
-        status == other.status &&
-        description == other.description &&
-        startedAt == other.startedAt;
+        this.status == other.status &&
+        this.description == other.description &&
+        this.startedAt == other.startedAt;
   }
 }

@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotAlertSecurityAdvisoryCwesInner {
   /// {@macro dependabot_alert_security_advisory_cwes_inner}
-  const DependabotAlertSecurityAdvisoryCwesInner({
+  DependabotAlertSecurityAdvisoryCwesInner({
     required this.cweId,
     required this.name,
   });
@@ -63,7 +63,7 @@ class DependabotAlertSecurityAdvisoryCwesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotAlertSecurityAdvisoryCwesInner &&
-        cweId == other.cweId &&
-        name == other.name;
+        this.cweId == other.cweId &&
+        this.name == other.name;
   }
 }

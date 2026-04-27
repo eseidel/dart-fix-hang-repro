@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/gists_update_request_files.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class GistsUpdateRequest {
-  const GistsUpdateRequest({
+  GistsUpdateRequest({
     this.description,
     this.files,
   });
@@ -73,7 +69,7 @@ class GistsUpdateRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistsUpdateRequest &&
-        description == other.description &&
-        mapsEqual(files, other.files);
+        this.description == other.description &&
+        mapsEqual(this.files, other.files);
   }
 }

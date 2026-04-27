@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Blob {
   /// {@macro blob}
-  const Blob({
+  Blob({
     required this.content,
     required this.encoding,
     required this.url,
@@ -28,7 +28,7 @@ class Blob {
         encoding: json['encoding'] as String,
         url: Uri.parse(json['url'] as String),
         sha: json['sha'] as String,
-        size: checkedKey(json, 'size') as int?,
+        size: (checkedKey(json, 'size') as int?),
         nodeId: json['node_id'] as String,
         highlightedContent: json['highlighted_content'] as String?,
       ),
@@ -80,12 +80,12 @@ class Blob {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Blob &&
-        content == other.content &&
-        encoding == other.encoding &&
-        url == other.url &&
-        sha == other.sha &&
-        size == other.size &&
-        nodeId == other.nodeId &&
-        highlightedContent == other.highlightedContent;
+        this.content == other.content &&
+        this.encoding == other.encoding &&
+        this.url == other.url &&
+        this.sha == other.sha &&
+        this.size == other.size &&
+        this.nodeId == other.nodeId &&
+        this.highlightedContent == other.highlightedContent;
   }
 }

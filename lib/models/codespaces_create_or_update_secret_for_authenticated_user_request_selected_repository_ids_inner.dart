@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:meta/meta.dart';
 
 sealed class CodespacesCreateOrUpdateSecretForAuthenticatedUserRequestSelectedRepositoryIdsInner {
@@ -11,11 +7,11 @@ sealed class CodespacesCreateOrUpdateSecretForAuthenticatedUserRequestSelectedRe
     dynamic json,
   ) {
     return switch (json) {
-      final int v =>
+      int v =>
         CodespacesCreateOrUpdateSecretForAuthenticatedUserRequestSelectedRepositoryIdsInnerInt(
           v,
         ),
-      final String v =>
+      String v =>
         CodespacesCreateOrUpdateSecretForAuthenticatedUserRequestSelectedRepositoryIdsInnerString(
           v,
         ),

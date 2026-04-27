@@ -1,6 +1,26 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template code_search_result_item}
@@ -10,7 +30,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeSearchResultItem {
   /// {@macro code_search_result_item}
-  const CodeSearchResultItem({
+  CodeSearchResultItem({
     required this.name,
     required this.path,
     required this.sha,
@@ -42,7 +62,7 @@ class CodeSearchResultItem {
           json['repository'] as Map<String, dynamic>,
         ),
         score: (json['score'] as num).toDouble(),
-        fileSize: json['file_size'] as int?,
+        fileSize: (json['file_size'] as int?),
         language: json['language'] as String?,
         lastModifiedAt: maybeParseDateTime(json['last_modified_at'] as String?),
         lineNumbers: (json['line_numbers'] as List?)?.cast<String>(),
@@ -128,18 +148,18 @@ class CodeSearchResultItem {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeSearchResultItem &&
-        name == other.name &&
-        path == other.path &&
-        sha == other.sha &&
-        url == other.url &&
-        gitUrl == other.gitUrl &&
-        htmlUrl == other.htmlUrl &&
-        repository == other.repository &&
-        score == other.score &&
-        fileSize == other.fileSize &&
-        language == other.language &&
-        lastModifiedAt == other.lastModifiedAt &&
-        listsEqual(lineNumbers, other.lineNumbers) &&
-        listsEqual(textMatches, other.textMatches);
+        this.name == other.name &&
+        this.path == other.path &&
+        this.sha == other.sha &&
+        this.url == other.url &&
+        this.gitUrl == other.gitUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.repository == other.repository &&
+        this.score == other.score &&
+        this.fileSize == other.fileSize &&
+        this.language == other.language &&
+        this.lastModifiedAt == other.lastModifiedAt &&
+        listsEqual(this.lineNumbers, other.lineNumbers) &&
+        listsEqual(this.textMatches, other.textMatches);
   }
 }

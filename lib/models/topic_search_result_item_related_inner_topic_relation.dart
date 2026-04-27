@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TopicSearchResultItemRelatedInnerTopicRelation {
-  const TopicSearchResultItemRelatedInnerTopicRelation({
+  TopicSearchResultItemRelatedInnerTopicRelation({
     this.id,
     this.name,
     this.topicId,
@@ -19,9 +19,9 @@ class TopicSearchResultItemRelatedInnerTopicRelation {
       'TopicSearchResultItemRelatedInnerTopicRelation',
       json,
       () => TopicSearchResultItemRelatedInnerTopicRelation(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         name: json['name'] as String?,
-        topicId: json['topic_id'] as int?,
+        topicId: (json['topic_id'] as int?),
         relationType: json['relation_type'] as String?,
       ),
     );
@@ -66,9 +66,9 @@ class TopicSearchResultItemRelatedInnerTopicRelation {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TopicSearchResultItemRelatedInnerTopicRelation &&
-        id == other.id &&
-        name == other.name &&
-        topicId == other.topicId &&
-        relationType == other.relationType;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.topicId == other.topicId &&
+        this.relationType == other.relationType;
   }
 }

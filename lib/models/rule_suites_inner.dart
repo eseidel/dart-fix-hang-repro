@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RuleSuitesInner {
-  const RuleSuitesInner({
+  RuleSuitesInner({
     this.id,
     this.actorId,
     this.actorName,
@@ -25,13 +25,13 @@ class RuleSuitesInner {
       'RuleSuitesInner',
       json,
       () => RuleSuitesInner(
-        id: json['id'] as int?,
-        actorId: json['actor_id'] as int?,
+        id: (json['id'] as int?),
+        actorId: (json['actor_id'] as int?),
         actorName: json['actor_name'] as String?,
         beforeSha: json['before_sha'] as String?,
         afterSha: json['after_sha'] as String?,
         ref: json['ref'] as String?,
-        repositoryId: json['repository_id'] as int?,
+        repositoryId: (json['repository_id'] as int?),
         repositoryName: json['repository_name'] as String?,
         pushedAt: maybeParseDateTime(json['pushed_at'] as String?),
         result: RuleSuitesInnerResult.maybeFromJson(json['result'] as String?),
@@ -123,16 +123,16 @@ class RuleSuitesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RuleSuitesInner &&
-        id == other.id &&
-        actorId == other.actorId &&
-        actorName == other.actorName &&
-        beforeSha == other.beforeSha &&
-        afterSha == other.afterSha &&
-        ref == other.ref &&
-        repositoryId == other.repositoryId &&
-        repositoryName == other.repositoryName &&
-        pushedAt == other.pushedAt &&
-        result == other.result &&
-        evaluationResult == other.evaluationResult;
+        this.id == other.id &&
+        this.actorId == other.actorId &&
+        this.actorName == other.actorName &&
+        this.beforeSha == other.beforeSha &&
+        this.afterSha == other.afterSha &&
+        this.ref == other.ref &&
+        this.repositoryId == other.repositoryId &&
+        this.repositoryName == other.repositoryName &&
+        this.pushedAt == other.pushedAt &&
+        this.result == other.result &&
+        this.evaluationResult == other.evaluationResult;
   }
 }

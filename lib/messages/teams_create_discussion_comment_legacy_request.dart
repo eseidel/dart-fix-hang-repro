@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamsCreateDiscussionCommentLegacyRequest {
-  const TeamsCreateDiscussionCommentLegacyRequest({
+  TeamsCreateDiscussionCommentLegacyRequest({
     required this.body,
   });
 
@@ -50,6 +50,6 @@ class TeamsCreateDiscussionCommentLegacyRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamsCreateDiscussionCommentLegacyRequest &&
-        body == other.body;
+        this.body == other.body;
   }
 }

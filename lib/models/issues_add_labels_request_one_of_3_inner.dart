@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesAddLabelsRequestOneOf3Inner {
-  const IssuesAddLabelsRequestOneOf3Inner({
+  IssuesAddLabelsRequestOneOf3Inner({
     required this.name,
   });
 
@@ -48,6 +48,7 @@ class IssuesAddLabelsRequestOneOf3Inner {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is IssuesAddLabelsRequestOneOf3Inner && name == other.name;
+    return other is IssuesAddLabelsRequestOneOf3Inner &&
+        this.name == other.name;
   }
 }

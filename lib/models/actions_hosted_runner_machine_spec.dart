@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsHostedRunnerMachineSpec {
   /// {@macro actions_hosted_runner_machine_spec}
-  const ActionsHostedRunnerMachineSpec({
+  ActionsHostedRunnerMachineSpec({
     required this.id,
     required this.cpuCores,
     required this.memoryGb,
@@ -22,9 +22,9 @@ class ActionsHostedRunnerMachineSpec {
       json,
       () => ActionsHostedRunnerMachineSpec(
         id: json['id'] as String,
-        cpuCores: json['cpu_cores'] as int,
-        memoryGb: json['memory_gb'] as int,
-        storageGb: json['storage_gb'] as int,
+        cpuCores: (json['cpu_cores'] as int),
+        memoryGb: (json['memory_gb'] as int),
+        storageGb: (json['storage_gb'] as int),
       ),
     );
   }
@@ -78,9 +78,9 @@ class ActionsHostedRunnerMachineSpec {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsHostedRunnerMachineSpec &&
-        id == other.id &&
-        cpuCores == other.cpuCores &&
-        memoryGb == other.memoryGb &&
-        storageGb == other.storageGb;
+        this.id == other.id &&
+        this.cpuCores == other.cpuCores &&
+        this.memoryGb == other.memoryGb &&
+        this.storageGb == other.storageGb;
   }
 }

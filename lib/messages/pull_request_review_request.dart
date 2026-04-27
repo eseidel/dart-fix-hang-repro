@@ -1,6 +1,8 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 /// {@template pull_request_review_request}
@@ -10,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PullRequestReviewRequest {
   /// {@macro pull_request_review_request}
-  const PullRequestReviewRequest({
+  PullRequestReviewRequest({
     required this.users,
     required this.teams,
   });
@@ -63,7 +65,7 @@ class PullRequestReviewRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestReviewRequest &&
-        listsEqual(users, other.users) &&
-        listsEqual(teams, other.teams);
+        listsEqual(this.users, other.users) &&
+        listsEqual(this.teams, other.teams);
   }
 }

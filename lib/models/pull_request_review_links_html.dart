@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestReviewLinksHtml {
-  const PullRequestReviewLinksHtml({
+  PullRequestReviewLinksHtml({
     required this.href,
   });
 
@@ -42,6 +42,6 @@ class PullRequestReviewLinksHtml {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is PullRequestReviewLinksHtml && href == other.href;
+    return other is PullRequestReviewLinksHtml && this.href == other.href;
   }
 }

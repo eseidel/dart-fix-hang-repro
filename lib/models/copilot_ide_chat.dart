@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_ide_chat_editors_inner.dart';
+import 'package:github_out/models/copilot_ide_chat_editors_inner_models_inner.dart';
 import 'package:meta/meta.dart';
 
 /// {@template copilot_ide_chat}
@@ -8,10 +9,10 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotIdeChat {
   /// {@macro copilot_ide_chat}
-  const CopilotIdeChat({
-    required this.entries,
+  CopilotIdeChat({
     this.totalEngagedUsers,
     this.editors,
+    required this.entries,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CopilotIdeChat].
@@ -20,7 +21,7 @@ class CopilotIdeChat {
       'CopilotIdeChat',
       json,
       () => CopilotIdeChat(
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
         editors: (json['editors'] as List?)
             ?.map<CopilotIdeChatEditorsInner>(
               (e) => CopilotIdeChatEditorsInner.fromJson(
@@ -28,7 +29,7 @@ class CopilotIdeChat {
               ),
             )
             .toList(),
-        entries: json.map(MapEntry.new),
+        entries: json.map((key, value) => MapEntry(key, value)),
       ),
     );
   }
@@ -47,14 +48,14 @@ class CopilotIdeChat {
   final List<CopilotIdeChatEditorsInner>? editors;
   final Map<String, dynamic> entries;
 
-  dynamic operator [](String key) => entries[key];
+  dynamic? operator [](String key) => entries[key];
 
   /// Converts a [CopilotIdeChat] to a `Map<String, dynamic>`.
   Map<String, dynamic> toJson() {
     return {
       'total_engaged_users': totalEngagedUsers,
       'editors': editors?.map((e) => e.toJson()).toList(),
-      ...entries.map(MapEntry.new),
+      ...entries.map((key, value) => MapEntry(key, value)),
     };
   }
 
@@ -69,8 +70,8 @@ class CopilotIdeChat {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotIdeChat &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        listsEqual(editors, other.editors) &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        listsEqual(this.editors, other.editors) &&
         mapsEqual(entries, other.entries);
   }
 }

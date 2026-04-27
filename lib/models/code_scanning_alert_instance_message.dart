@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningAlertInstanceMessage {
-  const CodeScanningAlertInstanceMessage({
+  CodeScanningAlertInstanceMessage({
     this.text,
   });
 
@@ -44,6 +44,6 @@ class CodeScanningAlertInstanceMessage {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is CodeScanningAlertInstanceMessage && text == other.text;
+    return other is CodeScanningAlertInstanceMessage && this.text == other.text;
   }
 }

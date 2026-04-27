@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
@@ -14,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReposUpdatePullRequestReviewProtectionRequestDismissalRestrictions {
   /// {@macro repos_update_pull_request_review_protection_request_dismissal_restrictions}
-  const ReposUpdatePullRequestReviewProtectionRequestDismissalRestrictions({
+  ReposUpdatePullRequestReviewProtectionRequestDismissalRestrictions({
     this.users,
     this.teams,
     this.apps,
@@ -79,8 +75,8 @@ class ReposUpdatePullRequestReviewProtectionRequestDismissalRestrictions {
     if (identical(this, other)) return true;
     return other
             is ReposUpdatePullRequestReviewProtectionRequestDismissalRestrictions &&
-        listsEqual(users, other.users) &&
-        listsEqual(teams, other.teams) &&
-        listsEqual(apps, other.apps);
+        listsEqual(this.users, other.users) &&
+        listsEqual(this.teams, other.teams) &&
+        listsEqual(this.apps, other.apps);
   }
 }

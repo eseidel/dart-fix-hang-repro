@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CommitActivity {
   /// {@macro commit_activity}
-  const CommitActivity({
+  CommitActivity({
     required this.days,
     required this.total,
     required this.week,
@@ -21,8 +21,8 @@ class CommitActivity {
       json,
       () => CommitActivity(
         days: (json['days'] as List).cast<int>(),
-        total: json['total'] as int,
-        week: json['week'] as int,
+        total: (json['total'] as int),
+        week: (json['week'] as int),
       ),
     );
   }
@@ -71,8 +71,8 @@ class CommitActivity {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitActivity &&
-        listsEqual(days, other.days) &&
-        total == other.total &&
-        week == other.week;
+        listsEqual(this.days, other.days) &&
+        this.total == other.total &&
+        this.week == other.week;
   }
 }

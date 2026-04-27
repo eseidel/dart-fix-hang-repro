@@ -8,10 +8,10 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotDotcomChat {
   /// {@macro copilot_dotcom_chat}
-  const CopilotDotcomChat({
-    required this.entries,
+  CopilotDotcomChat({
     this.totalEngagedUsers,
     this.models,
+    required this.entries,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CopilotDotcomChat].
@@ -20,7 +20,7 @@ class CopilotDotcomChat {
       'CopilotDotcomChat',
       json,
       () => CopilotDotcomChat(
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
         models: (json['models'] as List?)
             ?.map<CopilotDotcomChatModelsInner>(
               (e) => CopilotDotcomChatModelsInner.fromJson(
@@ -28,7 +28,7 @@ class CopilotDotcomChat {
               ),
             )
             .toList(),
-        entries: json.map(MapEntry.new),
+        entries: json.map((key, value) => MapEntry(key, value)),
       ),
     );
   }
@@ -50,14 +50,14 @@ class CopilotDotcomChat {
   final List<CopilotDotcomChatModelsInner>? models;
   final Map<String, dynamic> entries;
 
-  dynamic operator [](String key) => entries[key];
+  dynamic? operator [](String key) => entries[key];
 
   /// Converts a [CopilotDotcomChat] to a `Map<String, dynamic>`.
   Map<String, dynamic> toJson() {
     return {
       'total_engaged_users': totalEngagedUsers,
       'models': models?.map((e) => e.toJson()).toList(),
-      ...entries.map(MapEntry.new),
+      ...entries.map((key, value) => MapEntry(key, value)),
     };
   }
 
@@ -72,8 +72,8 @@ class CopilotDotcomChat {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotDotcomChat &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        listsEqual(models, other.models) &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        listsEqual(this.models, other.models) &&
         mapsEqual(entries, other.entries);
   }
 }

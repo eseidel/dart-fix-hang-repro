@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repos_create_for_authenticated_user_request_merge_commit_message.dart';
 import 'package:github_out/models/repos_create_for_authenticated_user_request_merge_commit_title.dart';
@@ -11,7 +7,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateForAuthenticatedUserRequest {
-  const ReposCreateForAuthenticatedUserRequest({
+  ReposCreateForAuthenticatedUserRequest({
     required this.name,
     this.description,
     this.homepage,
@@ -54,7 +50,7 @@ class ReposCreateForAuthenticatedUserRequest {
         hasProjects: json['has_projects'] as bool? ?? true,
         hasWiki: json['has_wiki'] as bool? ?? true,
         hasDiscussions: json['has_discussions'] as bool? ?? false,
-        teamId: json['team_id'] as int?,
+        teamId: (json['team_id'] as int?),
         autoInit: json['auto_init'] as bool? ?? false,
         gitignoreTemplate: json['gitignore_template'] as String?,
         licenseTemplate: json['license_template'] as String?,
@@ -266,28 +262,28 @@ class ReposCreateForAuthenticatedUserRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateForAuthenticatedUserRequest &&
-        name == other.name &&
-        description == other.description &&
-        homepage == other.homepage &&
-        private == other.private &&
-        hasIssues == other.hasIssues &&
-        hasProjects == other.hasProjects &&
-        hasWiki == other.hasWiki &&
-        hasDiscussions == other.hasDiscussions &&
-        teamId == other.teamId &&
-        autoInit == other.autoInit &&
-        gitignoreTemplate == other.gitignoreTemplate &&
-        licenseTemplate == other.licenseTemplate &&
-        allowSquashMerge == other.allowSquashMerge &&
-        allowMergeCommit == other.allowMergeCommit &&
-        allowRebaseMerge == other.allowRebaseMerge &&
-        allowAutoMerge == other.allowAutoMerge &&
-        deleteBranchOnMerge == other.deleteBranchOnMerge &&
-        squashMergeCommitTitle == other.squashMergeCommitTitle &&
-        squashMergeCommitMessage == other.squashMergeCommitMessage &&
-        mergeCommitTitle == other.mergeCommitTitle &&
-        mergeCommitMessage == other.mergeCommitMessage &&
-        hasDownloads == other.hasDownloads &&
-        isTemplate == other.isTemplate;
+        this.name == other.name &&
+        this.description == other.description &&
+        this.homepage == other.homepage &&
+        this.private == other.private &&
+        this.hasIssues == other.hasIssues &&
+        this.hasProjects == other.hasProjects &&
+        this.hasWiki == other.hasWiki &&
+        this.hasDiscussions == other.hasDiscussions &&
+        this.teamId == other.teamId &&
+        this.autoInit == other.autoInit &&
+        this.gitignoreTemplate == other.gitignoreTemplate &&
+        this.licenseTemplate == other.licenseTemplate &&
+        this.allowSquashMerge == other.allowSquashMerge &&
+        this.allowMergeCommit == other.allowMergeCommit &&
+        this.allowRebaseMerge == other.allowRebaseMerge &&
+        this.allowAutoMerge == other.allowAutoMerge &&
+        this.deleteBranchOnMerge == other.deleteBranchOnMerge &&
+        this.squashMergeCommitTitle == other.squashMergeCommitTitle &&
+        this.squashMergeCommitMessage == other.squashMergeCommitMessage &&
+        this.mergeCommitTitle == other.mergeCommitTitle &&
+        this.mergeCommitMessage == other.mergeCommitMessage &&
+        this.hasDownloads == other.hasDownloads &&
+        this.isTemplate == other.isTemplate;
   }
 }

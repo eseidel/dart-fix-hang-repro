@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeSecurityDetachConfigurationRequest {
-  const CodeSecurityDetachConfigurationRequest({
+  CodeSecurityDetachConfigurationRequest({
     this.selectedRepositoryIds,
   });
 
@@ -51,6 +51,6 @@ class CodeSecurityDetachConfigurationRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeSecurityDetachConfigurationRequest &&
-        listsEqual(selectedRepositoryIds, other.selectedRepositoryIds);
+        listsEqual(this.selectedRepositoryIds, other.selectedRepositoryIds);
   }
 }

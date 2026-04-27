@@ -1,15 +1,14 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle_dsse_envelope.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle_verification_material.dart';
 import 'package:github_out/models/orgs_list_attestations_bulk200_response_page_info.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrgsListAttestationsBulk200Response {
-  const OrgsListAttestationsBulk200Response({
+  OrgsListAttestationsBulk200Response({
     this.attestationsSubjectDigests,
     this.pageInfo,
   });
@@ -89,9 +88,9 @@ class OrgsListAttestationsBulk200Response {
     if (identical(this, other)) return true;
     return other is OrgsListAttestationsBulk200Response &&
         mapsEqual(
-          attestationsSubjectDigests,
+          this.attestationsSubjectDigests,
           other.attestationsSubjectDigests,
         ) &&
-        pageInfo == other.pageInfo;
+        this.pageInfo == other.pageInfo;
   }
 }

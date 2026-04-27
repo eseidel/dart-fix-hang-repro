@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ApiInsightsUserStatsInner {
-  const ApiInsightsUserStatsInner({
+  ApiInsightsUserStatsInner({
     this.actorType,
     this.actorName,
     this.actorId,
@@ -23,11 +23,11 @@ class ApiInsightsUserStatsInner {
       () => ApiInsightsUserStatsInner(
         actorType: json['actor_type'] as String?,
         actorName: json['actor_name'] as String?,
-        actorId: json['actor_id'] as int?,
-        integrationId: json['integration_id'] as int?,
-        oauthApplicationId: json['oauth_application_id'] as int?,
-        totalRequestCount: json['total_request_count'] as int?,
-        rateLimitedRequestCount: json['rate_limited_request_count'] as int?,
+        actorId: (json['actor_id'] as int?),
+        integrationId: (json['integration_id'] as int?),
+        oauthApplicationId: (json['oauth_application_id'] as int?),
+        totalRequestCount: (json['total_request_count'] as int?),
+        rateLimitedRequestCount: (json['rate_limited_request_count'] as int?),
         lastRateLimitedTimestamp:
             json['last_rate_limited_timestamp'] as String?,
         lastRequestTimestamp: json['last_request_timestamp'] as String?,
@@ -86,14 +86,14 @@ class ApiInsightsUserStatsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiInsightsUserStatsInner &&
-        actorType == other.actorType &&
-        actorName == other.actorName &&
-        actorId == other.actorId &&
-        integrationId == other.integrationId &&
-        oauthApplicationId == other.oauthApplicationId &&
-        totalRequestCount == other.totalRequestCount &&
-        rateLimitedRequestCount == other.rateLimitedRequestCount &&
-        lastRateLimitedTimestamp == other.lastRateLimitedTimestamp &&
-        lastRequestTimestamp == other.lastRequestTimestamp;
+        this.actorType == other.actorType &&
+        this.actorName == other.actorName &&
+        this.actorId == other.actorId &&
+        this.integrationId == other.integrationId &&
+        this.oauthApplicationId == other.oauthApplicationId &&
+        this.totalRequestCount == other.totalRequestCount &&
+        this.rateLimitedRequestCount == other.rateLimitedRequestCount &&
+        this.lastRateLimitedTimestamp == other.lastRateLimitedTimestamp &&
+        this.lastRequestTimestamp == other.lastRequestTimestamp;
   }
 }

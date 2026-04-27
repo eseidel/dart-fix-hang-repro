@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/organization_programmatic_access_grant_permissions.dart';
 import 'package:github_out/models/organization_programmatic_access_grant_repository_selection.dart';
@@ -16,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OrganizationProgrammaticAccessGrant {
   /// {@macro organization_programmatic_access_grant}
-  const OrganizationProgrammaticAccessGrant({
+  OrganizationProgrammaticAccessGrant({
     required this.id,
     required this.owner,
     required this.repositorySelection,
@@ -39,7 +35,7 @@ class OrganizationProgrammaticAccessGrant {
       'OrganizationProgrammaticAccessGrant',
       json,
       () => OrganizationProgrammaticAccessGrant(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         owner: SimpleUser.fromJson(json['owner'] as Map<String, dynamic>),
         repositorySelection:
             OrganizationProgrammaticAccessGrantRepositorySelection.fromJson(
@@ -50,7 +46,7 @@ class OrganizationProgrammaticAccessGrant {
           json['permissions'] as Map<String, dynamic>,
         ),
         accessGrantedAt: json['access_granted_at'] as String,
-        tokenId: json['token_id'] as int,
+        tokenId: (json['token_id'] as int),
         tokenName: json['token_name'] as String,
         tokenExpired: json['token_expired'] as bool,
         tokenExpiresAt: checkedKey(json, 'token_expires_at') as String?,
@@ -150,16 +146,16 @@ class OrganizationProgrammaticAccessGrant {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrganizationProgrammaticAccessGrant &&
-        id == other.id &&
-        owner == other.owner &&
-        repositorySelection == other.repositorySelection &&
-        repositoriesUrl == other.repositoriesUrl &&
-        permissions == other.permissions &&
-        accessGrantedAt == other.accessGrantedAt &&
-        tokenId == other.tokenId &&
-        tokenName == other.tokenName &&
-        tokenExpired == other.tokenExpired &&
-        tokenExpiresAt == other.tokenExpiresAt &&
-        tokenLastUsedAt == other.tokenLastUsedAt;
+        this.id == other.id &&
+        this.owner == other.owner &&
+        this.repositorySelection == other.repositorySelection &&
+        this.repositoriesUrl == other.repositoriesUrl &&
+        this.permissions == other.permissions &&
+        this.accessGrantedAt == other.accessGrantedAt &&
+        this.tokenId == other.tokenId &&
+        this.tokenName == other.tokenName &&
+        this.tokenExpired == other.tokenExpired &&
+        this.tokenExpiresAt == other.tokenExpiresAt &&
+        this.tokenLastUsedAt == other.tokenLastUsedAt;
   }
 }

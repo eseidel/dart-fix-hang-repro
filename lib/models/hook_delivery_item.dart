@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class HookDeliveryItem {
   /// {@macro hook_delivery_item}
-  const HookDeliveryItem({
+  HookDeliveryItem({
     required this.id,
     required this.guid,
     required this.deliveredAt,
@@ -29,17 +29,17 @@ class HookDeliveryItem {
       'HookDeliveryItem',
       json,
       () => HookDeliveryItem(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         guid: json['guid'] as String,
         deliveredAt: DateTime.parse(json['delivered_at'] as String),
         redelivery: json['redelivery'] as bool,
         duration: (json['duration'] as num).toDouble(),
         status: json['status'] as String,
-        statusCode: json['status_code'] as int,
+        statusCode: (json['status_code'] as int),
         event: json['event'] as String,
         action: checkedKey(json, 'action') as String?,
-        installationId: checkedKey(json, 'installation_id') as int?,
-        repositoryId: checkedKey(json, 'repository_id') as int?,
+        installationId: (checkedKey(json, 'installation_id') as int?),
+        repositoryId: (checkedKey(json, 'repository_id') as int?),
         throttledAt: maybeParseDateTime(json['throttled_at'] as String?),
       ),
     );
@@ -141,17 +141,17 @@ class HookDeliveryItem {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is HookDeliveryItem &&
-        id == other.id &&
-        guid == other.guid &&
-        deliveredAt == other.deliveredAt &&
-        redelivery == other.redelivery &&
-        duration == other.duration &&
-        status == other.status &&
-        statusCode == other.statusCode &&
-        event == other.event &&
-        action == other.action &&
-        installationId == other.installationId &&
-        repositoryId == other.repositoryId &&
-        throttledAt == other.throttledAt;
+        this.id == other.id &&
+        this.guid == other.guid &&
+        this.deliveredAt == other.deliveredAt &&
+        this.redelivery == other.redelivery &&
+        this.duration == other.duration &&
+        this.status == other.status &&
+        this.statusCode == other.statusCode &&
+        this.event == other.event &&
+        this.action == other.action &&
+        this.installationId == other.installationId &&
+        this.repositoryId == other.repositoryId &&
+        this.throttledAt == other.throttledAt;
   }
 }

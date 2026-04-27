@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamOrganizationPlan {
-  const TeamOrganizationPlan({
+  TeamOrganizationPlan({
     required this.name,
     required this.space,
     required this.privateRepos,
@@ -18,10 +18,10 @@ class TeamOrganizationPlan {
       json,
       () => TeamOrganizationPlan(
         name: json['name'] as String,
-        space: json['space'] as int,
-        privateRepos: json['private_repos'] as int,
-        filledSeats: json['filled_seats'] as int?,
-        seats: json['seats'] as int?,
+        space: (json['space'] as int),
+        privateRepos: (json['private_repos'] as int),
+        filledSeats: (json['filled_seats'] as int?),
+        seats: (json['seats'] as int?),
       ),
     );
   }
@@ -65,10 +65,10 @@ class TeamOrganizationPlan {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamOrganizationPlan &&
-        name == other.name &&
-        space == other.space &&
-        privateRepos == other.privateRepos &&
-        filledSeats == other.filledSeats &&
-        seats == other.seats;
+        this.name == other.name &&
+        this.space == other.space &&
+        this.privateRepos == other.privateRepos &&
+        this.filledSeats == other.filledSeats &&
+        this.seats == other.seats;
   }
 }

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ProtectedBranchLockBranch {
   /// {@macro protected_branch_lock_branch}
-  const ProtectedBranchLockBranch({
+  ProtectedBranchLockBranch({
     this.enabled = false,
   });
 
@@ -47,6 +47,6 @@ class ProtectedBranchLockBranch {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ProtectedBranchLockBranch && enabled == other.enabled;
+    return other is ProtectedBranchLockBranch && this.enabled == other.enabled;
   }
 }

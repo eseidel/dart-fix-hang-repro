@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ProjectCard {
   /// {@macro project_card}
-  const ProjectCard({
+  ProjectCard({
     required this.url,
     required this.id,
     required this.nodeId,
@@ -17,12 +17,12 @@ class ProjectCard {
     required this.creator,
     required this.createdAt,
     required this.updatedAt,
-    required this.columnUrl,
-    required this.projectUrl,
     this.archived,
     this.columnName,
     this.projectId,
+    required this.columnUrl,
     this.contentUrl,
+    required this.projectUrl,
   });
 
   /// Converts a `Map<String, dynamic>` to a [ProjectCard].
@@ -32,7 +32,7 @@ class ProjectCard {
       json,
       () => ProjectCard(
         url: Uri.parse(json['url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         note: checkedKey(json, 'note') as String?,
         creator: SimpleUser.maybeFromJson(
@@ -138,18 +138,18 @@ class ProjectCard {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectCard &&
-        url == other.url &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        note == other.note &&
-        creator == other.creator &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        archived == other.archived &&
-        columnName == other.columnName &&
-        projectId == other.projectId &&
-        columnUrl == other.columnUrl &&
-        contentUrl == other.contentUrl &&
-        projectUrl == other.projectUrl;
+        this.url == other.url &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.note == other.note &&
+        this.creator == other.creator &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.archived == other.archived &&
+        this.columnName == other.columnName &&
+        this.projectId == other.projectId &&
+        this.columnUrl == other.columnUrl &&
+        this.contentUrl == other.contentUrl &&
+        this.projectUrl == other.projectUrl;
   }
 }

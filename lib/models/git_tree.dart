@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/git_tree_tree_inner.dart';
 import 'package:meta/meta.dart';
@@ -13,11 +9,11 @@ import 'package:meta/meta.dart';
 @immutable
 class GitTree {
   /// {@macro git_tree}
-  const GitTree({
+  GitTree({
     required this.sha,
+    this.url,
     required this.truncated,
     required this.tree,
-    this.url,
   });
 
   /// Converts a `Map<String, dynamic>` to a [GitTree].
@@ -77,9 +73,9 @@ class GitTree {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitTree &&
-        sha == other.sha &&
-        url == other.url &&
-        truncated == other.truncated &&
-        listsEqual(tree, other.tree);
+        this.sha == other.sha &&
+        this.url == other.url &&
+        this.truncated == other.truncated &&
+        listsEqual(this.tree, other.tree);
   }
 }

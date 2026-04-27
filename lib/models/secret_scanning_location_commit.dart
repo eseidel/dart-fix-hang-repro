@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SecretScanningLocationCommit {
   /// {@macro secret_scanning_location_commit}
-  const SecretScanningLocationCommit({
+  SecretScanningLocationCommit({
     required this.path,
     required this.startLine,
     required this.endLine,
@@ -114,14 +114,14 @@ class SecretScanningLocationCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningLocationCommit &&
-        path == other.path &&
-        startLine == other.startLine &&
-        endLine == other.endLine &&
-        startColumn == other.startColumn &&
-        endColumn == other.endColumn &&
-        blobSha == other.blobSha &&
-        blobUrl == other.blobUrl &&
-        commitSha == other.commitSha &&
-        commitUrl == other.commitUrl;
+        this.path == other.path &&
+        this.startLine == other.startLine &&
+        this.endLine == other.endLine &&
+        this.startColumn == other.startColumn &&
+        this.endColumn == other.endColumn &&
+        this.blobSha == other.blobSha &&
+        this.blobUrl == other.blobUrl &&
+        this.commitSha == other.commitSha &&
+        this.commitUrl == other.commitUrl;
   }
 }

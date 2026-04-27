@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -13,6 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/messages/issue_pull_request.dart';
 import 'package:github_out/messages/issues_add_assignees_request.dart';
 import 'package:github_out/messages/issues_add_labels_request.dart';
 import 'package:github_out/messages/issues_add_sub_issue_request.dart';
@@ -29,11 +26,47 @@ import 'package:github_out/messages/issues_update_comment_request.dart';
 import 'package:github_out/messages/issues_update_label_request.dart';
 import 'package:github_out/messages/issues_update_milestone_request.dart';
 import 'package:github_out/messages/issues_update_request.dart';
+import 'package:github_out/messages/pull_request_review_comment_links_pull_request.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
+import 'package:github_out/messages/timeline_reviewed_event_links_pull_request.dart';
+import 'package:github_out/models/added_to_project_issue_event.dart';
+import 'package:github_out/models/added_to_project_issue_event_project_card.dart';
+import 'package:github_out/models/assigned_issue_event.dart';
+import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/commit_comment.dart';
+import 'package:github_out/models/converted_note_to_issue_issue_event.dart';
+import 'package:github_out/models/converted_note_to_issue_issue_event_project_card.dart';
+import 'package:github_out/models/demilestoned_issue_event.dart';
+import 'package:github_out/models/demilestoned_issue_event_milestone.dart';
 import 'package:github_out/models/direction_param.dart';
+import 'package:github_out/models/enterprise.dart';
+import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/issue.dart';
 import 'package:github_out/models/issue_comment.dart';
 import 'package:github_out/models/issue_event.dart';
+import 'package:github_out/models/issue_event_dismissed_review.dart';
 import 'package:github_out/models/issue_event_for_issue.dart';
+import 'package:github_out/models/issue_event_label.dart';
+import 'package:github_out/models/issue_event_milestone.dart';
+import 'package:github_out/models/issue_event_project_card.dart';
+import 'package:github_out/models/issue_event_rename.dart';
+import 'package:github_out/models/issue_labels_inner.dart';
+import 'package:github_out/models/issue_labels_inner_one_of_1.dart';
+import 'package:github_out/models/issue_state_reason.dart';
+import 'package:github_out/models/issue_type.dart';
+import 'package:github_out/models/issue_type_color.dart';
+import 'package:github_out/models/issues_add_labels_request_one_of_0.dart';
+import 'package:github_out/models/issues_add_labels_request_one_of_2.dart';
+import 'package:github_out/models/issues_add_labels_request_one_of_2_labels_inner.dart';
+import 'package:github_out/models/issues_add_labels_request_one_of_3_inner.dart';
+import 'package:github_out/models/issues_create_milestone_request_state.dart';
+import 'package:github_out/models/issues_create_request_labels_inner.dart';
+import 'package:github_out/models/issues_create_request_labels_inner_one_of_1.dart';
+import 'package:github_out/models/issues_create_request_milestone.dart';
+import 'package:github_out/models/issues_create_request_title.dart';
 import 'package:github_out/models/issues_list_comments_for_repo_parameter3.dart';
 import 'package:github_out/models/issues_list_for_authenticated_user_parameter0.dart';
 import 'package:github_out/models/issues_list_for_authenticated_user_parameter1.dart';
@@ -49,11 +82,84 @@ import 'package:github_out/models/issues_list_milestones_parameter4.dart';
 import 'package:github_out/models/issues_list_parameter0.dart';
 import 'package:github_out/models/issues_list_parameter1.dart';
 import 'package:github_out/models/issues_list_parameter3.dart';
+import 'package:github_out/models/issues_lock_request_lock_reason.dart';
+import 'package:github_out/models/issues_set_labels_request_one_of_0.dart';
+import 'package:github_out/models/issues_set_labels_request_one_of_2.dart';
+import 'package:github_out/models/issues_set_labels_request_one_of_2_labels_inner.dart';
+import 'package:github_out/models/issues_set_labels_request_one_of_3_inner.dart';
+import 'package:github_out/models/issues_update_milestone_request_state.dart';
+import 'package:github_out/models/issues_update_request_labels_inner.dart';
+import 'package:github_out/models/issues_update_request_labels_inner_one_of_1.dart';
+import 'package:github_out/models/issues_update_request_milestone.dart';
+import 'package:github_out/models/issues_update_request_state.dart';
+import 'package:github_out/models/issues_update_request_state_reason.dart';
+import 'package:github_out/models/issues_update_request_title.dart';
 import 'package:github_out/models/label.dart';
+import 'package:github_out/models/labeled_issue_event.dart';
+import 'package:github_out/models/labeled_issue_event_label.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/locked_issue_event.dart';
 import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
+import 'package:github_out/models/milestoned_issue_event.dart';
+import 'package:github_out/models/milestoned_issue_event_milestone.dart';
+import 'package:github_out/models/moved_column_in_project_issue_event.dart';
+import 'package:github_out/models/moved_column_in_project_issue_event_project_card.dart';
+import 'package:github_out/models/pull_request_review_comment.dart';
+import 'package:github_out/models/pull_request_review_comment_links.dart';
+import 'package:github_out/models/pull_request_review_comment_links_html.dart';
+import 'package:github_out/models/pull_request_review_comment_links_self.dart';
+import 'package:github_out/models/pull_request_review_comment_side.dart';
+import 'package:github_out/models/pull_request_review_comment_start_side.dart';
+import 'package:github_out/models/pull_request_review_comment_subject_type.dart';
+import 'package:github_out/models/reaction_rollup.dart';
+import 'package:github_out/models/removed_from_project_issue_event.dart';
+import 'package:github_out/models/removed_from_project_issue_event_project_card.dart';
+import 'package:github_out/models/renamed_issue_event.dart';
+import 'package:github_out/models/renamed_issue_event_rename.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/review_dismissed_issue_event.dart';
+import 'package:github_out/models/review_dismissed_issue_event_dismissed_review.dart';
+import 'package:github_out/models/review_request_removed_issue_event.dart';
+import 'package:github_out/models/review_requested_issue_event.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/sort_param.dart';
+import 'package:github_out/models/state_change_issue_event.dart';
+import 'package:github_out/models/sub_issues_summary.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:github_out/models/timeline_assigned_issue_event.dart';
+import 'package:github_out/models/timeline_comment_event.dart';
+import 'package:github_out/models/timeline_commit_commented_event.dart';
+import 'package:github_out/models/timeline_committed_event.dart';
+import 'package:github_out/models/timeline_committed_event_author.dart';
+import 'package:github_out/models/timeline_committed_event_committer.dart';
+import 'package:github_out/models/timeline_committed_event_parents_inner.dart';
+import 'package:github_out/models/timeline_committed_event_tree.dart';
+import 'package:github_out/models/timeline_committed_event_verification.dart';
+import 'package:github_out/models/timeline_cross_referenced_event.dart';
+import 'package:github_out/models/timeline_cross_referenced_event_source.dart';
 import 'package:github_out/models/timeline_issue_events.dart';
+import 'package:github_out/models/timeline_line_commented_event.dart';
+import 'package:github_out/models/timeline_reviewed_event.dart';
+import 'package:github_out/models/timeline_reviewed_event_links.dart';
+import 'package:github_out/models/timeline_reviewed_event_links_html.dart';
+import 'package:github_out/models/timeline_unassigned_issue_event.dart';
+import 'package:github_out/models/unassigned_issue_event.dart';
+import 'package:github_out/models/unlabeled_issue_event.dart';
+import 'package:github_out/models/unlabeled_issue_event_label.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/validation_error_simple.dart';
+import 'package:http/http.dart' as http;
 
 /// Interact with GitHub Issues.
 class IssuesApi {
@@ -110,12 +216,12 @@ class IssuesApi {
       method: Method.get,
       path: '/issues',
       queryParameters: {
-        if (filter != null) 'filter': [filter.toJson()],
-        if (state != null) 'state': [state.toJson()],
-        if (labels != null) 'labels': [labels],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (since != null) 'since': [since.toIso8601String()],
+        if (filter != null) 'filter': [filter.toJson().toString()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (labels != null) 'labels': [labels.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (collab != null) 'collab': [collab.toString()],
         if (orgs != null) 'orgs': [orgs.toString()],
         if (owned != null) 'owned': [owned.toString()],
@@ -128,7 +234,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -182,15 +288,15 @@ class IssuesApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/issues'.replaceAll('{org}', org),
+      path: '/orgs/{org}/issues'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (filter != null) 'filter': [filter.toJson()],
-        if (state != null) 'state': [state.toJson()],
-        if (labels != null) 'labels': [labels],
-        if (type != null) 'type': [type],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (since != null) 'since': [since.toIso8601String()],
+        if (filter != null) 'filter': [filter.toJson().toString()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (labels != null) 'labels': [labels.toString()],
+        if (type != null) 'type': [type.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -199,7 +305,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -225,8 +331,8 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/assignees'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -236,7 +342,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -267,15 +373,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/assignees/{assignee}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{assignee}', assignee),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{assignee}', '${assignee}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -326,19 +432,19 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (milestone != null) 'milestone': [milestone],
-        if (state != null) 'state': [state.toJson()],
-        if (assignee != null) 'assignee': [assignee],
-        if (type != null) 'type': [type],
-        if (creator != null) 'creator': [creator],
-        if (mentioned != null) 'mentioned': [mentioned],
-        if (labels != null) 'labels': [labels],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (since != null) 'since': [since.toIso8601String()],
+        if (milestone != null) 'milestone': [milestone.toString()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (assignee != null) 'assignee': [assignee.toString()],
+        if (type != null) 'type': [type.toString()],
+        if (creator != null) 'creator': [creator.toString()],
+        if (mentioned != null) 'mentioned': [mentioned.toString()],
+        if (labels != null) 'labels': [labels.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -347,7 +453,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -396,15 +502,16 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/issues'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: issuesCreateRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -448,12 +555,12 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (since != null) 'since': [since.toIso8601String()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -462,7 +569,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -503,15 +610,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -535,15 +642,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/issues/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -575,16 +682,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/issues/comments/{comment_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       body: issuesUpdateCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -608,8 +716,8 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/events'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -619,7 +727,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -644,15 +752,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/events/{event_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{event_id}', '$eventId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{event_id}', '${eventId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -713,15 +821,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/{issue_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -759,16 +867,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/issues/{issue_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesUpdateRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -791,16 +900,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/assignees'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesAddAssigneesRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -822,16 +932,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/assignees'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesRemoveAssigneesRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -858,16 +969,16 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/assignees/{assignee}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber')
-          .replaceAll('{assignee}', assignee),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}')
+          .replaceAll('{assignee}', '${assignee}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -903,11 +1014,11 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       queryParameters: {
-        if (since != null) 'since': [since.toIso8601String()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -916,7 +1027,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -967,16 +1078,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/comments'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesCreateCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1001,9 +1113,9 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/events'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1013,7 +1125,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1040,9 +1152,9 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1052,7 +1164,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1077,16 +1189,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesAddLabelsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1110,16 +1223,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesSetLabelsRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1142,15 +1256,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1168,16 +1282,16 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/labels/{name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber')
-          .replaceAll('{name}', name),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1206,16 +1320,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/lock'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesLockRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1230,15 +1345,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/lock'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1273,16 +1388,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/sub_issue'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesRemoveSubIssueRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1320,9 +1436,9 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/sub_issues'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1332,7 +1448,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1378,16 +1494,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/sub_issues'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesAddSubIssueRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1410,16 +1527,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/sub_issues/priority'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: issuesReprioritizeSubIssueRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1442,9 +1560,9 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/timeline'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1454,7 +1572,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1480,8 +1598,8 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1491,7 +1609,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1516,15 +1634,16 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: issuesCreateLabelRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1545,15 +1664,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/labels/{name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{name}', name),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1574,15 +1693,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/labels/{name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{name}', name),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{name}', '${name}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1598,16 +1717,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/labels/{name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{name}', name),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{name}', '${name}'),
       body: issuesUpdateLabelRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1632,12 +1752,12 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/milestones'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1646,7 +1766,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1669,15 +1789,16 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/milestones'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: issuesCreateMilestoneRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1700,15 +1821,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/milestones/{milestone_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{milestone_number}', '$milestoneNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{milestone_number}', '${milestoneNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1731,15 +1852,15 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/milestones/{milestone_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{milestone_number}', '$milestoneNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{milestone_number}', '${milestoneNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1755,16 +1876,17 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/milestones/{milestone_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{milestone_number}', '$milestoneNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{milestone_number}', '${milestoneNumber}'),
       body: issuesUpdateMilestoneRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1789,9 +1911,9 @@ class IssuesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/milestones/{milestone_number}/labels'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{milestone_number}', '$milestoneNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{milestone_number}', '${milestoneNumber}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1801,7 +1923,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1856,12 +1978,12 @@ class IssuesApi {
       method: Method.get,
       path: '/user/issues',
       queryParameters: {
-        if (filter != null) 'filter': [filter.toJson()],
-        if (state != null) 'state': [state.toJson()],
-        if (labels != null) 'labels': [labels],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (since != null) 'since': [since.toIso8601String()],
+        if (filter != null) 'filter': [filter.toJson().toString()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (labels != null) 'labels': [labels.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (since != null) 'since': [since.toIso8601String().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1870,7 +1992,7 @@ class IssuesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

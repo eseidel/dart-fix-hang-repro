@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryAdvisorySubmission {
-  const RepositoryAdvisorySubmission({
+  RepositoryAdvisorySubmission({
     required this.accepted,
   });
 
@@ -46,6 +46,7 @@ class RepositoryAdvisorySubmission {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RepositoryAdvisorySubmission && accepted == other.accepted;
+    return other is RepositoryAdvisorySubmission &&
+        this.accepted == other.accepted;
   }
 }

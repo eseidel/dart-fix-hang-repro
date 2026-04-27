@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RuleSuiteRuleEvaluationsInnerRuleSource {
-  const RuleSuiteRuleEvaluationsInnerRuleSource({
+  RuleSuiteRuleEvaluationsInnerRuleSource({
     this.type,
     this.id,
     this.name,
@@ -19,7 +19,7 @@ class RuleSuiteRuleEvaluationsInnerRuleSource {
       json,
       () => RuleSuiteRuleEvaluationsInnerRuleSource(
         type: json['type'] as String?,
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         name: json['name'] as String?,
       ),
     );
@@ -66,8 +66,8 @@ class RuleSuiteRuleEvaluationsInnerRuleSource {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RuleSuiteRuleEvaluationsInnerRuleSource &&
-        type == other.type &&
-        id == other.id &&
-        name == other.name;
+        this.type == other.type &&
+        this.id == other.id &&
+        this.name == other.name;
   }
 }

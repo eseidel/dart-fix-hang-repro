@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class IssueEventLabel {
   /// {@macro issue_event_label}
-  const IssueEventLabel({
+  IssueEventLabel({
     required this.name,
     required this.color,
   });
@@ -55,7 +55,7 @@ class IssueEventLabel {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssueEventLabel &&
-        name == other.name &&
-        color == other.color;
+        this.name == other.name &&
+        this.color == other.color;
   }
 }

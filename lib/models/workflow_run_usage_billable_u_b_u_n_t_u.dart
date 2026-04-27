@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/workflow_run_usage_billable_u_b_u_n_t_u_job_runs_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class WorkflowRunUsageBillableUBUNTU {
-  const WorkflowRunUsageBillableUBUNTU({
+  WorkflowRunUsageBillableUBUNTU({
     required this.totalMs,
     required this.jobs,
     this.jobRuns,
@@ -20,8 +16,8 @@ class WorkflowRunUsageBillableUBUNTU {
       'WorkflowRunUsageBillableUBUNTU',
       json,
       () => WorkflowRunUsageBillableUBUNTU(
-        totalMs: json['total_ms'] as int,
-        jobs: json['jobs'] as int,
+        totalMs: (json['total_ms'] as int),
+        jobs: (json['jobs'] as int),
         jobRuns: (json['job_runs'] as List?)
             ?.map<WorkflowRunUsageBillableUBUNTUJobRunsInner>(
               (e) => WorkflowRunUsageBillableUBUNTUJobRunsInner.fromJson(
@@ -68,8 +64,8 @@ class WorkflowRunUsageBillableUBUNTU {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is WorkflowRunUsageBillableUBUNTU &&
-        totalMs == other.totalMs &&
-        jobs == other.jobs &&
-        listsEqual(jobRuns, other.jobRuns);
+        this.totalMs == other.totalMs &&
+        this.jobs == other.jobs &&
+        listsEqual(this.jobRuns, other.jobRuns);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsCreateWorkflowDispatchRequest {
-  const ActionsCreateWorkflowDispatchRequest({
+  ActionsCreateWorkflowDispatchRequest({
     required this.ref,
     this.inputs,
   });
@@ -19,7 +19,7 @@ class ActionsCreateWorkflowDispatchRequest {
       () => ActionsCreateWorkflowDispatchRequest(
         ref: json['ref'] as String,
         inputs: (json['inputs'] as Map<String, dynamic>?)?.map(
-          MapEntry.new,
+          (key, value) => MapEntry(key, value),
         ),
       ),
     );
@@ -64,7 +64,7 @@ class ActionsCreateWorkflowDispatchRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsCreateWorkflowDispatchRequest &&
-        ref == other.ref &&
-        mapsEqual(inputs, other.inputs);
+        this.ref == other.ref &&
+        mapsEqual(this.inputs, other.inputs);
   }
 }

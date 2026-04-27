@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CopilotDotcomPullRequestsRepositoriesInnerModelsInner {
-  const CopilotDotcomPullRequestsRepositoriesInnerModelsInner({
+  CopilotDotcomPullRequestsRepositoriesInnerModelsInner({
     this.name,
     this.isCustomModel,
     this.customModelTrainingDate,
@@ -23,8 +23,8 @@ class CopilotDotcomPullRequestsRepositoriesInnerModelsInner {
         name: json['name'] as String?,
         isCustomModel: json['is_custom_model'] as bool?,
         customModelTrainingDate: json['custom_model_training_date'] as String?,
-        totalPrSummariesCreated: json['total_pr_summaries_created'] as int?,
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalPrSummariesCreated: (json['total_pr_summaries_created'] as int?),
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
       ),
     );
   }
@@ -83,10 +83,10 @@ class CopilotDotcomPullRequestsRepositoriesInnerModelsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotDotcomPullRequestsRepositoriesInnerModelsInner &&
-        name == other.name &&
-        isCustomModel == other.isCustomModel &&
-        customModelTrainingDate == other.customModelTrainingDate &&
-        totalPrSummariesCreated == other.totalPrSummariesCreated &&
-        totalEngagedUsers == other.totalEngagedUsers;
+        this.name == other.name &&
+        this.isCustomModel == other.isCustomModel &&
+        this.customModelTrainingDate == other.customModelTrainingDate &&
+        this.totalPrSummariesCreated == other.totalPrSummariesCreated &&
+        this.totalEngagedUsers == other.totalEngagedUsers;
   }
 }

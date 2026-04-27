@@ -1,20 +1,19 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_advisory_create_credits_inner.dart';
 import 'package:github_out/models/repository_advisory_create_severity.dart';
 import 'package:github_out/models/repository_advisory_create_vulnerabilities_inner.dart';
+import 'package:github_out/models/repository_advisory_create_vulnerabilities_inner_package.dart';
+import 'package:github_out/models/security_advisory_credit_types.dart';
+import 'package:github_out/models/security_advisory_ecosystems.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryAdvisoryCreate {
-  const RepositoryAdvisoryCreate({
+  RepositoryAdvisoryCreate({
     required this.summary,
     required this.description,
-    required this.vulnerabilities,
     this.cveId,
+    required this.vulnerabilities,
     this.cweIds,
     this.credits,
     this.severity,
@@ -128,14 +127,14 @@ class RepositoryAdvisoryCreate {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryAdvisoryCreate &&
-        summary == other.summary &&
-        description == other.description &&
-        cveId == other.cveId &&
-        listsEqual(vulnerabilities, other.vulnerabilities) &&
-        listsEqual(cweIds, other.cweIds) &&
-        listsEqual(credits, other.credits) &&
-        severity == other.severity &&
-        cvssVectorString == other.cvssVectorString &&
-        startPrivateFork == other.startPrivateFork;
+        this.summary == other.summary &&
+        this.description == other.description &&
+        this.cveId == other.cveId &&
+        listsEqual(this.vulnerabilities, other.vulnerabilities) &&
+        listsEqual(this.cweIds, other.cweIds) &&
+        listsEqual(this.credits, other.credits) &&
+        this.severity == other.severity &&
+        this.cvssVectorString == other.cvssVectorString &&
+        this.startPrivateFork == other.startPrivateFork;
   }
 }

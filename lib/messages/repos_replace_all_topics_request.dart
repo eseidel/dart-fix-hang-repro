@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposReplaceAllTopicsRequest {
-  const ReposReplaceAllTopicsRequest({
+  ReposReplaceAllTopicsRequest({
     required this.names,
   });
 
@@ -49,6 +49,6 @@ class ReposReplaceAllTopicsRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposReplaceAllTopicsRequest &&
-        listsEqual(names, other.names);
+        listsEqual(this.names, other.names);
   }
 }

@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class LicenseContent {
   /// {@macro license_content}
-  const LicenseContent({
+  LicenseContent({
     required this.name,
     required this.path,
     required this.sha,
@@ -35,7 +35,7 @@ class LicenseContent {
         name: json['name'] as String,
         path: json['path'] as String,
         sha: json['sha'] as String,
-        size: json['size'] as int,
+        size: (json['size'] as int),
         url: Uri.parse(json['url'] as String),
         htmlUrl: maybeParseUri(checkedKey(json, 'html_url') as String?),
         gitUrl: maybeParseUri(checkedKey(json, 'git_url') as String?),
@@ -119,18 +119,18 @@ class LicenseContent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is LicenseContent &&
-        name == other.name &&
-        path == other.path &&
-        sha == other.sha &&
-        size == other.size &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        gitUrl == other.gitUrl &&
-        downloadUrl == other.downloadUrl &&
-        type == other.type &&
-        content == other.content &&
-        encoding == other.encoding &&
-        links == other.links &&
-        license == other.license;
+        this.name == other.name &&
+        this.path == other.path &&
+        this.sha == other.sha &&
+        this.size == other.size &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.gitUrl == other.gitUrl &&
+        this.downloadUrl == other.downloadUrl &&
+        this.type == other.type &&
+        this.content == other.content &&
+        this.encoding == other.encoding &&
+        this.links == other.links &&
+        this.license == other.license;
   }
 }

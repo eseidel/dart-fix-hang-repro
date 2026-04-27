@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ForbiddenGistResponse {
-  const ForbiddenGistResponse({
+  ForbiddenGistResponse({
     this.block,
     this.message,
     this.documentationUrl,
@@ -58,8 +58,8 @@ class ForbiddenGistResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ForbiddenGistResponse &&
-        block == other.block &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl;
+        this.block == other.block &&
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl;
   }
 }

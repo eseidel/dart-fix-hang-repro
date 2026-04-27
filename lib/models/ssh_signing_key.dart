@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SshSigningKey {
   /// {@macro ssh_signing_key}
-  const SshSigningKey({
+  SshSigningKey({
     required this.key,
     required this.id,
     required this.title,
@@ -22,7 +22,7 @@ class SshSigningKey {
       json,
       () => SshSigningKey(
         key: json['key'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         title: json['title'] as String,
         createdAt: DateTime.parse(json['created_at'] as String),
       ),
@@ -65,9 +65,9 @@ class SshSigningKey {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SshSigningKey &&
-        key == other.key &&
-        id == other.id &&
-        title == other.title &&
-        createdAt == other.createdAt;
+        this.key == other.key &&
+        this.id == other.id &&
+        this.title == other.title &&
+        this.createdAt == other.createdAt;
   }
 }

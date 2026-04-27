@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsCacheList {
   /// {@macro actions_cache_list}
-  const ActionsCacheList({
+  ActionsCacheList({
     required this.totalCount,
     required this.actionsCaches,
   });
@@ -20,7 +20,7 @@ class ActionsCacheList {
       'ActionsCacheList',
       json,
       () => ActionsCacheList(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         actionsCaches: (json['actions_caches'] as List)
             .map<ActionsCacheListActionsCachesInner>(
               (e) => ActionsCacheListActionsCachesInner.fromJson(
@@ -66,7 +66,7 @@ class ActionsCacheList {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsCacheList &&
-        totalCount == other.totalCount &&
-        listsEqual(actionsCaches, other.actionsCaches);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.actionsCaches, other.actionsCaches);
   }
 }

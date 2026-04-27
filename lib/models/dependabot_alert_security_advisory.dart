@@ -1,15 +1,17 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/cvss_severities.dart';
+import 'package:github_out/models/cvss_severities_cvss_v3.dart';
+import 'package:github_out/models/cvss_severities_cvss_v4.dart';
+import 'package:github_out/models/dependabot_alert_package.dart';
 import 'package:github_out/models/dependabot_alert_security_advisory_cvss.dart';
 import 'package:github_out/models/dependabot_alert_security_advisory_cwes_inner.dart';
 import 'package:github_out/models/dependabot_alert_security_advisory_identifiers_inner.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_identifiers_inner_type.dart';
 import 'package:github_out/models/dependabot_alert_security_advisory_references_inner.dart';
 import 'package:github_out/models/dependabot_alert_security_advisory_severity.dart';
 import 'package:github_out/models/dependabot_alert_security_vulnerability.dart';
+import 'package:github_out/models/dependabot_alert_security_vulnerability_first_patched_version.dart';
+import 'package:github_out/models/dependabot_alert_security_vulnerability_severity.dart';
 import 'package:github_out/models/security_advisory_epss.dart';
 import 'package:meta/meta.dart';
 
@@ -19,7 +21,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotAlertSecurityAdvisory {
   /// {@macro dependabot_alert_security_advisory}
-  const DependabotAlertSecurityAdvisory({
+  DependabotAlertSecurityAdvisory({
     required this.ghsaId,
     required this.cveId,
     required this.summary,
@@ -27,14 +29,14 @@ class DependabotAlertSecurityAdvisory {
     required this.vulnerabilities,
     required this.severity,
     required this.cvss,
+    this.cvssSeverities,
+    this.epss,
     required this.cwes,
     required this.identifiers,
     required this.references,
     required this.publishedAt,
     required this.updatedAt,
     required this.withdrawnAt,
-    this.cvssSeverities,
-    this.epss,
   });
 
   /// Converts a `Map<String, dynamic>` to a [DependabotAlertSecurityAdvisory].
@@ -199,20 +201,20 @@ class DependabotAlertSecurityAdvisory {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotAlertSecurityAdvisory &&
-        ghsaId == other.ghsaId &&
-        cveId == other.cveId &&
-        summary == other.summary &&
-        description == other.description &&
-        listsEqual(vulnerabilities, other.vulnerabilities) &&
-        severity == other.severity &&
-        cvss == other.cvss &&
-        cvssSeverities == other.cvssSeverities &&
-        epss == other.epss &&
-        listsEqual(cwes, other.cwes) &&
-        listsEqual(identifiers, other.identifiers) &&
-        listsEqual(references, other.references) &&
-        publishedAt == other.publishedAt &&
-        updatedAt == other.updatedAt &&
-        withdrawnAt == other.withdrawnAt;
+        this.ghsaId == other.ghsaId &&
+        this.cveId == other.cveId &&
+        this.summary == other.summary &&
+        this.description == other.description &&
+        listsEqual(this.vulnerabilities, other.vulnerabilities) &&
+        this.severity == other.severity &&
+        this.cvss == other.cvss &&
+        this.cvssSeverities == other.cvssSeverities &&
+        this.epss == other.epss &&
+        listsEqual(this.cwes, other.cwes) &&
+        listsEqual(this.identifiers, other.identifiers) &&
+        listsEqual(this.references, other.references) &&
+        this.publishedAt == other.publishedAt &&
+        this.updatedAt == other.updatedAt &&
+        this.withdrawnAt == other.withdrawnAt;
   }
 }

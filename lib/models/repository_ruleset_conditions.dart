@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRulesetConditions {
   /// {@macro repository_ruleset_conditions}
-  const RepositoryRulesetConditions({
+  RepositoryRulesetConditions({
     this.refName,
   });
 
@@ -52,6 +52,7 @@ class RepositoryRulesetConditions {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RepositoryRulesetConditions && refName == other.refName;
+    return other is RepositoryRulesetConditions &&
+        this.refName == other.refName;
   }
 }

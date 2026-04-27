@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class InteractionLimit {
   /// {@macro interaction_limit}
-  const InteractionLimit({
+  InteractionLimit({
     required this.limit,
     this.expiry,
   });
@@ -63,7 +63,7 @@ class InteractionLimit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is InteractionLimit &&
-        limit == other.limit &&
-        expiry == other.expiry;
+        this.limit == other.limit &&
+        this.expiry == other.expiry;
   }
 }

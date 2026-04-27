@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 /// example: `{emails: [octocat@github.com, mona@github.com]}`
 @immutable
 class UsersAddEmailForAuthenticatedUserRequestOneOf0 {
-  const UsersAddEmailForAuthenticatedUserRequestOneOf0({
+  UsersAddEmailForAuthenticatedUserRequestOneOf0({
     required this.emails,
   });
 
@@ -54,6 +54,6 @@ class UsersAddEmailForAuthenticatedUserRequestOneOf0 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UsersAddEmailForAuthenticatedUserRequestOneOf0 &&
-        listsEqual(emails, other.emails);
+        listsEqual(this.emails, other.emails);
   }
 }

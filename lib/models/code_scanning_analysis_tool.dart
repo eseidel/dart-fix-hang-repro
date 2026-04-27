@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningAnalysisTool {
-  const CodeScanningAnalysisTool({
+  CodeScanningAnalysisTool({
     this.name,
     this.version,
     this.guid,
@@ -70,8 +70,8 @@ class CodeScanningAnalysisTool {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningAnalysisTool &&
-        name == other.name &&
-        version == other.version &&
-        guid == other.guid;
+        this.name == other.name &&
+        this.version == other.version &&
+        this.guid == other.guid;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_repository.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_status.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningVariantAnalysisScannedRepositoriesInner {
-  const CodeScanningVariantAnalysisScannedRepositoriesInner({
+  CodeScanningVariantAnalysisScannedRepositoriesInner({
     required this.repository,
     required this.analysisStatus,
     this.resultCount,
@@ -32,8 +28,8 @@ class CodeScanningVariantAnalysisScannedRepositoriesInner {
         analysisStatus: CodeScanningVariantAnalysisStatus.fromJson(
           json['analysis_status'] as String,
         ),
-        resultCount: json['result_count'] as int?,
-        artifactSizeInBytes: json['artifact_size_in_bytes'] as int?,
+        resultCount: (json['result_count'] as int?),
+        artifactSizeInBytes: (json['artifact_size_in_bytes'] as int?),
         failureMessage: json['failure_message'] as String?,
       ),
     );
@@ -94,10 +90,10 @@ class CodeScanningVariantAnalysisScannedRepositoriesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningVariantAnalysisScannedRepositoriesInner &&
-        repository == other.repository &&
-        analysisStatus == other.analysisStatus &&
-        resultCount == other.resultCount &&
-        artifactSizeInBytes == other.artifactSizeInBytes &&
-        failureMessage == other.failureMessage;
+        this.repository == other.repository &&
+        this.analysisStatus == other.analysisStatus &&
+        this.resultCount == other.resultCount &&
+        this.artifactSizeInBytes == other.artifactSizeInBytes &&
+        this.failureMessage == other.failureMessage;
   }
 }

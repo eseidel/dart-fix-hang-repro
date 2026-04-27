@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_merge_queue_parameters_grouping_strategy.dart';
 import 'package:github_out/models/repository_rule_merge_queue_parameters_merge_method.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleMergeQueueParameters {
-  const RepositoryRuleMergeQueueParameters({
+  RepositoryRuleMergeQueueParameters({
     required this.checkResponseTimeoutMinutes,
     required this.groupingStrategy,
     required this.maxEntriesToBuild,
@@ -29,19 +25,19 @@ class RepositoryRuleMergeQueueParameters {
       json,
       () => RepositoryRuleMergeQueueParameters(
         checkResponseTimeoutMinutes:
-            json['check_response_timeout_minutes'] as int,
+            (json['check_response_timeout_minutes'] as int),
         groupingStrategy:
             RepositoryRuleMergeQueueParametersGroupingStrategy.fromJson(
               json['grouping_strategy'] as String,
             ),
-        maxEntriesToBuild: json['max_entries_to_build'] as int,
-        maxEntriesToMerge: json['max_entries_to_merge'] as int,
+        maxEntriesToBuild: (json['max_entries_to_build'] as int),
+        maxEntriesToMerge: (json['max_entries_to_merge'] as int),
         mergeMethod: RepositoryRuleMergeQueueParametersMergeMethod.fromJson(
           json['merge_method'] as String,
         ),
-        minEntriesToMerge: json['min_entries_to_merge'] as int,
+        minEntriesToMerge: (json['min_entries_to_merge'] as int),
         minEntriesToMergeWaitMinutes:
-            json['min_entries_to_merge_wait_minutes'] as int,
+            (json['min_entries_to_merge_wait_minutes'] as int),
       ),
     );
   }
@@ -117,12 +113,12 @@ class RepositoryRuleMergeQueueParameters {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleMergeQueueParameters &&
-        checkResponseTimeoutMinutes == other.checkResponseTimeoutMinutes &&
-        groupingStrategy == other.groupingStrategy &&
-        maxEntriesToBuild == other.maxEntriesToBuild &&
-        maxEntriesToMerge == other.maxEntriesToMerge &&
-        mergeMethod == other.mergeMethod &&
-        minEntriesToMerge == other.minEntriesToMerge &&
-        minEntriesToMergeWaitMinutes == other.minEntriesToMergeWaitMinutes;
+        this.checkResponseTimeoutMinutes == other.checkResponseTimeoutMinutes &&
+        this.groupingStrategy == other.groupingStrategy &&
+        this.maxEntriesToBuild == other.maxEntriesToBuild &&
+        this.maxEntriesToMerge == other.maxEntriesToMerge &&
+        this.mergeMethod == other.mergeMethod &&
+        this.minEntriesToMerge == other.minEntriesToMerge &&
+        this.minEntriesToMergeWaitMinutes == other.minEntriesToMergeWaitMinutes;
   }
 }

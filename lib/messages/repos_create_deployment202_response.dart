@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateDeployment202Response {
-  const ReposCreateDeployment202Response({
+  ReposCreateDeployment202Response({
     this.message,
   });
 
@@ -45,6 +45,6 @@ class ReposCreateDeployment202Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateDeployment202Response &&
-        message == other.message;
+        this.message == other.message;
   }
 }

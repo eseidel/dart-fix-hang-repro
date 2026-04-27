@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/dependency_graph_diff_inner_change_type.dart';
 import 'package:github_out/models/dependency_graph_diff_inner_scope.dart';
@@ -10,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class DependencyGraphDiffInner {
-  const DependencyGraphDiffInner({
+  DependencyGraphDiffInner({
     required this.changeType,
     required this.manifest,
     required this.ecosystem,
@@ -125,15 +121,15 @@ class DependencyGraphDiffInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependencyGraphDiffInner &&
-        changeType == other.changeType &&
-        manifest == other.manifest &&
-        ecosystem == other.ecosystem &&
-        name == other.name &&
-        version == other.version &&
-        packageUrl == other.packageUrl &&
-        license == other.license &&
-        sourceRepositoryUrl == other.sourceRepositoryUrl &&
-        listsEqual(vulnerabilities, other.vulnerabilities) &&
-        scope == other.scope;
+        this.changeType == other.changeType &&
+        this.manifest == other.manifest &&
+        this.ecosystem == other.ecosystem &&
+        this.name == other.name &&
+        this.version == other.version &&
+        this.packageUrl == other.packageUrl &&
+        this.license == other.license &&
+        this.sourceRepositoryUrl == other.sourceRepositoryUrl &&
+        listsEqual(this.vulnerabilities, other.vulnerabilities) &&
+        this.scope == other.scope;
   }
 }

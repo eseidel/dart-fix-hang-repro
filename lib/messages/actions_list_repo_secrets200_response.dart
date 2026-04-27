@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListRepoSecrets200Response {
-  const ActionsListRepoSecrets200Response({
+  ActionsListRepoSecrets200Response({
     required this.totalCount,
     required this.secrets,
   });
@@ -18,7 +18,7 @@ class ActionsListRepoSecrets200Response {
       'ActionsListRepoSecrets200Response',
       json,
       () => ActionsListRepoSecrets200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         secrets: (json['secrets'] as List)
             .map<ActionsSecret>(
               (e) => ActionsSecret.fromJson(e as Map<String, dynamic>),
@@ -61,7 +61,7 @@ class ActionsListRepoSecrets200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListRepoSecrets200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(secrets, other.secrets);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.secrets, other.secrets);
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodespacesCreateForAuthenticatedUserRequestOneOf1PullRequest {
   /// {@macro codespaces_create_for_authenticated_user_request_one_of_1_pull_request}
-  const CodespacesCreateForAuthenticatedUserRequestOneOf1PullRequest({
+  CodespacesCreateForAuthenticatedUserRequestOneOf1PullRequest({
     required this.pullRequestNumber,
     required this.repositoryId,
   });
@@ -25,8 +21,8 @@ class CodespacesCreateForAuthenticatedUserRequestOneOf1PullRequest {
       'CodespacesCreateForAuthenticatedUserRequestOneOf1PullRequest',
       json,
       () => CodespacesCreateForAuthenticatedUserRequestOneOf1PullRequest(
-        pullRequestNumber: json['pull_request_number'] as int,
-        repositoryId: json['repository_id'] as int,
+        pullRequestNumber: (json['pull_request_number'] as int),
+        repositoryId: (json['repository_id'] as int),
       ),
     );
   }
@@ -69,7 +65,7 @@ class CodespacesCreateForAuthenticatedUserRequestOneOf1PullRequest {
     if (identical(this, other)) return true;
     return other
             is CodespacesCreateForAuthenticatedUserRequestOneOf1PullRequest &&
-        pullRequestNumber == other.pullRequestNumber &&
-        repositoryId == other.repositoryId;
+        this.pullRequestNumber == other.pullRequestNumber &&
+        this.repositoryId == other.repositoryId;
   }
 }

@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/secret_scanning_push_protection_bypass_placeholder_id.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleViolationErrorMetadataSecretScanningBypassPlaceholdersInner {
-  const RepositoryRuleViolationErrorMetadataSecretScanningBypassPlaceholdersInner({
+  RepositoryRuleViolationErrorMetadataSecretScanningBypassPlaceholdersInner({
     this.placeholderId,
     this.tokenType,
   });
@@ -69,7 +65,7 @@ class RepositoryRuleViolationErrorMetadataSecretScanningBypassPlaceholdersInner 
     if (identical(this, other)) return true;
     return other
             is RepositoryRuleViolationErrorMetadataSecretScanningBypassPlaceholdersInner &&
-        placeholderId == other.placeholderId &&
-        tokenType == other.tokenType;
+        this.placeholderId == other.placeholderId &&
+        this.tokenType == other.tokenType;
   }
 }

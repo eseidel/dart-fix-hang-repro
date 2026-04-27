@@ -1,13 +1,9 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CommitParentsInner {
-  const CommitParentsInner({
+  CommitParentsInner({
     required this.sha,
     required this.url,
     this.htmlUrl,
@@ -66,8 +62,8 @@ class CommitParentsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitParentsInner &&
-        sha == other.sha &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl;
+        this.sha == other.sha &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

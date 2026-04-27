@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningSarifsReceipt {
-  const CodeScanningSarifsReceipt({
+  CodeScanningSarifsReceipt({
     this.id,
     this.url,
   });
@@ -55,7 +55,7 @@ class CodeScanningSarifsReceipt {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningSarifsReceipt &&
-        id == other.id &&
-        url == other.url;
+        this.id == other.id &&
+        this.url == other.url;
   }
 }

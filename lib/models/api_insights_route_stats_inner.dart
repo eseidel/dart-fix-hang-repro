@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ApiInsightsRouteStatsInner {
-  const ApiInsightsRouteStatsInner({
+  ApiInsightsRouteStatsInner({
     this.httpMethod,
     this.apiRoute,
     this.totalRequestCount,
@@ -20,8 +20,8 @@ class ApiInsightsRouteStatsInner {
       () => ApiInsightsRouteStatsInner(
         httpMethod: json['http_method'] as String?,
         apiRoute: json['api_route'] as String?,
-        totalRequestCount: json['total_request_count'] as int?,
-        rateLimitedRequestCount: json['rate_limited_request_count'] as int?,
+        totalRequestCount: (json['total_request_count'] as int?),
+        rateLimitedRequestCount: (json['rate_limited_request_count'] as int?),
         lastRateLimitedTimestamp:
             json['last_rate_limited_timestamp'] as String?,
         lastRequestTimestamp: json['last_request_timestamp'] as String?,
@@ -79,11 +79,11 @@ class ApiInsightsRouteStatsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiInsightsRouteStatsInner &&
-        httpMethod == other.httpMethod &&
-        apiRoute == other.apiRoute &&
-        totalRequestCount == other.totalRequestCount &&
-        rateLimitedRequestCount == other.rateLimitedRequestCount &&
-        lastRateLimitedTimestamp == other.lastRateLimitedTimestamp &&
-        lastRequestTimestamp == other.lastRequestTimestamp;
+        this.httpMethod == other.httpMethod &&
+        this.apiRoute == other.apiRoute &&
+        this.totalRequestCount == other.totalRequestCount &&
+        this.rateLimitedRequestCount == other.rateLimitedRequestCount &&
+        this.lastRateLimitedTimestamp == other.lastRateLimitedTimestamp &&
+        this.lastRequestTimestamp == other.lastRequestTimestamp;
   }
 }

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CheckAutomatedSecurityFixes {
   /// {@macro check_automated_security_fixes}
-  const CheckAutomatedSecurityFixes({
+  CheckAutomatedSecurityFixes({
     required this.enabled,
     required this.paused,
   });
@@ -62,7 +62,7 @@ class CheckAutomatedSecurityFixes {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CheckAutomatedSecurityFixes &&
-        enabled == other.enabled &&
-        paused == other.paused;
+        this.enabled == other.enabled &&
+        this.paused == other.paused;
   }
 }

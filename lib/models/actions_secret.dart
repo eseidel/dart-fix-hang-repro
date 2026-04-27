@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsSecret {
   /// {@macro actions_secret}
-  const ActionsSecret({
+  ActionsSecret({
     required this.name,
     required this.createdAt,
     required this.updatedAt,
@@ -62,8 +62,8 @@ class ActionsSecret {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsSecret &&
-        name == other.name &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.name == other.name &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

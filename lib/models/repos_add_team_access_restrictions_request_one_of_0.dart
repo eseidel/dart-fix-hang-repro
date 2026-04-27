@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 /// example: `{teams: [my-team]}`
 @immutable
 class ReposAddTeamAccessRestrictionsRequestOneOf0 {
-  const ReposAddTeamAccessRestrictionsRequestOneOf0({
+  ReposAddTeamAccessRestrictionsRequestOneOf0({
     required this.teams,
   });
 
@@ -57,6 +57,6 @@ class ReposAddTeamAccessRestrictionsRequestOneOf0 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposAddTeamAccessRestrictionsRequestOneOf0 &&
-        listsEqual(teams, other.teams);
+        listsEqual(this.teams, other.teams);
   }
 }

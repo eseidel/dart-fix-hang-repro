@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsMergeRequest {
-  const PullsMergeRequest({
+  PullsMergeRequest({
     this.commitTitle,
     this.commitMessage,
     this.sha,
@@ -70,9 +70,9 @@ class PullsMergeRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsMergeRequest &&
-        commitTitle == other.commitTitle &&
-        commitMessage == other.commitMessage &&
-        sha == other.sha &&
-        mergeMethod == other.mergeMethod;
+        this.commitTitle == other.commitTitle &&
+        this.commitMessage == other.commitMessage &&
+        this.sha == other.sha &&
+        this.mergeMethod == other.mergeMethod;
   }
 }

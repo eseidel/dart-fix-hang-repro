@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListSelfHostedRunnerGroupsForOrg200Response {
-  const ActionsListSelfHostedRunnerGroupsForOrg200Response({
+  ActionsListSelfHostedRunnerGroupsForOrg200Response({
     required this.totalCount,
     required this.runnerGroups,
   });
@@ -61,7 +61,7 @@ class ActionsListSelfHostedRunnerGroupsForOrg200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListSelfHostedRunnerGroupsForOrg200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(runnerGroups, other.runnerGroups);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.runnerGroups, other.runnerGroups);
   }
 }

@@ -1,6 +1,8 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/pull_request_minimal_base.dart';
+import 'package:github_out/models/pull_request_minimal_base_repo.dart';
 import 'package:github_out/models/pull_request_minimal_head.dart';
+import 'package:github_out/models/pull_request_minimal_head_repo.dart';
 import 'package:meta/meta.dart';
 
 /// {@template pull_request_minimal}
@@ -9,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PullRequestMinimal {
   /// {@macro pull_request_minimal}
-  const PullRequestMinimal({
+  PullRequestMinimal({
     required this.id,
     required this.number,
     required this.url,
@@ -23,8 +25,8 @@ class PullRequestMinimal {
       'PullRequestMinimal',
       json,
       () => PullRequestMinimal(
-        id: json['id'] as int,
-        number: json['number'] as int,
+        id: (json['id'] as int),
+        number: (json['number'] as int),
         url: json['url'] as String,
         head: PullRequestMinimalHead.fromJson(
           json['head'] as Map<String, dynamic>,
@@ -75,10 +77,10 @@ class PullRequestMinimal {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestMinimal &&
-        id == other.id &&
-        number == other.number &&
-        url == other.url &&
-        head == other.head &&
-        base == other.base;
+        this.id == other.id &&
+        this.number == other.number &&
+        this.url == other.url &&
+        this.head == other.head &&
+        this.base == other.base;
   }
 }

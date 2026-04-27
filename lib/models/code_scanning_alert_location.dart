@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeScanningAlertLocation {
   /// {@macro code_scanning_alert_location}
-  const CodeScanningAlertLocation({
+  CodeScanningAlertLocation({
     this.path,
     this.startLine,
     this.endLine,
@@ -22,10 +22,10 @@ class CodeScanningAlertLocation {
       json,
       () => CodeScanningAlertLocation(
         path: json['path'] as String?,
-        startLine: json['start_line'] as int?,
-        endLine: json['end_line'] as int?,
-        startColumn: json['start_column'] as int?,
-        endColumn: json['end_column'] as int?,
+        startLine: (json['start_line'] as int?),
+        endLine: (json['end_line'] as int?),
+        startColumn: (json['start_column'] as int?),
+        endColumn: (json['end_column'] as int?),
       ),
     );
   }
@@ -69,10 +69,10 @@ class CodeScanningAlertLocation {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningAlertLocation &&
-        path == other.path &&
-        startLine == other.startLine &&
-        endLine == other.endLine &&
-        startColumn == other.startColumn &&
-        endColumn == other.endColumn;
+        this.path == other.path &&
+        this.startLine == other.startLine &&
+        this.endLine == other.endLine &&
+        this.startColumn == other.startColumn &&
+        this.endColumn == other.endColumn;
   }
 }

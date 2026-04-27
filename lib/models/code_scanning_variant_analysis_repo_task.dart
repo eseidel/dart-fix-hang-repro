@@ -1,11 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_status.dart';
 import 'package:github_out/models/simple_repository.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningVariantAnalysisRepoTask {
-  const CodeScanningVariantAnalysisRepoTask({
+  CodeScanningVariantAnalysisRepoTask({
     required this.repository,
     required this.analysisStatus,
     this.artifactSizeInBytes,
@@ -31,8 +32,8 @@ class CodeScanningVariantAnalysisRepoTask {
         analysisStatus: CodeScanningVariantAnalysisStatus.fromJson(
           json['analysis_status'] as String,
         ),
-        artifactSizeInBytes: json['artifact_size_in_bytes'] as int?,
-        resultCount: json['result_count'] as int?,
+        artifactSizeInBytes: (json['artifact_size_in_bytes'] as int?),
+        resultCount: (json['result_count'] as int?),
         failureMessage: json['failure_message'] as String?,
         databaseCommitSha: json['database_commit_sha'] as String?,
         sourceLocationPrefix: json['source_location_prefix'] as String?,
@@ -113,13 +114,13 @@ class CodeScanningVariantAnalysisRepoTask {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningVariantAnalysisRepoTask &&
-        repository == other.repository &&
-        analysisStatus == other.analysisStatus &&
-        artifactSizeInBytes == other.artifactSizeInBytes &&
-        resultCount == other.resultCount &&
-        failureMessage == other.failureMessage &&
-        databaseCommitSha == other.databaseCommitSha &&
-        sourceLocationPrefix == other.sourceLocationPrefix &&
-        artifactUrl == other.artifactUrl;
+        this.repository == other.repository &&
+        this.analysisStatus == other.analysisStatus &&
+        this.artifactSizeInBytes == other.artifactSizeInBytes &&
+        this.resultCount == other.resultCount &&
+        this.failureMessage == other.failureMessage &&
+        this.databaseCommitSha == other.databaseCommitSha &&
+        this.sourceLocationPrefix == other.sourceLocationPrefix &&
+        this.artifactUrl == other.artifactUrl;
   }
 }

@@ -1,5 +1,7 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/api_overview_domains.dart';
+import 'package:github_out/models/api_overview_domains_actions_inbound.dart';
+import 'package:github_out/models/api_overview_domains_artifact_attestations.dart';
 import 'package:github_out/models/api_overview_ssh_key_fingerprints.dart';
 import 'package:meta/meta.dart';
 
@@ -10,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ApiOverview {
   /// {@macro api_overview}
-  const ApiOverview({
+  ApiOverview({
     required this.verifiablePasswordAuthentication,
     this.sshKeyFingerprints,
     this.sshKeys,
@@ -167,26 +169,26 @@ class ApiOverview {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiOverview &&
-        verifiablePasswordAuthentication ==
+        this.verifiablePasswordAuthentication ==
             other.verifiablePasswordAuthentication &&
-        sshKeyFingerprints == other.sshKeyFingerprints &&
-        listsEqual(sshKeys, other.sshKeys) &&
-        listsEqual(hooks, other.hooks) &&
+        this.sshKeyFingerprints == other.sshKeyFingerprints &&
+        listsEqual(this.sshKeys, other.sshKeys) &&
+        listsEqual(this.hooks, other.hooks) &&
         listsEqual(
-          githubEnterpriseImporter,
+          this.githubEnterpriseImporter,
           other.githubEnterpriseImporter,
         ) &&
-        listsEqual(web, other.web) &&
-        listsEqual(api, other.api) &&
-        listsEqual(git, other.git) &&
-        listsEqual(packages, other.packages) &&
-        listsEqual(pages, other.pages) &&
-        listsEqual(importer, other.importer) &&
-        listsEqual(actions, other.actions) &&
-        listsEqual(actionsMacos, other.actionsMacos) &&
-        listsEqual(codespaces, other.codespaces) &&
-        listsEqual(dependabot, other.dependabot) &&
-        listsEqual(copilot, other.copilot) &&
-        domains == other.domains;
+        listsEqual(this.web, other.web) &&
+        listsEqual(this.api, other.api) &&
+        listsEqual(this.git, other.git) &&
+        listsEqual(this.packages, other.packages) &&
+        listsEqual(this.pages, other.pages) &&
+        listsEqual(this.importer, other.importer) &&
+        listsEqual(this.actions, other.actions) &&
+        listsEqual(this.actionsMacos, other.actionsMacos) &&
+        listsEqual(this.codespaces, other.codespaces) &&
+        listsEqual(this.dependabot, other.dependabot) &&
+        listsEqual(this.copilot, other.copilot) &&
+        this.domains == other.domains;
   }
 }

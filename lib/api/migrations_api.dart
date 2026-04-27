@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -19,13 +15,52 @@ import 'package:github_out/messages/migrations_start_for_authenticated_user_requ
 import 'package:github_out/messages/migrations_start_for_org_request.dart';
 import 'package:github_out/messages/migrations_start_import_request.dart';
 import 'package:github_out/messages/migrations_update_import_request.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/import.dart';
+import 'package:github_out/models/import_project_choices_inner.dart';
+import 'package:github_out/models/import_status.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/migration.dart';
 import 'package:github_out/models/migrations_get_status_for_org_parameter2_inner.dart';
 import 'package:github_out/models/migrations_list_for_org_parameter3_inner.dart';
+import 'package:github_out/models/migrations_set_lfs_preference_request_use_lfs.dart';
+import 'package:github_out/models/migrations_start_for_authenticated_user_request_exclude_inner.dart';
+import 'package:github_out/models/migrations_start_for_org_request_exclude_inner.dart';
+import 'package:github_out/models/migrations_start_import_request_vcs.dart';
+import 'package:github_out/models/migrations_update_import_request_vcs.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/porter_author.dart';
 import 'package:github_out/models/porter_large_file.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 
 /// Move projects to or from GitHub.
 class MigrationsApi {
@@ -47,18 +82,19 @@ class MigrationsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/migrations'.replaceAll('{org}', org),
+      path: '/orgs/{org}/migrations'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (exclude != null) 'exclude': exclude.map((e) => e.toJson()).toList(),
+        if (exclude != null)
+          'exclude': exclude.map((e) => e.toJson().toString()).toList(),
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -79,14 +115,15 @@ class MigrationsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/migrations'.replaceAll('{org}', org),
+      path: '/orgs/{org}/migrations'.replaceAll('{org}', '${org}'),
       body: migrationsStartForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -116,17 +153,18 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/migrations/{migration_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{migration_id}', '$migrationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{migration_id}', '${migrationId}'),
       queryParameters: {
-        if (exclude != null) 'exclude': exclude.map((e) => e.toJson()).toList(),
+        if (exclude != null)
+          'exclude': exclude.map((e) => e.toJson().toString()).toList(),
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -148,14 +186,14 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/migrations/{migration_id}/archive'
-          .replaceAll('{org}', org)
-          .replaceAll('{migration_id}', '$migrationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{migration_id}', '${migrationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -170,14 +208,14 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/migrations/{migration_id}/archive'
-          .replaceAll('{org}', org)
-          .replaceAll('{migration_id}', '$migrationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{migration_id}', '${migrationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -195,15 +233,15 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock'
-          .replaceAll('{org}', org)
-          .replaceAll('{migration_id}', '$migrationId')
-          .replaceAll('{repo_name}', repoName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{migration_id}', '${migrationId}')
+          .replaceAll('{repo_name}', '${repoName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -219,8 +257,8 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/migrations/{migration_id}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{migration_id}', '$migrationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{migration_id}', '${migrationId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -230,7 +268,7 @@ class MigrationsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -341,14 +379,14 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/import'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -379,15 +417,16 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/import'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: migrationsStartImportRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -414,14 +453,14 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/import'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -452,15 +491,16 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/import'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: migrationsUpdateImportRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -497,8 +537,8 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/import/authors'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (since != null) 'since': [since.toString()],
       },
@@ -507,7 +547,7 @@ class MigrationsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -542,16 +582,17 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/import/authors/{author_id}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{author_id}', '$authorId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{author_id}', '${authorId}'),
       body: migrationsMapCommitAuthorRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -580,14 +621,14 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/import/large_files'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -625,15 +666,16 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/import/lfs'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: migrationsSetLfsPreferenceRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -662,7 +704,7 @@ class MigrationsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -685,12 +727,13 @@ class MigrationsApi {
       method: Method.post,
       path: '/user/migrations',
       body: migrationsStartForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -722,17 +765,18 @@ class MigrationsApi {
       method: Method.get,
       path: '/user/migrations/{migration_id}'.replaceAll(
         '{migration_id}',
-        '$migrationId',
+        '${migrationId}',
       ),
       queryParameters: {
-        if (exclude != null) 'exclude': exclude.map((e) => e).toList(),
+        if (exclude != null)
+          'exclude': exclude.map((e) => e.toString()).toList(),
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -778,14 +822,14 @@ class MigrationsApi {
       method: Method.get,
       path: '/user/migrations/{migration_id}/archive'.replaceAll(
         '{migration_id}',
-        '$migrationId',
+        '${migrationId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -806,14 +850,14 @@ class MigrationsApi {
       method: Method.delete,
       path: '/user/migrations/{migration_id}/archive'.replaceAll(
         '{migration_id}',
-        '$migrationId',
+        '${migrationId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -833,14 +877,14 @@ class MigrationsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/user/migrations/{migration_id}/repos/{repo_name}/lock'
-          .replaceAll('{migration_id}', '$migrationId')
-          .replaceAll('{repo_name}', repoName),
+          .replaceAll('{migration_id}', '${migrationId}')
+          .replaceAll('{repo_name}', '${repoName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -856,7 +900,7 @@ class MigrationsApi {
       method: Method.get,
       path: '/user/migrations/{migration_id}/repositories'.replaceAll(
         '{migration_id}',
-        '$migrationId',
+        '${migrationId}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -867,7 +911,7 @@ class MigrationsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

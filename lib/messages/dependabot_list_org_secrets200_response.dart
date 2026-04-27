@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/organization_dependabot_secret.dart';
+import 'package:github_out/models/organization_dependabot_secret_visibility.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class DependabotListOrgSecrets200Response {
-  const DependabotListOrgSecrets200Response({
+  DependabotListOrgSecrets200Response({
     required this.totalCount,
     required this.secrets,
   });
@@ -18,7 +19,7 @@ class DependabotListOrgSecrets200Response {
       'DependabotListOrgSecrets200Response',
       json,
       () => DependabotListOrgSecrets200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         secrets: (json['secrets'] as List)
             .map<OrganizationDependabotSecret>(
               (e) => OrganizationDependabotSecret.fromJson(
@@ -63,7 +64,7 @@ class DependabotListOrgSecrets200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotListOrgSecrets200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(secrets, other.secrets);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.secrets, other.secrets);
   }
 }

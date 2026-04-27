@@ -3,12 +3,12 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CollaboratorPermissions {
-  const CollaboratorPermissions({
+  CollaboratorPermissions({
     required this.pull,
-    required this.push,
-    required this.admin,
     this.triage,
+    required this.push,
     this.maintain,
+    required this.admin,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CollaboratorPermissions].
@@ -65,10 +65,10 @@ class CollaboratorPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CollaboratorPermissions &&
-        pull == other.pull &&
-        triage == other.triage &&
-        push == other.push &&
-        maintain == other.maintain &&
-        admin == other.admin;
+        this.pull == other.pull &&
+        this.triage == other.triage &&
+        this.push == other.push &&
+        this.maintain == other.maintain &&
+        this.admin == other.admin;
   }
 }

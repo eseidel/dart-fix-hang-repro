@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateTagProtectionRequest {
-  const ReposCreateTagProtectionRequest({
+  ReposCreateTagProtectionRequest({
     required this.pattern,
   });
 
@@ -45,6 +45,7 @@ class ReposCreateTagProtectionRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ReposCreateTagProtectionRequest && pattern == other.pattern;
+    return other is ReposCreateTagProtectionRequest &&
+        this.pattern == other.pattern;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/marketplace_account.dart';
 import 'package:github_out/models/marketplace_listing_plan.dart';
+import 'package:github_out/models/marketplace_listing_plan_price_model.dart';
 import 'package:meta/meta.dart';
 
 /// {@template user_marketplace_purchase}
@@ -10,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class UserMarketplacePurchase {
   /// {@macro user_marketplace_purchase}
-  const UserMarketplacePurchase({
+  UserMarketplacePurchase({
     required this.billingCycle,
     required this.nextBillingDate,
     required this.unitCount,
@@ -31,7 +32,7 @@ class UserMarketplacePurchase {
         nextBillingDate: maybeParseDateTime(
           checkedKey(json, 'next_billing_date') as String?,
         ),
-        unitCount: checkedKey(json, 'unit_count') as int?,
+        unitCount: (checkedKey(json, 'unit_count') as int?),
         onFreeTrial: json['on_free_trial'] as bool,
         freeTrialEndsOn: maybeParseDateTime(
           checkedKey(json, 'free_trial_ends_on') as String?,
@@ -111,13 +112,13 @@ class UserMarketplacePurchase {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UserMarketplacePurchase &&
-        billingCycle == other.billingCycle &&
-        nextBillingDate == other.nextBillingDate &&
-        unitCount == other.unitCount &&
-        onFreeTrial == other.onFreeTrial &&
-        freeTrialEndsOn == other.freeTrialEndsOn &&
-        updatedAt == other.updatedAt &&
-        account == other.account &&
-        plan == other.plan;
+        this.billingCycle == other.billingCycle &&
+        this.nextBillingDate == other.nextBillingDate &&
+        this.unitCount == other.unitCount &&
+        this.onFreeTrial == other.onFreeTrial &&
+        this.freeTrialEndsOn == other.freeTrialEndsOn &&
+        this.updatedAt == other.updatedAt &&
+        this.account == other.account &&
+        this.plan == other.plan;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposAddCollaboratorRequest {
-  const ReposAddCollaboratorRequest({
+  ReposAddCollaboratorRequest({
     this.permission = 'push',
   });
 
@@ -50,6 +50,6 @@ class ReposAddCollaboratorRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposAddCollaboratorRequest &&
-        permission == other.permission;
+        this.permission == other.permission;
   }
 }

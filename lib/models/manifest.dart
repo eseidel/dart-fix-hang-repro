@@ -1,12 +1,14 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/dependency.dart';
+import 'package:github_out/models/dependency_relationship.dart';
+import 'package:github_out/models/dependency_scope.dart';
 import 'package:github_out/models/manifest_file.dart';
 import 'package:github_out/models/metadata_1.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class Manifest {
-  const Manifest({
+  Manifest({
     required this.name,
     this.file,
     this.metadata,
@@ -76,9 +78,9 @@ class Manifest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Manifest &&
-        name == other.name &&
-        file == other.file &&
-        mapsEqual(metadata, other.metadata) &&
-        mapsEqual(resolved, other.resolved);
+        this.name == other.name &&
+        this.file == other.file &&
+        mapsEqual(this.metadata, other.metadata) &&
+        mapsEqual(this.resolved, other.resolved);
   }
 }

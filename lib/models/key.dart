@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Key {
   /// {@macro key}
-  const Key({
+  Key({
     required this.key,
     required this.id,
     required this.url,
@@ -25,7 +25,7 @@ class Key {
       json,
       () => Key(
         key: json['key'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         url: json['url'] as String,
         title: json['title'] as String,
         createdAt: DateTime.parse(json['created_at'] as String),
@@ -80,12 +80,12 @@ class Key {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Key &&
-        key == other.key &&
-        id == other.id &&
-        url == other.url &&
-        title == other.title &&
-        createdAt == other.createdAt &&
-        verified == other.verified &&
-        readOnly == other.readOnly;
+        this.key == other.key &&
+        this.id == other.id &&
+        this.url == other.url &&
+        this.title == other.title &&
+        this.createdAt == other.createdAt &&
+        this.verified == other.verified &&
+        this.readOnly == other.readOnly;
   }
 }

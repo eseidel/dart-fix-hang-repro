@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/webhook_config_content_type.dart';
 import 'package:github_out/models/webhook_config_insecure_ssl.dart';
@@ -15,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OrgsCreateWebhookRequestConfig {
   /// {@macro orgs_create_webhook_request_config}
-  const OrgsCreateWebhookRequestConfig({
+  OrgsCreateWebhookRequestConfig({
     required this.url,
     this.contentType,
     this.secret,
@@ -103,11 +99,11 @@ class OrgsCreateWebhookRequestConfig {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsCreateWebhookRequestConfig &&
-        url == other.url &&
-        contentType == other.contentType &&
-        secret == other.secret &&
-        insecureSsl == other.insecureSsl &&
-        username == other.username &&
-        password == other.password;
+        this.url == other.url &&
+        this.contentType == other.contentType &&
+        this.secret == other.secret &&
+        this.insecureSsl == other.insecureSsl &&
+        this.username == other.username &&
+        this.password == other.password;
   }
 }

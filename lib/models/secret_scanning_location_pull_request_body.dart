@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SecretScanningLocationPullRequestBody {
   /// {@macro secret_scanning_location_pull_request_body}
-  const SecretScanningLocationPullRequestBody({
+  SecretScanningLocationPullRequestBody({
     required this.pullRequestBodyUrl,
   });
 
@@ -57,6 +57,6 @@ class SecretScanningLocationPullRequestBody {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningLocationPullRequestBody &&
-        pullRequestBodyUrl == other.pullRequestBodyUrl;
+        this.pullRequestBodyUrl == other.pullRequestBodyUrl;
   }
 }

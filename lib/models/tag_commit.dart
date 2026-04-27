@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TagCommit {
-  const TagCommit({
+  TagCommit({
     required this.sha,
     required this.url,
   });
@@ -49,6 +49,6 @@ class TagCommit {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is TagCommit && sha == other.sha && url == other.url;
+    return other is TagCommit && this.sha == other.sha && this.url == other.url;
   }
 }

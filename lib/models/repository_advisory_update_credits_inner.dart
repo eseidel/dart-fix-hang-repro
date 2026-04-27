@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryAdvisoryUpdateCreditsInner {
-  const RepositoryAdvisoryUpdateCreditsInner({
+  RepositoryAdvisoryUpdateCreditsInner({
     required this.login,
     required this.type,
   });
@@ -60,7 +60,7 @@ class RepositoryAdvisoryUpdateCreditsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryAdvisoryUpdateCreditsInner &&
-        login == other.login &&
-        type == other.type;
+        this.login == other.login &&
+        this.type == other.type;
   }
 }

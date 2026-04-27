@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class LicenseSimple {
   /// {@macro license_simple}
-  const LicenseSimple({
+  LicenseSimple({
     required this.key,
     required this.name,
     required this.url,
@@ -84,11 +84,11 @@ class LicenseSimple {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is LicenseSimple &&
-        key == other.key &&
-        name == other.name &&
-        url == other.url &&
-        spdxId == other.spdxId &&
-        nodeId == other.nodeId &&
-        htmlUrl == other.htmlUrl;
+        this.key == other.key &&
+        this.name == other.name &&
+        this.url == other.url &&
+        this.spdxId == other.spdxId &&
+        this.nodeId == other.nodeId &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

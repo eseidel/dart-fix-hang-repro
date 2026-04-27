@@ -1,10 +1,7 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/dependabot_repository_access_details_default_level.dart';
 import 'package:github_out/models/simple_repository.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template dependabot_repository_access_details}
@@ -15,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotRepositoryAccessDetails {
   /// {@macro dependabot_repository_access_details}
-  const DependabotRepositoryAccessDetails({
+  DependabotRepositoryAccessDetails({
     this.defaultLevel,
     this.accessibleRepositories,
   });
@@ -79,7 +76,7 @@ class DependabotRepositoryAccessDetails {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotRepositoryAccessDetails &&
-        defaultLevel == other.defaultLevel &&
-        listsEqual(accessibleRepositories, other.accessibleRepositories);
+        this.defaultLevel == other.defaultLevel &&
+        listsEqual(this.accessibleRepositories, other.accessibleRepositories);
   }
 }

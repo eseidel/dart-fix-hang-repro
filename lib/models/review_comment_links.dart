@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReviewCommentLinks {
-  const ReviewCommentLinks({
+  ReviewCommentLinks({
     required this.self,
     required this.html,
     required this.pullRequest,
@@ -66,8 +66,8 @@ class ReviewCommentLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReviewCommentLinks &&
-        self == other.self &&
-        html == other.html &&
-        pullRequest == other.pullRequest;
+        this.self == other.self &&
+        this.html == other.html &&
+        this.pullRequest == other.pullRequest;
   }
 }

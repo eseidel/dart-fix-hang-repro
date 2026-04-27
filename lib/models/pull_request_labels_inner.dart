@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestLabelsInner {
-  const PullRequestLabelsInner({
+  PullRequestLabelsInner({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -19,7 +19,7 @@ class PullRequestLabelsInner {
       'PullRequestLabelsInner',
       json,
       () => PullRequestLabelsInner(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: json['url'] as String,
         name: json['name'] as String,
@@ -75,12 +75,12 @@ class PullRequestLabelsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestLabelsInner &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        name == other.name &&
-        description == other.description &&
-        color == other.color &&
-        default_ == other.default_;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.color == other.color &&
+        this.default_ == other.default_;
   }
 }

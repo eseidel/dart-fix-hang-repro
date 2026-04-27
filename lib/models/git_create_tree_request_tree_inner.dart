@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitCreateTreeRequestTreeInner {
-  const GitCreateTreeRequestTreeInner({
+  GitCreateTreeRequestTreeInner({
     this.path,
     this.mode,
     this.type,
@@ -92,10 +92,10 @@ class GitCreateTreeRequestTreeInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCreateTreeRequestTreeInner &&
-        path == other.path &&
-        mode == other.mode &&
-        type == other.type &&
-        sha == other.sha &&
-        content == other.content;
+        this.path == other.path &&
+        this.mode == other.mode &&
+        this.type == other.type &&
+        this.sha == other.sha &&
+        this.content == other.content;
   }
 }

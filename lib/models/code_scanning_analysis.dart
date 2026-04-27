@@ -6,17 +6,21 @@ import 'package:github_out/models/code_scanning_analysis_created_at.dart';
 import 'package:github_out/models/code_scanning_analysis_environment.dart';
 import 'package:github_out/models/code_scanning_analysis_sarif_id.dart';
 import 'package:github_out/models/code_scanning_analysis_tool.dart';
+import 'package:github_out/models/code_scanning_analysis_tool_guid.dart';
+import 'package:github_out/models/code_scanning_analysis_tool_name.dart';
+import 'package:github_out/models/code_scanning_analysis_tool_version.dart';
 import 'package:github_out/models/code_scanning_analysis_url.dart';
 import 'package:github_out/models/code_scanning_ref.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningAnalysis {
-  const CodeScanningAnalysis({
+  CodeScanningAnalysis({
     required this.ref,
     required this.commitSha,
     required this.analysisKey,
     required this.environment,
+    this.category,
     required this.error,
     required this.createdAt,
     required this.resultsCount,
@@ -27,7 +31,6 @@ class CodeScanningAnalysis {
     required this.tool,
     required this.deletable,
     required this.warning,
-    this.category,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CodeScanningAnalysis].
@@ -53,9 +56,9 @@ class CodeScanningAnalysis {
         createdAt: CodeScanningAnalysisCreatedAt.fromJson(
           json['created_at'] as String,
         ),
-        resultsCount: json['results_count'] as int,
-        rulesCount: json['rules_count'] as int,
-        id: json['id'] as int,
+        resultsCount: (json['results_count'] as int),
+        rulesCount: (json['rules_count'] as int),
+        id: (json['id'] as int),
         url: CodeScanningAnalysisUrl.fromJson(json['url'] as String),
         sarifId: CodeScanningAnalysisSarifId.fromJson(
           json['sarif_id'] as String,
@@ -173,20 +176,20 @@ class CodeScanningAnalysis {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningAnalysis &&
-        ref == other.ref &&
-        commitSha == other.commitSha &&
-        analysisKey == other.analysisKey &&
-        environment == other.environment &&
-        category == other.category &&
-        error == other.error &&
-        createdAt == other.createdAt &&
-        resultsCount == other.resultsCount &&
-        rulesCount == other.rulesCount &&
-        id == other.id &&
-        url == other.url &&
-        sarifId == other.sarifId &&
-        tool == other.tool &&
-        deletable == other.deletable &&
-        warning == other.warning;
+        this.ref == other.ref &&
+        this.commitSha == other.commitSha &&
+        this.analysisKey == other.analysisKey &&
+        this.environment == other.environment &&
+        this.category == other.category &&
+        this.error == other.error &&
+        this.createdAt == other.createdAt &&
+        this.resultsCount == other.resultsCount &&
+        this.rulesCount == other.rulesCount &&
+        this.id == other.id &&
+        this.url == other.url &&
+        this.sarifId == other.sarifId &&
+        this.tool == other.tool &&
+        this.deletable == other.deletable &&
+        this.warning == other.warning;
   }
 }

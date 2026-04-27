@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class BranchShort {
   /// {@macro branch_short}
-  const BranchShort({
+  BranchShort({
     required this.name,
     required this.commit,
     required this.protected,
@@ -63,8 +63,8 @@ class BranchShort {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchShort &&
-        name == other.name &&
-        commit == other.commit &&
-        protected == other.protected;
+        this.name == other.name &&
+        this.commit == other.commit &&
+        this.protected == other.protected;
   }
 }

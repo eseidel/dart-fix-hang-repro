@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReposDeleteFileRequestCommitter {
   /// {@macro repos_delete_file_request_committer}
-  const ReposDeleteFileRequestCommitter({
+  ReposDeleteFileRequestCommitter({
     this.name,
     this.email,
   });
@@ -59,7 +59,7 @@ class ReposDeleteFileRequestCommitter {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposDeleteFileRequestCommitter &&
-        name == other.name &&
-        email == other.email;
+        this.name == other.name &&
+        this.email == other.email;
   }
 }

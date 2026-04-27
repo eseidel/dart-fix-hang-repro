@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsMoveColumnRequest {
-  const ProjectsMoveColumnRequest({
+  ProjectsMoveColumnRequest({
     required this.position,
   });
 
@@ -45,6 +45,7 @@ class ProjectsMoveColumnRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ProjectsMoveColumnRequest && position == other.position;
+    return other is ProjectsMoveColumnRequest &&
+        this.position == other.position;
   }
 }

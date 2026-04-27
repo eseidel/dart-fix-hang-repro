@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestLinks {
-  const PullRequestLinks({
+  PullRequestLinks({
     required this.comments,
     required this.commits,
     required this.statuses,
@@ -108,13 +108,13 @@ class PullRequestLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestLinks &&
-        comments == other.comments &&
-        commits == other.commits &&
-        statuses == other.statuses &&
-        html == other.html &&
-        issue == other.issue &&
-        reviewComments == other.reviewComments &&
-        reviewComment == other.reviewComment &&
-        self == other.self;
+        this.comments == other.comments &&
+        this.commits == other.commits &&
+        this.statuses == other.statuses &&
+        this.html == other.html &&
+        this.issue == other.issue &&
+        this.reviewComments == other.reviewComments &&
+        this.reviewComment == other.reviewComment &&
+        this.self == other.self;
   }
 }

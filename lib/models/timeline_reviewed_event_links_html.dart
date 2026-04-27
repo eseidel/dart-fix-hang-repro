@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TimelineReviewedEventLinksHtml {
-  const TimelineReviewedEventLinksHtml({
+  TimelineReviewedEventLinksHtml({
     required this.href,
   });
 
@@ -44,6 +44,6 @@ class TimelineReviewedEventLinksHtml {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is TimelineReviewedEventLinksHtml && href == other.href;
+    return other is TimelineReviewedEventLinksHtml && this.href == other.href;
   }
 }

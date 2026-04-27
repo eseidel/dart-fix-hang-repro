@@ -1,19 +1,28 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/cvss_severities.dart';
+import 'package:github_out/models/cvss_severities_cvss_v3.dart';
+import 'package:github_out/models/cvss_severities_cvss_v4.dart';
 import 'package:github_out/models/repository_advisory_author.dart';
 import 'package:github_out/models/repository_advisory_credit.dart';
+import 'package:github_out/models/repository_advisory_credit_state.dart';
 import 'package:github_out/models/repository_advisory_credits_inner.dart';
 import 'package:github_out/models/repository_advisory_cvss.dart';
 import 'package:github_out/models/repository_advisory_cwes_inner.dart';
 import 'package:github_out/models/repository_advisory_identifiers_inner.dart';
+import 'package:github_out/models/repository_advisory_identifiers_inner_type.dart';
 import 'package:github_out/models/repository_advisory_private_fork.dart';
 import 'package:github_out/models/repository_advisory_publisher.dart';
 import 'package:github_out/models/repository_advisory_severity.dart';
 import 'package:github_out/models/repository_advisory_state.dart';
 import 'package:github_out/models/repository_advisory_submission.dart';
 import 'package:github_out/models/repository_advisory_vulnerability.dart';
+import 'package:github_out/models/repository_advisory_vulnerability_package.dart';
+import 'package:github_out/models/security_advisory_credit_types.dart';
+import 'package:github_out/models/security_advisory_ecosystems.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 /// {@template repository_advisory}
@@ -22,7 +31,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryAdvisory {
   /// {@macro repository_advisory}
-  const RepositoryAdvisory({
+  RepositoryAdvisory({
     required this.ghsaId,
     required this.cveId,
     required this.url,
@@ -42,6 +51,7 @@ class RepositoryAdvisory {
     required this.submission,
     required this.vulnerabilities,
     required this.cvss,
+    this.cvssSeverities,
     required this.cwes,
     required this.cweIds,
     required this.credits,
@@ -49,7 +59,6 @@ class RepositoryAdvisory {
     required this.collaboratingUsers,
     required this.collaboratingTeams,
     required this.privateFork,
-    this.cvssSeverities,
   });
 
   /// Converts a `Map<String, dynamic>` to a [RepositoryAdvisory].
@@ -296,32 +305,32 @@ class RepositoryAdvisory {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryAdvisory &&
-        ghsaId == other.ghsaId &&
-        cveId == other.cveId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        summary == other.summary &&
-        description == other.description &&
-        severity == other.severity &&
-        author == other.author &&
-        publisher == other.publisher &&
-        listsEqual(identifiers, other.identifiers) &&
-        state == other.state &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        publishedAt == other.publishedAt &&
-        closedAt == other.closedAt &&
-        withdrawnAt == other.withdrawnAt &&
-        submission == other.submission &&
-        listsEqual(vulnerabilities, other.vulnerabilities) &&
-        cvss == other.cvss &&
-        cvssSeverities == other.cvssSeverities &&
-        listsEqual(cwes, other.cwes) &&
-        listsEqual(cweIds, other.cweIds) &&
-        listsEqual(credits, other.credits) &&
-        listsEqual(creditsDetailed, other.creditsDetailed) &&
-        listsEqual(collaboratingUsers, other.collaboratingUsers) &&
-        listsEqual(collaboratingTeams, other.collaboratingTeams) &&
-        privateFork == other.privateFork;
+        this.ghsaId == other.ghsaId &&
+        this.cveId == other.cveId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.summary == other.summary &&
+        this.description == other.description &&
+        this.severity == other.severity &&
+        this.author == other.author &&
+        this.publisher == other.publisher &&
+        listsEqual(this.identifiers, other.identifiers) &&
+        this.state == other.state &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.publishedAt == other.publishedAt &&
+        this.closedAt == other.closedAt &&
+        this.withdrawnAt == other.withdrawnAt &&
+        this.submission == other.submission &&
+        listsEqual(this.vulnerabilities, other.vulnerabilities) &&
+        this.cvss == other.cvss &&
+        this.cvssSeverities == other.cvssSeverities &&
+        listsEqual(this.cwes, other.cwes) &&
+        listsEqual(this.cweIds, other.cweIds) &&
+        listsEqual(this.credits, other.credits) &&
+        listsEqual(this.creditsDetailed, other.creditsDetailed) &&
+        listsEqual(this.collaboratingUsers, other.collaboratingUsers) &&
+        listsEqual(this.collaboratingTeams, other.collaboratingTeams) &&
+        this.privateFork == other.privateFork;
   }
 }

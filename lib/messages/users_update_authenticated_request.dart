@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class UsersUpdateAuthenticatedRequest {
-  const UsersUpdateAuthenticatedRequest({
+  UsersUpdateAuthenticatedRequest({
     this.name,
     this.email,
     this.blog,
@@ -103,13 +103,13 @@ class UsersUpdateAuthenticatedRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UsersUpdateAuthenticatedRequest &&
-        name == other.name &&
-        email == other.email &&
-        blog == other.blog &&
-        twitterUsername == other.twitterUsername &&
-        company == other.company &&
-        location == other.location &&
-        hireable == other.hireable &&
-        bio == other.bio;
+        this.name == other.name &&
+        this.email == other.email &&
+        this.blog == other.blog &&
+        this.twitterUsername == other.twitterUsername &&
+        this.company == other.company &&
+        this.location == other.location &&
+        this.hireable == other.hireable &&
+        this.bio == other.bio;
   }
 }

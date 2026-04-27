@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class MinimalRepositoryPermissions {
-  const MinimalRepositoryPermissions({
+  MinimalRepositoryPermissions({
     this.admin,
     this.maintain,
     this.push,
@@ -67,10 +67,10 @@ class MinimalRepositoryPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MinimalRepositoryPermissions &&
-        admin == other.admin &&
-        maintain == other.maintain &&
-        push == other.push &&
-        triage == other.triage &&
-        pull == other.pull;
+        this.admin == other.admin &&
+        this.maintain == other.maintain &&
+        this.push == other.push &&
+        this.triage == other.triage &&
+        this.pull == other.pull;
   }
 }

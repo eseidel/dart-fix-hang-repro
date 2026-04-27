@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class MergedUpstream {
   /// {@macro merged_upstream}
-  const MergedUpstream({
+  MergedUpstream({
     this.message,
     this.mergeType,
     this.baseBranch,
@@ -63,8 +63,8 @@ class MergedUpstream {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MergedUpstream &&
-        message == other.message &&
-        mergeType == other.mergeType &&
-        baseBranch == other.baseBranch;
+        this.message == other.message &&
+        this.mergeType == other.mergeType &&
+        this.baseBranch == other.baseBranch;
   }
 }

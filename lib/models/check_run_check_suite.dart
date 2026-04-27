@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CheckRunCheckSuite {
-  const CheckRunCheckSuite({
+  CheckRunCheckSuite({
     required this.id,
   });
 
@@ -13,7 +13,7 @@ class CheckRunCheckSuite {
       'CheckRunCheckSuite',
       json,
       () => CheckRunCheckSuite(
-        id: json['id'] as int,
+        id: (json['id'] as int),
       ),
     );
   }
@@ -42,6 +42,6 @@ class CheckRunCheckSuite {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is CheckRunCheckSuite && id == other.id;
+    return other is CheckRunCheckSuite && this.id == other.id;
   }
 }

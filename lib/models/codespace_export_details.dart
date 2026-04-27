@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodespaceExportDetails {
   /// {@macro codespace_export_details}
-  const CodespaceExportDetails({
+  CodespaceExportDetails({
     this.state,
     this.completedAt,
     this.branch,
@@ -101,12 +101,12 @@ class CodespaceExportDetails {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespaceExportDetails &&
-        state == other.state &&
-        completedAt == other.completedAt &&
-        branch == other.branch &&
-        sha == other.sha &&
-        id == other.id &&
-        exportUrl == other.exportUrl &&
-        htmlUrl == other.htmlUrl;
+        this.state == other.state &&
+        this.completedAt == other.completedAt &&
+        this.branch == other.branch &&
+        this.sha == other.sha &&
+        this.id == other.id &&
+        this.exportUrl == other.exportUrl &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

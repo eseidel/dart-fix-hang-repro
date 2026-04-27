@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DeploymentBranchPolicySettings {
   /// {@macro deployment_branch_policy_settings}
-  const DeploymentBranchPolicySettings({
+  DeploymentBranchPolicySettings({
     required this.protectedBranches,
     required this.customBranchPolicies,
   });
@@ -66,7 +66,7 @@ class DeploymentBranchPolicySettings {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DeploymentBranchPolicySettings &&
-        protectedBranches == other.protectedBranches &&
-        customBranchPolicies == other.customBranchPolicies;
+        this.protectedBranches == other.protectedBranches &&
+        this.customBranchPolicies == other.customBranchPolicies;
   }
 }

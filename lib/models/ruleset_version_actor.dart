@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RulesetVersionActor {
   /// {@macro ruleset_version_actor}
-  const RulesetVersionActor({
+  RulesetVersionActor({
     this.id,
     this.type,
   });
@@ -18,7 +18,7 @@ class RulesetVersionActor {
       'RulesetVersionActor',
       json,
       () => RulesetVersionActor(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         type: json['type'] as String?,
       ),
     );
@@ -53,6 +53,8 @@ class RulesetVersionActor {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RulesetVersionActor && id == other.id && type == other.type;
+    return other is RulesetVersionActor &&
+        this.id == other.id &&
+        this.type == other.type;
   }
 }

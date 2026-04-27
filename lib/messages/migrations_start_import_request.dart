@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class MigrationsStartImportRequest {
-  const MigrationsStartImportRequest({
+  MigrationsStartImportRequest({
     required this.vcsUrl,
     this.vcs,
     this.vcsUsername,
@@ -81,10 +81,10 @@ class MigrationsStartImportRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MigrationsStartImportRequest &&
-        vcsUrl == other.vcsUrl &&
-        vcs == other.vcs &&
-        vcsUsername == other.vcsUsername &&
-        vcsPassword == other.vcsPassword &&
-        tfvcProject == other.tfvcProject;
+        this.vcsUrl == other.vcsUrl &&
+        this.vcs == other.vcs &&
+        this.vcsUsername == other.vcsUsername &&
+        this.vcsPassword == other.vcsPassword &&
+        this.tfvcProject == other.tfvcProject;
   }
 }

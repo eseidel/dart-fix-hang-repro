@@ -1,20 +1,16 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodeownersErrorsErrorsInner {
-  const CodeownersErrorsErrorsInner({
+  CodeownersErrorsErrorsInner({
     required this.line,
     required this.column,
+    this.source,
     required this.kind,
+    this.suggestion,
     required this.message,
     required this.path,
-    this.source,
-    this.suggestion,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CodeownersErrorsErrorsInner].
@@ -23,8 +19,8 @@ class CodeownersErrorsErrorsInner {
       'CodeownersErrorsErrorsInner',
       json,
       () => CodeownersErrorsErrorsInner(
-        line: json['line'] as int,
-        column: json['column'] as int,
+        line: (json['line'] as int),
+        column: (json['column'] as int),
         source: json['source'] as String?,
         kind: json['kind'] as String,
         suggestion: json['suggestion'] as String?,
@@ -107,12 +103,12 @@ class CodeownersErrorsErrorsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeownersErrorsErrorsInner &&
-        line == other.line &&
-        column == other.column &&
-        source == other.source &&
-        kind == other.kind &&
-        suggestion == other.suggestion &&
-        message == other.message &&
-        path == other.path;
+        this.line == other.line &&
+        this.column == other.column &&
+        this.source == other.source &&
+        this.kind == other.kind &&
+        this.suggestion == other.suggestion &&
+        this.message == other.message &&
+        this.path == other.path;
   }
 }

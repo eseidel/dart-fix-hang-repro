@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class MarketplaceListingPlan {
   /// {@macro marketplace_listing_plan}
-  const MarketplaceListingPlan({
+  MarketplaceListingPlan({
     required this.url,
     required this.accountsUrl,
     required this.id,
@@ -33,12 +33,12 @@ class MarketplaceListingPlan {
       () => MarketplaceListingPlan(
         url: Uri.parse(json['url'] as String),
         accountsUrl: Uri.parse(json['accounts_url'] as String),
-        id: json['id'] as int,
-        number: json['number'] as int,
+        id: (json['id'] as int),
+        number: (json['number'] as int),
         name: json['name'] as String,
         description: json['description'] as String,
-        monthlyPriceInCents: json['monthly_price_in_cents'] as int,
-        yearlyPriceInCents: json['yearly_price_in_cents'] as int,
+        monthlyPriceInCents: (json['monthly_price_in_cents'] as int),
+        yearlyPriceInCents: (json['yearly_price_in_cents'] as int),
         priceModel: MarketplaceListingPlanPriceModel.fromJson(
           json['price_model'] as String,
         ),
@@ -138,18 +138,18 @@ class MarketplaceListingPlan {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MarketplaceListingPlan &&
-        url == other.url &&
-        accountsUrl == other.accountsUrl &&
-        id == other.id &&
-        number == other.number &&
-        name == other.name &&
-        description == other.description &&
-        monthlyPriceInCents == other.monthlyPriceInCents &&
-        yearlyPriceInCents == other.yearlyPriceInCents &&
-        priceModel == other.priceModel &&
-        hasFreeTrial == other.hasFreeTrial &&
-        unitName == other.unitName &&
-        state == other.state &&
-        listsEqual(bullets, other.bullets);
+        this.url == other.url &&
+        this.accountsUrl == other.accountsUrl &&
+        this.id == other.id &&
+        this.number == other.number &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.monthlyPriceInCents == other.monthlyPriceInCents &&
+        this.yearlyPriceInCents == other.yearlyPriceInCents &&
+        this.priceModel == other.priceModel &&
+        this.hasFreeTrial == other.hasFreeTrial &&
+        this.unitName == other.unitName &&
+        this.state == other.state &&
+        listsEqual(this.bullets, other.bullets);
   }
 }

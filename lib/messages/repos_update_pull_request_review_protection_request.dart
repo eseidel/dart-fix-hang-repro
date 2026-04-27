@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repos_update_pull_request_review_protection_request_bypass_pull_request_allowances.dart';
 import 'package:github_out/models/repos_update_pull_request_review_protection_request_dismissal_restrictions.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposUpdatePullRequestReviewProtectionRequest {
-  const ReposUpdatePullRequestReviewProtectionRequest({
+  ReposUpdatePullRequestReviewProtectionRequest({
     this.dismissalRestrictions,
     this.dismissStaleReviews,
     this.requireCodeOwnerReviews,
@@ -34,7 +30,7 @@ class ReposUpdatePullRequestReviewProtectionRequest {
         dismissStaleReviews: json['dismiss_stale_reviews'] as bool?,
         requireCodeOwnerReviews: json['require_code_owner_reviews'] as bool?,
         requiredApprovingReviewCount:
-            json['required_approving_review_count'] as int?,
+            (json['required_approving_review_count'] as int?),
         requireLastPushApproval:
             json['require_last_push_approval'] as bool? ?? false,
         bypassPullRequestAllowances:
@@ -112,11 +108,12 @@ class ReposUpdatePullRequestReviewProtectionRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposUpdatePullRequestReviewProtectionRequest &&
-        dismissalRestrictions == other.dismissalRestrictions &&
-        dismissStaleReviews == other.dismissStaleReviews &&
-        requireCodeOwnerReviews == other.requireCodeOwnerReviews &&
-        requiredApprovingReviewCount == other.requiredApprovingReviewCount &&
-        requireLastPushApproval == other.requireLastPushApproval &&
-        bypassPullRequestAllowances == other.bypassPullRequestAllowances;
+        this.dismissalRestrictions == other.dismissalRestrictions &&
+        this.dismissStaleReviews == other.dismissStaleReviews &&
+        this.requireCodeOwnerReviews == other.requireCodeOwnerReviews &&
+        this.requiredApprovingReviewCount ==
+            other.requiredApprovingReviewCount &&
+        this.requireLastPushApproval == other.requireLastPushApproval &&
+        this.bypassPullRequestAllowances == other.bypassPullRequestAllowances;
   }
 }

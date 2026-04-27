@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SimpleCommit {
   /// {@macro simple_commit}
-  const SimpleCommit({
+  SimpleCommit({
     required this.id,
     required this.treeId,
     required this.message,
@@ -95,11 +95,11 @@ class SimpleCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SimpleCommit &&
-        id == other.id &&
-        treeId == other.treeId &&
-        message == other.message &&
-        timestamp == other.timestamp &&
-        author == other.author &&
-        committer == other.committer;
+        this.id == other.id &&
+        this.treeId == other.treeId &&
+        this.message == other.message &&
+        this.timestamp == other.timestamp &&
+        this.author == other.author &&
+        this.committer == other.committer;
   }
 }

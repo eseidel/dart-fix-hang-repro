@@ -1,10 +1,15 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/actions_hosted_runner.dart';
+import 'package:github_out/models/actions_hosted_runner_machine_spec.dart';
+import 'package:github_out/models/actions_hosted_runner_pool_image.dart';
+import 'package:github_out/models/actions_hosted_runner_pool_image_source.dart';
+import 'package:github_out/models/actions_hosted_runner_status.dart';
+import 'package:github_out/models/public_ip.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListHostedRunnersForOrg200Response {
-  const ActionsListHostedRunnersForOrg200Response({
+  ActionsListHostedRunnersForOrg200Response({
     required this.totalCount,
     required this.runners,
   });
@@ -18,7 +23,7 @@ class ActionsListHostedRunnersForOrg200Response {
       'ActionsListHostedRunnersForOrg200Response',
       json,
       () => ActionsListHostedRunnersForOrg200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         runners: (json['runners'] as List)
             .map<ActionsHostedRunner>(
               (e) => ActionsHostedRunner.fromJson(e as Map<String, dynamic>),
@@ -61,7 +66,7 @@ class ActionsListHostedRunnersForOrg200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListHostedRunnersForOrg200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(runners, other.runners);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.runners, other.runners);
   }
 }

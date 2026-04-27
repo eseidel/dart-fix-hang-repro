@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/deployment_branch_policy_name_pattern_with_type_type.dart';
 import 'package:meta/meta.dart';
@@ -12,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DeploymentBranchPolicyNamePatternWithType {
   /// {@macro deployment_branch_policy_name_pattern_with_type}
-  const DeploymentBranchPolicyNamePatternWithType({
+  DeploymentBranchPolicyNamePatternWithType({
     required this.name,
     this.type,
   });
@@ -80,7 +76,7 @@ class DeploymentBranchPolicyNamePatternWithType {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DeploymentBranchPolicyNamePatternWithType &&
-        name == other.name &&
-        type == other.type;
+        this.name == other.name &&
+        this.type == other.type;
   }
 }

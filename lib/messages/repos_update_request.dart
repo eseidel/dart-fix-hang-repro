@@ -1,11 +1,13 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repos_update_request_merge_commit_message.dart';
 import 'package:github_out/models/repos_update_request_merge_commit_title.dart';
 import 'package:github_out/models/repos_update_request_security_and_analysis.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_code_security.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/repos_update_request_security_and_analysis_secret_scanning_push_protection.dart';
 import 'package:github_out/models/repos_update_request_squash_merge_commit_message.dart';
 import 'package:github_out/models/repos_update_request_squash_merge_commit_title.dart';
 import 'package:github_out/models/repos_update_request_visibility.dart';
@@ -13,7 +15,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposUpdateRequest {
-  const ReposUpdateRequest({
+  ReposUpdateRequest({
     this.name,
     this.description,
     this.homepage,
@@ -300,30 +302,30 @@ class ReposUpdateRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposUpdateRequest &&
-        name == other.name &&
-        description == other.description &&
-        homepage == other.homepage &&
-        private == other.private &&
-        visibility == other.visibility &&
-        securityAndAnalysis == other.securityAndAnalysis &&
-        hasIssues == other.hasIssues &&
-        hasProjects == other.hasProjects &&
-        hasWiki == other.hasWiki &&
-        isTemplate == other.isTemplate &&
-        defaultBranch == other.defaultBranch &&
-        allowSquashMerge == other.allowSquashMerge &&
-        allowMergeCommit == other.allowMergeCommit &&
-        allowRebaseMerge == other.allowRebaseMerge &&
-        allowAutoMerge == other.allowAutoMerge &&
-        deleteBranchOnMerge == other.deleteBranchOnMerge &&
-        allowUpdateBranch == other.allowUpdateBranch &&
-        useSquashPrTitleAsDefault == other.useSquashPrTitleAsDefault &&
-        squashMergeCommitTitle == other.squashMergeCommitTitle &&
-        squashMergeCommitMessage == other.squashMergeCommitMessage &&
-        mergeCommitTitle == other.mergeCommitTitle &&
-        mergeCommitMessage == other.mergeCommitMessage &&
-        archived == other.archived &&
-        allowForking == other.allowForking &&
-        webCommitSignoffRequired == other.webCommitSignoffRequired;
+        this.name == other.name &&
+        this.description == other.description &&
+        this.homepage == other.homepage &&
+        this.private == other.private &&
+        this.visibility == other.visibility &&
+        this.securityAndAnalysis == other.securityAndAnalysis &&
+        this.hasIssues == other.hasIssues &&
+        this.hasProjects == other.hasProjects &&
+        this.hasWiki == other.hasWiki &&
+        this.isTemplate == other.isTemplate &&
+        this.defaultBranch == other.defaultBranch &&
+        this.allowSquashMerge == other.allowSquashMerge &&
+        this.allowMergeCommit == other.allowMergeCommit &&
+        this.allowRebaseMerge == other.allowRebaseMerge &&
+        this.allowAutoMerge == other.allowAutoMerge &&
+        this.deleteBranchOnMerge == other.deleteBranchOnMerge &&
+        this.allowUpdateBranch == other.allowUpdateBranch &&
+        this.useSquashPrTitleAsDefault == other.useSquashPrTitleAsDefault &&
+        this.squashMergeCommitTitle == other.squashMergeCommitTitle &&
+        this.squashMergeCommitMessage == other.squashMergeCommitMessage &&
+        this.mergeCommitTitle == other.mergeCommitTitle &&
+        this.mergeCommitMessage == other.mergeCommitMessage &&
+        this.archived == other.archived &&
+        this.allowForking == other.allowForking &&
+        this.webCommitSignoffRequired == other.webCommitSignoffRequired;
   }
 }

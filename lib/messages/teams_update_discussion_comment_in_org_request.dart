@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamsUpdateDiscussionCommentInOrgRequest {
-  const TeamsUpdateDiscussionCommentInOrgRequest({
+  TeamsUpdateDiscussionCommentInOrgRequest({
     required this.body,
   });
 
@@ -50,6 +50,6 @@ class TeamsUpdateDiscussionCommentInOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamsUpdateDiscussionCommentInOrgRequest &&
-        body == other.body;
+        this.body == other.body;
   }
 }

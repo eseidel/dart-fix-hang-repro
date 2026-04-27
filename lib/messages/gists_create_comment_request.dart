@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GistsCreateCommentRequest {
-  const GistsCreateCommentRequest({
+  GistsCreateCommentRequest({
     required this.body,
   });
 
@@ -44,6 +44,6 @@ class GistsCreateCommentRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is GistsCreateCommentRequest && body == other.body;
+    return other is GistsCreateCommentRequest && this.body == other.body;
   }
 }

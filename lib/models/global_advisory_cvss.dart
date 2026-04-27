@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GlobalAdvisoryCvss {
-  const GlobalAdvisoryCvss({
+  GlobalAdvisoryCvss({
     required this.vectorString,
     required this.score,
   });
@@ -53,7 +53,7 @@ class GlobalAdvisoryCvss {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GlobalAdvisoryCvss &&
-        vectorString == other.vectorString &&
-        score == other.score;
+        this.vectorString == other.vectorString &&
+        this.score == other.score;
   }
 }

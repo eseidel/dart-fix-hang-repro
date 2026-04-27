@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ManifestFile {
-  const ManifestFile({
+  ManifestFile({
     this.sourceLocation,
   });
 
@@ -45,6 +45,6 @@ class ManifestFile {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ManifestFile && sourceLocation == other.sourceLocation;
+    return other is ManifestFile && this.sourceLocation == other.sourceLocation;
   }
 }

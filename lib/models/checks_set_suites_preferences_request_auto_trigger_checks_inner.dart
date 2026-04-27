@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ChecksSetSuitesPreferencesRequestAutoTriggerChecksInner {
-  const ChecksSetSuitesPreferencesRequestAutoTriggerChecksInner({
+  ChecksSetSuitesPreferencesRequestAutoTriggerChecksInner({
     required this.appId,
     this.setting = true,
   });
@@ -17,7 +17,7 @@ class ChecksSetSuitesPreferencesRequestAutoTriggerChecksInner {
       'ChecksSetSuitesPreferencesRequestAutoTriggerChecksInner',
       json,
       () => ChecksSetSuitesPreferencesRequestAutoTriggerChecksInner(
-        appId: json['app_id'] as int,
+        appId: (json['app_id'] as int),
         setting: json['setting'] as bool,
       ),
     );
@@ -62,7 +62,7 @@ class ChecksSetSuitesPreferencesRequestAutoTriggerChecksInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ChecksSetSuitesPreferencesRequestAutoTriggerChecksInner &&
-        appId == other.appId &&
-        setting == other.setting;
+        this.appId == other.appId &&
+        this.setting == other.setting;
   }
 }

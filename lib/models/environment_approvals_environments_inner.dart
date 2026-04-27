@@ -1,13 +1,9 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class EnvironmentApprovalsEnvironmentsInner {
-  const EnvironmentApprovalsEnvironmentsInner({
+  EnvironmentApprovalsEnvironmentsInner({
     this.id,
     this.nodeId,
     this.name,
@@ -26,7 +22,7 @@ class EnvironmentApprovalsEnvironmentsInner {
       'EnvironmentApprovalsEnvironmentsInner',
       json,
       () => EnvironmentApprovalsEnvironmentsInner(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         nodeId: json['node_id'] as String?,
         name: json['name'] as String?,
         url: json['url'] as String?,
@@ -104,12 +100,12 @@ class EnvironmentApprovalsEnvironmentsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is EnvironmentApprovalsEnvironmentsInner &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_security_update_configuration_request_secret_scanning_delegated_bypass_options_reviewers_inner_reviewer_type.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptionsReviewersInner {
-  const CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptionsReviewersInner({
+  CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptionsReviewersInner({
     required this.reviewerId,
     required this.reviewerType,
   });
@@ -22,7 +18,7 @@ class CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptions
       'CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptionsReviewersInner',
       json,
       () => CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptionsReviewersInner(
-        reviewerId: json['reviewer_id'] as int,
+        reviewerId: (json['reviewer_id'] as int),
         reviewerType:
             CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptionsReviewersInnerReviewerType.fromJson(
               json['reviewer_type'] as String,
@@ -70,7 +66,7 @@ class CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptions
     if (identical(this, other)) return true;
     return other
             is CodeSecurityUpdateConfigurationRequestSecretScanningDelegatedBypassOptionsReviewersInner &&
-        reviewerId == other.reviewerId &&
-        reviewerType == other.reviewerType;
+        this.reviewerId == other.reviewerId &&
+        this.reviewerType == other.reviewerType;
   }
 }

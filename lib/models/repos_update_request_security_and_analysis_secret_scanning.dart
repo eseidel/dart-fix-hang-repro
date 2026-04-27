@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReposUpdateRequestSecurityAndAnalysisSecretScanning {
   /// {@macro repos_update_request_security_and_analysis_secret_scanning}
-  const ReposUpdateRequestSecurityAndAnalysisSecretScanning({
+  ReposUpdateRequestSecurityAndAnalysisSecretScanning({
     this.status,
   });
 
@@ -56,6 +56,6 @@ class ReposUpdateRequestSecurityAndAnalysisSecretScanning {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposUpdateRequestSecurityAndAnalysisSecretScanning &&
-        status == other.status;
+        this.status == other.status;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:meta/meta.dart';
 
 sealed class IssuesCreateRequestMilestone {
@@ -9,8 +5,8 @@ sealed class IssuesCreateRequestMilestone {
 
   factory IssuesCreateRequestMilestone.fromJson(dynamic json) {
     return switch (json) {
-      final String v => IssuesCreateRequestMilestoneString(v),
-      final int v => IssuesCreateRequestMilestoneInt(v),
+      String v => IssuesCreateRequestMilestoneString(v),
+      int v => IssuesCreateRequestMilestoneInt(v),
       _ => throw FormatException(
         'Unsupported shape for IssuesCreateRequestMilestone: ${json.runtimeType}',
       ),

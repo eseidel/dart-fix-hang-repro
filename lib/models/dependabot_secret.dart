@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotSecret {
   /// {@macro dependabot_secret}
-  const DependabotSecret({
+  DependabotSecret({
     required this.name,
     required this.createdAt,
     required this.updatedAt,
@@ -62,8 +62,8 @@ class DependabotSecret {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotSecret &&
-        name == other.name &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.name == other.name &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

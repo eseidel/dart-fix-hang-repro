@@ -11,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Reaction {
   /// {@macro reaction}
-  const Reaction({
+  Reaction({
     required this.id,
     required this.nodeId,
     required this.user,
@@ -25,7 +25,7 @@ class Reaction {
       'Reaction',
       json,
       () => Reaction(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         user: SimpleUser.maybeFromJson(
           checkedKey(json, 'user') as Map<String, dynamic>?,
@@ -86,10 +86,10 @@ class Reaction {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Reaction &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        user == other.user &&
-        content == other.content &&
-        createdAt == other.createdAt;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.user == other.user &&
+        this.content == other.content &&
+        this.createdAt == other.createdAt;
   }
 }

@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class WorkflowUsageBillable {
-  const WorkflowUsageBillable({
+  WorkflowUsageBillable({
     this.ubuntu,
     this.macos,
     this.windows,
@@ -64,8 +64,8 @@ class WorkflowUsageBillable {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is WorkflowUsageBillable &&
-        ubuntu == other.ubuntu &&
-        macos == other.macos &&
-        windows == other.windows;
+        this.ubuntu == other.ubuntu &&
+        this.macos == other.macos &&
+        this.windows == other.windows;
   }
 }

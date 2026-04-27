@@ -5,10 +5,19 @@ import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/campaigns_create_campaign_request.dart';
 import 'package:github_out/messages/campaigns_update_campaign_request.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/campaign_state.dart';
 import 'package:github_out/models/campaign_summary.dart';
+import 'package:github_out/models/campaign_summary_alert_stats.dart';
+import 'package:github_out/models/campaigns_create_campaign_request_code_scanning_alerts_inner.dart';
 import 'package:github_out/models/campaigns_list_org_campaigns_parameter5.dart';
 import 'package:github_out/models/direction_param.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:http/http.dart' as http;
 
 /// Endpoints to manage campaigns via the REST API.
 class CampaignsApi {
@@ -34,20 +43,20 @@ class CampaignsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/campaigns'.replaceAll('{org}', org),
+      path: '/orgs/{org}/campaigns'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (state != null) 'state': [state.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (state != null) 'state': [state.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -80,14 +89,15 @@ class CampaignsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/campaigns'.replaceAll('{org}', org),
+      path: '/orgs/{org}/campaigns'.replaceAll('{org}', '${org}'),
       body: campaignsCreateCampaignRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -115,14 +125,14 @@ class CampaignsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/campaigns/{campaign_number}'
-          .replaceAll('{org}', org)
-          .replaceAll('{campaign_number}', '$campaignNumber'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{campaign_number}', '${campaignNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -150,14 +160,14 @@ class CampaignsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/campaigns/{campaign_number}'
-          .replaceAll('{org}', org)
-          .replaceAll('{campaign_number}', '$campaignNumber'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{campaign_number}', '${campaignNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -178,15 +188,16 @@ class CampaignsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/campaigns/{campaign_number}'
-          .replaceAll('{org}', org)
-          .replaceAll('{campaign_number}', '$campaignNumber'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{campaign_number}', '${campaignNumber}'),
       body: campaignsUpdateCampaignRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

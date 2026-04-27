@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class AutoMerge {
   /// {@macro auto_merge}
-  const AutoMerge({
+  AutoMerge({
     required this.enabledBy,
     required this.mergeMethod,
     required this.commitTitle,
@@ -79,9 +79,9 @@ class AutoMerge {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is AutoMerge &&
-        enabledBy == other.enabledBy &&
-        mergeMethod == other.mergeMethod &&
-        commitTitle == other.commitTitle &&
-        commitMessage == other.commitMessage;
+        this.enabledBy == other.enabledBy &&
+        this.mergeMethod == other.mergeMethod &&
+        this.commitTitle == other.commitTitle &&
+        this.commitMessage == other.commitMessage;
   }
 }

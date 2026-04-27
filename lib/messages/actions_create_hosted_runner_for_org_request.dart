@@ -1,14 +1,11 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/actions_create_hosted_runner_for_org_request_image.dart';
+import 'package:github_out/models/actions_create_hosted_runner_for_org_request_image_source.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsCreateHostedRunnerForOrgRequest {
-  const ActionsCreateHostedRunnerForOrgRequest({
+  ActionsCreateHostedRunnerForOrgRequest({
     required this.name,
     required this.image,
     required this.size,
@@ -31,8 +28,8 @@ class ActionsCreateHostedRunnerForOrgRequest {
           json['image'] as Map<String, dynamic>,
         ),
         size: json['size'] as String,
-        runnerGroupId: json['runner_group_id'] as int,
-        maximumRunners: json['maximum_runners'] as int?,
+        runnerGroupId: (json['runner_group_id'] as int),
+        maximumRunners: (json['maximum_runners'] as int?),
         enableStaticIp: json['enable_static_ip'] as bool?,
       ),
     );
@@ -98,11 +95,11 @@ class ActionsCreateHostedRunnerForOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsCreateHostedRunnerForOrgRequest &&
-        name == other.name &&
-        image == other.image &&
-        size == other.size &&
-        runnerGroupId == other.runnerGroupId &&
-        maximumRunners == other.maximumRunners &&
-        enableStaticIp == other.enableStaticIp;
+        this.name == other.name &&
+        this.image == other.image &&
+        this.size == other.size &&
+        this.runnerGroupId == other.runnerGroupId &&
+        this.maximumRunners == other.maximumRunners &&
+        this.enableStaticIp == other.enableStaticIp;
   }
 }

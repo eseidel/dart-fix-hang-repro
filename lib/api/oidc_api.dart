@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/empty_object.dart';
 import 'package:github_out/models/oidc_custom_sub.dart';
+import 'package:http/http.dart' as http;
 
 /// Endpoints to manage GitHub OIDC configuration using the REST API.
 class OidcApi {
@@ -26,14 +28,14 @@ class OidcApi {
       method: Method.get,
       path: '/orgs/{org}/actions/oidc/customization/sub'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -61,15 +63,16 @@ class OidcApi {
       method: Method.put,
       path: '/orgs/{org}/actions/oidc/customization/sub'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: oidcCustomSub.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

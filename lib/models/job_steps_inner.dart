@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class JobStepsInner {
-  const JobStepsInner({
+  JobStepsInner({
     required this.status,
     required this.conclusion,
     required this.name,
@@ -22,7 +22,7 @@ class JobStepsInner {
         status: JobStepsInnerStatus.fromJson(json['status'] as String),
         conclusion: checkedKey(json, 'conclusion') as String?,
         name: json['name'] as String,
-        number: json['number'] as int,
+        number: (json['number'] as int),
         startedAt: maybeParseDateTime(json['started_at'] as String?),
         completedAt: maybeParseDateTime(json['completed_at'] as String?),
       ),
@@ -87,11 +87,11 @@ class JobStepsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is JobStepsInner &&
-        status == other.status &&
-        conclusion == other.conclusion &&
-        name == other.name &&
-        number == other.number &&
-        startedAt == other.startedAt &&
-        completedAt == other.completedAt;
+        this.status == other.status &&
+        this.conclusion == other.conclusion &&
+        this.name == other.name &&
+        this.number == other.number &&
+        this.startedAt == other.startedAt &&
+        this.completedAt == other.completedAt;
   }
 }

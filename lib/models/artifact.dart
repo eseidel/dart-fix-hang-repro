@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/artifact_workflow_run.dart';
 import 'package:meta/meta.dart';
@@ -13,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Artifact {
   /// {@macro artifact}
-  const Artifact({
+  Artifact({
     required this.id,
     required this.nodeId,
     required this.name,
@@ -34,10 +30,10 @@ class Artifact {
       'Artifact',
       json,
       () => Artifact(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
-        sizeInBytes: json['size_in_bytes'] as int,
+        sizeInBytes: (json['size_in_bytes'] as int),
         url: json['url'] as String,
         archiveDownloadUrl: json['archive_download_url'] as String,
         expired: json['expired'] as bool,
@@ -141,17 +137,17 @@ class Artifact {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Artifact &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        sizeInBytes == other.sizeInBytes &&
-        url == other.url &&
-        archiveDownloadUrl == other.archiveDownloadUrl &&
-        expired == other.expired &&
-        createdAt == other.createdAt &&
-        expiresAt == other.expiresAt &&
-        updatedAt == other.updatedAt &&
-        digest == other.digest &&
-        workflowRun == other.workflowRun;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.sizeInBytes == other.sizeInBytes &&
+        this.url == other.url &&
+        this.archiveDownloadUrl == other.archiveDownloadUrl &&
+        this.expired == other.expired &&
+        this.createdAt == other.createdAt &&
+        this.expiresAt == other.expiresAt &&
+        this.updatedAt == other.updatedAt &&
+        this.digest == other.digest &&
+        this.workflowRun == other.workflowRun;
   }
 }

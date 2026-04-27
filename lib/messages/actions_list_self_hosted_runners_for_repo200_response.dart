@@ -1,10 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/runner.dart';
+import 'package:github_out/models/runner_label.dart';
+import 'package:github_out/models/runner_label_type.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListSelfHostedRunnersForRepo200Response {
-  const ActionsListSelfHostedRunnersForRepo200Response({
+  ActionsListSelfHostedRunnersForRepo200Response({
     required this.totalCount,
     required this.runners,
   });
@@ -18,7 +20,7 @@ class ActionsListSelfHostedRunnersForRepo200Response {
       'ActionsListSelfHostedRunnersForRepo200Response',
       json,
       () => ActionsListSelfHostedRunnersForRepo200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         runners: (json['runners'] as List)
             .map<Runner>((e) => Runner.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -59,7 +61,7 @@ class ActionsListSelfHostedRunnersForRepo200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListSelfHostedRunnersForRepo200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(runners, other.runners);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.runners, other.runners);
   }
 }

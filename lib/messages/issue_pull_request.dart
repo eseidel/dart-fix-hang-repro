@@ -3,12 +3,12 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuePullRequest {
-  const IssuePullRequest({
+  IssuePullRequest({
+    this.mergedAt,
     required this.diffUrl,
     required this.htmlUrl,
     required this.patchUrl,
     required this.url,
-    this.mergedAt,
   });
 
   /// Converts a `Map<String, dynamic>` to an [IssuePullRequest].
@@ -65,10 +65,10 @@ class IssuePullRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssuePullRequest &&
-        mergedAt == other.mergedAt &&
-        diffUrl == other.diffUrl &&
-        htmlUrl == other.htmlUrl &&
-        patchUrl == other.patchUrl &&
-        url == other.url;
+        this.mergedAt == other.mergedAt &&
+        this.diffUrl == other.diffUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.patchUrl == other.patchUrl &&
+        this.url == other.url;
   }
 }

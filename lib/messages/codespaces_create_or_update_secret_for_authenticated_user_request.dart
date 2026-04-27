@@ -1,16 +1,12 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/codespaces_create_or_update_secret_for_authenticated_user_request_selected_repository_ids_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesCreateOrUpdateSecretForAuthenticatedUserRequest {
-  const CodespacesCreateOrUpdateSecretForAuthenticatedUserRequest({
-    required this.keyId,
+  CodespacesCreateOrUpdateSecretForAuthenticatedUserRequest({
     this.encryptedValue,
+    required this.keyId,
     this.selectedRepositoryIds,
   });
 
@@ -99,8 +95,8 @@ class CodespacesCreateOrUpdateSecretForAuthenticatedUserRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesCreateOrUpdateSecretForAuthenticatedUserRequest &&
-        encryptedValue == other.encryptedValue &&
-        keyId == other.keyId &&
-        listsEqual(selectedRepositoryIds, other.selectedRepositoryIds);
+        this.encryptedValue == other.encryptedValue &&
+        this.keyId == other.keyId &&
+        listsEqual(this.selectedRepositoryIds, other.selectedRepositoryIds);
   }
 }

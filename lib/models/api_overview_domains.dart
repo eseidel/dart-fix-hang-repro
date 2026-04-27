@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/api_overview_domains_actions_inbound.dart';
 import 'package:github_out/models/api_overview_domains_artifact_attestations.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ApiOverviewDomains {
-  const ApiOverviewDomains({
+  ApiOverviewDomains({
     this.website,
     this.codespaces,
     this.copilot,
@@ -86,12 +82,12 @@ class ApiOverviewDomains {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiOverviewDomains &&
-        listsEqual(website, other.website) &&
-        listsEqual(codespaces, other.codespaces) &&
-        listsEqual(copilot, other.copilot) &&
-        listsEqual(packages, other.packages) &&
-        listsEqual(actions, other.actions) &&
-        actionsInbound == other.actionsInbound &&
-        artifactAttestations == other.artifactAttestations;
+        listsEqual(this.website, other.website) &&
+        listsEqual(this.codespaces, other.codespaces) &&
+        listsEqual(this.copilot, other.copilot) &&
+        listsEqual(this.packages, other.packages) &&
+        listsEqual(this.actions, other.actions) &&
+        this.actionsInbound == other.actionsInbound &&
+        this.artifactAttestations == other.artifactAttestations;
   }
 }

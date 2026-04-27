@@ -1,5 +1,7 @@
 import 'package:github_out/models/checks_create_request_one_of_0.dart';
+import 'package:github_out/models/checks_create_request_one_of_0_status.dart';
 import 'package:github_out/models/checks_create_request_one_of_1.dart';
+import 'package:github_out/models/checks_create_request_one_of_1_status.dart';
 import 'package:meta/meta.dart';
 
 sealed class ChecksCreateRequest {

@@ -1,5 +1,7 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/simple_classroom.dart';
 import 'package:github_out/models/simple_classroom_assignment.dart';
+import 'package:github_out/models/simple_classroom_assignment_type.dart';
 import 'package:github_out/models/simple_classroom_repository.dart';
 import 'package:github_out/models/simple_classroom_user.dart';
 import 'package:meta/meta.dart';
@@ -11,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ClassroomAcceptedAssignment {
   /// {@macro classroom_accepted_assignment}
-  const ClassroomAcceptedAssignment({
+  ClassroomAcceptedAssignment({
     required this.id,
     required this.submitted,
     required this.passing,
@@ -28,10 +30,10 @@ class ClassroomAcceptedAssignment {
       'ClassroomAcceptedAssignment',
       json,
       () => ClassroomAcceptedAssignment(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         submitted: json['submitted'] as bool,
         passing: json['passing'] as bool,
-        commitCount: json['commit_count'] as int,
+        commitCount: (json['commit_count'] as int),
         grade: json['grade'] as String,
         students: (json['students'] as List)
             .map<SimpleClassroomUser>(
@@ -118,13 +120,13 @@ class ClassroomAcceptedAssignment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ClassroomAcceptedAssignment &&
-        id == other.id &&
-        submitted == other.submitted &&
-        passing == other.passing &&
-        commitCount == other.commitCount &&
-        grade == other.grade &&
-        listsEqual(students, other.students) &&
-        repository == other.repository &&
-        assignment == other.assignment;
+        this.id == other.id &&
+        this.submitted == other.submitted &&
+        this.passing == other.passing &&
+        this.commitCount == other.commitCount &&
+        this.grade == other.grade &&
+        listsEqual(this.students, other.students) &&
+        this.repository == other.repository &&
+        this.assignment == other.assignment;
   }
 }

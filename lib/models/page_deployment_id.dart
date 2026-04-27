@@ -7,8 +7,8 @@ sealed class PageDeploymentId {
 
   factory PageDeploymentId.fromJson(dynamic json) {
     return switch (json) {
-      final int v => PageDeploymentIdInt(v),
-      final String v => PageDeploymentIdString(v),
+      int v => PageDeploymentIdInt(v),
+      String v => PageDeploymentIdString(v),
       _ => throw FormatException(
         'Unsupported shape for PageDeploymentId: ${json.runtimeType}',
       ),

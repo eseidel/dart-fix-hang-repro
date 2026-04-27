@@ -1,15 +1,19 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/enterprise.dart';
+import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/protected_branch_required_pull_request_reviews_bypass_pull_request_allowances.dart';
 import 'package:github_out/models/protected_branch_required_pull_request_reviews_dismissal_restrictions.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ProtectedBranchRequiredPullRequestReviews {
-  const ProtectedBranchRequiredPullRequestReviews({
+  ProtectedBranchRequiredPullRequestReviews({
     required this.url,
     this.dismissStaleReviews,
     this.requireCodeOwnerReviews,
@@ -32,7 +36,7 @@ class ProtectedBranchRequiredPullRequestReviews {
         dismissStaleReviews: json['dismiss_stale_reviews'] as bool?,
         requireCodeOwnerReviews: json['require_code_owner_reviews'] as bool?,
         requiredApprovingReviewCount:
-            json['required_approving_review_count'] as int?,
+            (json['required_approving_review_count'] as int?),
         requireLastPushApproval:
             json['require_last_push_approval'] as bool? ?? false,
         dismissalRestrictions:
@@ -100,12 +104,13 @@ class ProtectedBranchRequiredPullRequestReviews {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProtectedBranchRequiredPullRequestReviews &&
-        url == other.url &&
-        dismissStaleReviews == other.dismissStaleReviews &&
-        requireCodeOwnerReviews == other.requireCodeOwnerReviews &&
-        requiredApprovingReviewCount == other.requiredApprovingReviewCount &&
-        requireLastPushApproval == other.requireLastPushApproval &&
-        dismissalRestrictions == other.dismissalRestrictions &&
-        bypassPullRequestAllowances == other.bypassPullRequestAllowances;
+        this.url == other.url &&
+        this.dismissStaleReviews == other.dismissStaleReviews &&
+        this.requireCodeOwnerReviews == other.requireCodeOwnerReviews &&
+        this.requiredApprovingReviewCount ==
+            other.requiredApprovingReviewCount &&
+        this.requireLastPushApproval == other.requireLastPushApproval &&
+        this.dismissalRestrictions == other.dismissalRestrictions &&
+        this.bypassPullRequestAllowances == other.bypassPullRequestAllowances;
   }
 }

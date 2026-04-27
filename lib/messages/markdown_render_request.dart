@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class MarkdownRenderRequest {
-  const MarkdownRenderRequest({
+  MarkdownRenderRequest({
     required this.text,
     this.mode,
     this.context,
@@ -65,8 +65,8 @@ class MarkdownRenderRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MarkdownRenderRequest &&
-        text == other.text &&
-        mode == other.mode &&
-        context == other.context;
+        this.text == other.text &&
+        this.mode == other.mode &&
+        this.context == other.context;
   }
 }

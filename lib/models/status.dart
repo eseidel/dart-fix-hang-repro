@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Status {
   /// {@macro status}
-  const Status({
+  Status({
     required this.url,
     required this.avatarUrl,
     required this.id,
@@ -31,7 +31,7 @@ class Status {
       () => Status(
         url: json['url'] as String,
         avatarUrl: checkedKey(json, 'avatar_url') as String?,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         state: json['state'] as String,
         description: checkedKey(json, 'description') as String?,
@@ -106,16 +106,16 @@ class Status {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Status &&
-        url == other.url &&
-        avatarUrl == other.avatarUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        state == other.state &&
-        description == other.description &&
-        targetUrl == other.targetUrl &&
-        context == other.context &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        creator == other.creator;
+        this.url == other.url &&
+        this.avatarUrl == other.avatarUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.state == other.state &&
+        this.description == other.description &&
+        this.targetUrl == other.targetUrl &&
+        this.context == other.context &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.creator == other.creator;
   }
 }

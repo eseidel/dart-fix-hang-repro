@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PorterLargeFile {
   /// {@macro porter_large_file}
-  const PorterLargeFile({
+  PorterLargeFile({
     required this.refName,
     required this.path,
     required this.oid,
@@ -24,7 +24,7 @@ class PorterLargeFile {
         refName: json['ref_name'] as String,
         path: json['path'] as String,
         oid: json['oid'] as String,
-        size: json['size'] as int,
+        size: (json['size'] as int),
       ),
     );
   }
@@ -65,9 +65,9 @@ class PorterLargeFile {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PorterLargeFile &&
-        refName == other.refName &&
-        path == other.path &&
-        oid == other.oid &&
-        size == other.size;
+        this.refName == other.refName &&
+        this.path == other.path &&
+        this.oid == other.oid &&
+        this.size == other.size;
   }
 }

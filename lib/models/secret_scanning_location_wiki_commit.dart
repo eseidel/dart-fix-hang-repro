@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
@@ -12,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SecretScanningLocationWikiCommit {
   /// {@macro secret_scanning_location_wiki_commit}
-  const SecretScanningLocationWikiCommit({
+  SecretScanningLocationWikiCommit({
     required this.path,
     required this.startLine,
     required this.endLine,
@@ -122,14 +118,14 @@ class SecretScanningLocationWikiCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningLocationWikiCommit &&
-        path == other.path &&
-        startLine == other.startLine &&
-        endLine == other.endLine &&
-        startColumn == other.startColumn &&
-        endColumn == other.endColumn &&
-        blobSha == other.blobSha &&
-        pageUrl == other.pageUrl &&
-        commitSha == other.commitSha &&
-        commitUrl == other.commitUrl;
+        this.path == other.path &&
+        this.startLine == other.startLine &&
+        this.endLine == other.endLine &&
+        this.startColumn == other.startColumn &&
+        this.endColumn == other.endColumn &&
+        this.blobSha == other.blobSha &&
+        this.pageUrl == other.pageUrl &&
+        this.commitSha == other.commitSha &&
+        this.commitUrl == other.commitUrl;
   }
 }

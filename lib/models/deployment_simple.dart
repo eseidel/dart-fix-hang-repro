@@ -1,5 +1,9 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template deployment_simple}
@@ -10,18 +14,18 @@ import 'package:meta/meta.dart';
 @immutable
 class DeploymentSimple {
   /// {@macro deployment_simple}
-  const DeploymentSimple({
+  DeploymentSimple({
     required this.url,
     required this.id,
     required this.nodeId,
     required this.task,
+    this.originalEnvironment,
     required this.environment,
     required this.description,
     required this.createdAt,
     required this.updatedAt,
     required this.statusesUrl,
     required this.repositoryUrl,
-    this.originalEnvironment,
     this.transientEnvironment,
     this.productionEnvironment,
     this.performedViaGithubApp,
@@ -34,7 +38,7 @@ class DeploymentSimple {
       json,
       () => DeploymentSimple(
         url: Uri.parse(json['url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         task: json['task'] as String,
         originalEnvironment: json['original_environment'] as String?,
@@ -158,19 +162,19 @@ class DeploymentSimple {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DeploymentSimple &&
-        url == other.url &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        task == other.task &&
-        originalEnvironment == other.originalEnvironment &&
-        environment == other.environment &&
-        description == other.description &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        statusesUrl == other.statusesUrl &&
-        repositoryUrl == other.repositoryUrl &&
-        transientEnvironment == other.transientEnvironment &&
-        productionEnvironment == other.productionEnvironment &&
-        performedViaGithubApp == other.performedViaGithubApp;
+        this.url == other.url &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.task == other.task &&
+        this.originalEnvironment == other.originalEnvironment &&
+        this.environment == other.environment &&
+        this.description == other.description &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.statusesUrl == other.statusesUrl &&
+        this.repositoryUrl == other.repositoryUrl &&
+        this.transientEnvironment == other.transientEnvironment &&
+        this.productionEnvironment == other.productionEnvironment &&
+        this.performedViaGithubApp == other.performedViaGithubApp;
   }
 }

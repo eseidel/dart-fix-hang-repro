@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class OrgHookConfig {
-  const OrgHookConfig({
+  OrgHookConfig({
     this.url,
     this.insecureSsl,
     this.contentType,
@@ -67,9 +67,9 @@ class OrgHookConfig {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgHookConfig &&
-        url == other.url &&
-        insecureSsl == other.insecureSsl &&
-        contentType == other.contentType &&
-        secret == other.secret;
+        this.url == other.url &&
+        this.insecureSsl == other.insecureSsl &&
+        this.contentType == other.contentType &&
+        this.secret == other.secret;
   }
 }

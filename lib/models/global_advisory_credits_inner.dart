@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GlobalAdvisoryCreditsInner {
-  const GlobalAdvisoryCreditsInner({
+  GlobalAdvisoryCreditsInner({
     required this.user,
     required this.type,
   });
@@ -56,7 +56,7 @@ class GlobalAdvisoryCreditsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GlobalAdvisoryCreditsInner &&
-        user == other.user &&
-        type == other.type;
+        this.user == other.user &&
+        this.type == other.type;
   }
 }

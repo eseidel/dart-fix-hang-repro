@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleFilePathRestrictionParameters {
-  const RepositoryRuleFilePathRestrictionParameters({
+  RepositoryRuleFilePathRestrictionParameters({
     required this.restrictedFilePaths,
   });
 
@@ -52,6 +52,6 @@ class RepositoryRuleFilePathRestrictionParameters {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleFilePathRestrictionParameters &&
-        listsEqual(restrictedFilePaths, other.restrictedFilePaths);
+        listsEqual(this.restrictedFilePaths, other.restrictedFilePaths);
   }
 }

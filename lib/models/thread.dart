@@ -1,5 +1,24 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/thread_subject.dart';
 import 'package:meta/meta.dart';
 
@@ -10,7 +29,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Thread {
   /// {@macro thread}
-  const Thread({
+  Thread({
     required this.id,
     required this.repository,
     required this.subject,
@@ -101,14 +120,14 @@ class Thread {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Thread &&
-        id == other.id &&
-        repository == other.repository &&
-        subject == other.subject &&
-        reason == other.reason &&
-        unread == other.unread &&
-        updatedAt == other.updatedAt &&
-        lastReadAt == other.lastReadAt &&
-        url == other.url &&
-        subscriptionUrl == other.subscriptionUrl;
+        this.id == other.id &&
+        this.repository == other.repository &&
+        this.subject == other.subject &&
+        this.reason == other.reason &&
+        this.unread == other.unread &&
+        this.updatedAt == other.updatedAt &&
+        this.lastReadAt == other.lastReadAt &&
+        this.url == other.url &&
+        this.subscriptionUrl == other.subscriptionUrl;
   }
 }

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http/http.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/auth.dart';
-import 'package:http/http.dart';
 
 export 'package:github_out/auth.dart';
 

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class BasicError {
   /// {@macro basic_error}
-  const BasicError({
+  BasicError({
     this.message,
     this.documentationUrl,
     this.url,
@@ -65,9 +65,9 @@ class BasicError {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BasicError &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl &&
-        url == other.url &&
-        status == other.status;
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl &&
+        this.url == other.url &&
+        this.status == other.status;
   }
 }

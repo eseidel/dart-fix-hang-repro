@@ -1,13 +1,21 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class AppsListInstallationReposForAuthenticatedUser200Response {
-  const AppsListInstallationReposForAuthenticatedUser200Response({
+  AppsListInstallationReposForAuthenticatedUser200Response({
     required this.totalCount,
-    required this.repositories,
     this.repositorySelection,
+    required this.repositories,
   });
 
   /// Converts a `Map<String, dynamic>` to an
@@ -19,7 +27,7 @@ class AppsListInstallationReposForAuthenticatedUser200Response {
       'AppsListInstallationReposForAuthenticatedUser200Response',
       json,
       () => AppsListInstallationReposForAuthenticatedUser200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         repositorySelection: json['repository_selection'] as String?,
         repositories: (json['repositories'] as List)
             .map<Repository>(
@@ -67,8 +75,8 @@ class AppsListInstallationReposForAuthenticatedUser200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is AppsListInstallationReposForAuthenticatedUser200Response &&
-        totalCount == other.totalCount &&
-        repositorySelection == other.repositorySelection &&
-        listsEqual(repositories, other.repositories);
+        this.totalCount == other.totalCount &&
+        this.repositorySelection == other.repositorySelection &&
+        listsEqual(this.repositories, other.repositories);
   }
 }

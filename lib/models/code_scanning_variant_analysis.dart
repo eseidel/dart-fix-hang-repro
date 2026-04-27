@@ -1,12 +1,12 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_failure_reason.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_language.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_repository.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_scanned_repositories_inner.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_skipped_repo_group.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_skipped_repositories.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_skipped_repositories_not_found_repos.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_status.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_status_1.dart';
 import 'package:github_out/models/simple_repository.dart';
 import 'package:github_out/models/simple_user.dart';
@@ -19,16 +19,16 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeScanningVariantAnalysis {
   /// {@macro code_scanning_variant_analysis}
-  const CodeScanningVariantAnalysis({
+  CodeScanningVariantAnalysis({
     required this.id,
     required this.controllerRepo,
     required this.actor,
     required this.queryLanguage,
     required this.queryPackUrl,
-    required this.status,
     this.createdAt,
     this.updatedAt,
     this.completedAt,
+    required this.status,
     this.actionsWorkflowRunId,
     this.failureReason,
     this.scannedRepositories,
@@ -41,7 +41,7 @@ class CodeScanningVariantAnalysis {
       'CodeScanningVariantAnalysis',
       json,
       () => CodeScanningVariantAnalysis(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         controllerRepo: SimpleRepository.fromJson(
           json['controller_repo'] as Map<String, dynamic>,
         ),
@@ -56,7 +56,7 @@ class CodeScanningVariantAnalysis {
         status: CodeScanningVariantAnalysisStatus1.fromJson(
           json['status'] as String,
         ),
-        actionsWorkflowRunId: json['actions_workflow_run_id'] as int?,
+        actionsWorkflowRunId: (json['actions_workflow_run_id'] as int?),
         failureReason: CodeScanningVariantAnalysisFailureReason.maybeFromJson(
           json['failure_reason'] as String?,
         ),
@@ -175,18 +175,18 @@ class CodeScanningVariantAnalysis {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningVariantAnalysis &&
-        id == other.id &&
-        controllerRepo == other.controllerRepo &&
-        actor == other.actor &&
-        queryLanguage == other.queryLanguage &&
-        queryPackUrl == other.queryPackUrl &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        completedAt == other.completedAt &&
-        status == other.status &&
-        actionsWorkflowRunId == other.actionsWorkflowRunId &&
-        failureReason == other.failureReason &&
-        listsEqual(scannedRepositories, other.scannedRepositories) &&
-        skippedRepositories == other.skippedRepositories;
+        this.id == other.id &&
+        this.controllerRepo == other.controllerRepo &&
+        this.actor == other.actor &&
+        this.queryLanguage == other.queryLanguage &&
+        this.queryPackUrl == other.queryPackUrl &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.completedAt == other.completedAt &&
+        this.status == other.status &&
+        this.actionsWorkflowRunId == other.actionsWorkflowRunId &&
+        this.failureReason == other.failureReason &&
+        listsEqual(this.scannedRepositories, other.scannedRepositories) &&
+        this.skippedRepositories == other.skippedRepositories;
   }
 }

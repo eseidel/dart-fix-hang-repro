@@ -1,9 +1,6 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_commit_message_pattern_parameters.dart';
+import 'package:github_out/models/repository_rule_commit_message_pattern_parameters_operator.dart';
 import 'package:github_out/models/repository_rule_commit_message_pattern_type.dart';
 import 'package:meta/meta.dart';
 
@@ -14,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleCommitMessagePattern {
   /// {@macro repository_rule_commit_message_pattern}
-  const RepositoryRuleCommitMessagePattern({
+  RepositoryRuleCommitMessagePattern({
     required this.type,
     this.parameters,
   });
@@ -71,7 +68,7 @@ class RepositoryRuleCommitMessagePattern {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleCommitMessagePattern &&
-        type == other.type &&
-        parameters == other.parameters;
+        this.type == other.type &&
+        this.parameters == other.parameters;
   }
 }

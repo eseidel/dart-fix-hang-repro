@@ -1,10 +1,13 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/organization_role.dart';
+import 'package:github_out/models/organization_role_base_role.dart';
+import 'package:github_out/models/organization_role_source.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrgsListOrgRoles200Response {
-  const OrgsListOrgRoles200Response({
+  OrgsListOrgRoles200Response({
     this.totalCount,
     this.roles,
   });
@@ -15,7 +18,7 @@ class OrgsListOrgRoles200Response {
       'OrgsListOrgRoles200Response',
       json,
       () => OrgsListOrgRoles200Response(
-        totalCount: json['total_count'] as int?,
+        totalCount: (json['total_count'] as int?),
         roles: (json['roles'] as List?)
             ?.map<OrganizationRole>(
               (e) => OrganizationRole.fromJson(e as Map<String, dynamic>),
@@ -60,7 +63,7 @@ class OrgsListOrgRoles200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsListOrgRoles200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(roles, other.roles);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.roles, other.roles);
   }
 }

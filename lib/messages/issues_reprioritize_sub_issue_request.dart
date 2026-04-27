@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesReprioritizeSubIssueRequest {
-  const IssuesReprioritizeSubIssueRequest({
+  IssuesReprioritizeSubIssueRequest({
     required this.subIssueId,
     this.afterId,
     this.beforeId,
@@ -18,9 +18,9 @@ class IssuesReprioritizeSubIssueRequest {
       'IssuesReprioritizeSubIssueRequest',
       json,
       () => IssuesReprioritizeSubIssueRequest(
-        subIssueId: json['sub_issue_id'] as int,
-        afterId: json['after_id'] as int?,
-        beforeId: json['before_id'] as int?,
+        subIssueId: (json['sub_issue_id'] as int),
+        afterId: (json['after_id'] as int?),
+        beforeId: (json['before_id'] as int?),
       ),
     );
   }
@@ -68,8 +68,8 @@ class IssuesReprioritizeSubIssueRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssuesReprioritizeSubIssueRequest &&
-        subIssueId == other.subIssueId &&
-        afterId == other.afterId &&
-        beforeId == other.beforeId;
+        this.subIssueId == other.subIssueId &&
+        this.afterId == other.afterId &&
+        this.beforeId == other.beforeId;
   }
 }

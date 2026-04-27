@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRulesetLinks {
-  const RepositoryRulesetLinks({
+  RepositoryRulesetLinks({
     this.self,
     this.html,
   });
@@ -56,7 +56,7 @@ class RepositoryRulesetLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRulesetLinks &&
-        self == other.self &&
-        html == other.html;
+        this.self == other.self &&
+        this.html == other.html;
   }
 }

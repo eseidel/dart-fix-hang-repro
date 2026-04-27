@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReferrerTraffic {
   /// {@macro referrer_traffic}
-  const ReferrerTraffic({
+  ReferrerTraffic({
     required this.referrer,
     required this.count,
     required this.uniques,
@@ -21,8 +21,8 @@ class ReferrerTraffic {
       json,
       () => ReferrerTraffic(
         referrer: json['referrer'] as String,
-        count: json['count'] as int,
-        uniques: json['uniques'] as int,
+        count: (json['count'] as int),
+        uniques: (json['uniques'] as int),
       ),
     );
   }
@@ -65,8 +65,8 @@ class ReferrerTraffic {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReferrerTraffic &&
-        referrer == other.referrer &&
-        count == other.count &&
-        uniques == other.uniques;
+        this.referrer == other.referrer &&
+        this.count == other.count &&
+        this.uniques == other.uniques;
   }
 }

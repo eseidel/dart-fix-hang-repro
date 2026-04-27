@@ -1,5 +1,8 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/code_of_conduct_simple.dart';
+import 'package:github_out/models/community_health_file.dart';
 import 'package:github_out/models/community_profile_files.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:meta/meta.dart';
 
 /// {@template community_profile}
@@ -9,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CommunityProfile {
   /// {@macro community_profile}
-  const CommunityProfile({
+  CommunityProfile({
     required this.healthPercentage,
     required this.description,
     required this.documentation,
@@ -24,7 +27,7 @@ class CommunityProfile {
       'CommunityProfile',
       json,
       () => CommunityProfile(
-        healthPercentage: json['health_percentage'] as int,
+        healthPercentage: (json['health_percentage'] as int),
         description: checkedKey(json, 'description') as String?,
         documentation: checkedKey(json, 'documentation') as String?,
         files: CommunityProfileFiles.fromJson(
@@ -89,11 +92,11 @@ class CommunityProfile {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommunityProfile &&
-        healthPercentage == other.healthPercentage &&
-        description == other.description &&
-        documentation == other.documentation &&
-        files == other.files &&
-        updatedAt == other.updatedAt &&
-        contentReportsEnabled == other.contentReportsEnabled;
+        this.healthPercentage == other.healthPercentage &&
+        this.description == other.description &&
+        this.documentation == other.documentation &&
+        this.files == other.files &&
+        this.updatedAt == other.updatedAt &&
+        this.contentReportsEnabled == other.contentReportsEnabled;
   }
 }

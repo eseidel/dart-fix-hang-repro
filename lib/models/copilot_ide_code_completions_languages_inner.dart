@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotIdeCodeCompletionsLanguagesInner {
   /// {@macro copilot_ide_code_completions_languages_inner}
-  const CopilotIdeCodeCompletionsLanguagesInner({
+  CopilotIdeCodeCompletionsLanguagesInner({
     this.name,
     this.totalEngagedUsers,
   });
@@ -23,7 +23,7 @@ class CopilotIdeCodeCompletionsLanguagesInner {
       json,
       () => CopilotIdeCodeCompletionsLanguagesInner(
         name: json['name'] as String?,
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
       ),
     );
   }
@@ -66,7 +66,7 @@ class CopilotIdeCodeCompletionsLanguagesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotIdeCodeCompletionsLanguagesInner &&
-        name == other.name &&
-        totalEngagedUsers == other.totalEngagedUsers;
+        this.name == other.name &&
+        this.totalEngagedUsers == other.totalEngagedUsers;
   }
 }

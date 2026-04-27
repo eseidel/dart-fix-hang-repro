@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ApiOverviewDomainsActionsInbound {
-  const ApiOverviewDomainsActionsInbound({
+  ApiOverviewDomainsActionsInbound({
     this.fullDomains,
     this.wildcardDomains,
   });
@@ -54,7 +54,7 @@ class ApiOverviewDomainsActionsInbound {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiOverviewDomainsActionsInbound &&
-        listsEqual(fullDomains, other.fullDomains) &&
-        listsEqual(wildcardDomains, other.wildcardDomains);
+        listsEqual(this.fullDomains, other.fullDomains) &&
+        listsEqual(this.wildcardDomains, other.wildcardDomains);
   }
 }

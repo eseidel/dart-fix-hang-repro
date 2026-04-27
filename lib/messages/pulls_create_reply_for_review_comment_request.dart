@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsCreateReplyForReviewCommentRequest {
-  const PullsCreateReplyForReviewCommentRequest({
+  PullsCreateReplyForReviewCommentRequest({
     required this.body,
   });
 
@@ -50,6 +50,6 @@ class PullsCreateReplyForReviewCommentRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsCreateReplyForReviewCommentRequest &&
-        body == other.body;
+        this.body == other.body;
   }
 }

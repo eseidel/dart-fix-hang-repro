@@ -6,8 +6,8 @@ sealed class IssuesCreateRequestTitle {
 
   factory IssuesCreateRequestTitle.fromJson(dynamic json) {
     return switch (json) {
-      final String v => IssuesCreateRequestTitleString(v),
-      final int v => IssuesCreateRequestTitleInt(v),
+      String v => IssuesCreateRequestTitleString(v),
+      int v => IssuesCreateRequestTitleInt(v),
       _ => throw FormatException(
         'Unsupported shape for IssuesCreateRequestTitle: ${json.runtimeType}',
       ),

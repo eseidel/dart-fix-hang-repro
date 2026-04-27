@@ -1,21 +1,17 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_pull_request_parameters_allowed_merge_methods_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRulePullRequestParameters {
-  const RepositoryRulePullRequestParameters({
+  RepositoryRulePullRequestParameters({
+    this.allowedMergeMethods,
+    this.automaticCopilotCodeReviewEnabled,
     required this.dismissStaleReviewsOnPush,
     required this.requireCodeOwnerReview,
     required this.requireLastPushApproval,
     required this.requiredApprovingReviewCount,
     required this.requiredReviewThreadResolution,
-    this.allowedMergeMethods,
-    this.automaticCopilotCodeReviewEnabled,
   });
 
   /// Converts a `Map<String, dynamic>` to a
@@ -42,7 +38,7 @@ class RepositoryRulePullRequestParameters {
         requireCodeOwnerReview: json['require_code_owner_review'] as bool,
         requireLastPushApproval: json['require_last_push_approval'] as bool,
         requiredApprovingReviewCount:
-            json['required_approving_review_count'] as int,
+            (json['required_approving_review_count'] as int),
         requiredReviewThreadResolution:
             json['required_review_thread_resolution'] as bool,
       ),
@@ -121,13 +117,15 @@ class RepositoryRulePullRequestParameters {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRulePullRequestParameters &&
-        listsEqual(allowedMergeMethods, other.allowedMergeMethods) &&
-        automaticCopilotCodeReviewEnabled ==
+        listsEqual(this.allowedMergeMethods, other.allowedMergeMethods) &&
+        this.automaticCopilotCodeReviewEnabled ==
             other.automaticCopilotCodeReviewEnabled &&
-        dismissStaleReviewsOnPush == other.dismissStaleReviewsOnPush &&
-        requireCodeOwnerReview == other.requireCodeOwnerReview &&
-        requireLastPushApproval == other.requireLastPushApproval &&
-        requiredApprovingReviewCount == other.requiredApprovingReviewCount &&
-        requiredReviewThreadResolution == other.requiredReviewThreadResolution;
+        this.dismissStaleReviewsOnPush == other.dismissStaleReviewsOnPush &&
+        this.requireCodeOwnerReview == other.requireCodeOwnerReview &&
+        this.requireLastPushApproval == other.requireLastPushApproval &&
+        this.requiredApprovingReviewCount ==
+            other.requiredApprovingReviewCount &&
+        this.requiredReviewThreadResolution ==
+            other.requiredReviewThreadResolution;
   }
 }

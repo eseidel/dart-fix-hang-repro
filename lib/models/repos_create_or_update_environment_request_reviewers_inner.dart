@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateOrUpdateEnvironmentRequestReviewersInner {
-  const ReposCreateOrUpdateEnvironmentRequestReviewersInner({
+  ReposCreateOrUpdateEnvironmentRequestReviewersInner({
     this.type,
     this.id,
   });
@@ -19,7 +19,7 @@ class ReposCreateOrUpdateEnvironmentRequestReviewersInner {
       json,
       () => ReposCreateOrUpdateEnvironmentRequestReviewersInner(
         type: DeploymentReviewerType.maybeFromJson(json['type'] as String?),
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
       ),
     );
   }
@@ -62,7 +62,7 @@ class ReposCreateOrUpdateEnvironmentRequestReviewersInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateOrUpdateEnvironmentRequestReviewersInner &&
-        type == other.type &&
-        id == other.id;
+        this.type == other.type &&
+        this.id == other.id;
   }
 }

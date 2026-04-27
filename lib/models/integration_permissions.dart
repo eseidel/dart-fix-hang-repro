@@ -8,13 +8,13 @@ import 'package:meta/meta.dart';
 @immutable
 class IntegrationPermissions {
   /// {@macro integration_permissions}
-  const IntegrationPermissions({
-    required this.entries,
+  IntegrationPermissions({
     this.issues,
     this.checks,
     this.metadata,
     this.contents,
     this.deployments,
+    required this.entries,
   });
 
   /// Converts a `Map<String, dynamic>` to an [IntegrationPermissions].
@@ -59,7 +59,7 @@ class IntegrationPermissions {
       'metadata': metadata,
       'contents': contents,
       'deployments': deployments,
-      ...entries.map(MapEntry.new),
+      ...entries.map((key, value) => MapEntry(key, value)),
     };
   }
 
@@ -77,11 +77,11 @@ class IntegrationPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IntegrationPermissions &&
-        issues == other.issues &&
-        checks == other.checks &&
-        metadata == other.metadata &&
-        contents == other.contents &&
-        deployments == other.deployments &&
+        this.issues == other.issues &&
+        this.checks == other.checks &&
+        this.metadata == other.metadata &&
+        this.contents == other.contents &&
+        this.deployments == other.deployments &&
         mapsEqual(entries, other.entries);
   }
 }

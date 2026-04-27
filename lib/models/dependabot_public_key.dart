@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotPublicKey {
   /// {@macro dependabot_public_key}
-  const DependabotPublicKey({
+  DependabotPublicKey({
     required this.keyId,
     required this.key,
   });
@@ -60,7 +60,7 @@ class DependabotPublicKey {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotPublicKey &&
-        keyId == other.keyId &&
-        key == other.key;
+        this.keyId == other.keyId &&
+        this.key == other.key;
   }
 }

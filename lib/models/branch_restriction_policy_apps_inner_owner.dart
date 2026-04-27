@@ -1,13 +1,9 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class BranchRestrictionPolicyAppsInnerOwner {
-  const BranchRestrictionPolicyAppsInnerOwner({
+  BranchRestrictionPolicyAppsInnerOwner({
     this.login,
     this.id,
     this.nodeId,
@@ -44,7 +40,7 @@ class BranchRestrictionPolicyAppsInnerOwner {
       json,
       () => BranchRestrictionPolicyAppsInnerOwner(
         login: json['login'] as String?,
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         nodeId: json['node_id'] as String?,
         url: json['url'] as String?,
         reposUrl: json['repos_url'] as String?,
@@ -201,29 +197,29 @@ class BranchRestrictionPolicyAppsInnerOwner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchRestrictionPolicyAppsInnerOwner &&
-        login == other.login &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        reposUrl == other.reposUrl &&
-        eventsUrl == other.eventsUrl &&
-        hooksUrl == other.hooksUrl &&
-        issuesUrl == other.issuesUrl &&
-        membersUrl == other.membersUrl &&
-        publicMembersUrl == other.publicMembersUrl &&
-        avatarUrl == other.avatarUrl &&
-        description == other.description &&
-        gravatarId == other.gravatarId &&
-        htmlUrl == other.htmlUrl &&
-        followersUrl == other.followersUrl &&
-        followingUrl == other.followingUrl &&
-        gistsUrl == other.gistsUrl &&
-        starredUrl == other.starredUrl &&
-        subscriptionsUrl == other.subscriptionsUrl &&
-        organizationsUrl == other.organizationsUrl &&
-        receivedEventsUrl == other.receivedEventsUrl &&
-        type == other.type &&
-        siteAdmin == other.siteAdmin &&
-        userViewType == other.userViewType;
+        this.login == other.login &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.reposUrl == other.reposUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.hooksUrl == other.hooksUrl &&
+        this.issuesUrl == other.issuesUrl &&
+        this.membersUrl == other.membersUrl &&
+        this.publicMembersUrl == other.publicMembersUrl &&
+        this.avatarUrl == other.avatarUrl &&
+        this.description == other.description &&
+        this.gravatarId == other.gravatarId &&
+        this.htmlUrl == other.htmlUrl &&
+        this.followersUrl == other.followersUrl &&
+        this.followingUrl == other.followingUrl &&
+        this.gistsUrl == other.gistsUrl &&
+        this.starredUrl == other.starredUrl &&
+        this.subscriptionsUrl == other.subscriptionsUrl &&
+        this.organizationsUrl == other.organizationsUrl &&
+        this.receivedEventsUrl == other.receivedEventsUrl &&
+        this.type == other.type &&
+        this.siteAdmin == other.siteAdmin &&
+        this.userViewType == other.userViewType;
   }
 }

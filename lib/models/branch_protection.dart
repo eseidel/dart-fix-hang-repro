@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/branch_protection_allow_deletions.dart';
 import 'package:github_out/models/branch_protection_allow_force_pushes.dart';
@@ -12,9 +8,25 @@ import 'package:github_out/models/branch_protection_required_conversation_resolu
 import 'package:github_out/models/branch_protection_required_linear_history.dart';
 import 'package:github_out/models/branch_protection_required_signatures.dart';
 import 'package:github_out/models/branch_restriction_policy.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner_owner.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner_permissions.dart';
+import 'package:github_out/models/branch_restriction_policy_teams_inner.dart';
+import 'package:github_out/models/branch_restriction_policy_users_inner.dart';
+import 'package:github_out/models/enterprise.dart';
+import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/protected_branch_admin_enforced.dart';
 import 'package:github_out/models/protected_branch_pull_request_review.dart';
+import 'package:github_out/models/protected_branch_pull_request_review_bypass_pull_request_allowances.dart';
+import 'package:github_out/models/protected_branch_pull_request_review_dismissal_restrictions.dart';
 import 'package:github_out/models/protected_branch_required_status_check.dart';
+import 'package:github_out/models/protected_branch_required_status_check_checks_inner.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 /// {@template branch_protection}
@@ -24,7 +36,7 @@ import 'package:meta/meta.dart';
 @immutable
 class BranchProtection {
   /// {@macro branch_protection}
-  const BranchProtection({
+  BranchProtection({
     this.url,
     this.enabled,
     this.requiredStatusChecks,
@@ -194,22 +206,22 @@ class BranchProtection {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchProtection &&
-        url == other.url &&
-        enabled == other.enabled &&
-        requiredStatusChecks == other.requiredStatusChecks &&
-        enforceAdmins == other.enforceAdmins &&
-        requiredPullRequestReviews == other.requiredPullRequestReviews &&
-        restrictions == other.restrictions &&
-        requiredLinearHistory == other.requiredLinearHistory &&
-        allowForcePushes == other.allowForcePushes &&
-        allowDeletions == other.allowDeletions &&
-        blockCreations == other.blockCreations &&
-        requiredConversationResolution ==
+        this.url == other.url &&
+        this.enabled == other.enabled &&
+        this.requiredStatusChecks == other.requiredStatusChecks &&
+        this.enforceAdmins == other.enforceAdmins &&
+        this.requiredPullRequestReviews == other.requiredPullRequestReviews &&
+        this.restrictions == other.restrictions &&
+        this.requiredLinearHistory == other.requiredLinearHistory &&
+        this.allowForcePushes == other.allowForcePushes &&
+        this.allowDeletions == other.allowDeletions &&
+        this.blockCreations == other.blockCreations &&
+        this.requiredConversationResolution ==
             other.requiredConversationResolution &&
-        name == other.name &&
-        protectionUrl == other.protectionUrl &&
-        requiredSignatures == other.requiredSignatures &&
-        lockBranch == other.lockBranch &&
-        allowForkSyncing == other.allowForkSyncing;
+        this.name == other.name &&
+        this.protectionUrl == other.protectionUrl &&
+        this.requiredSignatures == other.requiredSignatures &&
+        this.lockBranch == other.lockBranch &&
+        this.allowForkSyncing == other.allowForkSyncing;
   }
 }

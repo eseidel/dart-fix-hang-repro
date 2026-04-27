@@ -11,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class UsersDeleteEmailForAuthenticatedUserRequestOneOf0 {
   /// {@macro users_delete_email_for_authenticated_user_request_one_of_0}
-  const UsersDeleteEmailForAuthenticatedUserRequestOneOf0({
+  UsersDeleteEmailForAuthenticatedUserRequestOneOf0({
     required this.emails,
   });
 
@@ -58,6 +58,6 @@ class UsersDeleteEmailForAuthenticatedUserRequestOneOf0 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UsersDeleteEmailForAuthenticatedUserRequestOneOf0 &&
-        listsEqual(emails, other.emails);
+        listsEqual(this.emails, other.emails);
   }
 }

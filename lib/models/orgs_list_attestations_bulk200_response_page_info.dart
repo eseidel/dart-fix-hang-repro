@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OrgsListAttestationsBulk200ResponsePageInfo {
   /// {@macro orgs_list_attestations_bulk200_response_page_info}
-  const OrgsListAttestationsBulk200ResponsePageInfo({
+  OrgsListAttestationsBulk200ResponsePageInfo({
     this.hasNext,
     this.hasPrevious,
     this.next,
@@ -77,9 +77,9 @@ class OrgsListAttestationsBulk200ResponsePageInfo {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsListAttestationsBulk200ResponsePageInfo &&
-        hasNext == other.hasNext &&
-        hasPrevious == other.hasPrevious &&
-        next == other.next &&
-        previous == other.previous;
+        this.hasNext == other.hasNext &&
+        this.hasPrevious == other.hasPrevious &&
+        this.next == other.next &&
+        this.previous == other.previous;
   }
 }

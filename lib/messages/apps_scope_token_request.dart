@@ -1,14 +1,58 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/app_permissions.dart';
+import 'package:github_out/models/app_permissions_actions.dart';
+import 'package:github_out/models/app_permissions_administration.dart';
+import 'package:github_out/models/app_permissions_checks.dart';
+import 'package:github_out/models/app_permissions_codespaces.dart';
+import 'package:github_out/models/app_permissions_contents.dart';
+import 'package:github_out/models/app_permissions_dependabot_secrets.dart';
+import 'package:github_out/models/app_permissions_deployments.dart';
+import 'package:github_out/models/app_permissions_email_addresses.dart';
+import 'package:github_out/models/app_permissions_environments.dart';
+import 'package:github_out/models/app_permissions_followers.dart';
+import 'package:github_out/models/app_permissions_git_ssh_keys.dart';
+import 'package:github_out/models/app_permissions_gpg_keys.dart';
+import 'package:github_out/models/app_permissions_interaction_limits.dart';
+import 'package:github_out/models/app_permissions_issues.dart';
+import 'package:github_out/models/app_permissions_members.dart';
+import 'package:github_out/models/app_permissions_metadata.dart';
+import 'package:github_out/models/app_permissions_organization_administration.dart';
+import 'package:github_out/models/app_permissions_organization_announcement_banners.dart';
+import 'package:github_out/models/app_permissions_organization_copilot_seat_management.dart';
+import 'package:github_out/models/app_permissions_organization_custom_org_roles.dart';
+import 'package:github_out/models/app_permissions_organization_custom_properties.dart';
+import 'package:github_out/models/app_permissions_organization_custom_roles.dart';
+import 'package:github_out/models/app_permissions_organization_events.dart';
+import 'package:github_out/models/app_permissions_organization_hooks.dart';
+import 'package:github_out/models/app_permissions_organization_packages.dart';
+import 'package:github_out/models/app_permissions_organization_personal_access_token_requests.dart';
+import 'package:github_out/models/app_permissions_organization_personal_access_tokens.dart';
+import 'package:github_out/models/app_permissions_organization_plan.dart';
+import 'package:github_out/models/app_permissions_organization_projects.dart';
+import 'package:github_out/models/app_permissions_organization_secrets.dart';
+import 'package:github_out/models/app_permissions_organization_self_hosted_runners.dart';
+import 'package:github_out/models/app_permissions_organization_user_blocking.dart';
+import 'package:github_out/models/app_permissions_packages.dart';
+import 'package:github_out/models/app_permissions_pages.dart';
+import 'package:github_out/models/app_permissions_profile.dart';
+import 'package:github_out/models/app_permissions_pull_requests.dart';
+import 'package:github_out/models/app_permissions_repository_custom_properties.dart';
+import 'package:github_out/models/app_permissions_repository_hooks.dart';
+import 'package:github_out/models/app_permissions_repository_projects.dart';
+import 'package:github_out/models/app_permissions_secret_scanning_alerts.dart';
+import 'package:github_out/models/app_permissions_secrets.dart';
+import 'package:github_out/models/app_permissions_security_events.dart';
+import 'package:github_out/models/app_permissions_single_file.dart';
+import 'package:github_out/models/app_permissions_starring.dart';
+import 'package:github_out/models/app_permissions_statuses.dart';
+import 'package:github_out/models/app_permissions_team_discussions.dart';
+import 'package:github_out/models/app_permissions_vulnerability_alerts.dart';
+import 'package:github_out/models/app_permissions_workflows.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class AppsScopeTokenRequest {
-  const AppsScopeTokenRequest({
+  AppsScopeTokenRequest({
     required this.accessToken,
     this.target,
     this.targetId,
@@ -25,7 +69,7 @@ class AppsScopeTokenRequest {
       () => AppsScopeTokenRequest(
         accessToken: json['access_token'] as String,
         target: json['target'] as String?,
-        targetId: json['target_id'] as int?,
+        targetId: (json['target_id'] as int?),
         repositories: (json['repositories'] as List?)?.cast<String>(),
         repositoryIds: (json['repository_ids'] as List?)?.cast<int>(),
         permissions: AppPermissions.maybeFromJson(
@@ -98,11 +142,11 @@ class AppsScopeTokenRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is AppsScopeTokenRequest &&
-        accessToken == other.accessToken &&
-        target == other.target &&
-        targetId == other.targetId &&
-        listsEqual(repositories, other.repositories) &&
-        listsEqual(repositoryIds, other.repositoryIds) &&
-        permissions == other.permissions;
+        this.accessToken == other.accessToken &&
+        this.target == other.target &&
+        this.targetId == other.targetId &&
+        listsEqual(this.repositories, other.repositories) &&
+        listsEqual(this.repositoryIds, other.repositoryIds) &&
+        this.permissions == other.permissions;
   }
 }

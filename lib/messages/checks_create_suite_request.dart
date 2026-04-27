@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ChecksCreateSuiteRequest {
-  const ChecksCreateSuiteRequest({
+  ChecksCreateSuiteRequest({
     required this.headSha,
   });
 
@@ -43,6 +43,6 @@ class ChecksCreateSuiteRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ChecksCreateSuiteRequest && headSha == other.headSha;
+    return other is ChecksCreateSuiteRequest && this.headSha == other.headSha;
   }
 }

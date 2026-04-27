@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_organization_details_cli.dart';
 import 'package:github_out/models/copilot_organization_details_ide_chat.dart';
@@ -20,15 +16,15 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotOrganizationDetails {
   /// {@macro copilot_organization_details}
-  const CopilotOrganizationDetails({
+  CopilotOrganizationDetails({
     required this.seatBreakdown,
     required this.publicCodeSuggestions,
-    required this.seatManagementSetting,
-    required this.entries,
     this.ideChat,
     this.platformChat,
     this.cli,
+    required this.seatManagementSetting,
     this.planType,
+    required this.entries,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CopilotOrganizationDetails].
@@ -60,7 +56,7 @@ class CopilotOrganizationDetails {
         planType: CopilotOrganizationDetailsPlanType.maybeFromJson(
           json['plan_type'] as String?,
         ),
-        entries: json.map(MapEntry.new),
+        entries: json.map((key, value) => MapEntry(key, value)),
       ),
     );
   }
@@ -101,7 +97,7 @@ class CopilotOrganizationDetails {
   final CopilotOrganizationDetailsPlanType? planType;
   final Map<String, dynamic> entries;
 
-  dynamic operator [](String key) => entries[key];
+  dynamic? operator [](String key) => entries[key];
 
   /// Converts a [CopilotOrganizationDetails] to a `Map<String, dynamic>`.
   Map<String, dynamic> toJson() {
@@ -113,7 +109,7 @@ class CopilotOrganizationDetails {
       'cli': cli?.toJson(),
       'seat_management_setting': seatManagementSetting.toJson(),
       'plan_type': planType?.toJson(),
-      ...entries.map(MapEntry.new),
+      ...entries.map((key, value) => MapEntry(key, value)),
     };
   }
 
@@ -133,13 +129,13 @@ class CopilotOrganizationDetails {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotOrganizationDetails &&
-        seatBreakdown == other.seatBreakdown &&
-        publicCodeSuggestions == other.publicCodeSuggestions &&
-        ideChat == other.ideChat &&
-        platformChat == other.platformChat &&
-        cli == other.cli &&
-        seatManagementSetting == other.seatManagementSetting &&
-        planType == other.planType &&
+        this.seatBreakdown == other.seatBreakdown &&
+        this.publicCodeSuggestions == other.publicCodeSuggestions &&
+        this.ideChat == other.ideChat &&
+        this.platformChat == other.platformChat &&
+        this.cli == other.cli &&
+        this.seatManagementSetting == other.seatManagementSetting &&
+        this.planType == other.planType &&
         mapsEqual(entries, other.entries);
   }
 }

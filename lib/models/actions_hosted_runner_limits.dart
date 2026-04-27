@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsHostedRunnerLimits {
-  const ActionsHostedRunnerLimits({
+  ActionsHostedRunnerLimits({
     required this.publicIps,
   });
 
@@ -48,6 +48,7 @@ class ActionsHostedRunnerLimits {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ActionsHostedRunnerLimits && publicIps == other.publicIps;
+    return other is ActionsHostedRunnerLimits &&
+        this.publicIps == other.publicIps;
   }
 }

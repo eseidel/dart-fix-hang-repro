@@ -9,12 +9,12 @@ import 'package:meta/meta.dart';
 @immutable
 class NetworkConfiguration {
   /// {@macro network_configuration}
-  const NetworkConfiguration({
+  NetworkConfiguration({
     required this.id,
     required this.name,
-    required this.createdOn,
     this.computeService,
     this.networkSettingsIds,
+    required this.createdOn,
   });
 
   /// Converts a `Map<String, dynamic>` to a [NetworkConfiguration].
@@ -90,10 +90,10 @@ class NetworkConfiguration {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is NetworkConfiguration &&
-        id == other.id &&
-        name == other.name &&
-        computeService == other.computeService &&
-        listsEqual(networkSettingsIds, other.networkSettingsIds) &&
-        createdOn == other.createdOn;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.computeService == other.computeService &&
+        listsEqual(this.networkSettingsIds, other.networkSettingsIds) &&
+        this.createdOn == other.createdOn;
   }
 }

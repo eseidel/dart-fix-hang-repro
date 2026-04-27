@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RateLimitOverview {
   /// {@macro rate_limit_overview}
-  const RateLimitOverview({
+  RateLimitOverview({
     required this.resources,
     required this.rate,
   });
@@ -61,7 +61,7 @@ class RateLimitOverview {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RateLimitOverview &&
-        resources == other.resources &&
-        rate == other.rate;
+        this.resources == other.resources &&
+        this.rate == other.rate;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitCommitTree {
-  const GitCommitTree({
+  GitCommitTree({
     required this.sha,
     required this.url,
   });
@@ -51,6 +51,8 @@ class GitCommitTree {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is GitCommitTree && sha == other.sha && url == other.url;
+    return other is GitCommitTree &&
+        this.sha == other.sha &&
+        this.url == other.url;
   }
 }

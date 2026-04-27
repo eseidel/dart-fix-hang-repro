@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/markdown_render_request.dart';
+import 'package:github_out/models/markdown_render_request_mode.dart';
+import 'package:http/http.dart' as http;
 
 /// Render GitHub flavored markdown
 class MarkdownApi {
@@ -21,12 +24,13 @@ class MarkdownApi {
       method: Method.post,
       path: '/markdown',
       body: markdownRenderRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -57,7 +61,7 @@ class MarkdownApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

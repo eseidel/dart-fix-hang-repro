@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class IssueEventProjectCard {
   /// {@macro issue_event_project_card}
-  const IssueEventProjectCard({
+  IssueEventProjectCard({
     required this.url,
     required this.id,
     required this.projectUrl,
@@ -24,9 +24,9 @@ class IssueEventProjectCard {
       json,
       () => IssueEventProjectCard(
         url: Uri.parse(json['url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         projectUrl: Uri.parse(json['project_url'] as String),
-        projectId: json['project_id'] as int,
+        projectId: (json['project_id'] as int),
         columnName: json['column_name'] as String,
         previousColumnName: json['previous_column_name'] as String?,
       ),
@@ -75,11 +75,11 @@ class IssueEventProjectCard {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssueEventProjectCard &&
-        url == other.url &&
-        id == other.id &&
-        projectUrl == other.projectUrl &&
-        projectId == other.projectId &&
-        columnName == other.columnName &&
-        previousColumnName == other.previousColumnName;
+        this.url == other.url &&
+        this.id == other.id &&
+        this.projectUrl == other.projectUrl &&
+        this.projectId == other.projectId &&
+        this.columnName == other.columnName &&
+        this.previousColumnName == other.previousColumnName;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningVariantAnalysisSkippedRepositoriesNotFoundRepos {
-  const CodeScanningVariantAnalysisSkippedRepositoriesNotFoundRepos({
+  CodeScanningVariantAnalysisSkippedRepositoriesNotFoundRepos({
     required this.repositoryCount,
     required this.repositoryFullNames,
   });
@@ -17,7 +17,7 @@ class CodeScanningVariantAnalysisSkippedRepositoriesNotFoundRepos {
       'CodeScanningVariantAnalysisSkippedRepositoriesNotFoundRepos',
       json,
       () => CodeScanningVariantAnalysisSkippedRepositoriesNotFoundRepos(
-        repositoryCount: json['repository_count'] as int,
+        repositoryCount: (json['repository_count'] as int),
         repositoryFullNames: (json['repository_full_names'] as List)
             .cast<String>(),
       ),
@@ -64,7 +64,7 @@ class CodeScanningVariantAnalysisSkippedRepositoriesNotFoundRepos {
     if (identical(this, other)) return true;
     return other
             is CodeScanningVariantAnalysisSkippedRepositoriesNotFoundRepos &&
-        repositoryCount == other.repositoryCount &&
-        listsEqual(repositoryFullNames, other.repositoryFullNames);
+        this.repositoryCount == other.repositoryCount &&
+        listsEqual(this.repositoryFullNames, other.repositoryFullNames);
   }
 }

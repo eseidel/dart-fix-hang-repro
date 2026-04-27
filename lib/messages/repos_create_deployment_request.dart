@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateDeploymentRequest {
-  const ReposCreateDeploymentRequest({
+  ReposCreateDeploymentRequest({
     required this.ref,
     this.task = 'deploy',
     this.autoMerge = true,
@@ -113,14 +113,14 @@ class ReposCreateDeploymentRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateDeploymentRequest &&
-        ref == other.ref &&
-        task == other.task &&
-        autoMerge == other.autoMerge &&
-        listsEqual(requiredContexts, other.requiredContexts) &&
-        payload == other.payload &&
-        environment == other.environment &&
-        description == other.description &&
-        transientEnvironment == other.transientEnvironment &&
-        productionEnvironment == other.productionEnvironment;
+        this.ref == other.ref &&
+        this.task == other.task &&
+        this.autoMerge == other.autoMerge &&
+        listsEqual(this.requiredContexts, other.requiredContexts) &&
+        this.payload == other.payload &&
+        this.environment == other.environment &&
+        this.description == other.description &&
+        this.transientEnvironment == other.transientEnvironment &&
+        this.productionEnvironment == other.productionEnvironment;
   }
 }

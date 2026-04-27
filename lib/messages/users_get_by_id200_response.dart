@@ -1,5 +1,7 @@
 import 'package:github_out/models/private_user.dart';
+import 'package:github_out/models/private_user_plan.dart';
 import 'package:github_out/models/public_user.dart';
+import 'package:github_out/models/public_user_plan.dart';
 import 'package:meta/meta.dart';
 
 sealed class UsersGetById200Response {

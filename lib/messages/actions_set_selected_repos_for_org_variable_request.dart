@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsSetSelectedReposForOrgVariableRequest {
-  const ActionsSetSelectedReposForOrgVariableRequest({
+  ActionsSetSelectedReposForOrgVariableRequest({
     required this.selectedRepositoryIds,
   });
 
@@ -51,6 +51,6 @@ class ActionsSetSelectedReposForOrgVariableRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsSetSelectedReposForOrgVariableRequest &&
-        listsEqual(selectedRepositoryIds, other.selectedRepositoryIds);
+        listsEqual(this.selectedRepositoryIds, other.selectedRepositoryIds);
   }
 }

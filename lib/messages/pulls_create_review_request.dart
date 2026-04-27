@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/pulls_create_review_request_comments_inner.dart';
 import 'package:github_out/models/pulls_create_review_request_event.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsCreateReviewRequest {
-  const PullsCreateReviewRequest({
+  PullsCreateReviewRequest({
     this.commitId,
     this.body,
     this.event,
@@ -91,9 +87,9 @@ class PullsCreateReviewRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsCreateReviewRequest &&
-        commitId == other.commitId &&
-        body == other.body &&
-        event == other.event &&
-        listsEqual(comments, other.comments);
+        this.commitId == other.commitId &&
+        this.body == other.body &&
+        this.event == other.event &&
+        listsEqual(this.comments, other.comments);
   }
 }

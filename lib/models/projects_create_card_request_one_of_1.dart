@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsCreateCardRequestOneOf1 {
-  const ProjectsCreateCardRequestOneOf1({
+  ProjectsCreateCardRequestOneOf1({
     required this.contentId,
     required this.contentType,
   });
@@ -14,7 +14,7 @@ class ProjectsCreateCardRequestOneOf1 {
       'ProjectsCreateCardRequestOneOf1',
       json,
       () => ProjectsCreateCardRequestOneOf1(
-        contentId: json['content_id'] as int,
+        contentId: (json['content_id'] as int),
         contentType: json['content_type'] as String,
       ),
     );
@@ -57,7 +57,7 @@ class ProjectsCreateCardRequestOneOf1 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectsCreateCardRequestOneOf1 &&
-        contentId == other.contentId &&
-        contentType == other.contentType;
+        this.contentId == other.contentId &&
+        this.contentType == other.contentType;
   }
 }

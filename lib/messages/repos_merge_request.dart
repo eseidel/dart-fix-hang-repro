@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposMergeRequest {
-  const ReposMergeRequest({
+  ReposMergeRequest({
     required this.base,
     required this.head,
     this.commitMessage,
@@ -61,8 +61,8 @@ class ReposMergeRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposMergeRequest &&
-        base == other.base &&
-        head == other.head &&
-        commitMessage == other.commitMessage;
+        this.base == other.base &&
+        this.head == other.head &&
+        this.commitMessage == other.commitMessage;
   }
 }

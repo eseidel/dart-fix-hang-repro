@@ -1,10 +1,9 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
+import 'package:github_out/messages/pull_request_review_comment_links_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
 import 'package:github_out/models/pull_request_review_comment_links.dart';
+import 'package:github_out/models/pull_request_review_comment_links_html.dart';
+import 'package:github_out/models/pull_request_review_comment_links_self.dart';
 import 'package:github_out/models/pull_request_review_comment_side.dart';
 import 'package:github_out/models/pull_request_review_comment_start_side.dart';
 import 'package:github_out/models/pull_request_review_comment_subject_type.dart';
@@ -20,15 +19,18 @@ import 'package:meta/meta.dart';
 @immutable
 class PullRequestReviewComment {
   /// {@macro pull_request_review_comment}
-  const PullRequestReviewComment({
+  PullRequestReviewComment({
     required this.url,
     required this.pullRequestReviewId,
     required this.id,
     required this.nodeId,
     required this.diffHunk,
     required this.path,
+    this.position,
+    this.originalPosition,
     required this.commitId,
     required this.originalCommitId,
+    this.inReplyToId,
     required this.user,
     required this.body,
     required this.createdAt,
@@ -37,9 +39,6 @@ class PullRequestReviewComment {
     required this.pullRequestUrl,
     required this.authorAssociation,
     required this.links,
-    this.position,
-    this.originalPosition,
-    this.inReplyToId,
     this.startLine,
     this.originalStartLine,
     this.startSide,
@@ -59,16 +58,17 @@ class PullRequestReviewComment {
       json,
       () => PullRequestReviewComment(
         url: json['url'] as String,
-        pullRequestReviewId: checkedKey(json, 'pull_request_review_id') as int?,
-        id: json['id'] as int,
+        pullRequestReviewId:
+            (checkedKey(json, 'pull_request_review_id') as int?),
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         diffHunk: json['diff_hunk'] as String,
         path: json['path'] as String,
-        position: json['position'] as int?,
-        originalPosition: json['original_position'] as int?,
+        position: (json['position'] as int?),
+        originalPosition: (json['original_position'] as int?),
         commitId: json['commit_id'] as String,
         originalCommitId: json['original_commit_id'] as String,
-        inReplyToId: json['in_reply_to_id'] as int?,
+        inReplyToId: (json['in_reply_to_id'] as int?),
         user: SimpleUser.fromJson(json['user'] as Map<String, dynamic>),
         body: json['body'] as String,
         createdAt: DateTime.parse(json['created_at'] as String),
@@ -81,13 +81,13 @@ class PullRequestReviewComment {
         links: PullRequestReviewCommentLinks.fromJson(
           json['_links'] as Map<String, dynamic>,
         ),
-        startLine: json['start_line'] as int?,
-        originalStartLine: json['original_start_line'] as int?,
+        startLine: (json['start_line'] as int?),
+        originalStartLine: (json['original_start_line'] as int?),
         startSide: PullRequestReviewCommentStartSide.maybeFromJson(
           json['start_side'] as String?,
         ),
-        line: json['line'] as int?,
-        originalLine: json['original_line'] as int?,
+        line: (json['line'] as int?),
+        originalLine: (json['original_line'] as int?),
         side: PullRequestReviewCommentSide.maybeFromJson(
           json['side'] as String?,
         ),
@@ -298,34 +298,34 @@ class PullRequestReviewComment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestReviewComment &&
-        url == other.url &&
-        pullRequestReviewId == other.pullRequestReviewId &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        diffHunk == other.diffHunk &&
-        path == other.path &&
-        position == other.position &&
-        originalPosition == other.originalPosition &&
-        commitId == other.commitId &&
-        originalCommitId == other.originalCommitId &&
-        inReplyToId == other.inReplyToId &&
-        user == other.user &&
-        body == other.body &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        htmlUrl == other.htmlUrl &&
-        pullRequestUrl == other.pullRequestUrl &&
-        authorAssociation == other.authorAssociation &&
-        links == other.links &&
-        startLine == other.startLine &&
-        originalStartLine == other.originalStartLine &&
-        startSide == other.startSide &&
-        line == other.line &&
-        originalLine == other.originalLine &&
-        side == other.side &&
-        subjectType == other.subjectType &&
-        reactions == other.reactions &&
-        bodyHtml == other.bodyHtml &&
-        bodyText == other.bodyText;
+        this.url == other.url &&
+        this.pullRequestReviewId == other.pullRequestReviewId &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.diffHunk == other.diffHunk &&
+        this.path == other.path &&
+        this.position == other.position &&
+        this.originalPosition == other.originalPosition &&
+        this.commitId == other.commitId &&
+        this.originalCommitId == other.originalCommitId &&
+        this.inReplyToId == other.inReplyToId &&
+        this.user == other.user &&
+        this.body == other.body &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.htmlUrl == other.htmlUrl &&
+        this.pullRequestUrl == other.pullRequestUrl &&
+        this.authorAssociation == other.authorAssociation &&
+        this.links == other.links &&
+        this.startLine == other.startLine &&
+        this.originalStartLine == other.originalStartLine &&
+        this.startSide == other.startSide &&
+        this.line == other.line &&
+        this.originalLine == other.originalLine &&
+        this.side == other.side &&
+        this.subjectType == other.subjectType &&
+        this.reactions == other.reactions &&
+        this.bodyHtml == other.bodyHtml &&
+        this.bodyText == other.bodyText;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProjectsCreateForOrgRequest {
-  const ProjectsCreateForOrgRequest({
+  ProjectsCreateForOrgRequest({
     required this.name,
     this.body,
   });
@@ -55,7 +55,7 @@ class ProjectsCreateForOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProjectsCreateForOrgRequest &&
-        name == other.name &&
-        body == other.body;
+        this.name == other.name &&
+        this.body == other.body;
   }
 }

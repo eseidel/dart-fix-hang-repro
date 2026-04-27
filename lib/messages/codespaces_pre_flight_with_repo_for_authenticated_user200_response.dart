@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/codespaces_pre_flight_with_repo_for_authenticated_user200_response_defaults.dart';
 import 'package:github_out/models/simple_user.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesPreFlightWithRepoForAuthenticatedUser200Response {
-  const CodespacesPreFlightWithRepoForAuthenticatedUser200Response({
+  CodespacesPreFlightWithRepoForAuthenticatedUser200Response({
     this.billableOwner,
     this.defaults,
   });
@@ -72,7 +68,7 @@ class CodespacesPreFlightWithRepoForAuthenticatedUser200Response {
     if (identical(this, other)) return true;
     return other
             is CodespacesPreFlightWithRepoForAuthenticatedUser200Response &&
-        billableOwner == other.billableOwner &&
-        defaults == other.defaults;
+        this.billableOwner == other.billableOwner &&
+        this.defaults == other.defaults;
   }
 }

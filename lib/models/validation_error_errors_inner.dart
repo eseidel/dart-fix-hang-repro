@@ -4,11 +4,11 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ValidationErrorErrorsInner {
-  const ValidationErrorErrorsInner({
-    required this.code,
+  ValidationErrorErrorsInner({
     this.resource,
     this.field,
     this.message,
+    required this.code,
     this.index,
     this.value,
   });
@@ -23,7 +23,7 @@ class ValidationErrorErrorsInner {
         field: json['field'] as String?,
         message: json['message'] as String?,
         code: json['code'] as String,
-        index: json['index'] as int?,
+        index: (json['index'] as int?),
         value: ValidationErrorErrorsInnerValue.maybeFromJson(
           json['value'] as Map<String, dynamic>,
         ),
@@ -73,11 +73,11 @@ class ValidationErrorErrorsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ValidationErrorErrorsInner &&
-        resource == other.resource &&
-        field == other.field &&
-        message == other.message &&
-        code == other.code &&
-        index == other.index &&
-        value == other.value;
+        this.resource == other.resource &&
+        this.field == other.field &&
+        this.message == other.message &&
+        this.code == other.code &&
+        this.index == other.index &&
+        this.value == other.value;
   }
 }

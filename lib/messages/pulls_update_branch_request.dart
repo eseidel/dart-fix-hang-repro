@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsUpdateBranchRequest {
-  const PullsUpdateBranchRequest({
+  PullsUpdateBranchRequest({
     this.expectedHeadSha,
   });
 
@@ -50,6 +50,6 @@ class PullsUpdateBranchRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsUpdateBranchRequest &&
-        expectedHeadSha == other.expectedHeadSha;
+        this.expectedHeadSha == other.expectedHeadSha;
   }
 }

@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_security_set_configuration_as_default_request_default_for_new_repos.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodeSecuritySetConfigurationAsDefaultRequest {
-  const CodeSecuritySetConfigurationAsDefaultRequest({
+  CodeSecuritySetConfigurationAsDefaultRequest({
     this.defaultForNewRepos,
   });
 
@@ -60,6 +56,6 @@ class CodeSecuritySetConfigurationAsDefaultRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeSecuritySetConfigurationAsDefaultRequest &&
-        defaultForNewRepos == other.defaultForNewRepos;
+        this.defaultForNewRepos == other.defaultForNewRepos;
   }
 }

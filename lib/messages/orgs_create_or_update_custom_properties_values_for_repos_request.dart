@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/custom_property_value.dart';
+import 'package:github_out/models/custom_property_value_value.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrgsCreateOrUpdateCustomPropertiesValuesForReposRequest {
-  const OrgsCreateOrUpdateCustomPropertiesValuesForReposRequest({
+  OrgsCreateOrUpdateCustomPropertiesValuesForReposRequest({
     required this.repositoryNames,
     required this.properties,
   });
@@ -68,7 +69,7 @@ class OrgsCreateOrUpdateCustomPropertiesValuesForReposRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsCreateOrUpdateCustomPropertiesValuesForReposRequest &&
-        listsEqual(repositoryNames, other.repositoryNames) &&
-        listsEqual(properties, other.properties);
+        listsEqual(this.repositoryNames, other.repositoryNames) &&
+        listsEqual(this.properties, other.properties);
   }
 }

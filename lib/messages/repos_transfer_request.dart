@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposTransferRequest {
-  const ReposTransferRequest({
+  ReposTransferRequest({
     required this.newOwner,
     this.newName,
     this.teamIds,
@@ -61,8 +61,8 @@ class ReposTransferRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposTransferRequest &&
-        newOwner == other.newOwner &&
-        newName == other.newName &&
-        listsEqual(teamIds, other.teamIds);
+        this.newOwner == other.newOwner &&
+        this.newName == other.newName &&
+        listsEqual(this.teamIds, other.teamIds);
   }
 }

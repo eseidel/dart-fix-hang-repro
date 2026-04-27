@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class MigrationsMapCommitAuthorRequest {
-  const MigrationsMapCommitAuthorRequest({
+  MigrationsMapCommitAuthorRequest({
     this.email,
     this.name,
   });
@@ -55,7 +55,7 @@ class MigrationsMapCommitAuthorRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MigrationsMapCommitAuthorRequest &&
-        email == other.email &&
-        name == other.name;
+        this.email == other.email &&
+        this.name == other.name;
   }
 }

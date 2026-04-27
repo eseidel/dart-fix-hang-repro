@@ -1,10 +1,18 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_seat_details.dart';
+import 'package:github_out/models/copilot_seat_details_assigning_team.dart';
+import 'package:github_out/models/copilot_seat_details_plan_type.dart';
+import 'package:github_out/models/enterprise_team.dart';
+import 'package:github_out/models/organization_simple.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CopilotListCopilotSeats200Response {
-  const CopilotListCopilotSeats200Response({
+  CopilotListCopilotSeats200Response({
     this.totalSeats,
     this.seats,
   });
@@ -18,7 +26,7 @@ class CopilotListCopilotSeats200Response {
       'CopilotListCopilotSeats200Response',
       json,
       () => CopilotListCopilotSeats200Response(
-        totalSeats: json['total_seats'] as int?,
+        totalSeats: (json['total_seats'] as int?),
         seats: (json['seats'] as List?)
             ?.map<CopilotSeatDetails>(
               (e) => CopilotSeatDetails.fromJson(e as Map<String, dynamic>),
@@ -63,7 +71,7 @@ class CopilotListCopilotSeats200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotListCopilotSeats200Response &&
-        totalSeats == other.totalSeats &&
-        listsEqual(seats, other.seats);
+        this.totalSeats == other.totalSeats &&
+        listsEqual(this.seats, other.seats);
   }
 }

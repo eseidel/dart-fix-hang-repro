@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GistHistory {
   /// {@macro gist_history}
-  const GistHistory({
+  GistHistory({
     this.user,
     this.version,
     this.committedAt,
@@ -76,10 +76,10 @@ class GistHistory {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistHistory &&
-        user == other.user &&
-        version == other.version &&
-        committedAt == other.committedAt &&
-        changeStatus == other.changeStatus &&
-        url == other.url;
+        this.user == other.user &&
+        this.version == other.version &&
+        this.committedAt == other.committedAt &&
+        this.changeStatus == other.changeStatus &&
+        this.url == other.url;
   }
 }

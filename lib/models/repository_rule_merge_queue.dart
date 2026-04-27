@@ -1,5 +1,7 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_merge_queue_parameters.dart';
+import 'package:github_out/models/repository_rule_merge_queue_parameters_grouping_strategy.dart';
+import 'package:github_out/models/repository_rule_merge_queue_parameters_merge_method.dart';
 import 'package:github_out/models/repository_rule_merge_queue_type.dart';
 import 'package:meta/meta.dart';
 
@@ -10,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleMergeQueue {
   /// {@macro repository_rule_merge_queue}
-  const RepositoryRuleMergeQueue({
+  RepositoryRuleMergeQueue({
     required this.type,
     this.parameters,
   });
@@ -59,7 +61,7 @@ class RepositoryRuleMergeQueue {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleMergeQueue &&
-        type == other.type &&
-        parameters == other.parameters;
+        this.type == other.type &&
+        this.parameters == other.parameters;
   }
 }

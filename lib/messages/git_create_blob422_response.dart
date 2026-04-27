@@ -1,9 +1,11 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/models/repository_rule_violation_error.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata_secret_scanning.dart';
+import 'package:github_out/models/repository_rule_violation_error_metadata_secret_scanning_bypass_placeholders_inner.dart';
+import 'package:github_out/models/secret_scanning_push_protection_bypass_placeholder_id.dart';
 import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
 import 'package:meta/meta.dart';
 
 sealed class GitCreateBlob422Response {

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CopilotIdeChatEditorsInnerModelsInner {
-  const CopilotIdeChatEditorsInnerModelsInner({
+  CopilotIdeChatEditorsInnerModelsInner({
     this.name,
     this.isCustomModel,
     this.customModelTrainingDate,
@@ -25,10 +25,10 @@ class CopilotIdeChatEditorsInnerModelsInner {
         name: json['name'] as String?,
         isCustomModel: json['is_custom_model'] as bool?,
         customModelTrainingDate: json['custom_model_training_date'] as String?,
-        totalEngagedUsers: json['total_engaged_users'] as int?,
-        totalChats: json['total_chats'] as int?,
-        totalChatInsertionEvents: json['total_chat_insertion_events'] as int?,
-        totalChatCopyEvents: json['total_chat_copy_events'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
+        totalChats: (json['total_chats'] as int?),
+        totalChatInsertionEvents: (json['total_chat_insertion_events'] as int?),
+        totalChatCopyEvents: (json['total_chat_copy_events'] as int?),
       ),
     );
   }
@@ -99,12 +99,12 @@ class CopilotIdeChatEditorsInnerModelsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotIdeChatEditorsInnerModelsInner &&
-        name == other.name &&
-        isCustomModel == other.isCustomModel &&
-        customModelTrainingDate == other.customModelTrainingDate &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        totalChats == other.totalChats &&
-        totalChatInsertionEvents == other.totalChatInsertionEvents &&
-        totalChatCopyEvents == other.totalChatCopyEvents;
+        this.name == other.name &&
+        this.isCustomModel == other.isCustomModel &&
+        this.customModelTrainingDate == other.customModelTrainingDate &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        this.totalChats == other.totalChats &&
+        this.totalChatInsertionEvents == other.totalChatInsertionEvents &&
+        this.totalChatCopyEvents == other.totalChatCopyEvents;
   }
 }

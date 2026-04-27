@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -18,7 +14,7 @@ import 'package:meta/meta.dart';
 @immutable
 class License {
   /// {@macro license}
-  const License({
+  License({
     required this.key,
     required this.name,
     required this.spdxId,
@@ -181,18 +177,18 @@ class License {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is License &&
-        key == other.key &&
-        name == other.name &&
-        spdxId == other.spdxId &&
-        url == other.url &&
-        nodeId == other.nodeId &&
-        htmlUrl == other.htmlUrl &&
-        description == other.description &&
-        implementation == other.implementation &&
-        listsEqual(permissions, other.permissions) &&
-        listsEqual(conditions, other.conditions) &&
-        listsEqual(limitations, other.limitations) &&
-        body == other.body &&
-        featured == other.featured;
+        this.key == other.key &&
+        this.name == other.name &&
+        this.spdxId == other.spdxId &&
+        this.url == other.url &&
+        this.nodeId == other.nodeId &&
+        this.htmlUrl == other.htmlUrl &&
+        this.description == other.description &&
+        this.implementation == other.implementation &&
+        listsEqual(this.permissions, other.permissions) &&
+        listsEqual(this.conditions, other.conditions) &&
+        listsEqual(this.limitations, other.limitations) &&
+        this.body == other.body &&
+        this.featured == other.featured;
   }
 }

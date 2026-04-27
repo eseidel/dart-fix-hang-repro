@@ -1,8 +1,5 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/code_scanning_variant_analysis_repository.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_skipped_repo_group.dart';
 import 'package:github_out/models/code_scanning_variant_analysis_skipped_repositories_not_found_repos.dart';
 import 'package:meta/meta.dart';
@@ -15,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeScanningVariantAnalysisSkippedRepositories {
   /// {@macro code_scanning_variant_analysis_skipped_repositories}
-  const CodeScanningVariantAnalysisSkippedRepositories({
+  CodeScanningVariantAnalysisSkippedRepositories({
     required this.accessMismatchRepos,
     required this.notFoundRepos,
     required this.noCodeqlDbRepos,
@@ -89,9 +86,9 @@ class CodeScanningVariantAnalysisSkippedRepositories {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningVariantAnalysisSkippedRepositories &&
-        accessMismatchRepos == other.accessMismatchRepos &&
-        notFoundRepos == other.notFoundRepos &&
-        noCodeqlDbRepos == other.noCodeqlDbRepos &&
-        overLimitRepos == other.overLimitRepos;
+        this.accessMismatchRepos == other.accessMismatchRepos &&
+        this.notFoundRepos == other.notFoundRepos &&
+        this.noCodeqlDbRepos == other.noCodeqlDbRepos &&
+        this.overLimitRepos == other.overLimitRepos;
   }
 }

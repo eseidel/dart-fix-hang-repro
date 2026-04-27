@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ClassroomAssignmentGrade {
   /// {@macro classroom_assignment_grade}
-  const ClassroomAssignmentGrade({
+  ClassroomAssignmentGrade({
     required this.assignmentName,
     required this.assignmentUrl,
     required this.starterCodeUrl,
@@ -36,8 +36,8 @@ class ClassroomAssignmentGrade {
         studentRepositoryName: json['student_repository_name'] as String,
         studentRepositoryUrl: json['student_repository_url'] as String,
         submissionTimestamp: json['submission_timestamp'] as String,
-        pointsAwarded: json['points_awarded'] as int,
-        pointsAvailable: json['points_available'] as int,
+        pointsAwarded: (json['points_awarded'] as int),
+        pointsAvailable: (json['points_available'] as int),
         groupName: json['group_name'] as String?,
       ),
     );
@@ -121,16 +121,16 @@ class ClassroomAssignmentGrade {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ClassroomAssignmentGrade &&
-        assignmentName == other.assignmentName &&
-        assignmentUrl == other.assignmentUrl &&
-        starterCodeUrl == other.starterCodeUrl &&
-        githubUsername == other.githubUsername &&
-        rosterIdentifier == other.rosterIdentifier &&
-        studentRepositoryName == other.studentRepositoryName &&
-        studentRepositoryUrl == other.studentRepositoryUrl &&
-        submissionTimestamp == other.submissionTimestamp &&
-        pointsAwarded == other.pointsAwarded &&
-        pointsAvailable == other.pointsAvailable &&
-        groupName == other.groupName;
+        this.assignmentName == other.assignmentName &&
+        this.assignmentUrl == other.assignmentUrl &&
+        this.starterCodeUrl == other.starterCodeUrl &&
+        this.githubUsername == other.githubUsername &&
+        this.rosterIdentifier == other.rosterIdentifier &&
+        this.studentRepositoryName == other.studentRepositoryName &&
+        this.studentRepositoryUrl == other.studentRepositoryUrl &&
+        this.submissionTimestamp == other.submissionTimestamp &&
+        this.pointsAwarded == other.pointsAwarded &&
+        this.pointsAvailable == other.pointsAvailable &&
+        this.groupName == other.groupName;
   }
 }

@@ -4,8 +4,16 @@ import 'package:github_out/models/check_run_conclusion.dart';
 import 'package:github_out/models/check_run_output.dart';
 import 'package:github_out/models/check_run_status.dart';
 import 'package:github_out/models/deployment_simple.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/pull_request_minimal.dart';
+import 'package:github_out/models/pull_request_minimal_base.dart';
+import 'package:github_out/models/pull_request_minimal_base_repo.dart';
+import 'package:github_out/models/pull_request_minimal_head.dart';
+import 'package:github_out/models/pull_request_minimal_head_repo.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template check_run}
@@ -15,7 +23,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CheckRun {
   /// {@macro check_run}
-  const CheckRun({
+  CheckRun({
     required this.id,
     required this.headSha,
     required this.nodeId,
@@ -41,7 +49,7 @@ class CheckRun {
       'CheckRun',
       json,
       () => CheckRun(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         headSha: json['head_sha'] as String,
         nodeId: json['node_id'] as String,
         externalId: checkedKey(json, 'external_id') as String?,
@@ -197,22 +205,22 @@ class CheckRun {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CheckRun &&
-        id == other.id &&
-        headSha == other.headSha &&
-        nodeId == other.nodeId &&
-        externalId == other.externalId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        detailsUrl == other.detailsUrl &&
-        status == other.status &&
-        conclusion == other.conclusion &&
-        startedAt == other.startedAt &&
-        completedAt == other.completedAt &&
-        output == other.output &&
-        name == other.name &&
-        checkSuite == other.checkSuite &&
-        app == other.app &&
-        listsEqual(pullRequests, other.pullRequests) &&
-        deployment == other.deployment;
+        this.id == other.id &&
+        this.headSha == other.headSha &&
+        this.nodeId == other.nodeId &&
+        this.externalId == other.externalId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.detailsUrl == other.detailsUrl &&
+        this.status == other.status &&
+        this.conclusion == other.conclusion &&
+        this.startedAt == other.startedAt &&
+        this.completedAt == other.completedAt &&
+        this.output == other.output &&
+        this.name == other.name &&
+        this.checkSuite == other.checkSuite &&
+        this.app == other.app &&
+        listsEqual(this.pullRequests, other.pullRequests) &&
+        this.deployment == other.deployment;
   }
 }

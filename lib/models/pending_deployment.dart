@@ -1,6 +1,12 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/deployment_reviewer_type.dart';
 import 'package:github_out/models/pending_deployment_environment.dart';
 import 'package:github_out/models/pending_deployment_reviewers_inner.dart';
+import 'package:github_out/models/pending_deployment_reviewers_inner_reviewer.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 /// {@template pending_deployment}
@@ -10,7 +16,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PendingDeployment {
   /// {@macro pending_deployment}
-  const PendingDeployment({
+  PendingDeployment({
     required this.environment,
     required this.waitTimer,
     required this.waitTimerStartedAt,
@@ -27,7 +33,7 @@ class PendingDeployment {
         environment: PendingDeploymentEnvironment.fromJson(
           json['environment'] as Map<String, dynamic>,
         ),
-        waitTimer: json['wait_timer'] as int,
+        waitTimer: (json['wait_timer'] as int),
         waitTimerStartedAt: maybeParseDateTime(
           checkedKey(json, 'wait_timer_started_at') as String?,
         ),
@@ -96,10 +102,10 @@ class PendingDeployment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PendingDeployment &&
-        environment == other.environment &&
-        waitTimer == other.waitTimer &&
-        waitTimerStartedAt == other.waitTimerStartedAt &&
-        currentUserCanApprove == other.currentUserCanApprove &&
-        listsEqual(reviewers, other.reviewers);
+        this.environment == other.environment &&
+        this.waitTimer == other.waitTimer &&
+        this.waitTimerStartedAt == other.waitTimerStartedAt &&
+        this.currentUserCanApprove == other.currentUserCanApprove &&
+        listsEqual(this.reviewers, other.reviewers);
   }
 }

@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/runner_label.dart';
+import 'package:github_out/models/runner_label_type.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsRunnerLabelsReadonlyResponse {
-  const ActionsRunnerLabelsReadonlyResponse({
+  ActionsRunnerLabelsReadonlyResponse({
     required this.totalCount,
     required this.labels,
   });
@@ -18,7 +19,7 @@ class ActionsRunnerLabelsReadonlyResponse {
       'ActionsRunnerLabelsReadonlyResponse',
       json,
       () => ActionsRunnerLabelsReadonlyResponse(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         labels: (json['labels'] as List)
             .map<RunnerLabel>(
               (e) => RunnerLabel.fromJson(e as Map<String, dynamic>),
@@ -61,7 +62,7 @@ class ActionsRunnerLabelsReadonlyResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsRunnerLabelsReadonlyResponse &&
-        totalCount == other.totalCount &&
-        listsEqual(labels, other.labels);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.labels, other.labels);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CommitSearchResultItemCommitAuthor {
-  const CommitSearchResultItemCommitAuthor({
+  CommitSearchResultItemCommitAuthor({
     required this.name,
     required this.email,
     required this.date,
@@ -61,8 +61,8 @@ class CommitSearchResultItemCommitAuthor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitSearchResultItemCommitAuthor &&
-        name == other.name &&
-        email == other.email &&
-        date == other.date;
+        this.name == other.name &&
+        this.email == other.email &&
+        this.date == other.date;
   }
 }

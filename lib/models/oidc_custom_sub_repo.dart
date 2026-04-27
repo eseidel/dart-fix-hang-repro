@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OidcCustomSubRepo {
   /// {@macro oidc_custom_sub_repo}
-  const OidcCustomSubRepo({
+  OidcCustomSubRepo({
     required this.useDefault,
     this.includeClaimKeys,
   });
@@ -60,7 +60,7 @@ class OidcCustomSubRepo {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OidcCustomSubRepo &&
-        useDefault == other.useDefault &&
-        listsEqual(includeClaimKeys, other.includeClaimKeys);
+        this.useDefault == other.useDefault &&
+        listsEqual(this.includeClaimKeys, other.includeClaimKeys);
   }
 }

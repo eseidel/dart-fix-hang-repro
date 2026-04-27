@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/gist_commit_change_status.dart';
 import 'package:github_out/models/simple_user.dart';
@@ -14,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GistCommit {
   /// {@macro gist_commit}
-  const GistCommit({
+  GistCommit({
     required this.url,
     required this.version,
     required this.user,
@@ -89,10 +85,10 @@ class GistCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistCommit &&
-        url == other.url &&
-        version == other.version &&
-        user == other.user &&
-        changeStatus == other.changeStatus &&
-        committedAt == other.committedAt;
+        this.url == other.url &&
+        this.version == other.version &&
+        this.user == other.user &&
+        this.changeStatus == other.changeStatus &&
+        this.committedAt == other.committedAt;
   }
 }

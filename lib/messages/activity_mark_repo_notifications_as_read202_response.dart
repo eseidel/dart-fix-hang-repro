@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActivityMarkRepoNotificationsAsRead202Response {
-  const ActivityMarkRepoNotificationsAsRead202Response({
+  ActivityMarkRepoNotificationsAsRead202Response({
     this.message,
     this.url,
   });
@@ -56,7 +56,7 @@ class ActivityMarkRepoNotificationsAsRead202Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActivityMarkRepoNotificationsAsRead202Response &&
-        message == other.message &&
-        url == other.url;
+        this.message == other.message &&
+        this.url == other.url;
   }
 }

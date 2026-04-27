@@ -6,10 +6,8 @@ sealed class CustomPropertyDefaultValue {
 
   factory CustomPropertyDefaultValue.fromJson(dynamic json) {
     return switch (json) {
-      final String v => CustomPropertyDefaultValueString(v),
-      final List<dynamic> v => CustomPropertyDefaultValueList(
-        v.cast<dynamic>(),
-      ),
+      String v => CustomPropertyDefaultValueString(v),
+      List<dynamic> v => CustomPropertyDefaultValueList(v.cast<dynamic>()),
       _ => throw FormatException(
         'Unsupported shape for CustomPropertyDefaultValue: ${json.runtimeType}',
       ),

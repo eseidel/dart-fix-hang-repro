@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CheckAnnotation {
   /// {@macro check_annotation}
-  const CheckAnnotation({
+  CheckAnnotation({
     required this.path,
     required this.startLine,
     required this.endLine,
@@ -28,10 +28,10 @@ class CheckAnnotation {
       json,
       () => CheckAnnotation(
         path: json['path'] as String,
-        startLine: json['start_line'] as int,
-        endLine: json['end_line'] as int,
-        startColumn: checkedKey(json, 'start_column') as int?,
-        endColumn: checkedKey(json, 'end_column') as int?,
+        startLine: (json['start_line'] as int),
+        endLine: (json['end_line'] as int),
+        startColumn: (checkedKey(json, 'start_column') as int?),
+        endColumn: (checkedKey(json, 'end_column') as int?),
         annotationLevel: checkedKey(json, 'annotation_level') as String?,
         title: checkedKey(json, 'title') as String?,
         message: checkedKey(json, 'message') as String?,
@@ -112,15 +112,15 @@ class CheckAnnotation {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CheckAnnotation &&
-        path == other.path &&
-        startLine == other.startLine &&
-        endLine == other.endLine &&
-        startColumn == other.startColumn &&
-        endColumn == other.endColumn &&
-        annotationLevel == other.annotationLevel &&
-        title == other.title &&
-        message == other.message &&
-        rawDetails == other.rawDetails &&
-        blobHref == other.blobHref;
+        this.path == other.path &&
+        this.startLine == other.startLine &&
+        this.endLine == other.endLine &&
+        this.startColumn == other.startColumn &&
+        this.endColumn == other.endColumn &&
+        this.annotationLevel == other.annotationLevel &&
+        this.title == other.title &&
+        this.message == other.message &&
+        this.rawDetails == other.rawDetails &&
+        this.blobHref == other.blobHref;
   }
 }

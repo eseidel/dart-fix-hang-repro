@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryAdvisoryCwesInner {
-  const RepositoryAdvisoryCwesInner({
+  RepositoryAdvisoryCwesInner({
     required this.cweId,
     required this.name,
   });
@@ -55,7 +55,7 @@ class RepositoryAdvisoryCwesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryAdvisoryCwesInner &&
-        cweId == other.cweId &&
-        name == other.name;
+        this.cweId == other.cweId &&
+        this.name == other.name;
   }
 }

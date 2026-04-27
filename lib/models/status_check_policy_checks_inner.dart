@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class StatusCheckPolicyChecksInner {
-  const StatusCheckPolicyChecksInner({
+  StatusCheckPolicyChecksInner({
     required this.context,
     required this.appId,
   });
@@ -15,7 +15,7 @@ class StatusCheckPolicyChecksInner {
       json,
       () => StatusCheckPolicyChecksInner(
         context: json['context'] as String,
-        appId: checkedKey(json, 'app_id') as int?,
+        appId: (checkedKey(json, 'app_id') as int?),
       ),
     );
   }
@@ -53,7 +53,7 @@ class StatusCheckPolicyChecksInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is StatusCheckPolicyChecksInner &&
-        context == other.context &&
-        appId == other.appId;
+        this.context == other.context &&
+        this.appId == other.appId;
   }
 }

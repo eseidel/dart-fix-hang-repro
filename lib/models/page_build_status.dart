@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PageBuildStatus {
   /// {@macro page_build_status}
-  const PageBuildStatus({
+  PageBuildStatus({
     required this.url,
     required this.status,
   });
@@ -59,7 +59,7 @@ class PageBuildStatus {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PageBuildStatus &&
-        url == other.url &&
-        status == other.status;
+        this.url == other.url &&
+        this.status == other.status;
   }
 }

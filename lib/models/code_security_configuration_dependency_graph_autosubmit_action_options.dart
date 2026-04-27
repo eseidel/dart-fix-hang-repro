@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeSecurityConfigurationDependencyGraphAutosubmitActionOptions {
   /// {@macro code_security_configuration_dependency_graph_autosubmit_action_options}
-  const CodeSecurityConfigurationDependencyGraphAutosubmitActionOptions({
+  CodeSecurityConfigurationDependencyGraphAutosubmitActionOptions({
     this.labeledRunners,
   });
 
@@ -61,6 +57,6 @@ class CodeSecurityConfigurationDependencyGraphAutosubmitActionOptions {
     if (identical(this, other)) return true;
     return other
             is CodeSecurityConfigurationDependencyGraphAutosubmitActionOptions &&
-        labeledRunners == other.labeledRunners;
+        this.labeledRunners == other.labeledRunners;
   }
 }

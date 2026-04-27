@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_ide_code_completions_editors_inner_models_inner_languages_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CopilotIdeCodeCompletionsEditorsInnerModelsInner {
-  const CopilotIdeCodeCompletionsEditorsInnerModelsInner({
+  CopilotIdeCodeCompletionsEditorsInnerModelsInner({
     this.name,
     this.isCustomModel,
     this.customModelTrainingDate,
@@ -28,7 +24,7 @@ class CopilotIdeCodeCompletionsEditorsInnerModelsInner {
         name: json['name'] as String?,
         isCustomModel: json['is_custom_model'] as bool?,
         customModelTrainingDate: json['custom_model_training_date'] as String?,
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
         languages: (json['languages'] as List?)
             ?.map<
               CopilotIdeCodeCompletionsEditorsInnerModelsInnerLanguagesInner
@@ -98,10 +94,10 @@ class CopilotIdeCodeCompletionsEditorsInnerModelsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotIdeCodeCompletionsEditorsInnerModelsInner &&
-        name == other.name &&
-        isCustomModel == other.isCustomModel &&
-        customModelTrainingDate == other.customModelTrainingDate &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        listsEqual(languages, other.languages);
+        this.name == other.name &&
+        this.isCustomModel == other.isCustomModel &&
+        this.customModelTrainingDate == other.customModelTrainingDate &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        listsEqual(this.languages, other.languages);
   }
 }

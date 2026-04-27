@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BranchRestrictionPolicyUsersInner {
-  const BranchRestrictionPolicyUsersInner({
+  BranchRestrictionPolicyUsersInner({
     this.login,
     this.id,
     this.nodeId,
@@ -35,7 +35,7 @@ class BranchRestrictionPolicyUsersInner {
       json,
       () => BranchRestrictionPolicyUsersInner(
         login: json['login'] as String?,
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         nodeId: json['node_id'] as String?,
         avatarUrl: json['avatar_url'] as String?,
         gravatarId: json['gravatar_id'] as String?,
@@ -141,24 +141,24 @@ class BranchRestrictionPolicyUsersInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchRestrictionPolicyUsersInner &&
-        login == other.login &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        avatarUrl == other.avatarUrl &&
-        gravatarId == other.gravatarId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        followersUrl == other.followersUrl &&
-        followingUrl == other.followingUrl &&
-        gistsUrl == other.gistsUrl &&
-        starredUrl == other.starredUrl &&
-        subscriptionsUrl == other.subscriptionsUrl &&
-        organizationsUrl == other.organizationsUrl &&
-        reposUrl == other.reposUrl &&
-        eventsUrl == other.eventsUrl &&
-        receivedEventsUrl == other.receivedEventsUrl &&
-        type == other.type &&
-        siteAdmin == other.siteAdmin &&
-        userViewType == other.userViewType;
+        this.login == other.login &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.avatarUrl == other.avatarUrl &&
+        this.gravatarId == other.gravatarId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.followersUrl == other.followersUrl &&
+        this.followingUrl == other.followingUrl &&
+        this.gistsUrl == other.gistsUrl &&
+        this.starredUrl == other.starredUrl &&
+        this.subscriptionsUrl == other.subscriptionsUrl &&
+        this.organizationsUrl == other.organizationsUrl &&
+        this.reposUrl == other.reposUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.receivedEventsUrl == other.receivedEventsUrl &&
+        this.type == other.type &&
+        this.siteAdmin == other.siteAdmin &&
+        this.userViewType == other.userViewType;
   }
 }

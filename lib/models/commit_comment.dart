@@ -11,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CommitComment {
   /// {@macro commit_comment}
-  const CommitComment({
+  CommitComment({
     required this.htmlUrl,
     required this.url,
     required this.id,
@@ -36,12 +36,12 @@ class CommitComment {
       () => CommitComment(
         htmlUrl: Uri.parse(json['html_url'] as String),
         url: Uri.parse(json['url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         body: json['body'] as String,
         path: checkedKey(json, 'path') as String?,
-        position: checkedKey(json, 'position') as int?,
-        line: checkedKey(json, 'line') as int?,
+        position: (checkedKey(json, 'position') as int?),
+        line: (checkedKey(json, 'line') as int?),
         commitId: json['commit_id'] as String,
         user: SimpleUser.maybeFromJson(
           checkedKey(json, 'user') as Map<String, dynamic>?,
@@ -133,19 +133,19 @@ class CommitComment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitComment &&
-        htmlUrl == other.htmlUrl &&
-        url == other.url &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        body == other.body &&
-        path == other.path &&
-        position == other.position &&
-        line == other.line &&
-        commitId == other.commitId &&
-        user == other.user &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        authorAssociation == other.authorAssociation &&
-        reactions == other.reactions;
+        this.htmlUrl == other.htmlUrl &&
+        this.url == other.url &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.body == other.body &&
+        this.path == other.path &&
+        this.position == other.position &&
+        this.line == other.line &&
+        this.commitId == other.commitId &&
+        this.user == other.user &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.authorAssociation == other.authorAssociation &&
+        this.reactions == other.reactions;
   }
 }

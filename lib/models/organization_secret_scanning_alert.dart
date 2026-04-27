@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/alert_created_at.dart';
 import 'package:github_out/models/alert_html_url.dart';
@@ -12,13 +8,26 @@ import 'package:github_out/models/organization_secret_scanning_alert_validity.da
 import 'package:github_out/models/secret_scanning_alert_resolution.dart';
 import 'package:github_out/models/secret_scanning_alert_state.dart';
 import 'package:github_out/models/secret_scanning_first_detected_location.dart';
+import 'package:github_out/models/secret_scanning_location_commit.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_body.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_comment.dart';
+import 'package:github_out/models/secret_scanning_location_discussion_title.dart';
+import 'package:github_out/models/secret_scanning_location_issue_body.dart';
+import 'package:github_out/models/secret_scanning_location_issue_comment.dart';
+import 'package:github_out/models/secret_scanning_location_issue_title.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_body.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_comment.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_review.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_review_comment.dart';
+import 'package:github_out/models/secret_scanning_location_pull_request_title.dart';
+import 'package:github_out/models/secret_scanning_location_wiki_commit.dart';
 import 'package:github_out/models/simple_repository.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrganizationSecretScanningAlert {
-  const OrganizationSecretScanningAlert({
+  OrganizationSecretScanningAlert({
     this.number,
     this.createdAt,
     this.updatedAt,
@@ -294,37 +303,37 @@ class OrganizationSecretScanningAlert {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrganizationSecretScanningAlert &&
-        number == other.number &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        locationsUrl == other.locationsUrl &&
-        state == other.state &&
-        resolution == other.resolution &&
-        resolvedAt == other.resolvedAt &&
-        resolvedBy == other.resolvedBy &&
-        secretType == other.secretType &&
-        secretTypeDisplayName == other.secretTypeDisplayName &&
-        secret == other.secret &&
-        repository == other.repository &&
-        pushProtectionBypassed == other.pushProtectionBypassed &&
-        pushProtectionBypassedBy == other.pushProtectionBypassedBy &&
-        pushProtectionBypassedAt == other.pushProtectionBypassedAt &&
-        pushProtectionBypassRequestReviewer ==
+        this.number == other.number &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.locationsUrl == other.locationsUrl &&
+        this.state == other.state &&
+        this.resolution == other.resolution &&
+        this.resolvedAt == other.resolvedAt &&
+        this.resolvedBy == other.resolvedBy &&
+        this.secretType == other.secretType &&
+        this.secretTypeDisplayName == other.secretTypeDisplayName &&
+        this.secret == other.secret &&
+        this.repository == other.repository &&
+        this.pushProtectionBypassed == other.pushProtectionBypassed &&
+        this.pushProtectionBypassedBy == other.pushProtectionBypassedBy &&
+        this.pushProtectionBypassedAt == other.pushProtectionBypassedAt &&
+        this.pushProtectionBypassRequestReviewer ==
             other.pushProtectionBypassRequestReviewer &&
-        pushProtectionBypassRequestReviewerComment ==
+        this.pushProtectionBypassRequestReviewerComment ==
             other.pushProtectionBypassRequestReviewerComment &&
-        pushProtectionBypassRequestComment ==
+        this.pushProtectionBypassRequestComment ==
             other.pushProtectionBypassRequestComment &&
-        pushProtectionBypassRequestHtmlUrl ==
+        this.pushProtectionBypassRequestHtmlUrl ==
             other.pushProtectionBypassRequestHtmlUrl &&
-        resolutionComment == other.resolutionComment &&
-        validity == other.validity &&
-        publiclyLeaked == other.publiclyLeaked &&
-        multiRepo == other.multiRepo &&
-        isBase64Encoded == other.isBase64Encoded &&
-        firstLocationDetected == other.firstLocationDetected &&
-        hasMoreLocations == other.hasMoreLocations;
+        this.resolutionComment == other.resolutionComment &&
+        this.validity == other.validity &&
+        this.publiclyLeaked == other.publiclyLeaked &&
+        this.multiRepo == other.multiRepo &&
+        this.isBase64Encoded == other.isBase64Encoded &&
+        this.firstLocationDetected == other.firstLocationDetected &&
+        this.hasMoreLocations == other.hasMoreLocations;
   }
 }

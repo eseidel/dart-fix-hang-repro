@@ -3,6 +3,7 @@ import 'package:github_out/models/page_build_type.dart';
 import 'package:github_out/models/page_protected_domain_state.dart';
 import 'package:github_out/models/page_status.dart';
 import 'package:github_out/models/pages_https_certificate.dart';
+import 'package:github_out/models/pages_https_certificate_state.dart';
 import 'package:github_out/models/pages_source_hash.dart';
 import 'package:meta/meta.dart';
 
@@ -13,17 +14,17 @@ import 'package:meta/meta.dart';
 @immutable
 class Page {
   /// {@macro page}
-  const Page({
+  Page({
     required this.url,
     required this.status,
     required this.cname,
-    required this.public,
     this.protectedDomainState,
     this.pendingDomainUnverifiedAt,
     this.custom404 = false,
     this.htmlUrl,
     this.buildType,
     this.source,
+    required this.public,
     this.httpsCertificate,
     this.httpsEnforced,
   });
@@ -154,17 +155,17 @@ class Page {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Page &&
-        url == other.url &&
-        status == other.status &&
-        cname == other.cname &&
-        protectedDomainState == other.protectedDomainState &&
-        pendingDomainUnverifiedAt == other.pendingDomainUnverifiedAt &&
-        custom404 == other.custom404 &&
-        htmlUrl == other.htmlUrl &&
-        buildType == other.buildType &&
-        source == other.source &&
-        public == other.public &&
-        httpsCertificate == other.httpsCertificate &&
-        httpsEnforced == other.httpsEnforced;
+        this.url == other.url &&
+        this.status == other.status &&
+        this.cname == other.cname &&
+        this.protectedDomainState == other.protectedDomainState &&
+        this.pendingDomainUnverifiedAt == other.pendingDomainUnverifiedAt &&
+        this.custom404 == other.custom404 &&
+        this.htmlUrl == other.htmlUrl &&
+        this.buildType == other.buildType &&
+        this.source == other.source &&
+        this.public == other.public &&
+        this.httpsCertificate == other.httpsCertificate &&
+        this.httpsEnforced == other.httpsEnforced;
   }
 }

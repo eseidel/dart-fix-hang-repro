@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ContentTraffic {
   /// {@macro content_traffic}
-  const ContentTraffic({
+  ContentTraffic({
     required this.path,
     required this.title,
     required this.count,
@@ -23,8 +23,8 @@ class ContentTraffic {
       () => ContentTraffic(
         path: json['path'] as String,
         title: json['title'] as String,
-        count: json['count'] as int,
-        uniques: json['uniques'] as int,
+        count: (json['count'] as int),
+        uniques: (json['uniques'] as int),
       ),
     );
   }
@@ -72,9 +72,9 @@ class ContentTraffic {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ContentTraffic &&
-        path == other.path &&
-        title == other.title &&
-        count == other.count &&
-        uniques == other.uniques;
+        this.path == other.path &&
+        this.title == other.title &&
+        this.count == other.count &&
+        this.uniques == other.uniques;
   }
 }

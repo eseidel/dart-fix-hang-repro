@@ -1,24 +1,21 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_creation_info.dart';
 import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_packages_inner.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_packages_inner_external_refs_inner.dart';
 import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_relationships_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class DependencyGraphSpdxSbomSbom {
-  const DependencyGraphSpdxSbomSbom({
+  DependencyGraphSpdxSbomSbom({
     required this.spdxid,
     required this.spdxVersion,
+    this.comment,
     required this.creationInfo,
     required this.name,
     required this.dataLicense,
     required this.documentNamespace,
     required this.packages,
-    this.comment,
     this.relationships,
   });
 
@@ -126,14 +123,14 @@ class DependencyGraphSpdxSbomSbom {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependencyGraphSpdxSbomSbom &&
-        spdxid == other.spdxid &&
-        spdxVersion == other.spdxVersion &&
-        comment == other.comment &&
-        creationInfo == other.creationInfo &&
-        name == other.name &&
-        dataLicense == other.dataLicense &&
-        documentNamespace == other.documentNamespace &&
-        listsEqual(packages, other.packages) &&
-        listsEqual(relationships, other.relationships);
+        this.spdxid == other.spdxid &&
+        this.spdxVersion == other.spdxVersion &&
+        this.comment == other.comment &&
+        this.creationInfo == other.creationInfo &&
+        this.name == other.name &&
+        this.dataLicense == other.dataLicense &&
+        this.documentNamespace == other.documentNamespace &&
+        listsEqual(this.packages, other.packages) &&
+        listsEqual(this.relationships, other.relationships);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActivitySetRepoSubscriptionRequest {
-  const ActivitySetRepoSubscriptionRequest({
+  ActivitySetRepoSubscriptionRequest({
     this.subscribed,
     this.ignored,
   });
@@ -59,7 +59,7 @@ class ActivitySetRepoSubscriptionRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActivitySetRepoSubscriptionRequest &&
-        subscribed == other.subscribed &&
-        ignored == other.ignored;
+        this.subscribed == other.subscribed &&
+        this.ignored == other.ignored;
   }
 }

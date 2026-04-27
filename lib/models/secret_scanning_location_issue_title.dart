@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SecretScanningLocationIssueTitle {
   /// {@macro secret_scanning_location_issue_title}
-  const SecretScanningLocationIssueTitle({
+  SecretScanningLocationIssueTitle({
     required this.issueTitleUrl,
   });
 
@@ -53,6 +53,6 @@ class SecretScanningLocationIssueTitle {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningLocationIssueTitle &&
-        issueTitleUrl == other.issueTitleUrl;
+        this.issueTitleUrl == other.issueTitleUrl;
   }
 }

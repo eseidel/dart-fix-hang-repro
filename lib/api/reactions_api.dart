@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -22,7 +18,18 @@ import 'package:github_out/messages/reactions_create_for_team_discussion_comment
 import 'package:github_out/messages/reactions_create_for_team_discussion_comment_legacy_request.dart';
 import 'package:github_out/messages/reactions_create_for_team_discussion_in_org_request.dart';
 import 'package:github_out/messages/reactions_create_for_team_discussion_legacy_request.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/reaction.dart';
+import 'package:github_out/models/reaction_content.dart';
+import 'package:github_out/models/reactions_create_for_commit_comment_request_content.dart';
+import 'package:github_out/models/reactions_create_for_issue_comment_request_content.dart';
+import 'package:github_out/models/reactions_create_for_issue_request_content.dart';
+import 'package:github_out/models/reactions_create_for_pull_request_review_comment_request_content.dart';
+import 'package:github_out/models/reactions_create_for_release_request_content.dart';
+import 'package:github_out/models/reactions_create_for_team_discussion_comment_in_org_request_content.dart';
+import 'package:github_out/models/reactions_create_for_team_discussion_comment_legacy_request_content.dart';
+import 'package:github_out/models/reactions_create_for_team_discussion_in_org_request_content.dart';
+import 'package:github_out/models/reactions_create_for_team_discussion_legacy_request_content.dart';
 import 'package:github_out/models/reactions_list_for_commit_comment_parameter3.dart';
 import 'package:github_out/models/reactions_list_for_issue_comment_parameter3.dart';
 import 'package:github_out/models/reactions_list_for_issue_parameter3.dart';
@@ -32,6 +39,11 @@ import 'package:github_out/models/reactions_list_for_team_discussion_comment_in_
 import 'package:github_out/models/reactions_list_for_team_discussion_comment_legacy_parameter3.dart';
 import 'package:github_out/models/reactions_list_for_team_discussion_in_org_parameter3.dart';
 import 'package:github_out/models/reactions_list_for_team_discussion_legacy_parameter2.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 
 /// Interact with reactions to various GitHub entities.
 class ReactionsApi {
@@ -62,12 +74,12 @@ class ReactionsApi {
       method: Method.get,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -76,7 +88,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -114,17 +126,18 @@ class ReactionsApi {
       method: Method.post,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
       body: reactionsCreateForTeamDiscussionCommentInOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -158,17 +171,17 @@ class ReactionsApi {
       method: Method.delete,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}/reactions/{reaction_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber')
-              .replaceAll('{reaction_id}', '$reactionId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}')
+              .replaceAll('{reaction_id}', '${reactionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -195,11 +208,11 @@ class ReactionsApi {
       method: Method.get,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -208,7 +221,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -245,16 +258,17 @@ class ReactionsApi {
       method: Method.post,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}'),
       body: reactionsCreateForTeamDiscussionInOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -287,16 +301,16 @@ class ReactionsApi {
       method: Method.delete,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/reactions/{reaction_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{reaction_id}', '$reactionId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{reaction_id}', '${reactionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -315,11 +329,11 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/comments/{comment_id}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -328,7 +342,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -356,16 +370,17 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/comments/{comment_id}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       body: reactionsCreateForCommitCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -395,16 +410,16 @@ class ReactionsApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/comments/{comment_id}/reactions/{reaction_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{comment_id}', '$commentId')
-              .replaceAll('{reaction_id}', '$reactionId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{comment_id}', '${commentId}')
+              .replaceAll('{reaction_id}', '${reactionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -423,11 +438,11 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -436,7 +451,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -463,16 +478,17 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       body: reactionsCreateForIssueCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -502,16 +518,16 @@ class ReactionsApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/issues/comments/{comment_id}/reactions/{reaction_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{comment_id}', '$commentId')
-              .replaceAll('{reaction_id}', '$reactionId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{comment_id}', '${commentId}')
+              .replaceAll('{reaction_id}', '${reactionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -530,11 +546,11 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -543,7 +559,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -570,16 +586,17 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/issues/{issue_number}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{issue_number}', '$issueNumber'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{issue_number}', '${issueNumber}'),
       body: reactionsCreateForIssueRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -609,16 +626,16 @@ class ReactionsApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/issues/{issue_number}/reactions/{reaction_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{issue_number}', '$issueNumber')
-              .replaceAll('{reaction_id}', '$reactionId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{issue_number}', '${issueNumber}')
+              .replaceAll('{reaction_id}', '${reactionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -637,11 +654,11 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -650,7 +667,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -678,16 +695,17 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{comment_id}', '$commentId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{comment_id}', '${commentId}'),
       body: reactionsCreateForPullRequestReviewCommentRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -717,16 +735,16 @@ class ReactionsApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/pulls/comments/{comment_id}/reactions/{reaction_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{comment_id}', '$commentId')
-              .replaceAll('{reaction_id}', '$reactionId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{comment_id}', '${commentId}')
+              .replaceAll('{reaction_id}', '${reactionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -745,11 +763,11 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/releases/{release_id}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{release_id}', '$releaseId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{release_id}', '${releaseId}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -758,7 +776,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -785,16 +803,17 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/releases/{release_id}/reactions'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{release_id}', '$releaseId'),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{release_id}', '${releaseId}'),
       body: reactionsCreateForReleaseRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -824,16 +843,16 @@ class ReactionsApi {
       method: Method.delete,
       path:
           '/repos/{owner}/{repo}/releases/{release_id}/reactions/{reaction_id}'
-              .replaceAll('{owner}', owner)
-              .replaceAll('{repo}', repo)
-              .replaceAll('{release_id}', '$releaseId')
-              .replaceAll('{reaction_id}', '$reactionId'),
+              .replaceAll('{owner}', '${owner}')
+              .replaceAll('{repo}', '${repo}')
+              .replaceAll('{release_id}', '${releaseId}')
+              .replaceAll('{reaction_id}', '${reactionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -862,11 +881,11 @@ class ReactionsApi {
       method: Method.get,
       path:
           '/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions'
-              .replaceAll('{team_id}', '$teamId')
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{team_id}', '${teamId}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -875,7 +894,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -915,16 +934,17 @@ class ReactionsApi {
       method: Method.post,
       path:
           '/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}/reactions'
-              .replaceAll('{team_id}', '$teamId')
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{team_id}', '${teamId}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
       body: reactionsCreateForTeamDiscussionCommentLegacyRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -959,10 +979,10 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/teams/{team_id}/discussions/{discussion_number}/reactions'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
       queryParameters: {
-        if (content != null) 'content': [content.toJson()],
+        if (content != null) 'content': [content.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -971,7 +991,7 @@ class ReactionsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1008,15 +1028,16 @@ class ReactionsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/teams/{team_id}/discussions/{discussion_number}/reactions'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
       body: reactionsCreateForTeamDiscussionLegacyRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

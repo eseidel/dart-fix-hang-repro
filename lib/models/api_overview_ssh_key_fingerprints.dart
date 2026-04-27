@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ApiOverviewSshKeyFingerprints {
-  const ApiOverviewSshKeyFingerprints({
+  ApiOverviewSshKeyFingerprints({
     this.sha256Rsa,
     this.sha256Dsa,
     this.sha256Ecdsa,
@@ -62,9 +62,9 @@ class ApiOverviewSshKeyFingerprints {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiOverviewSshKeyFingerprints &&
-        sha256Rsa == other.sha256Rsa &&
-        sha256Dsa == other.sha256Dsa &&
-        sha256Ecdsa == other.sha256Ecdsa &&
-        sha256Ed25519 == other.sha256Ed25519;
+        this.sha256Rsa == other.sha256Rsa &&
+        this.sha256Dsa == other.sha256Dsa &&
+        this.sha256Ecdsa == other.sha256Ecdsa &&
+        this.sha256Ed25519 == other.sha256Ed25519;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ContentSymlinkLinks {
-  const ContentSymlinkLinks({
+  ContentSymlinkLinks({
     required this.git,
     required this.html,
     required this.self,
@@ -55,8 +55,8 @@ class ContentSymlinkLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ContentSymlinkLinks &&
-        git == other.git &&
-        html == other.html &&
-        self == other.self;
+        this.git == other.git &&
+        this.html == other.html &&
+        this.self == other.self;
   }
 }

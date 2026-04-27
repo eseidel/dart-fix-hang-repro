@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/orgs_update_request_default_repository_permission.dart';
 import 'package:github_out/models/orgs_update_request_members_allowed_repository_creation_type.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class OrgsUpdateRequest {
-  const OrgsUpdateRequest({
+  OrgsUpdateRequest({
     this.billingEmail,
     this.company,
     this.email,
@@ -420,49 +416,51 @@ class OrgsUpdateRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsUpdateRequest &&
-        billingEmail == other.billingEmail &&
-        company == other.company &&
-        email == other.email &&
-        twitterUsername == other.twitterUsername &&
-        location == other.location &&
-        name == other.name &&
-        description == other.description &&
-        hasOrganizationProjects == other.hasOrganizationProjects &&
-        hasRepositoryProjects == other.hasRepositoryProjects &&
-        defaultRepositoryPermission == other.defaultRepositoryPermission &&
-        membersCanCreateRepositories == other.membersCanCreateRepositories &&
-        membersCanCreateInternalRepositories ==
+        this.billingEmail == other.billingEmail &&
+        this.company == other.company &&
+        this.email == other.email &&
+        this.twitterUsername == other.twitterUsername &&
+        this.location == other.location &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.hasOrganizationProjects == other.hasOrganizationProjects &&
+        this.hasRepositoryProjects == other.hasRepositoryProjects &&
+        this.defaultRepositoryPermission == other.defaultRepositoryPermission &&
+        this.membersCanCreateRepositories ==
+            other.membersCanCreateRepositories &&
+        this.membersCanCreateInternalRepositories ==
             other.membersCanCreateInternalRepositories &&
-        membersCanCreatePrivateRepositories ==
+        this.membersCanCreatePrivateRepositories ==
             other.membersCanCreatePrivateRepositories &&
-        membersCanCreatePublicRepositories ==
+        this.membersCanCreatePublicRepositories ==
             other.membersCanCreatePublicRepositories &&
-        membersAllowedRepositoryCreationType ==
+        this.membersAllowedRepositoryCreationType ==
             other.membersAllowedRepositoryCreationType &&
-        membersCanCreatePages == other.membersCanCreatePages &&
-        membersCanCreatePublicPages == other.membersCanCreatePublicPages &&
-        membersCanCreatePrivatePages == other.membersCanCreatePrivatePages &&
-        membersCanForkPrivateRepositories ==
+        this.membersCanCreatePages == other.membersCanCreatePages &&
+        this.membersCanCreatePublicPages == other.membersCanCreatePublicPages &&
+        this.membersCanCreatePrivatePages ==
+            other.membersCanCreatePrivatePages &&
+        this.membersCanForkPrivateRepositories ==
             other.membersCanForkPrivateRepositories &&
-        webCommitSignoffRequired == other.webCommitSignoffRequired &&
-        blog == other.blog &&
-        advancedSecurityEnabledForNewRepositories ==
+        this.webCommitSignoffRequired == other.webCommitSignoffRequired &&
+        this.blog == other.blog &&
+        this.advancedSecurityEnabledForNewRepositories ==
             other.advancedSecurityEnabledForNewRepositories &&
-        dependabotAlertsEnabledForNewRepositories ==
+        this.dependabotAlertsEnabledForNewRepositories ==
             other.dependabotAlertsEnabledForNewRepositories &&
-        dependabotSecurityUpdatesEnabledForNewRepositories ==
+        this.dependabotSecurityUpdatesEnabledForNewRepositories ==
             other.dependabotSecurityUpdatesEnabledForNewRepositories &&
-        dependencyGraphEnabledForNewRepositories ==
+        this.dependencyGraphEnabledForNewRepositories ==
             other.dependencyGraphEnabledForNewRepositories &&
-        secretScanningEnabledForNewRepositories ==
+        this.secretScanningEnabledForNewRepositories ==
             other.secretScanningEnabledForNewRepositories &&
-        secretScanningPushProtectionEnabledForNewRepositories ==
+        this.secretScanningPushProtectionEnabledForNewRepositories ==
             other.secretScanningPushProtectionEnabledForNewRepositories &&
-        secretScanningPushProtectionCustomLinkEnabled ==
+        this.secretScanningPushProtectionCustomLinkEnabled ==
             other.secretScanningPushProtectionCustomLinkEnabled &&
-        secretScanningPushProtectionCustomLink ==
+        this.secretScanningPushProtectionCustomLink ==
             other.secretScanningPushProtectionCustomLink &&
-        deployKeysEnabledForRepositories ==
+        this.deployKeysEnabledForRepositories ==
             other.deployKeysEnabledForRepositories;
   }
 }

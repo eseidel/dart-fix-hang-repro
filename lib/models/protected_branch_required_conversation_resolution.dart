@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProtectedBranchRequiredConversationResolution {
-  const ProtectedBranchRequiredConversationResolution({
+  ProtectedBranchRequiredConversationResolution({
     this.enabled,
   });
 
@@ -49,6 +49,6 @@ class ProtectedBranchRequiredConversationResolution {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProtectedBranchRequiredConversationResolution &&
-        enabled == other.enabled;
+        this.enabled == other.enabled;
   }
 }

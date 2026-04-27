@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/workflow.dart';
+import 'package:github_out/models/workflow_state.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListRepoWorkflows200Response {
-  const ActionsListRepoWorkflows200Response({
+  ActionsListRepoWorkflows200Response({
     required this.totalCount,
     required this.workflows,
   });
@@ -18,7 +19,7 @@ class ActionsListRepoWorkflows200Response {
       'ActionsListRepoWorkflows200Response',
       json,
       () => ActionsListRepoWorkflows200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         workflows: (json['workflows'] as List)
             .map<Workflow>((e) => Workflow.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -59,7 +60,7 @@ class ActionsListRepoWorkflows200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListRepoWorkflows200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(workflows, other.workflows);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.workflows, other.workflows);
   }
 }

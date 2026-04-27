@@ -1,16 +1,23 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
 import 'package:github_out/models/auto_merge.dart';
+import 'package:github_out/models/auto_merge_merge_method.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/link.dart';
 import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
 import 'package:github_out/models/pull_request_base.dart';
 import 'package:github_out/models/pull_request_head.dart';
 import 'package:github_out/models/pull_request_labels_inner.dart';
 import 'package:github_out/models/pull_request_links.dart';
 import 'package:github_out/models/pull_request_state.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
@@ -25,7 +32,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PullRequest {
   /// {@macro pull_request}
-  const PullRequest({
+  PullRequest({
     required this.url,
     required this.id,
     required this.nodeId,
@@ -46,19 +53,25 @@ class PullRequest {
     required this.body,
     required this.labels,
     required this.milestone,
+    this.activeLockReason,
     required this.createdAt,
     required this.updatedAt,
     required this.closedAt,
     required this.mergedAt,
     required this.mergeCommitSha,
     required this.assignee,
+    this.assignees,
+    this.requestedReviewers,
+    this.requestedTeams,
     required this.head,
     required this.base,
     required this.links,
     required this.authorAssociation,
     required this.autoMerge,
+    this.draft,
     required this.merged,
     required this.mergeable,
+    this.rebaseable,
     required this.mergeableState,
     required this.mergedBy,
     required this.comments,
@@ -68,12 +81,6 @@ class PullRequest {
     required this.additions,
     required this.deletions,
     required this.changedFiles,
-    this.activeLockReason,
-    this.assignees,
-    this.requestedReviewers,
-    this.requestedTeams,
-    this.draft,
-    this.rebaseable,
   });
 
   /// Converts a `Map<String, dynamic>` to a [PullRequest].
@@ -83,7 +90,7 @@ class PullRequest {
       json,
       () => PullRequest(
         url: Uri.parse(json['url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         htmlUrl: Uri.parse(json['html_url'] as String),
         diffUrl: Uri.parse(json['diff_url'] as String),
@@ -94,7 +101,7 @@ class PullRequest {
         reviewCommentUrl: json['review_comment_url'] as String,
         commentsUrl: Uri.parse(json['comments_url'] as String),
         statusesUrl: Uri.parse(json['statuses_url'] as String),
-        number: json['number'] as int,
+        number: (json['number'] as int),
         state: PullRequestState.fromJson(json['state'] as String),
         locked: json['locked'] as bool,
         title: json['title'] as String,
@@ -151,13 +158,13 @@ class PullRequest {
         mergedBy: SimpleUser.maybeFromJson(
           checkedKey(json, 'merged_by') as Map<String, dynamic>?,
         ),
-        comments: json['comments'] as int,
-        reviewComments: json['review_comments'] as int,
+        comments: (json['comments'] as int),
+        reviewComments: (json['review_comments'] as int),
         maintainerCanModify: json['maintainer_can_modify'] as bool,
-        commits: json['commits'] as int,
-        additions: json['additions'] as int,
-        deletions: json['deletions'] as int,
-        changedFiles: json['changed_files'] as int,
+        commits: (json['commits'] as int),
+        additions: (json['additions'] as int),
+        deletions: (json['deletions'] as int),
+        changedFiles: (json['changed_files'] as int),
       ),
     );
   }
@@ -429,53 +436,53 @@ class PullRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequest &&
-        url == other.url &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        htmlUrl == other.htmlUrl &&
-        diffUrl == other.diffUrl &&
-        patchUrl == other.patchUrl &&
-        issueUrl == other.issueUrl &&
-        commitsUrl == other.commitsUrl &&
-        reviewCommentsUrl == other.reviewCommentsUrl &&
-        reviewCommentUrl == other.reviewCommentUrl &&
-        commentsUrl == other.commentsUrl &&
-        statusesUrl == other.statusesUrl &&
-        number == other.number &&
-        state == other.state &&
-        locked == other.locked &&
-        title == other.title &&
-        user == other.user &&
-        body == other.body &&
-        listsEqual(labels, other.labels) &&
-        milestone == other.milestone &&
-        activeLockReason == other.activeLockReason &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        closedAt == other.closedAt &&
-        mergedAt == other.mergedAt &&
-        mergeCommitSha == other.mergeCommitSha &&
-        assignee == other.assignee &&
-        listsEqual(assignees, other.assignees) &&
-        listsEqual(requestedReviewers, other.requestedReviewers) &&
-        listsEqual(requestedTeams, other.requestedTeams) &&
-        head == other.head &&
-        base == other.base &&
-        links == other.links &&
-        authorAssociation == other.authorAssociation &&
-        autoMerge == other.autoMerge &&
-        draft == other.draft &&
-        merged == other.merged &&
-        mergeable == other.mergeable &&
-        rebaseable == other.rebaseable &&
-        mergeableState == other.mergeableState &&
-        mergedBy == other.mergedBy &&
-        comments == other.comments &&
-        reviewComments == other.reviewComments &&
-        maintainerCanModify == other.maintainerCanModify &&
-        commits == other.commits &&
-        additions == other.additions &&
-        deletions == other.deletions &&
-        changedFiles == other.changedFiles;
+        this.url == other.url &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.htmlUrl == other.htmlUrl &&
+        this.diffUrl == other.diffUrl &&
+        this.patchUrl == other.patchUrl &&
+        this.issueUrl == other.issueUrl &&
+        this.commitsUrl == other.commitsUrl &&
+        this.reviewCommentsUrl == other.reviewCommentsUrl &&
+        this.reviewCommentUrl == other.reviewCommentUrl &&
+        this.commentsUrl == other.commentsUrl &&
+        this.statusesUrl == other.statusesUrl &&
+        this.number == other.number &&
+        this.state == other.state &&
+        this.locked == other.locked &&
+        this.title == other.title &&
+        this.user == other.user &&
+        this.body == other.body &&
+        listsEqual(this.labels, other.labels) &&
+        this.milestone == other.milestone &&
+        this.activeLockReason == other.activeLockReason &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.closedAt == other.closedAt &&
+        this.mergedAt == other.mergedAt &&
+        this.mergeCommitSha == other.mergeCommitSha &&
+        this.assignee == other.assignee &&
+        listsEqual(this.assignees, other.assignees) &&
+        listsEqual(this.requestedReviewers, other.requestedReviewers) &&
+        listsEqual(this.requestedTeams, other.requestedTeams) &&
+        this.head == other.head &&
+        this.base == other.base &&
+        this.links == other.links &&
+        this.authorAssociation == other.authorAssociation &&
+        this.autoMerge == other.autoMerge &&
+        this.draft == other.draft &&
+        this.merged == other.merged &&
+        this.mergeable == other.mergeable &&
+        this.rebaseable == other.rebaseable &&
+        this.mergeableState == other.mergeableState &&
+        this.mergedBy == other.mergedBy &&
+        this.comments == other.comments &&
+        this.reviewComments == other.reviewComments &&
+        this.maintainerCanModify == other.maintainerCanModify &&
+        this.commits == other.commits &&
+        this.additions == other.additions &&
+        this.deletions == other.deletions &&
+        this.changedFiles == other.changedFiles;
   }
 }

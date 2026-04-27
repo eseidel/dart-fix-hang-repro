@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/messages/codespaces_create_for_authenticated_user_request_one_of_1_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/codespaces_create_for_authenticated_user_request_one_of_1_geo.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesCreateForAuthenticatedUserRequestOneOf1 {
-  const CodespacesCreateForAuthenticatedUserRequestOneOf1({
+  CodespacesCreateForAuthenticatedUserRequestOneOf1({
     required this.pullRequest,
     this.location,
     this.geo,
@@ -39,7 +35,7 @@ class CodespacesCreateForAuthenticatedUserRequestOneOf1 {
         machine: json['machine'] as String?,
         devcontainerPath: json['devcontainer_path'] as String?,
         workingDirectory: json['working_directory'] as String?,
-        idleTimeoutMinutes: json['idle_timeout_minutes'] as int?,
+        idleTimeoutMinutes: (json['idle_timeout_minutes'] as int?),
       ),
     );
   }
@@ -109,12 +105,12 @@ class CodespacesCreateForAuthenticatedUserRequestOneOf1 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesCreateForAuthenticatedUserRequestOneOf1 &&
-        pullRequest == other.pullRequest &&
-        location == other.location &&
-        geo == other.geo &&
-        machine == other.machine &&
-        devcontainerPath == other.devcontainerPath &&
-        workingDirectory == other.workingDirectory &&
-        idleTimeoutMinutes == other.idleTimeoutMinutes;
+        this.pullRequest == other.pullRequest &&
+        this.location == other.location &&
+        this.geo == other.geo &&
+        this.machine == other.machine &&
+        this.devcontainerPath == other.devcontainerPath &&
+        this.workingDirectory == other.workingDirectory &&
+        this.idleTimeoutMinutes == other.idleTimeoutMinutes;
   }
 }

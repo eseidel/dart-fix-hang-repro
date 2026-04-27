@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GitCreateTagRequestTagger {
   /// {@macro git_create_tag_request_tagger}
-  const GitCreateTagRequestTagger({
+  GitCreateTagRequestTagger({
     required this.name,
     required this.email,
     this.date,
@@ -66,8 +66,8 @@ class GitCreateTagRequestTagger {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCreateTagRequestTagger &&
-        name == other.name &&
-        email == other.email &&
-        date == other.date;
+        this.name == other.name &&
+        this.email == other.email &&
+        this.date == other.date;
   }
 }

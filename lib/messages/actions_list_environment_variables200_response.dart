@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListEnvironmentVariables200Response {
-  const ActionsListEnvironmentVariables200Response({
+  ActionsListEnvironmentVariables200Response({
     required this.totalCount,
     required this.variables,
   });
@@ -18,7 +18,7 @@ class ActionsListEnvironmentVariables200Response {
       'ActionsListEnvironmentVariables200Response',
       json,
       () => ActionsListEnvironmentVariables200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         variables: (json['variables'] as List)
             .map<ActionsVariable>(
               (e) => ActionsVariable.fromJson(e as Map<String, dynamic>),
@@ -61,7 +61,7 @@ class ActionsListEnvironmentVariables200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListEnvironmentVariables200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(variables, other.variables);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.variables, other.variables);
   }
 }

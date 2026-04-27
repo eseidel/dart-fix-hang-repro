@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -15,7 +11,9 @@ import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/teams_add_or_update_membership_for_user_in_org_request.dart';
 import 'package:github_out/messages/teams_add_or_update_membership_for_user_legacy_request.dart';
+import 'package:github_out/messages/teams_add_or_update_project_permissions_in_org403_response.dart';
 import 'package:github_out/messages/teams_add_or_update_project_permissions_in_org_request.dart';
+import 'package:github_out/messages/teams_add_or_update_project_permissions_legacy403_response.dart';
 import 'package:github_out/messages/teams_add_or_update_project_permissions_legacy_request.dart';
 import 'package:github_out/messages/teams_add_or_update_repo_permissions_in_org_request.dart';
 import 'package:github_out/messages/teams_add_or_update_repo_permissions_legacy_request.dart';
@@ -30,19 +28,68 @@ import 'package:github_out/messages/teams_update_discussion_in_org_request.dart'
 import 'package:github_out/messages/teams_update_discussion_legacy_request.dart';
 import 'package:github_out/messages/teams_update_in_org_request.dart';
 import 'package:github_out/messages/teams_update_legacy_request.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/direction_param.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/organization_invitation.dart';
+import 'package:github_out/models/reaction_rollup.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/team.dart';
 import 'package:github_out/models/team_discussion.dart';
 import 'package:github_out/models/team_discussion_comment.dart';
 import 'package:github_out/models/team_full.dart';
+import 'package:github_out/models/team_full_notification_setting.dart';
+import 'package:github_out/models/team_full_privacy.dart';
 import 'package:github_out/models/team_membership.dart';
+import 'package:github_out/models/team_membership_role.dart';
+import 'package:github_out/models/team_membership_state.dart';
+import 'package:github_out/models/team_organization.dart';
+import 'package:github_out/models/team_organization_plan.dart';
+import 'package:github_out/models/team_permissions.dart';
 import 'package:github_out/models/team_project.dart';
+import 'package:github_out/models/team_project_permissions.dart';
 import 'package:github_out/models/team_repository.dart';
+import 'package:github_out/models/team_repository_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
+import 'package:github_out/models/teams_add_or_update_membership_for_user_in_org_request_role.dart';
+import 'package:github_out/models/teams_add_or_update_membership_for_user_legacy_request_role.dart';
+import 'package:github_out/models/teams_add_or_update_project_permissions_in_org_request_permission.dart';
+import 'package:github_out/models/teams_add_or_update_project_permissions_legacy_request_permission.dart';
+import 'package:github_out/models/teams_add_or_update_repo_permissions_legacy_request_permission.dart';
+import 'package:github_out/models/teams_create_request_notification_setting.dart';
+import 'package:github_out/models/teams_create_request_permission.dart';
+import 'package:github_out/models/teams_create_request_privacy.dart';
 import 'package:github_out/models/teams_list_members_in_org_parameter2.dart';
 import 'package:github_out/models/teams_list_members_legacy_parameter1.dart';
+import 'package:github_out/models/teams_update_in_org_request_notification_setting.dart';
+import 'package:github_out/models/teams_update_in_org_request_permission.dart';
+import 'package:github_out/models/teams_update_in_org_request_privacy.dart';
+import 'package:github_out/models/teams_update_legacy_request_notification_setting.dart';
+import 'package:github_out/models/teams_update_legacy_request_permission.dart';
+import 'package:github_out/models/teams_update_legacy_request_privacy.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class TeamsCheckPermissionsForRepoInOrgResponse {
@@ -131,7 +178,7 @@ class TeamsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/teams'.replaceAll('{org}', org),
+      path: '/orgs/{org}/teams'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -141,7 +188,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -171,14 +218,15 @@ class TeamsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/teams'.replaceAll('{org}', org),
+      path: '/orgs/{org}/teams'.replaceAll('{org}', '${org}'),
       body: teamsCreateRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -207,14 +255,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -244,14 +292,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/teams/{team_slug}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -271,15 +319,16 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/teams/{team_slug}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       body: teamsUpdateInOrgRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -312,20 +361,20 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/discussions'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       queryParameters: {
-        if (direction != null) 'direction': [direction.toJson()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (pinned != null) 'pinned': [pinned],
+        if (pinned != null) 'pinned': [pinned.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -365,15 +414,16 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/teams/{team_slug}/discussions'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       body: teamsCreateDiscussionInOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -403,15 +453,15 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -441,15 +491,15 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -473,16 +523,17 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
       body: teamsUpdateDiscussionInOrgRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -516,11 +567,11 @@ class TeamsApi {
       method: Method.get,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}'),
       queryParameters: {
-        if (direction != null) 'direction': [direction.toJson()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -529,7 +580,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -572,16 +623,17 @@ class TeamsApi {
       method: Method.post,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}'),
       body: teamsCreateDiscussionCommentInOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -613,16 +665,16 @@ class TeamsApi {
       method: Method.get,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -654,16 +706,16 @@ class TeamsApi {
       method: Method.delete,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -689,17 +741,18 @@ class TeamsApi {
       method: Method.patch,
       path:
           '/orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}'
-              .replaceAll('{org}', org)
-              .replaceAll('{team_slug}', teamSlug)
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{team_slug}', '${teamSlug}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
       body: teamsUpdateDiscussionCommentInOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -731,8 +784,8 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/invitations'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -742,7 +795,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -772,10 +825,10 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/members'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       queryParameters: {
-        if (role != null) 'role': [role.toJson()],
+        if (role != null) 'role': [role.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -784,7 +837,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -824,15 +877,15 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/memberships/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -891,16 +944,17 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/teams/{team_slug}/memberships/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{username}', '${username}'),
       body: teamsAddOrUpdateMembershipForUserInOrgRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -947,15 +1001,15 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/teams/{team_slug}/memberships/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -976,8 +1030,8 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/projects'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -987,7 +1041,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1017,15 +1071,15 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/projects/{project_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{project_id}', '$projectId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{project_id}', '${projectId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1055,16 +1109,17 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/teams/{team_slug}/projects/{project_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{project_id}', '$projectId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{project_id}', '${projectId}'),
       body: teamsAddOrUpdateProjectPermissionsInOrgRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1084,15 +1139,15 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/teams/{team_slug}/projects/{project_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{project_id}', '$projectId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{project_id}', '${projectId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1112,8 +1167,8 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/repos'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1123,7 +1178,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1169,16 +1224,16 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1223,17 +1278,18 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: teamsAddOrUpdateRepoPermissionsInOrgRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1257,16 +1313,16 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1286,8 +1342,8 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/teams/{team_slug}/teams'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1297,7 +1353,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1322,13 +1378,13 @@ class TeamsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/teams/{team_id}'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}'.replaceAll('{team_id}', '${teamId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1358,13 +1414,13 @@ class TeamsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.delete,
-      path: '/teams/{team_id}'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}'.replaceAll('{team_id}', '${teamId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1387,14 +1443,15 @@ class TeamsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.patch,
-      path: '/teams/{team_id}'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}'.replaceAll('{team_id}', '${teamId}'),
       body: teamsUpdateLegacyRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1426,9 +1483,9 @@ class TeamsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/teams/{team_id}/discussions'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}/discussions'.replaceAll('{team_id}', '${teamId}'),
       queryParameters: {
-        if (direction != null) 'direction': [direction.toJson()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1437,7 +1494,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1477,14 +1534,15 @@ class TeamsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/teams/{team_id}/discussions'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}/discussions'.replaceAll('{team_id}', '${teamId}'),
       body: teamsCreateDiscussionLegacyRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1516,14 +1574,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/teams/{team_id}/discussions/{discussion_number}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1554,14 +1612,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/teams/{team_id}/discussions/{discussion_number}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1587,15 +1645,16 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/teams/{team_id}/discussions/{discussion_number}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
       body: teamsUpdateDiscussionLegacyRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1630,10 +1689,10 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/teams/{team_id}/discussions/{discussion_number}/comments'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
       queryParameters: {
-        if (direction != null) 'direction': [direction.toJson()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1642,7 +1701,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1686,15 +1745,16 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/teams/{team_id}/discussions/{discussion_number}/comments'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{discussion_number}', '$discussionNumber'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{discussion_number}', '${discussionNumber}'),
       body: teamsCreateDiscussionCommentLegacyRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1728,15 +1788,15 @@ class TeamsApi {
       method: Method.get,
       path:
           '/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}'
-              .replaceAll('{team_id}', '$teamId')
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{team_id}', '${teamId}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1770,15 +1830,15 @@ class TeamsApi {
       method: Method.delete,
       path:
           '/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}'
-              .replaceAll('{team_id}', '$teamId')
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{team_id}', '${teamId}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1806,16 +1866,17 @@ class TeamsApi {
       method: Method.patch,
       path:
           '/teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}'
-              .replaceAll('{team_id}', '$teamId')
-              .replaceAll('{discussion_number}', '$discussionNumber')
-              .replaceAll('{comment_number}', '$commentNumber'),
+              .replaceAll('{team_id}', '${teamId}')
+              .replaceAll('{discussion_number}', '${discussionNumber}')
+              .replaceAll('{comment_number}', '${commentNumber}'),
       body: teamsUpdateDiscussionCommentLegacyRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1847,7 +1908,7 @@ class TeamsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/teams/{team_id}/invitations'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}/invitations'.replaceAll('{team_id}', '${teamId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1857,7 +1918,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1888,9 +1949,9 @@ class TeamsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/teams/{team_id}/members'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}/members'.replaceAll('{team_id}', '${teamId}'),
       queryParameters: {
-        if (role != null) 'role': [role.toJson()],
+        if (role != null) 'role': [role.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1899,7 +1960,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1931,14 +1992,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/teams/{team_id}/members/{username}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{username}', username),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1981,14 +2042,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/teams/{team_id}/members/{username}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{username}', username),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2028,14 +2089,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/teams/{team_id}/members/{username}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{username}', username),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2067,14 +2128,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/teams/{team_id}/memberships/{username}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{username}', username),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2137,15 +2198,16 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/teams/{team_id}/memberships/{username}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{username}', username),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{username}', '${username}'),
       body: teamsAddOrUpdateMembershipForUserLegacyRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2194,14 +2256,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/teams/{team_id}/memberships/{username}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{username}', username),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2220,7 +2282,7 @@ class TeamsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/teams/{team_id}/projects'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}/projects'.replaceAll('{team_id}', '${teamId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2230,7 +2292,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2259,14 +2321,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/teams/{team_id}/projects/{project_id}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{project_id}', '$projectId'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{project_id}', '${projectId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2295,15 +2357,16 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/teams/{team_id}/projects/{project_id}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{project_id}', '$projectId'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{project_id}', '${projectId}'),
       body: teamsAddOrUpdateProjectPermissionsLegacyRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2322,14 +2385,14 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/teams/{team_id}/projects/{project_id}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{project_id}', '$projectId'),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{project_id}', '${projectId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2348,7 +2411,7 @@ class TeamsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/teams/{team_id}/repos'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}/repos'.replaceAll('{team_id}', '${teamId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2358,7 +2421,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2398,15 +2461,15 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/teams/{team_id}/repos/{owner}/{repo}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2451,16 +2514,17 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/teams/{team_id}/repos/{owner}/{repo}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: teamsAddOrUpdateRepoPermissionsLegacyRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2486,15 +2550,15 @@ class TeamsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/teams/{team_id}/repos/{owner}/{repo}'
-          .replaceAll('{team_id}', '$teamId')
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{team_id}', '${teamId}')
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2512,7 +2576,7 @@ class TeamsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/teams/{team_id}/teams'.replaceAll('{team_id}', '$teamId'),
+      path: '/teams/{team_id}/teams'.replaceAll('{team_id}', '${teamId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2522,7 +2586,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2562,7 +2626,7 @@ class TeamsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

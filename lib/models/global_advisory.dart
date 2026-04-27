@@ -1,13 +1,20 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/cvss_severities.dart';
+import 'package:github_out/models/cvss_severities_cvss_v3.dart';
+import 'package:github_out/models/cvss_severities_cvss_v4.dart';
 import 'package:github_out/models/global_advisory_credits_inner.dart';
 import 'package:github_out/models/global_advisory_cvss.dart';
 import 'package:github_out/models/global_advisory_cwes_inner.dart';
 import 'package:github_out/models/global_advisory_identifiers_inner.dart';
+import 'package:github_out/models/global_advisory_identifiers_inner_type.dart';
 import 'package:github_out/models/global_advisory_severity.dart';
 import 'package:github_out/models/global_advisory_type.dart';
+import 'package:github_out/models/security_advisory_credit_types.dart';
+import 'package:github_out/models/security_advisory_ecosystems.dart';
 import 'package:github_out/models/security_advisory_epss.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/vulnerability.dart';
+import 'package:github_out/models/vulnerability_package.dart';
 import 'package:meta/meta.dart';
 
 /// {@template global_advisory}
@@ -16,7 +23,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GlobalAdvisory {
   /// {@macro global_advisory}
-  const GlobalAdvisory({
+  GlobalAdvisory({
     required this.ghsaId,
     required this.cveId,
     required this.url,
@@ -36,10 +43,10 @@ class GlobalAdvisory {
     required this.withdrawnAt,
     required this.vulnerabilities,
     required this.cvss,
-    required this.cwes,
-    required this.credits,
     this.cvssSeverities,
     this.epss,
+    required this.cwes,
+    required this.credits,
   });
 
   /// Converts a `Map<String, dynamic>` to a [GlobalAdvisory].
@@ -248,28 +255,28 @@ class GlobalAdvisory {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GlobalAdvisory &&
-        ghsaId == other.ghsaId &&
-        cveId == other.cveId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        repositoryAdvisoryUrl == other.repositoryAdvisoryUrl &&
-        summary == other.summary &&
-        description == other.description &&
-        type == other.type &&
-        severity == other.severity &&
-        sourceCodeLocation == other.sourceCodeLocation &&
-        listsEqual(identifiers, other.identifiers) &&
-        listsEqual(references, other.references) &&
-        publishedAt == other.publishedAt &&
-        updatedAt == other.updatedAt &&
-        githubReviewedAt == other.githubReviewedAt &&
-        nvdPublishedAt == other.nvdPublishedAt &&
-        withdrawnAt == other.withdrawnAt &&
-        listsEqual(vulnerabilities, other.vulnerabilities) &&
-        cvss == other.cvss &&
-        cvssSeverities == other.cvssSeverities &&
-        epss == other.epss &&
-        listsEqual(cwes, other.cwes) &&
-        listsEqual(credits, other.credits);
+        this.ghsaId == other.ghsaId &&
+        this.cveId == other.cveId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.repositoryAdvisoryUrl == other.repositoryAdvisoryUrl &&
+        this.summary == other.summary &&
+        this.description == other.description &&
+        this.type == other.type &&
+        this.severity == other.severity &&
+        this.sourceCodeLocation == other.sourceCodeLocation &&
+        listsEqual(this.identifiers, other.identifiers) &&
+        listsEqual(this.references, other.references) &&
+        this.publishedAt == other.publishedAt &&
+        this.updatedAt == other.updatedAt &&
+        this.githubReviewedAt == other.githubReviewedAt &&
+        this.nvdPublishedAt == other.nvdPublishedAt &&
+        this.withdrawnAt == other.withdrawnAt &&
+        listsEqual(this.vulnerabilities, other.vulnerabilities) &&
+        this.cvss == other.cvss &&
+        this.cvssSeverities == other.cvssSeverities &&
+        this.epss == other.epss &&
+        listsEqual(this.cwes, other.cwes) &&
+        listsEqual(this.credits, other.credits);
   }
 }

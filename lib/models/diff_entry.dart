@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/diff_entry_status.dart';
 import 'package:meta/meta.dart';
@@ -13,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DiffEntry {
   /// {@macro diff_entry}
-  const DiffEntry({
+  DiffEntry({
     required this.sha,
     required this.filename,
     required this.status,
@@ -36,9 +32,9 @@ class DiffEntry {
         sha: json['sha'] as String,
         filename: json['filename'] as String,
         status: DiffEntryStatus.fromJson(json['status'] as String),
-        additions: json['additions'] as int,
-        deletions: json['deletions'] as int,
-        changes: json['changes'] as int,
+        additions: (json['additions'] as int),
+        deletions: (json['deletions'] as int),
+        changes: (json['changes'] as int),
         blobUrl: Uri.parse(json['blob_url'] as String),
         rawUrl: Uri.parse(json['raw_url'] as String),
         contentsUrl: Uri.parse(json['contents_url'] as String),
@@ -129,16 +125,16 @@ class DiffEntry {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DiffEntry &&
-        sha == other.sha &&
-        filename == other.filename &&
-        status == other.status &&
-        additions == other.additions &&
-        deletions == other.deletions &&
-        changes == other.changes &&
-        blobUrl == other.blobUrl &&
-        rawUrl == other.rawUrl &&
-        contentsUrl == other.contentsUrl &&
-        patch == other.patch &&
-        previousFilename == other.previousFilename;
+        this.sha == other.sha &&
+        this.filename == other.filename &&
+        this.status == other.status &&
+        this.additions == other.additions &&
+        this.deletions == other.deletions &&
+        this.changes == other.changes &&
+        this.blobUrl == other.blobUrl &&
+        this.rawUrl == other.rawUrl &&
+        this.contentsUrl == other.contentsUrl &&
+        this.patch == other.patch &&
+        this.previousFilename == other.previousFilename;
   }
 }

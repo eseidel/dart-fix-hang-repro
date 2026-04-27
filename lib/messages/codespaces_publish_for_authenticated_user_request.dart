@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesPublishForAuthenticatedUserRequest {
-  const CodespacesPublishForAuthenticatedUserRequest({
+  CodespacesPublishForAuthenticatedUserRequest({
     this.name,
     this.private = false,
   });
@@ -59,7 +59,7 @@ class CodespacesPublishForAuthenticatedUserRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesPublishForAuthenticatedUserRequest &&
-        name == other.name &&
-        private == other.private;
+        this.name == other.name &&
+        this.private == other.private;
   }
 }

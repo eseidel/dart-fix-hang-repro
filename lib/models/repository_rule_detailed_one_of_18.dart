@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_max_file_size_parameters.dart';
 import 'package:github_out/models/repository_rule_max_file_size_type.dart';
@@ -10,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleDetailedOneOf18 {
-  const RepositoryRuleDetailedOneOf18({
+  RepositoryRuleDetailedOneOf18({
     required this.type,
     this.parameters,
     this.rulesetSourceType,
@@ -33,7 +29,7 @@ class RepositoryRuleDetailedOneOf18 {
               json['ruleset_source_type'] as String?,
             ),
         rulesetSource: json['ruleset_source'] as String?,
-        rulesetId: json['ruleset_id'] as int?,
+        rulesetId: (json['ruleset_id'] as int?),
       ),
     );
   }
@@ -85,10 +81,10 @@ class RepositoryRuleDetailedOneOf18 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleDetailedOneOf18 &&
-        type == other.type &&
-        parameters == other.parameters &&
-        rulesetSourceType == other.rulesetSourceType &&
-        rulesetSource == other.rulesetSource &&
-        rulesetId == other.rulesetId;
+        this.type == other.type &&
+        this.parameters == other.parameters &&
+        this.rulesetSourceType == other.rulesetSourceType &&
+        this.rulesetSource == other.rulesetSource &&
+        this.rulesetId == other.rulesetId;
   }
 }

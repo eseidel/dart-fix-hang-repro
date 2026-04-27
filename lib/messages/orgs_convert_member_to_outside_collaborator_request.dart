@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class OrgsConvertMemberToOutsideCollaboratorRequest {
-  const OrgsConvertMemberToOutsideCollaboratorRequest({
+  OrgsConvertMemberToOutsideCollaboratorRequest({
     this.async_ = false,
   });
 
@@ -51,6 +51,6 @@ class OrgsConvertMemberToOutsideCollaboratorRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsConvertMemberToOutsideCollaboratorRequest &&
-        async_ == other.async_;
+        this.async_ == other.async_;
   }
 }

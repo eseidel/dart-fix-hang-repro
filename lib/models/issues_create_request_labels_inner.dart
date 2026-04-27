@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/models/issues_create_request_labels_inner_one_of_1.dart';
 import 'package:meta/meta.dart';
 
@@ -10,8 +6,8 @@ sealed class IssuesCreateRequestLabelsInner {
 
   factory IssuesCreateRequestLabelsInner.fromJson(dynamic json) {
     return switch (json) {
-      final String v => IssuesCreateRequestLabelsInnerString(v),
-      final Map<String, dynamic> v =>
+      String v => IssuesCreateRequestLabelsInnerString(v),
+      Map<String, dynamic> v =>
         IssuesCreateRequestLabelsInnerIssuesCreateRequestLabelsInnerOneOf1(
           IssuesCreateRequestLabelsInnerOneOf1.fromJson(v),
         ),

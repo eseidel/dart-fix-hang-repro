@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ArtifactWorkflowRun {
-  const ArtifactWorkflowRun({
+  ArtifactWorkflowRun({
     this.id,
     this.repositoryId,
     this.headRepositoryId,
@@ -17,9 +17,9 @@ class ArtifactWorkflowRun {
       'ArtifactWorkflowRun',
       json,
       () => ArtifactWorkflowRun(
-        id: json['id'] as int?,
-        repositoryId: json['repository_id'] as int?,
-        headRepositoryId: json['head_repository_id'] as int?,
+        id: (json['id'] as int?),
+        repositoryId: (json['repository_id'] as int?),
+        headRepositoryId: (json['head_repository_id'] as int?),
         headBranch: json['head_branch'] as String?,
         headSha: json['head_sha'] as String?,
       ),
@@ -74,10 +74,10 @@ class ArtifactWorkflowRun {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ArtifactWorkflowRun &&
-        id == other.id &&
-        repositoryId == other.repositoryId &&
-        headRepositoryId == other.headRepositoryId &&
-        headBranch == other.headBranch &&
-        headSha == other.headSha;
+        this.id == other.id &&
+        this.repositoryId == other.repositoryId &&
+        this.headRepositoryId == other.headRepositoryId &&
+        this.headBranch == other.headBranch &&
+        this.headSha == other.headSha;
   }
 }

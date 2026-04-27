@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BranchWithProtectionLinks {
-  const BranchWithProtectionLinks({
+  BranchWithProtectionLinks({
     required this.html,
     required this.self,
   });
@@ -50,7 +50,7 @@ class BranchWithProtectionLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchWithProtectionLinks &&
-        html == other.html &&
-        self == other.self;
+        this.html == other.html &&
+        this.self == other.self;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repos_create_or_update_file_contents_request_author.dart';
 import 'package:github_out/models/repos_create_or_update_file_contents_request_committer.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateOrUpdateFileContentsRequest {
-  const ReposCreateOrUpdateFileContentsRequest({
+  ReposCreateOrUpdateFileContentsRequest({
     required this.message,
     required this.content,
     this.sha,
@@ -100,11 +96,11 @@ class ReposCreateOrUpdateFileContentsRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateOrUpdateFileContentsRequest &&
-        message == other.message &&
-        content == other.content &&
-        sha == other.sha &&
-        branch == other.branch &&
-        committer == other.committer &&
-        author == other.author;
+        this.message == other.message &&
+        this.content == other.content &&
+        this.sha == other.sha &&
+        this.branch == other.branch &&
+        this.committer == other.committer &&
+        this.author == other.author;
   }
 }

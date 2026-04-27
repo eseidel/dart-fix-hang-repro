@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class FeedLinks {
-  const FeedLinks({
+  FeedLinks({
     required this.timeline,
     required this.user,
     this.securityAdvisories,
@@ -140,18 +140,19 @@ class FeedLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is FeedLinks &&
-        timeline == other.timeline &&
-        user == other.user &&
-        securityAdvisories == other.securityAdvisories &&
-        currentUser == other.currentUser &&
-        currentUserPublic == other.currentUserPublic &&
-        currentUserActor == other.currentUserActor &&
-        currentUserOrganization == other.currentUserOrganization &&
+        this.timeline == other.timeline &&
+        this.user == other.user &&
+        this.securityAdvisories == other.securityAdvisories &&
+        this.currentUser == other.currentUser &&
+        this.currentUserPublic == other.currentUserPublic &&
+        this.currentUserActor == other.currentUserActor &&
+        this.currentUserOrganization == other.currentUserOrganization &&
         listsEqual(
-          currentUserOrganizations,
+          this.currentUserOrganizations,
           other.currentUserOrganizations,
         ) &&
-        repositoryDiscussions == other.repositoryDiscussions &&
-        repositoryDiscussionsCategory == other.repositoryDiscussionsCategory;
+        this.repositoryDiscussions == other.repositoryDiscussions &&
+        this.repositoryDiscussionsCategory ==
+            other.repositoryDiscussionsCategory;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/actions_hosted_runner_machine_spec.dart';
 import 'package:github_out/models/actions_hosted_runner_pool_image.dart';
+import 'package:github_out/models/actions_hosted_runner_pool_image_source.dart';
 import 'package:github_out/models/actions_hosted_runner_status.dart';
 import 'package:github_out/models/public_ip.dart';
 import 'package:meta/meta.dart';
@@ -12,16 +13,16 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsHostedRunner {
   /// {@macro actions_hosted_runner}
-  const ActionsHostedRunner({
+  ActionsHostedRunner({
     required this.id,
     required this.name,
+    this.runnerGroupId,
     required this.imageDetails,
     required this.machineSizeDetails,
     required this.status,
     required this.platform,
-    required this.publicIpEnabled,
-    this.runnerGroupId,
     this.maximumRunners = 10,
+    required this.publicIpEnabled,
     this.publicIps,
     this.lastActiveOn,
   });
@@ -32,9 +33,9 @@ class ActionsHostedRunner {
       'ActionsHostedRunner',
       json,
       () => ActionsHostedRunner(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
-        runnerGroupId: json['runner_group_id'] as int?,
+        runnerGroupId: (json['runner_group_id'] as int?),
         imageDetails: ActionsHostedRunnerPoolImage.maybeFromJson(
           checkedKey(json, 'image_details') as Map<String, dynamic>?,
         ),
@@ -142,16 +143,16 @@ class ActionsHostedRunner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsHostedRunner &&
-        id == other.id &&
-        name == other.name &&
-        runnerGroupId == other.runnerGroupId &&
-        imageDetails == other.imageDetails &&
-        machineSizeDetails == other.machineSizeDetails &&
-        status == other.status &&
-        platform == other.platform &&
-        maximumRunners == other.maximumRunners &&
-        publicIpEnabled == other.publicIpEnabled &&
-        listsEqual(publicIps, other.publicIps) &&
-        lastActiveOn == other.lastActiveOn;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.runnerGroupId == other.runnerGroupId &&
+        this.imageDetails == other.imageDetails &&
+        this.machineSizeDetails == other.machineSizeDetails &&
+        this.status == other.status &&
+        this.platform == other.platform &&
+        this.maximumRunners == other.maximumRunners &&
+        this.publicIpEnabled == other.publicIpEnabled &&
+        listsEqual(this.publicIps, other.publicIps) &&
+        this.lastActiveOn == other.lastActiveOn;
   }
 }

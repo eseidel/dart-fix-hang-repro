@@ -1,16 +1,15 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/workflow_run_usage_billable_m_a_c_o_s.dart';
+import 'package:github_out/models/workflow_run_usage_billable_m_a_c_o_s_job_runs_inner.dart';
 import 'package:github_out/models/workflow_run_usage_billable_u_b_u_n_t_u.dart';
+import 'package:github_out/models/workflow_run_usage_billable_u_b_u_n_t_u_job_runs_inner.dart';
 import 'package:github_out/models/workflow_run_usage_billable_w_i_n_d_o_w_s.dart';
+import 'package:github_out/models/workflow_run_usage_billable_w_i_n_d_o_w_s_job_runs_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class WorkflowRunUsageBillable {
-  const WorkflowRunUsageBillable({
+  WorkflowRunUsageBillable({
     this.ubuntu,
     this.macos,
     this.windows,
@@ -68,8 +67,8 @@ class WorkflowRunUsageBillable {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is WorkflowRunUsageBillable &&
-        ubuntu == other.ubuntu &&
-        macos == other.macos &&
-        windows == other.windows;
+        this.ubuntu == other.ubuntu &&
+        this.macos == other.macos &&
+        this.windows == other.windows;
   }
 }

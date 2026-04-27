@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SecretScanningScanHistoryCustomPatternBackfillScansInner {
-  const SecretScanningScanHistoryCustomPatternBackfillScansInner({
+  SecretScanningScanHistoryCustomPatternBackfillScansInner({
     this.type,
     this.status,
     this.completedAt,
@@ -89,11 +89,11 @@ class SecretScanningScanHistoryCustomPatternBackfillScansInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningScanHistoryCustomPatternBackfillScansInner &&
-        type == other.type &&
-        status == other.status &&
-        completedAt == other.completedAt &&
-        startedAt == other.startedAt &&
-        patternName == other.patternName &&
-        patternScope == other.patternScope;
+        this.type == other.type &&
+        this.status == other.status &&
+        this.completedAt == other.completedAt &&
+        this.startedAt == other.startedAt &&
+        this.patternName == other.patternName &&
+        this.patternScope == other.patternScope;
   }
 }

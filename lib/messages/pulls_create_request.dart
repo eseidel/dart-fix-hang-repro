@@ -1,17 +1,13 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class PullsCreateRequest {
-  const PullsCreateRequest({
-    required this.head,
-    required this.base,
+  PullsCreateRequest({
     this.title,
+    required this.head,
     this.headRepo,
+    required this.base,
     this.body,
     this.maintainerCanModify,
     this.draft,
@@ -31,7 +27,7 @@ class PullsCreateRequest {
         body: json['body'] as String?,
         maintainerCanModify: json['maintainer_can_modify'] as bool?,
         draft: json['draft'] as bool?,
-        issue: json['issue'] as int?,
+        issue: (json['issue'] as int?),
       ),
     );
   }
@@ -114,13 +110,13 @@ class PullsCreateRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsCreateRequest &&
-        title == other.title &&
-        head == other.head &&
-        headRepo == other.headRepo &&
-        base == other.base &&
-        body == other.body &&
-        maintainerCanModify == other.maintainerCanModify &&
-        draft == other.draft &&
-        issue == other.issue;
+        this.title == other.title &&
+        this.head == other.head &&
+        this.headRepo == other.headRepo &&
+        this.base == other.base &&
+        this.body == other.body &&
+        this.maintainerCanModify == other.maintainerCanModify &&
+        this.draft == other.draft &&
+        this.issue == other.issue;
   }
 }

@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/codespaces_create_for_authenticated_user_request_one_of_0_geo.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesCreateForAuthenticatedUserRequestOneOf0 {
-  const CodespacesCreateForAuthenticatedUserRequestOneOf0({
+  CodespacesCreateForAuthenticatedUserRequestOneOf0({
     required this.repositoryId,
     this.ref,
     this.location,
@@ -32,7 +28,7 @@ class CodespacesCreateForAuthenticatedUserRequestOneOf0 {
       'CodespacesCreateForAuthenticatedUserRequestOneOf0',
       json,
       () => CodespacesCreateForAuthenticatedUserRequestOneOf0(
-        repositoryId: json['repository_id'] as int,
+        repositoryId: (json['repository_id'] as int),
         ref: json['ref'] as String?,
         location: json['location'] as String?,
         geo: CodespacesCreateForAuthenticatedUserRequestOneOf0Geo.maybeFromJson(
@@ -44,9 +40,9 @@ class CodespacesCreateForAuthenticatedUserRequestOneOf0 {
         multiRepoPermissionsOptOut:
             json['multi_repo_permissions_opt_out'] as bool?,
         workingDirectory: json['working_directory'] as String?,
-        idleTimeoutMinutes: json['idle_timeout_minutes'] as int?,
+        idleTimeoutMinutes: (json['idle_timeout_minutes'] as int?),
         displayName: json['display_name'] as String?,
-        retentionPeriodMinutes: json['retention_period_minutes'] as int?,
+        retentionPeriodMinutes: (json['retention_period_minutes'] as int?),
       ),
     );
   }
@@ -141,17 +137,17 @@ class CodespacesCreateForAuthenticatedUserRequestOneOf0 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesCreateForAuthenticatedUserRequestOneOf0 &&
-        repositoryId == other.repositoryId &&
-        ref == other.ref &&
-        location == other.location &&
-        geo == other.geo &&
-        clientIp == other.clientIp &&
-        machine == other.machine &&
-        devcontainerPath == other.devcontainerPath &&
-        multiRepoPermissionsOptOut == other.multiRepoPermissionsOptOut &&
-        workingDirectory == other.workingDirectory &&
-        idleTimeoutMinutes == other.idleTimeoutMinutes &&
-        displayName == other.displayName &&
-        retentionPeriodMinutes == other.retentionPeriodMinutes;
+        this.repositoryId == other.repositoryId &&
+        this.ref == other.ref &&
+        this.location == other.location &&
+        this.geo == other.geo &&
+        this.clientIp == other.clientIp &&
+        this.machine == other.machine &&
+        this.devcontainerPath == other.devcontainerPath &&
+        this.multiRepoPermissionsOptOut == other.multiRepoPermissionsOptOut &&
+        this.workingDirectory == other.workingDirectory &&
+        this.idleTimeoutMinutes == other.idleTimeoutMinutes &&
+        this.displayName == other.displayName &&
+        this.retentionPeriodMinutes == other.retentionPeriodMinutes;
   }
 }

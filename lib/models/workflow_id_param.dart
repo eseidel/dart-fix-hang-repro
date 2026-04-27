@@ -5,8 +5,8 @@ sealed class WorkflowIdParam {
 
   factory WorkflowIdParam.fromJson(dynamic json) {
     return switch (json) {
-      final int v => WorkflowIdParamInt(v),
-      final String v => WorkflowIdParamString(v),
+      int v => WorkflowIdParamInt(v),
+      String v => WorkflowIdParamString(v),
       _ => throw FormatException(
         'Unsupported shape for WorkflowIdParam: ${json.runtimeType}',
       ),

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class WorkflowRunUsageBillableUBUNTUJobRunsInner {
-  const WorkflowRunUsageBillableUBUNTUJobRunsInner({
+  WorkflowRunUsageBillableUBUNTUJobRunsInner({
     required this.jobId,
     required this.durationMs,
   });
@@ -17,8 +17,8 @@ class WorkflowRunUsageBillableUBUNTUJobRunsInner {
       'WorkflowRunUsageBillableUBUNTUJobRunsInner',
       json,
       () => WorkflowRunUsageBillableUBUNTUJobRunsInner(
-        jobId: json['job_id'] as int,
-        durationMs: json['duration_ms'] as int,
+        jobId: (json['job_id'] as int),
+        durationMs: (json['duration_ms'] as int),
       ),
     );
   }
@@ -56,7 +56,7 @@ class WorkflowRunUsageBillableUBUNTUJobRunsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is WorkflowRunUsageBillableUBUNTUJobRunsInner &&
-        jobId == other.jobId &&
-        durationMs == other.durationMs;
+        this.jobId == other.jobId &&
+        this.durationMs == other.durationMs;
   }
 }

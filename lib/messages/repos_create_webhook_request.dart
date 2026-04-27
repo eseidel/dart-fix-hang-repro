@@ -1,10 +1,14 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repos_create_webhook_request_config.dart';
+import 'package:github_out/models/webhook_config_content_type.dart';
+import 'package:github_out/models/webhook_config_insecure_ssl.dart';
+import 'package:github_out/models/webhook_config_secret.dart';
+import 'package:github_out/models/webhook_config_url.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateWebhookRequest {
-  const ReposCreateWebhookRequest({
+  ReposCreateWebhookRequest({
     this.name,
     this.config,
     this.events = const <String>['push'],
@@ -75,9 +79,9 @@ class ReposCreateWebhookRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateWebhookRequest &&
-        name == other.name &&
-        config == other.config &&
-        listsEqual(events, other.events) &&
-        active == other.active;
+        this.name == other.name &&
+        this.config == other.config &&
+        listsEqual(this.events, other.events) &&
+        this.active == other.active;
   }
 }

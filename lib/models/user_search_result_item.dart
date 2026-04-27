@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
 import 'package:meta/meta.dart';
 
 /// {@template user_search_result_item}
@@ -9,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class UserSearchResultItem {
   /// {@macro user_search_result_item}
-  const UserSearchResultItem({
+  UserSearchResultItem({
     required this.login,
     required this.id,
     required this.nodeId,
@@ -28,7 +29,6 @@ class UserSearchResultItem {
     required this.gistsUrl,
     required this.starredUrl,
     required this.eventsUrl,
-    required this.siteAdmin,
     this.publicRepos,
     this.publicGists,
     this.followers,
@@ -39,6 +39,7 @@ class UserSearchResultItem {
     this.bio,
     this.email,
     this.location,
+    required this.siteAdmin,
     this.hireable,
     this.textMatches,
     this.blog,
@@ -54,7 +55,7 @@ class UserSearchResultItem {
       json,
       () => UserSearchResultItem(
         login: json['login'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         avatarUrl: Uri.parse(json['avatar_url'] as String),
         gravatarId: checkedKey(json, 'gravatar_id') as String?,
@@ -71,10 +72,10 @@ class UserSearchResultItem {
         gistsUrl: json['gists_url'] as String,
         starredUrl: json['starred_url'] as String,
         eventsUrl: json['events_url'] as String,
-        publicRepos: json['public_repos'] as int?,
-        publicGists: json['public_gists'] as int?,
-        followers: json['followers'] as int?,
-        following: json['following'] as int?,
+        publicRepos: (json['public_repos'] as int?),
+        publicGists: (json['public_gists'] as int?),
+        followers: (json['followers'] as int?),
+        following: (json['following'] as int?),
         createdAt: maybeParseDateTime(json['created_at'] as String?),
         updatedAt: maybeParseDateTime(json['updated_at'] as String?),
         name: json['name'] as String?,
@@ -229,40 +230,40 @@ class UserSearchResultItem {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UserSearchResultItem &&
-        login == other.login &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        avatarUrl == other.avatarUrl &&
-        gravatarId == other.gravatarId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        followersUrl == other.followersUrl &&
-        subscriptionsUrl == other.subscriptionsUrl &&
-        organizationsUrl == other.organizationsUrl &&
-        reposUrl == other.reposUrl &&
-        receivedEventsUrl == other.receivedEventsUrl &&
-        type == other.type &&
-        score == other.score &&
-        followingUrl == other.followingUrl &&
-        gistsUrl == other.gistsUrl &&
-        starredUrl == other.starredUrl &&
-        eventsUrl == other.eventsUrl &&
-        publicRepos == other.publicRepos &&
-        publicGists == other.publicGists &&
-        followers == other.followers &&
-        following == other.following &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        name == other.name &&
-        bio == other.bio &&
-        email == other.email &&
-        location == other.location &&
-        siteAdmin == other.siteAdmin &&
-        hireable == other.hireable &&
-        listsEqual(textMatches, other.textMatches) &&
-        blog == other.blog &&
-        company == other.company &&
-        suspendedAt == other.suspendedAt &&
-        userViewType == other.userViewType;
+        this.login == other.login &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.avatarUrl == other.avatarUrl &&
+        this.gravatarId == other.gravatarId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.followersUrl == other.followersUrl &&
+        this.subscriptionsUrl == other.subscriptionsUrl &&
+        this.organizationsUrl == other.organizationsUrl &&
+        this.reposUrl == other.reposUrl &&
+        this.receivedEventsUrl == other.receivedEventsUrl &&
+        this.type == other.type &&
+        this.score == other.score &&
+        this.followingUrl == other.followingUrl &&
+        this.gistsUrl == other.gistsUrl &&
+        this.starredUrl == other.starredUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.publicRepos == other.publicRepos &&
+        this.publicGists == other.publicGists &&
+        this.followers == other.followers &&
+        this.following == other.following &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.name == other.name &&
+        this.bio == other.bio &&
+        this.email == other.email &&
+        this.location == other.location &&
+        this.siteAdmin == other.siteAdmin &&
+        this.hireable == other.hireable &&
+        listsEqual(this.textMatches, other.textMatches) &&
+        this.blog == other.blog &&
+        this.company == other.company &&
+        this.suspendedAt == other.suspendedAt &&
+        this.userViewType == other.userViewType;
   }
 }

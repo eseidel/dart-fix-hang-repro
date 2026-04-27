@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CommunityProfileFiles {
-  const CommunityProfileFiles({
+  CommunityProfileFiles({
     required this.codeOfConduct,
     required this.codeOfConductFile,
     required this.license,
@@ -107,12 +107,12 @@ class CommunityProfileFiles {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommunityProfileFiles &&
-        codeOfConduct == other.codeOfConduct &&
-        codeOfConductFile == other.codeOfConductFile &&
-        license == other.license &&
-        contributing == other.contributing &&
-        readme == other.readme &&
-        issueTemplate == other.issueTemplate &&
-        pullRequestTemplate == other.pullRequestTemplate;
+        this.codeOfConduct == other.codeOfConduct &&
+        this.codeOfConductFile == other.codeOfConductFile &&
+        this.license == other.license &&
+        this.contributing == other.contributing &&
+        this.readme == other.readme &&
+        this.issueTemplate == other.issueTemplate &&
+        this.pullRequestTemplate == other.pullRequestTemplate;
   }
 }

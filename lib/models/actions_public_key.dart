@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsPublicKey {
   /// {@macro actions_public_key}
-  const ActionsPublicKey({
+  ActionsPublicKey({
     required this.keyId,
     required this.key,
     this.id,
@@ -25,7 +25,7 @@ class ActionsPublicKey {
       () => ActionsPublicKey(
         keyId: json['key_id'] as String,
         key: json['key'] as String,
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         url: json['url'] as String?,
         title: json['title'] as String?,
         createdAt: json['created_at'] as String?,
@@ -88,11 +88,11 @@ class ActionsPublicKey {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsPublicKey &&
-        keyId == other.keyId &&
-        key == other.key &&
-        id == other.id &&
-        url == other.url &&
-        title == other.title &&
-        createdAt == other.createdAt;
+        this.keyId == other.keyId &&
+        this.key == other.key &&
+        this.id == other.id &&
+        this.url == other.url &&
+        this.title == other.title &&
+        this.createdAt == other.createdAt;
   }
 }

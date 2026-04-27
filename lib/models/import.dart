@@ -10,17 +10,13 @@ import 'package:meta/meta.dart';
 @immutable
 class Import {
   /// {@macro import}
-  const Import({
+  Import({
     required this.vcs,
-    required this.vcsUrl,
-    required this.status,
-    required this.url,
-    required this.htmlUrl,
-    required this.authorsUrl,
-    required this.repositoryUrl,
     this.useLfs,
+    required this.vcsUrl,
     this.svcRoot,
     this.tfvcProject,
+    required this.status,
     this.statusText,
     this.failedStep,
     this.errorMessage,
@@ -33,6 +29,10 @@ class Import {
     this.projectChoices,
     this.message,
     this.authorsCount,
+    required this.url,
+    required this.htmlUrl,
+    required this.authorsUrl,
+    required this.repositoryUrl,
     this.svnRoot,
   });
 
@@ -51,12 +51,12 @@ class Import {
         statusText: json['status_text'] as String?,
         failedStep: json['failed_step'] as String?,
         errorMessage: json['error_message'] as String?,
-        importPercent: json['import_percent'] as int?,
-        commitCount: json['commit_count'] as int?,
-        pushPercent: json['push_percent'] as int?,
+        importPercent: (json['import_percent'] as int?),
+        commitCount: (json['commit_count'] as int?),
+        pushPercent: (json['push_percent'] as int?),
         hasLargeFiles: json['has_large_files'] as bool?,
-        largeFilesSize: json['large_files_size'] as int?,
-        largeFilesCount: json['large_files_count'] as int?,
+        largeFilesSize: (json['large_files_size'] as int?),
+        largeFilesCount: (json['large_files_count'] as int?),
         projectChoices: (json['project_choices'] as List?)
             ?.map<ImportProjectChoicesInner>(
               (e) =>
@@ -64,7 +64,7 @@ class Import {
             )
             .toList(),
         message: json['message'] as String?,
-        authorsCount: json['authors_count'] as int?,
+        authorsCount: (json['authors_count'] as int?),
         url: Uri.parse(json['url'] as String),
         htmlUrl: Uri.parse(json['html_url'] as String),
         authorsUrl: Uri.parse(json['authors_url'] as String),
@@ -169,28 +169,28 @@ class Import {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Import &&
-        vcs == other.vcs &&
-        useLfs == other.useLfs &&
-        vcsUrl == other.vcsUrl &&
-        svcRoot == other.svcRoot &&
-        tfvcProject == other.tfvcProject &&
-        status == other.status &&
-        statusText == other.statusText &&
-        failedStep == other.failedStep &&
-        errorMessage == other.errorMessage &&
-        importPercent == other.importPercent &&
-        commitCount == other.commitCount &&
-        pushPercent == other.pushPercent &&
-        hasLargeFiles == other.hasLargeFiles &&
-        largeFilesSize == other.largeFilesSize &&
-        largeFilesCount == other.largeFilesCount &&
-        listsEqual(projectChoices, other.projectChoices) &&
-        message == other.message &&
-        authorsCount == other.authorsCount &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        authorsUrl == other.authorsUrl &&
-        repositoryUrl == other.repositoryUrl &&
-        svnRoot == other.svnRoot;
+        this.vcs == other.vcs &&
+        this.useLfs == other.useLfs &&
+        this.vcsUrl == other.vcsUrl &&
+        this.svcRoot == other.svcRoot &&
+        this.tfvcProject == other.tfvcProject &&
+        this.status == other.status &&
+        this.statusText == other.statusText &&
+        this.failedStep == other.failedStep &&
+        this.errorMessage == other.errorMessage &&
+        this.importPercent == other.importPercent &&
+        this.commitCount == other.commitCount &&
+        this.pushPercent == other.pushPercent &&
+        this.hasLargeFiles == other.hasLargeFiles &&
+        this.largeFilesSize == other.largeFilesSize &&
+        this.largeFilesCount == other.largeFilesCount &&
+        listsEqual(this.projectChoices, other.projectChoices) &&
+        this.message == other.message &&
+        this.authorsCount == other.authorsCount &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.authorsUrl == other.authorsUrl &&
+        this.repositoryUrl == other.repositoryUrl &&
+        this.svnRoot == other.svnRoot;
   }
 }

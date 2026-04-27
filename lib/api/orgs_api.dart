@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -13,6 +9,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/messages/hook_delivery_request.dart';
+import 'package:github_out/messages/hook_delivery_response.dart';
 import 'package:github_out/messages/organization_programmatic_access_grant_request.dart';
 import 'package:github_out/messages/orgs_convert_member_to_outside_collaborator202_response.dart';
 import 'package:github_out/messages/orgs_convert_member_to_outside_collaborator_request.dart';
@@ -26,9 +24,11 @@ import 'package:github_out/messages/orgs_list_attestations200_response.dart';
 import 'package:github_out/messages/orgs_list_attestations_bulk200_response.dart';
 import 'package:github_out/messages/orgs_list_attestations_bulk_request.dart';
 import 'package:github_out/messages/orgs_list_org_roles200_response.dart';
+import 'package:github_out/messages/orgs_remove_outside_collaborator422_response.dart';
 import 'package:github_out/messages/orgs_review_pat_grant_request_request.dart';
 import 'package:github_out/messages/orgs_review_pat_grant_requests_in_bulk_request.dart';
 import 'package:github_out/messages/orgs_set_membership_for_user_request.dart';
+import 'package:github_out/messages/orgs_update422_response.dart';
 import 'package:github_out/messages/orgs_update_membership_for_authenticated_user_request.dart';
 import 'package:github_out/messages/orgs_update_pat_access_request.dart';
 import 'package:github_out/messages/orgs_update_pat_accesses_request.dart';
@@ -43,40 +43,170 @@ import 'package:github_out/models/api_insights_subject_stats_inner.dart';
 import 'package:github_out/models/api_insights_summary_stats.dart';
 import 'package:github_out/models/api_insights_time_stats_inner.dart';
 import 'package:github_out/models/api_insights_user_stats_inner.dart';
+import 'package:github_out/models/app_permissions.dart';
+import 'package:github_out/models/app_permissions_actions.dart';
+import 'package:github_out/models/app_permissions_administration.dart';
+import 'package:github_out/models/app_permissions_checks.dart';
+import 'package:github_out/models/app_permissions_codespaces.dart';
+import 'package:github_out/models/app_permissions_contents.dart';
+import 'package:github_out/models/app_permissions_dependabot_secrets.dart';
+import 'package:github_out/models/app_permissions_deployments.dart';
+import 'package:github_out/models/app_permissions_email_addresses.dart';
+import 'package:github_out/models/app_permissions_environments.dart';
+import 'package:github_out/models/app_permissions_followers.dart';
+import 'package:github_out/models/app_permissions_git_ssh_keys.dart';
+import 'package:github_out/models/app_permissions_gpg_keys.dart';
+import 'package:github_out/models/app_permissions_interaction_limits.dart';
+import 'package:github_out/models/app_permissions_issues.dart';
+import 'package:github_out/models/app_permissions_members.dart';
+import 'package:github_out/models/app_permissions_metadata.dart';
+import 'package:github_out/models/app_permissions_organization_administration.dart';
+import 'package:github_out/models/app_permissions_organization_announcement_banners.dart';
+import 'package:github_out/models/app_permissions_organization_copilot_seat_management.dart';
+import 'package:github_out/models/app_permissions_organization_custom_org_roles.dart';
+import 'package:github_out/models/app_permissions_organization_custom_properties.dart';
+import 'package:github_out/models/app_permissions_organization_custom_roles.dart';
+import 'package:github_out/models/app_permissions_organization_events.dart';
+import 'package:github_out/models/app_permissions_organization_hooks.dart';
+import 'package:github_out/models/app_permissions_organization_packages.dart';
+import 'package:github_out/models/app_permissions_organization_personal_access_token_requests.dart';
+import 'package:github_out/models/app_permissions_organization_personal_access_tokens.dart';
+import 'package:github_out/models/app_permissions_organization_plan.dart';
+import 'package:github_out/models/app_permissions_organization_projects.dart';
+import 'package:github_out/models/app_permissions_organization_secrets.dart';
+import 'package:github_out/models/app_permissions_organization_self_hosted_runners.dart';
+import 'package:github_out/models/app_permissions_organization_user_blocking.dart';
+import 'package:github_out/models/app_permissions_packages.dart';
+import 'package:github_out/models/app_permissions_pages.dart';
+import 'package:github_out/models/app_permissions_profile.dart';
+import 'package:github_out/models/app_permissions_pull_requests.dart';
+import 'package:github_out/models/app_permissions_repository_custom_properties.dart';
+import 'package:github_out/models/app_permissions_repository_hooks.dart';
+import 'package:github_out/models/app_permissions_repository_projects.dart';
+import 'package:github_out/models/app_permissions_secret_scanning_alerts.dart';
+import 'package:github_out/models/app_permissions_secrets.dart';
+import 'package:github_out/models/app_permissions_security_events.dart';
+import 'package:github_out/models/app_permissions_single_file.dart';
+import 'package:github_out/models/app_permissions_starring.dart';
+import 'package:github_out/models/app_permissions_statuses.dart';
+import 'package:github_out/models/app_permissions_team_discussions.dart';
+import 'package:github_out/models/app_permissions_vulnerability_alerts.dart';
+import 'package:github_out/models/app_permissions_workflows.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/custom_property.dart';
+import 'package:github_out/models/custom_property_default_value.dart';
 import 'package:github_out/models/custom_property_set_payload.dart';
+import 'package:github_out/models/custom_property_set_payload_default_value.dart';
+import 'package:github_out/models/custom_property_set_payload_value_type.dart';
+import 'package:github_out/models/custom_property_set_payload_values_editable_by.dart';
+import 'package:github_out/models/custom_property_source_type.dart';
+import 'package:github_out/models/custom_property_value.dart';
+import 'package:github_out/models/custom_property_value_type.dart';
+import 'package:github_out/models/custom_property_value_value.dart';
+import 'package:github_out/models/custom_property_values_editable_by.dart';
 import 'package:github_out/models/direction_param.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/hook_delivery.dart';
 import 'package:github_out/models/hook_delivery_item.dart';
+import 'package:github_out/models/installation.dart';
+import 'package:github_out/models/installation_account.dart';
+import 'package:github_out/models/installation_repository_selection.dart';
 import 'package:github_out/models/issue_type.dart';
+import 'package:github_out/models/issue_type_color.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/org_hook.dart';
+import 'package:github_out/models/org_hook_config.dart';
 import 'package:github_out/models/org_membership.dart';
+import 'package:github_out/models/org_membership_permissions.dart';
+import 'package:github_out/models/org_membership_role.dart';
+import 'package:github_out/models/org_membership_state.dart';
 import 'package:github_out/models/org_repo_custom_property_values.dart';
 import 'package:github_out/models/org_security_product_enablement_param.dart';
 import 'package:github_out/models/organization_create_issue_type.dart';
+import 'package:github_out/models/organization_create_issue_type_color.dart';
 import 'package:github_out/models/organization_full.dart';
+import 'package:github_out/models/organization_full_plan.dart';
 import 'package:github_out/models/organization_invitation.dart';
 import 'package:github_out/models/organization_programmatic_access_grant.dart';
+import 'package:github_out/models/organization_programmatic_access_grant_permissions.dart';
+import 'package:github_out/models/organization_programmatic_access_grant_repository_selection.dart';
+import 'package:github_out/models/organization_programmatic_access_grant_request_permissions.dart';
+import 'package:github_out/models/organization_programmatic_access_grant_request_repository_selection.dart';
 import 'package:github_out/models/organization_role.dart';
+import 'package:github_out/models/organization_role_base_role.dart';
+import 'package:github_out/models/organization_role_source.dart';
 import 'package:github_out/models/organization_simple.dart';
 import 'package:github_out/models/organization_update_issue_type.dart';
+import 'package:github_out/models/organization_update_issue_type_color.dart';
+import 'package:github_out/models/orgs_create_invitation_request_role.dart';
+import 'package:github_out/models/orgs_create_webhook_request_config.dart';
+import 'package:github_out/models/orgs_enable_or_disable_security_product_on_all_org_repos_request_query_suite.dart';
+import 'package:github_out/models/orgs_list_attestations200_response_attestations_inner.dart';
+import 'package:github_out/models/orgs_list_attestations200_response_attestations_inner_bundle.dart';
+import 'package:github_out/models/orgs_list_attestations200_response_attestations_inner_bundle_dsse_envelope.dart';
+import 'package:github_out/models/orgs_list_attestations200_response_attestations_inner_bundle_verification_material.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle_dsse_envelope.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_attestations_subject_digests_inner_bundle_verification_material.dart';
+import 'package:github_out/models/orgs_list_attestations_bulk200_response_page_info.dart';
 import 'package:github_out/models/orgs_list_members_parameter1.dart';
 import 'package:github_out/models/orgs_list_members_parameter2.dart';
 import 'package:github_out/models/orgs_list_memberships_for_authenticated_user_parameter0.dart';
 import 'package:github_out/models/orgs_list_outside_collaborators_parameter1.dart';
 import 'package:github_out/models/orgs_list_pending_invitations_parameter3.dart';
 import 'package:github_out/models/orgs_list_pending_invitations_parameter4.dart';
+import 'package:github_out/models/orgs_review_pat_grant_request_request_action.dart';
+import 'package:github_out/models/orgs_review_pat_grant_requests_in_bulk_request_action.dart';
+import 'package:github_out/models/orgs_set_membership_for_user_request_role.dart';
+import 'package:github_out/models/orgs_update_membership_for_authenticated_user_request_state.dart';
+import 'package:github_out/models/orgs_update_pat_access_request_action.dart';
+import 'package:github_out/models/orgs_update_pat_accesses_request_action.dart';
+import 'package:github_out/models/orgs_update_request_default_repository_permission.dart';
+import 'package:github_out/models/orgs_update_request_members_allowed_repository_creation_type.dart';
+import 'package:github_out/models/orgs_update_webhook_request_config.dart';
 import 'package:github_out/models/personal_access_token_sort_param.dart';
 import 'package:github_out/models/ruleset_version.dart';
+import 'package:github_out/models/ruleset_version_actor.dart';
 import 'package:github_out/models/ruleset_version_with_state.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/security_product_param.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
 import 'package:github_out/models/team_role_assignment.dart';
+import 'package:github_out/models/team_role_assignment_assignment.dart';
+import 'package:github_out/models/team_role_assignment_permissions.dart';
 import 'package:github_out/models/team_simple.dart';
 import 'package:github_out/models/user_role_assignment.dart';
+import 'package:github_out/models/user_role_assignment_assignment.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/validation_error_simple.dart';
 import 'package:github_out/models/webhook_config.dart';
+import 'package:github_out/models/webhook_config_content_type.dart';
+import 'package:github_out/models/webhook_config_insecure_ssl.dart';
+import 'package:github_out/models/webhook_config_secret.dart';
+import 'package:github_out/models/webhook_config_url.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class OrgsConvertMemberToOutsideCollaboratorResponse {
@@ -144,7 +274,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -182,13 +312,13 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}'.replaceAll('{org}', org),
+      path: '/orgs/{org}'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -215,13 +345,13 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.delete,
-      path: '/orgs/{org}'.replaceAll('{org}', org),
+      path: '/orgs/{org}'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -266,14 +396,15 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.patch,
-      path: '/orgs/{org}'.replaceAll('{org}', org),
+      path: '/orgs/{org}'.replaceAll('{org}', '${org}'),
       body: orgsUpdateRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -315,19 +446,20 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/attestations/bulk-list'.replaceAll('{org}', org),
+      path: '/orgs/{org}/attestations/bulk-list'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
       },
       body: orgsListAttestationsBulkRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -371,20 +503,20 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/attestations/{subject_digest}'
-          .replaceAll('{org}', org)
-          .replaceAll('{subject_digest}', subjectDigest),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{subject_digest}', '${subjectDigest}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
-        if (predicateType != null) 'predicate_type': [predicateType],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
+        if (predicateType != null) 'predicate_type': [predicateType.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -406,7 +538,7 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/blocks'.replaceAll('{org}', org),
+      path: '/orgs/{org}/blocks'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -416,7 +548,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -442,14 +574,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/blocks/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -465,14 +597,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/blocks/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -486,14 +618,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/blocks/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -509,7 +641,7 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/failed_invitations'.replaceAll('{org}', org),
+      path: '/orgs/{org}/failed_invitations'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -519,7 +651,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -551,7 +683,7 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/hooks'.replaceAll('{org}', org),
+      path: '/orgs/{org}/hooks'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -561,7 +693,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -589,14 +721,15 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/hooks'.replaceAll('{org}', org),
+      path: '/orgs/{org}/hooks'.replaceAll('{org}', '${org}'),
       body: orgsCreateWebhookRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -627,14 +760,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/hooks/{hook_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -664,14 +797,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/hooks/{hook_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -702,15 +835,16 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/hooks/{hook_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}'),
       body: orgsUpdateWebhookRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -742,14 +876,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/hooks/{hook_id}/config'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -782,15 +916,16 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/hooks/{hook_id}/config'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}'),
       body: orgsUpdateWebhookConfigForOrgRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -822,18 +957,18 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/hooks/{hook_id}/deliveries'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (cursor != null) 'cursor': [cursor],
+        if (cursor != null) 'cursor': [cursor.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -865,15 +1000,15 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId')
-          .replaceAll('{delivery_id}', '$deliveryId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}')
+          .replaceAll('{delivery_id}', '${deliveryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -903,15 +1038,15 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/hooks/{hook_id}/deliveries/{delivery_id}/attempts'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId')
-          .replaceAll('{delivery_id}', '$deliveryId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}')
+          .replaceAll('{delivery_id}', '${deliveryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -940,14 +1075,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/hooks/{hook_id}/pings'
-          .replaceAll('{org}', org)
-          .replaceAll('{hook_id}', '$hookId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{hook_id}', '${hookId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -970,25 +1105,26 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/insights/api/route-stats/{actor_type}/{actor_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{actor_type}', actorType.toJson())
-          .replaceAll('{actor_id}', '$actorId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{actor_type}', '${actorType.toJson()}')
+          .replaceAll('{actor_id}', '${actorId}'),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (sort != null) 'sort': sort.map((e) => e.toJson()).toList(),
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (sort != null)
+          'sort': sort.map((e) => e.toJson().toString()).toList(),
         if (apiRouteSubstring != null)
-          'api_route_substring': [apiRouteSubstring],
+          'api_route_substring': [apiRouteSubstring.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1021,24 +1157,25 @@ class OrgsApi {
       method: Method.get,
       path: '/orgs/{org}/insights/api/subject-stats'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (sort != null) 'sort': sort.map((e) => e.toJson()).toList(),
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (sort != null)
+          'sort': sort.map((e) => e.toJson().toString()).toList(),
         if (subjectNameSubstring != null)
-          'subject_name_substring': [subjectNameSubstring],
+          'subject_name_substring': [subjectNameSubstring.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1067,18 +1204,18 @@ class OrgsApi {
       method: Method.get,
       path: '/orgs/{org}/insights/api/summary-stats'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1103,18 +1240,18 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/insights/api/summary-stats/users/{user_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{user_id}', userId),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{user_id}', '${userId}'),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1141,19 +1278,19 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/insights/api/summary-stats/{actor_type}/{actor_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{actor_type}', actorType.toJson())
-          .replaceAll('{actor_id}', '$actorId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{actor_type}', '${actorType.toJson()}')
+          .replaceAll('{actor_id}', '${actorId}'),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1177,18 +1314,18 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/insights/api/time-stats'.replaceAll('{org}', org),
+      path: '/orgs/{org}/insights/api/time-stats'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
-        'timestamp_increment': [timestampIncrement],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
+        'timestamp_increment': [timestampIncrement.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1217,19 +1354,19 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/insights/api/time-stats/users/{user_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{user_id}', userId),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{user_id}', '${userId}'),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
-        'timestamp_increment': [timestampIncrement],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
+        'timestamp_increment': [timestampIncrement.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1259,20 +1396,20 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/insights/api/time-stats/{actor_type}/{actor_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{actor_type}', actorType.toJson())
-          .replaceAll('{actor_id}', '$actorId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{actor_type}', '${actorType.toJson()}')
+          .replaceAll('{actor_id}', '${actorId}'),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
-        'timestamp_increment': [timestampIncrement],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
+        'timestamp_increment': [timestampIncrement.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1305,24 +1442,25 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/insights/api/user-stats/{user_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{user_id}', userId),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{user_id}', '${userId}'),
       queryParameters: {
-        'min_timestamp': [minTimestamp],
-        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp],
+        'min_timestamp': [minTimestamp.toString()],
+        if (maxTimestamp != null) 'max_timestamp': [maxTimestamp.toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (sort != null) 'sort': sort.map((e) => e.toJson()).toList(),
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (sort != null)
+          'sort': sort.map((e) => e.toJson().toString()).toList(),
         if (actorNameSubstring != null)
-          'actor_name_substring': [actorNameSubstring],
+          'actor_name_substring': [actorNameSubstring.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1355,7 +1493,7 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/installations'.replaceAll('{org}', org),
+      path: '/orgs/{org}/installations'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1365,7 +1503,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1393,20 +1531,20 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/invitations'.replaceAll('{org}', org),
+      path: '/orgs/{org}/invitations'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (role != null) 'role': [role.toJson()],
+        if (role != null) 'role': [role.toJson().toString()],
         if (invitationSource != null)
-          'invitation_source': [invitationSource.toJson()],
+          'invitation_source': [invitationSource.toJson().toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1439,14 +1577,15 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/invitations'.replaceAll('{org}', org),
+      path: '/orgs/{org}/invitations'.replaceAll('{org}', '${org}'),
       body: orgsCreateInvitationRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1472,14 +1611,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/invitations/{invitation_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{invitation_id}', '$invitationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{invitation_id}', '${invitationId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1497,8 +1636,8 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/invitations/{invitation_id}/teams'
-          .replaceAll('{org}', org)
-          .replaceAll('{invitation_id}', '$invitationId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{invitation_id}', '${invitationId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -1508,7 +1647,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1529,13 +1668,13 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/issue-types'.replaceAll('{org}', org),
+      path: '/orgs/{org}/issue-types'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1564,14 +1703,15 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/issue-types'.replaceAll('{org}', org),
+      path: '/orgs/{org}/issue-types'.replaceAll('{org}', '${org}'),
       body: organizationCreateIssueType.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1602,15 +1742,16 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/issue-types/{issue_type_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{issue_type_id}', '$issueTypeId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{issue_type_id}', '${issueTypeId}'),
       body: organizationUpdateIssueType.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1640,14 +1781,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/issue-types/{issue_type_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{issue_type_id}', '$issueTypeId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{issue_type_id}', '${issueTypeId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1665,10 +1806,10 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/members'.replaceAll('{org}', org),
+      path: '/orgs/{org}/members'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (filter != null) 'filter': [filter.toJson()],
-        if (role != null) 'role': [role.toJson()],
+        if (filter != null) 'filter': [filter.toJson().toString()],
+        if (role != null) 'role': [role.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -1677,7 +1818,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1701,14 +1842,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/members/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1723,14 +1864,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/members/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1746,14 +1887,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/memberships/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1796,15 +1937,16 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/memberships/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
       body: orgsSetMembershipForUserRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1832,14 +1974,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/memberships/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1862,13 +2004,13 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/organization-roles'.replaceAll('{org}', org),
+      path: '/orgs/{org}/organization-roles'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -1898,14 +2040,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/organization-roles/teams/{team_slug}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1928,15 +2070,15 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/organization-roles/teams/{team_slug}/{role_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{role_id}', '$roleId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{role_id}', '${roleId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1959,15 +2101,15 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/organization-roles/teams/{team_slug}/{role_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug)
-          .replaceAll('{role_id}', '$roleId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}')
+          .replaceAll('{role_id}', '${roleId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -1989,14 +2131,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/organization-roles/users/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2019,15 +2161,15 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/organization-roles/users/{username}/{role_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username)
-          .replaceAll('{role_id}', '$roleId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{role_id}', '${roleId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2050,15 +2192,15 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/organization-roles/users/{username}/{role_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username)
-          .replaceAll('{role_id}', '$roleId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}')
+          .replaceAll('{role_id}', '${roleId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2083,14 +2225,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/organization-roles/{role_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{role_id}', '$roleId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{role_id}', '${roleId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2121,8 +2263,8 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/organization-roles/{role_id}/teams'
-          .replaceAll('{org}', org)
-          .replaceAll('{role_id}', '$roleId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{role_id}', '${roleId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2132,7 +2274,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2165,8 +2307,8 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/organization-roles/{role_id}/users'
-          .replaceAll('{org}', org)
-          .replaceAll('{role_id}', '$roleId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{role_id}', '${roleId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2176,7 +2318,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2201,9 +2343,9 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/outside_collaborators'.replaceAll('{org}', org),
+      path: '/orgs/{org}/outside_collaborators'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (filter != null) 'filter': [filter.toJson()],
+        if (filter != null) 'filter': [filter.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -2212,7 +2354,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2248,21 +2390,22 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/outside_collaborators/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
       body: orgsConvertMemberToOutsideCollaboratorRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      202 => const OrgsConvertMemberToOutsideCollaboratorResponse202(
-        OrgsConvertMemberToOutsideCollaborator202Response(),
+      202 => OrgsConvertMemberToOutsideCollaboratorResponse202(
+        const OrgsConvertMemberToOutsideCollaborator202Response(),
       ),
       204 => const OrgsConvertMemberToOutsideCollaboratorResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
@@ -2279,14 +2422,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/outside_collaborators/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2318,28 +2461,29 @@ class OrgsApi {
       method: Method.get,
       path: '/orgs/{org}/personal-access-token-requests'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (owner != null) 'owner': owner.map((e) => e).toList(),
-        if (repository != null) 'repository': [repository],
-        if (permission != null) 'permission': [permission],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (owner != null) 'owner': owner.map((e) => e.toString()).toList(),
+        if (repository != null) 'repository': [repository.toString()],
+        if (permission != null) 'permission': [permission.toString()],
         if (lastUsedBefore != null)
-          'last_used_before': [lastUsedBefore.toIso8601String()],
+          'last_used_before': [lastUsedBefore.toIso8601String().toString()],
         if (lastUsedAfter != null)
-          'last_used_after': [lastUsedAfter.toIso8601String()],
-        if (tokenId != null) 'token_id': tokenId.map((e) => e).toList(),
+          'last_used_after': [lastUsedAfter.toIso8601String().toString()],
+        if (tokenId != null)
+          'token_id': tokenId.map((e) => e.toString()).toList(),
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2371,15 +2515,16 @@ class OrgsApi {
       method: Method.post,
       path: '/orgs/{org}/personal-access-token-requests'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: orgsReviewPatGrantRequestsInBulkRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2404,15 +2549,16 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/personal-access-token-requests/{pat_request_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{pat_request_id}', '$patRequestId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{pat_request_id}', '${patRequestId}'),
       body: orgsReviewPatGrantRequestRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2433,8 +2579,8 @@ class OrgsApi {
       method: Method.get,
       path:
           '/orgs/{org}/personal-access-token-requests/{pat_request_id}/repositories'
-              .replaceAll('{org}', org)
-              .replaceAll('{pat_request_id}', '$patRequestId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{pat_request_id}', '${patRequestId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2444,7 +2590,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2483,27 +2629,28 @@ class OrgsApi {
 
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/personal-access-tokens'.replaceAll('{org}', org),
+      path: '/orgs/{org}/personal-access-tokens'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (owner != null) 'owner': owner.map((e) => e).toList(),
-        if (repository != null) 'repository': [repository],
-        if (permission != null) 'permission': [permission],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (owner != null) 'owner': owner.map((e) => e.toString()).toList(),
+        if (repository != null) 'repository': [repository.toString()],
+        if (permission != null) 'permission': [permission.toString()],
         if (lastUsedBefore != null)
-          'last_used_before': [lastUsedBefore.toIso8601String()],
+          'last_used_before': [lastUsedBefore.toIso8601String().toString()],
         if (lastUsedAfter != null)
-          'last_used_after': [lastUsedAfter.toIso8601String()],
-        if (tokenId != null) 'token_id': tokenId.map((e) => e).toList(),
+          'last_used_after': [lastUsedAfter.toIso8601String().toString()],
+        if (tokenId != null)
+          'token_id': tokenId.map((e) => e.toString()).toList(),
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2533,14 +2680,15 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/personal-access-tokens'.replaceAll('{org}', org),
+      path: '/orgs/{org}/personal-access-tokens'.replaceAll('{org}', '${org}'),
       body: orgsUpdatePatAccessesRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2566,15 +2714,16 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/personal-access-tokens/{pat_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{pat_id}', '$patId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{pat_id}', '${patId}'),
       body: orgsUpdatePatAccessRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2593,8 +2742,8 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/personal-access-tokens/{pat_id}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{pat_id}', '$patId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{pat_id}', '${patId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2604,7 +2753,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2627,13 +2776,13 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/properties/schema'.replaceAll('{org}', org),
+      path: '/orgs/{org}/properties/schema'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2671,14 +2820,15 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.patch,
-      path: '/orgs/{org}/properties/schema'.replaceAll('{org}', org),
+      path: '/orgs/{org}/properties/schema'.replaceAll('{org}', '${org}'),
       body: orgsCreateOrUpdateCustomPropertiesRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2703,14 +2853,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/properties/schema/{custom_property_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{custom_property_name}', customPropertyName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{custom_property_name}', '${customPropertyName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2739,15 +2889,16 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/properties/schema/{custom_property_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{custom_property_name}', customPropertyName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{custom_property_name}', '${customPropertyName}'),
       body: customPropertySetPayload.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2774,14 +2925,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/properties/schema/{custom_property_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{custom_property_name}', customPropertyName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{custom_property_name}', '${customPropertyName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2799,18 +2950,19 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/properties/values'.replaceAll('{org}', org),
+      path: '/orgs/{org}/properties/values'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (repositoryQuery != null) 'repository_query': [repositoryQuery],
+        if (repositoryQuery != null)
+          'repository_query': [repositoryQuery.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2848,14 +3000,15 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.patch,
-      path: '/orgs/{org}/properties/values'.replaceAll('{org}', org),
+      path: '/orgs/{org}/properties/values'.replaceAll('{org}', '${org}'),
       body: orgsCreateOrUpdateCustomPropertiesValuesForReposRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2870,7 +3023,7 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/public_members'.replaceAll('{org}', org),
+      path: '/orgs/{org}/public_members'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2880,7 +3033,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -2904,14 +3057,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/public_members/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2930,14 +3083,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/public_members/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2952,14 +3105,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/public_members/{username}'
-          .replaceAll('{org}', org)
-          .replaceAll('{username}', username),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -2975,8 +3128,8 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/rulesets/{ruleset_id}/history'
-          .replaceAll('{org}', org)
-          .replaceAll('{ruleset_id}', '$rulesetId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{ruleset_id}', '${rulesetId}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -2986,7 +3139,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3011,15 +3164,15 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/rulesets/{ruleset_id}/history/{version_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{ruleset_id}', '$rulesetId')
-          .replaceAll('{version_id}', '$versionId'),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{ruleset_id}', '${rulesetId}')
+          .replaceAll('{version_id}', '${versionId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3043,13 +3196,13 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/security-managers'.replaceAll('{org}', org),
+      path: '/orgs/{org}/security-managers'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3077,14 +3230,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/security-managers/teams/{team_slug}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3102,14 +3255,14 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/security-managers/teams/{team_slug}'
-          .replaceAll('{org}', org)
-          .replaceAll('{team_slug}', teamSlug),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{team_slug}', '${teamSlug}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3143,16 +3296,17 @@ class OrgsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/orgs/{org}/{security_product}/{enablement}'
-          .replaceAll('{org}', org)
-          .replaceAll('{security_product}', securityProduct.toJson())
-          .replaceAll('{enablement}', enablement.toJson()),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{security_product}', '${securityProduct.toJson()}')
+          .replaceAll('{enablement}', '${enablement.toJson()}'),
       body: orgsEnableOrDisableSecurityProductOnAllOrgReposRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -3168,7 +3322,7 @@ class OrgsApi {
       method: Method.get,
       path: '/user/memberships/orgs',
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -3177,7 +3331,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3203,13 +3357,13 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/user/memberships/orgs/{org}'.replaceAll('{org}', org),
+      path: '/user/memberships/orgs/{org}'.replaceAll('{org}', '${org}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3232,14 +3386,15 @@ class OrgsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.patch,
-      path: '/user/memberships/orgs/{org}'.replaceAll('{org}', org),
+      path: '/user/memberships/orgs/{org}'.replaceAll('{org}', '${org}'),
       body: orgsUpdateMembershipForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3282,7 +3437,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -3315,7 +3470,7 @@ class OrgsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/users/{username}/orgs'.replaceAll('{username}', username),
+      path: '/users/{username}/orgs'.replaceAll('{username}', '${username}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -3325,7 +3480,7 @@ class OrgsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

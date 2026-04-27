@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ShortBlob {
   /// {@macro short_blob}
-  const ShortBlob({
+  ShortBlob({
     required this.url,
     required this.sha,
   });
@@ -54,6 +54,6 @@ class ShortBlob {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ShortBlob && url == other.url && sha == other.sha;
+    return other is ShortBlob && this.url == other.url && this.sha == other.sha;
   }
 }

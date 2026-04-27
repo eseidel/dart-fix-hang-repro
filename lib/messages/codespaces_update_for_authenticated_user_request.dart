@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesUpdateForAuthenticatedUserRequest {
-  const CodespacesUpdateForAuthenticatedUserRequest({
+  CodespacesUpdateForAuthenticatedUserRequest({
     this.machine,
     this.displayName,
     this.recentFolders,
@@ -67,8 +67,8 @@ class CodespacesUpdateForAuthenticatedUserRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesUpdateForAuthenticatedUserRequest &&
-        machine == other.machine &&
-        displayName == other.displayName &&
-        listsEqual(recentFolders, other.recentFolders);
+        this.machine == other.machine &&
+        this.displayName == other.displayName &&
+        listsEqual(this.recentFolders, other.recentFolders);
   }
 }

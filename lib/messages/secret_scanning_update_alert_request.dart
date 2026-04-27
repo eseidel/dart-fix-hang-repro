@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/secret_scanning_alert_resolution.dart';
 import 'package:github_out/models/secret_scanning_alert_resolution_comment.dart';
@@ -10,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SecretScanningUpdateAlertRequest {
-  const SecretScanningUpdateAlertRequest({
+  SecretScanningUpdateAlertRequest({
     required this.state,
     this.resolution,
     this.resolutionComment,
@@ -76,8 +72,8 @@ class SecretScanningUpdateAlertRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningUpdateAlertRequest &&
-        state == other.state &&
-        resolution == other.resolution &&
-        resolutionComment == other.resolutionComment;
+        this.state == other.state &&
+        this.resolution == other.resolution &&
+        this.resolutionComment == other.resolutionComment;
   }
 }

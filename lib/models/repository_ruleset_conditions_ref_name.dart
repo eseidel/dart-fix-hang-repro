@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRulesetConditionsRefName {
-  const RepositoryRulesetConditionsRefName({
+  RepositoryRulesetConditionsRefName({
     this.include,
     this.exclude,
   });
@@ -62,7 +62,7 @@ class RepositoryRulesetConditionsRefName {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRulesetConditionsRefName &&
-        listsEqual(include, other.include) &&
-        listsEqual(exclude, other.exclude);
+        listsEqual(this.include, other.include) &&
+        listsEqual(this.exclude, other.exclude);
   }
 }

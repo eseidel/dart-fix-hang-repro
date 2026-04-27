@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -10,8 +6,12 @@ import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/hosted_compute_create_network_configuration_for_org_request.dart';
 import 'package:github_out/messages/hosted_compute_list_network_configurations_for_org200_response.dart';
 import 'package:github_out/messages/hosted_compute_update_network_configuration_for_org_request.dart';
+import 'package:github_out/models/hosted_compute_create_network_configuration_for_org_request_compute_service.dart';
+import 'package:github_out/models/hosted_compute_update_network_configuration_for_org_request_compute_service.dart';
 import 'package:github_out/models/network_configuration.dart';
+import 'package:github_out/models/network_configuration_compute_service.dart';
 import 'package:github_out/models/network_settings.dart';
+import 'package:http/http.dart' as http;
 
 /// Manage hosted compute networking resources.
 class HostedComputeApi {
@@ -35,7 +35,7 @@ class HostedComputeApi {
       method: Method.get,
       path: '/orgs/{org}/settings/network-configurations'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -46,7 +46,7 @@ class HostedComputeApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -73,15 +73,16 @@ class HostedComputeApi {
       method: Method.post,
       path: '/orgs/{org}/settings/network-configurations'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: hostedComputeCreateNetworkConfigurationForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -108,17 +109,17 @@ class HostedComputeApi {
       method: Method.get,
       path:
           '/orgs/{org}/settings/network-configurations/{network_configuration_id}'
-              .replaceAll('{org}', org)
+              .replaceAll('{org}', '${org}')
               .replaceAll(
                 '{network_configuration_id}',
-                networkConfigurationId,
+                '${networkConfigurationId}',
               ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -144,17 +145,17 @@ class HostedComputeApi {
       method: Method.delete,
       path:
           '/orgs/{org}/settings/network-configurations/{network_configuration_id}'
-              .replaceAll('{org}', org)
+              .replaceAll('{org}', '${org}')
               .replaceAll(
                 '{network_configuration_id}',
-                networkConfigurationId,
+                '${networkConfigurationId}',
               ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -174,18 +175,19 @@ class HostedComputeApi {
       method: Method.patch,
       path:
           '/orgs/{org}/settings/network-configurations/{network_configuration_id}'
-              .replaceAll('{org}', org)
+              .replaceAll('{org}', '${org}')
               .replaceAll(
                 '{network_configuration_id}',
-                networkConfigurationId,
+                '${networkConfigurationId}',
               ),
       body: hostedComputeUpdateNetworkConfigurationForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -211,14 +213,14 @@ class HostedComputeApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/settings/network-settings/{network_settings_id}'
-          .replaceAll('{org}', org)
-          .replaceAll('{network_settings_id}', networkSettingsId),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{network_settings_id}', '${networkSettingsId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

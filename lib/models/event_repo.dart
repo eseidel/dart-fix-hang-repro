@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class EventRepo {
-  const EventRepo({
+  EventRepo({
     required this.id,
     required this.name,
     required this.url,
@@ -15,7 +15,7 @@ class EventRepo {
       'EventRepo',
       json,
       () => EventRepo(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         url: Uri.parse(json['url'] as String),
       ),
@@ -55,8 +55,8 @@ class EventRepo {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is EventRepo &&
-        id == other.id &&
-        name == other.name &&
-        url == other.url;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.url == other.url;
   }
 }

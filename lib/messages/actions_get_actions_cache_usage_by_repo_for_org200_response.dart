@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsGetActionsCacheUsageByRepoForOrg200Response {
-  const ActionsGetActionsCacheUsageByRepoForOrg200Response({
+  ActionsGetActionsCacheUsageByRepoForOrg200Response({
     required this.totalCount,
     required this.repositoryCacheUsages,
   });
@@ -18,7 +18,7 @@ class ActionsGetActionsCacheUsageByRepoForOrg200Response {
       'ActionsGetActionsCacheUsageByRepoForOrg200Response',
       json,
       () => ActionsGetActionsCacheUsageByRepoForOrg200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         repositoryCacheUsages: (json['repository_cache_usages'] as List)
             .map<ActionsCacheUsageByRepository>(
               (e) => ActionsCacheUsageByRepository.fromJson(
@@ -65,7 +65,7 @@ class ActionsGetActionsCacheUsageByRepoForOrg200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsGetActionsCacheUsageByRepoForOrg200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(repositoryCacheUsages, other.repositoryCacheUsages);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.repositoryCacheUsages, other.repositoryCacheUsages);
   }
 }

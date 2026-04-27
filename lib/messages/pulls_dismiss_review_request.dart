@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsDismissReviewRequest {
-  const PullsDismissReviewRequest({
+  PullsDismissReviewRequest({
     required this.message,
     this.event,
   });
@@ -56,7 +56,7 @@ class PullsDismissReviewRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsDismissReviewRequest &&
-        message == other.message &&
-        event == other.event;
+        this.message == other.message &&
+        this.event == other.event;
   }
 }

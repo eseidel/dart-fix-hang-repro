@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -14,7 +10,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateDeploymentStatusRequest {
-  const ReposCreateDeploymentStatusRequest({
+  ReposCreateDeploymentStatusRequest({
     required this.state,
     this.targetUrl = '',
     this.logUrl = '',
@@ -126,12 +122,12 @@ class ReposCreateDeploymentStatusRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateDeploymentStatusRequest &&
-        state == other.state &&
-        targetUrl == other.targetUrl &&
-        logUrl == other.logUrl &&
-        description == other.description &&
-        environment == other.environment &&
-        environmentUrl == other.environmentUrl &&
-        autoInactive == other.autoInactive;
+        this.state == other.state &&
+        this.targetUrl == other.targetUrl &&
+        this.logUrl == other.logUrl &&
+        this.description == other.description &&
+        this.environment == other.environment &&
+        this.environmentUrl == other.environmentUrl &&
+        this.autoInactive == other.autoInactive;
   }
 }

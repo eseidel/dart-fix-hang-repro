@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ApiInsightsTimeStatsInner {
-  const ApiInsightsTimeStatsInner({
+  ApiInsightsTimeStatsInner({
     this.timestamp,
     this.totalRequestCount,
     this.rateLimitedRequestCount,
@@ -16,8 +16,8 @@ class ApiInsightsTimeStatsInner {
       json,
       () => ApiInsightsTimeStatsInner(
         timestamp: json['timestamp'] as String?,
-        totalRequestCount: json['total_request_count'] as int?,
-        rateLimitedRequestCount: json['rate_limited_request_count'] as int?,
+        totalRequestCount: (json['total_request_count'] as int?),
+        rateLimitedRequestCount: (json['rate_limited_request_count'] as int?),
       ),
     );
   }
@@ -55,8 +55,8 @@ class ApiInsightsTimeStatsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ApiInsightsTimeStatsInner &&
-        timestamp == other.timestamp &&
-        totalRequestCount == other.totalRequestCount &&
-        rateLimitedRequestCount == other.rateLimitedRequestCount;
+        this.timestamp == other.timestamp &&
+        this.totalRequestCount == other.totalRequestCount &&
+        this.rateLimitedRequestCount == other.rateLimitedRequestCount;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesDeleteCodespacesAccessUsersRequest {
-  const CodespacesDeleteCodespacesAccessUsersRequest({
+  CodespacesDeleteCodespacesAccessUsersRequest({
     required this.selectedUsernames,
   });
 
@@ -51,6 +51,6 @@ class CodespacesDeleteCodespacesAccessUsersRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesDeleteCodespacesAccessUsersRequest &&
-        listsEqual(selectedUsernames, other.selectedUsernames);
+        listsEqual(this.selectedUsernames, other.selectedUsernames);
   }
 }

@@ -1,10 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/org_private_registry_configuration.dart';
+import 'package:github_out/models/org_private_registry_configuration_registry_type.dart';
+import 'package:github_out/models/org_private_registry_configuration_visibility.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class PrivateRegistriesListOrgPrivateRegistries200Response {
-  const PrivateRegistriesListOrgPrivateRegistries200Response({
+  PrivateRegistriesListOrgPrivateRegistries200Response({
     required this.totalCount,
     required this.configurations,
   });
@@ -18,7 +20,7 @@ class PrivateRegistriesListOrgPrivateRegistries200Response {
       'PrivateRegistriesListOrgPrivateRegistries200Response',
       json,
       () => PrivateRegistriesListOrgPrivateRegistries200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         configurations: (json['configurations'] as List)
             .map<OrgPrivateRegistryConfiguration>(
               (e) => OrgPrivateRegistryConfiguration.fromJson(
@@ -63,7 +65,7 @@ class PrivateRegistriesListOrgPrivateRegistries200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PrivateRegistriesListOrgPrivateRegistries200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(configurations, other.configurations);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.configurations, other.configurations);
   }
 }

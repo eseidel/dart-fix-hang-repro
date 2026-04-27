@@ -1,16 +1,15 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repos_update_branch_protection_request_required_pull_request_reviews.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_required_pull_request_reviews_bypass_pull_request_allowances.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_required_pull_request_reviews_dismissal_restrictions.dart';
 import 'package:github_out/models/repos_update_branch_protection_request_required_status_checks.dart';
+import 'package:github_out/models/repos_update_branch_protection_request_required_status_checks_checks_inner.dart';
 import 'package:github_out/models/repos_update_branch_protection_request_restrictions.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ReposUpdateBranchProtectionRequest {
-  const ReposUpdateBranchProtectionRequest({
+  ReposUpdateBranchProtectionRequest({
     required this.requiredStatusChecks,
     required this.enforceAdmins,
     required this.requiredPullRequestReviews,
@@ -174,17 +173,17 @@ class ReposUpdateBranchProtectionRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposUpdateBranchProtectionRequest &&
-        requiredStatusChecks == other.requiredStatusChecks &&
-        enforceAdmins == other.enforceAdmins &&
-        requiredPullRequestReviews == other.requiredPullRequestReviews &&
-        restrictions == other.restrictions &&
-        requiredLinearHistory == other.requiredLinearHistory &&
-        allowForcePushes == other.allowForcePushes &&
-        allowDeletions == other.allowDeletions &&
-        blockCreations == other.blockCreations &&
-        requiredConversationResolution ==
+        this.requiredStatusChecks == other.requiredStatusChecks &&
+        this.enforceAdmins == other.enforceAdmins &&
+        this.requiredPullRequestReviews == other.requiredPullRequestReviews &&
+        this.restrictions == other.restrictions &&
+        this.requiredLinearHistory == other.requiredLinearHistory &&
+        this.allowForcePushes == other.allowForcePushes &&
+        this.allowDeletions == other.allowDeletions &&
+        this.blockCreations == other.blockCreations &&
+        this.requiredConversationResolution ==
             other.requiredConversationResolution &&
-        lockBranch == other.lockBranch &&
-        allowForkSyncing == other.allowForkSyncing;
+        this.lockBranch == other.lockBranch &&
+        this.allowForkSyncing == other.allowForkSyncing;
   }
 }

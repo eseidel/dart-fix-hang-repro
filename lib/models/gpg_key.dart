@@ -1,10 +1,7 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/gpg_key_emails_inner.dart';
 import 'package:github_out/models/gpg_key_subkeys_inner.dart';
+import 'package:github_out/models/gpg_key_subkeys_inner_emails_inner.dart';
 import 'package:meta/meta.dart';
 
 /// {@template gpg_key}
@@ -14,8 +11,9 @@ import 'package:meta/meta.dart';
 @immutable
 class GpgKey {
   /// {@macro gpg_key}
-  const GpgKey({
+  GpgKey({
     required this.id,
+    this.name,
     required this.primaryKeyId,
     required this.keyId,
     required this.publicKey,
@@ -29,7 +27,6 @@ class GpgKey {
     required this.expiresAt,
     required this.revoked,
     required this.rawKey,
-    this.name,
   });
 
   /// Converts a `Map<String, dynamic>` to a [GpgKey].
@@ -38,9 +35,9 @@ class GpgKey {
       'GpgKey',
       json,
       () => GpgKey(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String?,
-        primaryKeyId: checkedKey(json, 'primary_key_id') as int?,
+        primaryKeyId: (checkedKey(json, 'primary_key_id') as int?),
         keyId: json['key_id'] as String,
         publicKey: json['public_key'] as String,
         emails: (json['emails'] as List)
@@ -155,20 +152,20 @@ class GpgKey {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GpgKey &&
-        id == other.id &&
-        name == other.name &&
-        primaryKeyId == other.primaryKeyId &&
-        keyId == other.keyId &&
-        publicKey == other.publicKey &&
-        listsEqual(emails, other.emails) &&
-        listsEqual(subkeys, other.subkeys) &&
-        canSign == other.canSign &&
-        canEncryptComms == other.canEncryptComms &&
-        canEncryptStorage == other.canEncryptStorage &&
-        canCertify == other.canCertify &&
-        createdAt == other.createdAt &&
-        expiresAt == other.expiresAt &&
-        revoked == other.revoked &&
-        rawKey == other.rawKey;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.primaryKeyId == other.primaryKeyId &&
+        this.keyId == other.keyId &&
+        this.publicKey == other.publicKey &&
+        listsEqual(this.emails, other.emails) &&
+        listsEqual(this.subkeys, other.subkeys) &&
+        this.canSign == other.canSign &&
+        this.canEncryptComms == other.canEncryptComms &&
+        this.canEncryptStorage == other.canEncryptStorage &&
+        this.canCertify == other.canCertify &&
+        this.createdAt == other.createdAt &&
+        this.expiresAt == other.expiresAt &&
+        this.revoked == other.revoked &&
+        this.rawKey == other.rawKey;
   }
 }

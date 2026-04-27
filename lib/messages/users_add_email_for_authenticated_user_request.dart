@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/models/users_add_email_for_authenticated_user_request_one_of_0.dart';
 import 'package:meta/meta.dart';
 
@@ -10,14 +6,14 @@ sealed class UsersAddEmailForAuthenticatedUserRequest {
 
   factory UsersAddEmailForAuthenticatedUserRequest.fromJson(dynamic json) {
     return switch (json) {
-      final Map<String, dynamic> v =>
+      Map<String, dynamic> v =>
         UsersAddEmailForAuthenticatedUserRequestUsersAddEmailForAuthenticatedUserRequestOneOf0(
           UsersAddEmailForAuthenticatedUserRequestOneOf0.fromJson(v),
         ),
-      final List<dynamic> v => UsersAddEmailForAuthenticatedUserRequestList(
+      List<dynamic> v => UsersAddEmailForAuthenticatedUserRequestList(
         v.cast<String>(),
       ),
-      final String v => UsersAddEmailForAuthenticatedUserRequestString(v),
+      String v => UsersAddEmailForAuthenticatedUserRequestString(v),
       _ => throw FormatException(
         'Unsupported shape for UsersAddEmailForAuthenticatedUserRequest: ${json.runtimeType}',
       ),

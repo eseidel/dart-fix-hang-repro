@@ -1,13 +1,9 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsUpdateHostedRunnerForOrgRequest {
-  const ActionsUpdateHostedRunnerForOrgRequest({
+  ActionsUpdateHostedRunnerForOrgRequest({
     this.name,
     this.runnerGroupId,
     this.maximumRunners,
@@ -24,8 +20,8 @@ class ActionsUpdateHostedRunnerForOrgRequest {
       json,
       () => ActionsUpdateHostedRunnerForOrgRequest(
         name: json['name'] as String?,
-        runnerGroupId: json['runner_group_id'] as int?,
-        maximumRunners: json['maximum_runners'] as int?,
+        runnerGroupId: (json['runner_group_id'] as int?),
+        maximumRunners: (json['maximum_runners'] as int?),
         enableStaticIp: json['enable_static_ip'] as bool?,
       ),
     );
@@ -80,9 +76,9 @@ class ActionsUpdateHostedRunnerForOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsUpdateHostedRunnerForOrgRequest &&
-        name == other.name &&
-        runnerGroupId == other.runnerGroupId &&
-        maximumRunners == other.maximumRunners &&
-        enableStaticIp == other.enableStaticIp;
+        this.name == other.name &&
+        this.runnerGroupId == other.runnerGroupId &&
+        this.maximumRunners == other.maximumRunners &&
+        this.enableStaticIp == other.enableStaticIp;
   }
 }

@@ -1,10 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/git_create_tree_request_tree_inner.dart';
+import 'package:github_out/models/git_create_tree_request_tree_inner_mode.dart';
+import 'package:github_out/models/git_create_tree_request_tree_inner_type.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class GitCreateTreeRequest {
-  const GitCreateTreeRequest({
+  GitCreateTreeRequest({
     required this.tree,
     this.baseTree,
   });
@@ -73,7 +75,7 @@ class GitCreateTreeRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCreateTreeRequest &&
-        listsEqual(tree, other.tree) &&
-        baseTree == other.baseTree;
+        listsEqual(this.tree, other.tree) &&
+        this.baseTree == other.baseTree;
   }
 }

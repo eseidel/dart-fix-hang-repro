@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsCacheListActionsCachesInner {
-  const ActionsCacheListActionsCachesInner({
+  ActionsCacheListActionsCachesInner({
     this.id,
     this.ref,
     this.key,
@@ -22,13 +22,13 @@ class ActionsCacheListActionsCachesInner {
       'ActionsCacheListActionsCachesInner',
       json,
       () => ActionsCacheListActionsCachesInner(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         ref: json['ref'] as String?,
         key: json['key'] as String?,
         version: json['version'] as String?,
         lastAccessedAt: maybeParseDateTime(json['last_accessed_at'] as String?),
         createdAt: maybeParseDateTime(json['created_at'] as String?),
-        sizeInBytes: json['size_in_bytes'] as int?,
+        sizeInBytes: (json['size_in_bytes'] as int?),
       ),
     );
   }
@@ -95,12 +95,12 @@ class ActionsCacheListActionsCachesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsCacheListActionsCachesInner &&
-        id == other.id &&
-        ref == other.ref &&
-        key == other.key &&
-        version == other.version &&
-        lastAccessedAt == other.lastAccessedAt &&
-        createdAt == other.createdAt &&
-        sizeInBytes == other.sizeInBytes;
+        this.id == other.id &&
+        this.ref == other.ref &&
+        this.key == other.key &&
+        this.version == other.version &&
+        this.lastAccessedAt == other.lastAccessedAt &&
+        this.createdAt == other.createdAt &&
+        this.sizeInBytes == other.sizeInBytes;
   }
 }

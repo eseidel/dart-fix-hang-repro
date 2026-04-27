@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Tag {
   /// {@macro tag}
-  const Tag({
+  Tag({
     required this.name,
     required this.commit,
     required this.zipballUrl,
@@ -76,10 +76,10 @@ class Tag {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Tag &&
-        name == other.name &&
-        commit == other.commit &&
-        zipballUrl == other.zipballUrl &&
-        tarballUrl == other.tarballUrl &&
-        nodeId == other.nodeId;
+        this.name == other.name &&
+        this.commit == other.commit &&
+        this.zipballUrl == other.zipballUrl &&
+        this.tarballUrl == other.tarballUrl &&
+        this.nodeId == other.nodeId;
   }
 }

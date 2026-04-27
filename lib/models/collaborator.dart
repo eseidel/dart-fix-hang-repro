@@ -9,9 +9,11 @@ import 'package:meta/meta.dart';
 @immutable
 class Collaborator {
   /// {@macro collaborator}
-  const Collaborator({
+  Collaborator({
     required this.login,
     required this.id,
+    this.email,
+    this.name,
     required this.nodeId,
     required this.avatarUrl,
     required this.gravatarId,
@@ -28,10 +30,8 @@ class Collaborator {
     required this.receivedEventsUrl,
     required this.type,
     required this.siteAdmin,
-    required this.roleName,
-    this.email,
-    this.name,
     this.permissions,
+    required this.roleName,
     this.userViewType,
   });
 
@@ -42,7 +42,7 @@ class Collaborator {
       json,
       () => Collaborator(
         login: json['login'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         email: json['email'] as String?,
         name: json['name'] as String?,
         nodeId: json['node_id'] as String,
@@ -200,28 +200,28 @@ class Collaborator {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Collaborator &&
-        login == other.login &&
-        id == other.id &&
-        email == other.email &&
-        name == other.name &&
-        nodeId == other.nodeId &&
-        avatarUrl == other.avatarUrl &&
-        gravatarId == other.gravatarId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        followersUrl == other.followersUrl &&
-        followingUrl == other.followingUrl &&
-        gistsUrl == other.gistsUrl &&
-        starredUrl == other.starredUrl &&
-        subscriptionsUrl == other.subscriptionsUrl &&
-        organizationsUrl == other.organizationsUrl &&
-        reposUrl == other.reposUrl &&
-        eventsUrl == other.eventsUrl &&
-        receivedEventsUrl == other.receivedEventsUrl &&
-        type == other.type &&
-        siteAdmin == other.siteAdmin &&
-        permissions == other.permissions &&
-        roleName == other.roleName &&
-        userViewType == other.userViewType;
+        this.login == other.login &&
+        this.id == other.id &&
+        this.email == other.email &&
+        this.name == other.name &&
+        this.nodeId == other.nodeId &&
+        this.avatarUrl == other.avatarUrl &&
+        this.gravatarId == other.gravatarId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.followersUrl == other.followersUrl &&
+        this.followingUrl == other.followingUrl &&
+        this.gistsUrl == other.gistsUrl &&
+        this.starredUrl == other.starredUrl &&
+        this.subscriptionsUrl == other.subscriptionsUrl &&
+        this.organizationsUrl == other.organizationsUrl &&
+        this.reposUrl == other.reposUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.receivedEventsUrl == other.receivedEventsUrl &&
+        this.type == other.type &&
+        this.siteAdmin == other.siteAdmin &&
+        this.permissions == other.permissions &&
+        this.roleName == other.roleName &&
+        this.userViewType == other.userViewType;
   }
 }

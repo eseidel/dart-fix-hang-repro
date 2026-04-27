@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SnapshotDetector {
   /// {@macro snapshot_detector}
-  const SnapshotDetector({
+  SnapshotDetector({
     required this.name,
     required this.version,
     required this.url,
@@ -67,8 +67,8 @@ class SnapshotDetector {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SnapshotDetector &&
-        name == other.name &&
-        version == other.version &&
-        url == other.url;
+        this.name == other.name &&
+        this.version == other.version &&
+        this.url == other.url;
   }
 }

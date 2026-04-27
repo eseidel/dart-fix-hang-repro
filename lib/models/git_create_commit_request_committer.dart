@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class GitCreateCommitRequestCommitter {
   /// {@macro git_create_commit_request_committer}
-  const GitCreateCommitRequestCommitter({
+  GitCreateCommitRequestCommitter({
     this.name,
     this.email,
     this.date,
@@ -70,8 +70,8 @@ class GitCreateCommitRequestCommitter {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCreateCommitRequestCommitter &&
-        name == other.name &&
-        email == other.email &&
-        date == other.date;
+        this.name == other.name &&
+        this.email == other.email &&
+        this.date == other.date;
   }
 }

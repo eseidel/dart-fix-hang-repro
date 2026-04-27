@@ -9,9 +9,10 @@ import 'package:meta/meta.dart';
 @immutable
 class PrivateUser {
   /// {@macro private_user}
-  const PrivateUser({
+  PrivateUser({
     required this.login,
     required this.id,
+    this.userViewType,
     required this.nodeId,
     required this.avatarUrl,
     required this.gravatarId,
@@ -33,8 +34,10 @@ class PrivateUser {
     required this.blog,
     required this.location,
     required this.email,
+    this.notificationEmail,
     required this.hireable,
     required this.bio,
+    this.twitterUsername,
     required this.publicRepos,
     required this.publicGists,
     required this.followers,
@@ -47,9 +50,6 @@ class PrivateUser {
     required this.diskUsage,
     required this.collaborators,
     required this.twoFactorAuthentication,
-    this.userViewType,
-    this.notificationEmail,
-    this.twitterUsername,
     this.plan,
     this.businessPlus,
     this.ldapDn,
@@ -62,7 +62,7 @@ class PrivateUser {
       json,
       () => PrivateUser(
         login: json['login'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         userViewType: json['user_view_type'] as String?,
         nodeId: json['node_id'] as String,
         avatarUrl: Uri.parse(json['avatar_url'] as String),
@@ -89,17 +89,17 @@ class PrivateUser {
         hireable: checkedKey(json, 'hireable') as bool?,
         bio: checkedKey(json, 'bio') as String?,
         twitterUsername: json['twitter_username'] as String?,
-        publicRepos: json['public_repos'] as int,
-        publicGists: json['public_gists'] as int,
-        followers: json['followers'] as int,
-        following: json['following'] as int,
+        publicRepos: (json['public_repos'] as int),
+        publicGists: (json['public_gists'] as int),
+        followers: (json['followers'] as int),
+        following: (json['following'] as int),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
-        privateGists: json['private_gists'] as int,
-        totalPrivateRepos: json['total_private_repos'] as int,
-        ownedPrivateRepos: json['owned_private_repos'] as int,
-        diskUsage: json['disk_usage'] as int,
-        collaborators: json['collaborators'] as int,
+        privateGists: (json['private_gists'] as int),
+        totalPrivateRepos: (json['total_private_repos'] as int),
+        ownedPrivateRepos: (json['owned_private_repos'] as int),
+        diskUsage: (json['disk_usage'] as int),
+        collaborators: (json['collaborators'] as int),
         twoFactorAuthentication: json['two_factor_authentication'] as bool,
         plan: PrivateUserPlan.maybeFromJson(
           json['plan'] as Map<String, dynamic>?,
@@ -336,48 +336,48 @@ class PrivateUser {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PrivateUser &&
-        login == other.login &&
-        id == other.id &&
-        userViewType == other.userViewType &&
-        nodeId == other.nodeId &&
-        avatarUrl == other.avatarUrl &&
-        gravatarId == other.gravatarId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        followersUrl == other.followersUrl &&
-        followingUrl == other.followingUrl &&
-        gistsUrl == other.gistsUrl &&
-        starredUrl == other.starredUrl &&
-        subscriptionsUrl == other.subscriptionsUrl &&
-        organizationsUrl == other.organizationsUrl &&
-        reposUrl == other.reposUrl &&
-        eventsUrl == other.eventsUrl &&
-        receivedEventsUrl == other.receivedEventsUrl &&
-        type == other.type &&
-        siteAdmin == other.siteAdmin &&
-        name == other.name &&
-        company == other.company &&
-        blog == other.blog &&
-        location == other.location &&
-        email == other.email &&
-        notificationEmail == other.notificationEmail &&
-        hireable == other.hireable &&
-        bio == other.bio &&
-        twitterUsername == other.twitterUsername &&
-        publicRepos == other.publicRepos &&
-        publicGists == other.publicGists &&
-        followers == other.followers &&
-        following == other.following &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        privateGists == other.privateGists &&
-        totalPrivateRepos == other.totalPrivateRepos &&
-        ownedPrivateRepos == other.ownedPrivateRepos &&
-        diskUsage == other.diskUsage &&
-        collaborators == other.collaborators &&
-        twoFactorAuthentication == other.twoFactorAuthentication &&
-        plan == other.plan &&
-        businessPlus == other.businessPlus &&
-        ldapDn == other.ldapDn;
+        this.login == other.login &&
+        this.id == other.id &&
+        this.userViewType == other.userViewType &&
+        this.nodeId == other.nodeId &&
+        this.avatarUrl == other.avatarUrl &&
+        this.gravatarId == other.gravatarId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.followersUrl == other.followersUrl &&
+        this.followingUrl == other.followingUrl &&
+        this.gistsUrl == other.gistsUrl &&
+        this.starredUrl == other.starredUrl &&
+        this.subscriptionsUrl == other.subscriptionsUrl &&
+        this.organizationsUrl == other.organizationsUrl &&
+        this.reposUrl == other.reposUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.receivedEventsUrl == other.receivedEventsUrl &&
+        this.type == other.type &&
+        this.siteAdmin == other.siteAdmin &&
+        this.name == other.name &&
+        this.company == other.company &&
+        this.blog == other.blog &&
+        this.location == other.location &&
+        this.email == other.email &&
+        this.notificationEmail == other.notificationEmail &&
+        this.hireable == other.hireable &&
+        this.bio == other.bio &&
+        this.twitterUsername == other.twitterUsername &&
+        this.publicRepos == other.publicRepos &&
+        this.publicGists == other.publicGists &&
+        this.followers == other.followers &&
+        this.following == other.following &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.privateGists == other.privateGists &&
+        this.totalPrivateRepos == other.totalPrivateRepos &&
+        this.ownedPrivateRepos == other.ownedPrivateRepos &&
+        this.diskUsage == other.diskUsage &&
+        this.collaborators == other.collaborators &&
+        this.twoFactorAuthentication == other.twoFactorAuthentication &&
+        this.plan == other.plan &&
+        this.businessPlus == other.businessPlus &&
+        this.ldapDn == other.ldapDn;
   }
 }

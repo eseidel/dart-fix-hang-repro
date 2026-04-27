@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningCreateVariantAnalysisRequest {
-  const CodeScanningCreateVariantAnalysisRequest({
+  CodeScanningCreateVariantAnalysisRequest({
     required this.language,
     required this.queryPack,
     this.repositories,
@@ -90,10 +90,10 @@ class CodeScanningCreateVariantAnalysisRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningCreateVariantAnalysisRequest &&
-        language == other.language &&
-        queryPack == other.queryPack &&
-        listsEqual(repositories, other.repositories) &&
-        listsEqual(repositoryLists, other.repositoryLists) &&
-        listsEqual(repositoryOwners, other.repositoryOwners);
+        this.language == other.language &&
+        this.queryPack == other.queryPack &&
+        listsEqual(this.repositories, other.repositories) &&
+        listsEqual(this.repositoryLists, other.repositoryLists) &&
+        listsEqual(this.repositoryOwners, other.repositoryOwners);
   }
 }

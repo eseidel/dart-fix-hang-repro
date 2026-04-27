@@ -1,15 +1,11 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateDeployKeyRequest {
-  const ReposCreateDeployKeyRequest({
-    required this.key,
+  ReposCreateDeployKeyRequest({
     this.title,
+    required this.key,
     this.readOnly,
   });
 
@@ -75,8 +71,8 @@ class ReposCreateDeployKeyRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateDeployKeyRequest &&
-        title == other.title &&
-        key == other.key &&
-        readOnly == other.readOnly;
+        this.title == other.title &&
+        this.key == other.key &&
+        this.readOnly == other.readOnly;
   }
 }

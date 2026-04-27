@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OrganizationProgrammaticAccessGrantRequestPermissions {
   /// {@macro organization_programmatic_access_grant_request_permissions}
-  const OrganizationProgrammaticAccessGrantRequestPermissions({
+  OrganizationProgrammaticAccessGrantRequestPermissions({
     this.organization,
     this.repository,
     this.other,
@@ -71,8 +71,8 @@ class OrganizationProgrammaticAccessGrantRequestPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrganizationProgrammaticAccessGrantRequestPermissions &&
-        mapsEqual(organization, other.organization) &&
-        mapsEqual(repository, other.repository) &&
+        mapsEqual(this.organization, other.organization) &&
+        mapsEqual(this.repository, other.repository) &&
         mapsEqual(this.other, other.other);
   }
 }

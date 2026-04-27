@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CopilotCancelCopilotSeatAssignmentForTeamsRequest {
-  const CopilotCancelCopilotSeatAssignmentForTeamsRequest({
+  CopilotCancelCopilotSeatAssignmentForTeamsRequest({
     required this.selectedTeams,
   });
 
@@ -50,6 +50,6 @@ class CopilotCancelCopilotSeatAssignmentForTeamsRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotCancelCopilotSeatAssignmentForTeamsRequest &&
-        listsEqual(selectedTeams, other.selectedTeams);
+        listsEqual(this.selectedTeams, other.selectedTeams);
   }
 }

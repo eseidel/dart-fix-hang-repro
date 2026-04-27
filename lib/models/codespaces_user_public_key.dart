@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodespacesUserPublicKey {
   /// {@macro codespaces_user_public_key}
-  const CodespacesUserPublicKey({
+  CodespacesUserPublicKey({
     required this.keyId,
     required this.key,
   });
@@ -60,7 +60,7 @@ class CodespacesUserPublicKey {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesUserPublicKey &&
-        keyId == other.keyId &&
-        key == other.key;
+        this.keyId == other.keyId &&
+        this.key == other.key;
   }
 }

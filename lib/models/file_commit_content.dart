@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class FileCommitContent {
-  const FileCommitContent({
+  FileCommitContent({
     this.name,
     this.path,
     this.sha,
@@ -26,7 +26,7 @@ class FileCommitContent {
         name: json['name'] as String?,
         path: json['path'] as String?,
         sha: json['sha'] as String?,
-        size: json['size'] as int?,
+        size: (json['size'] as int?),
         url: json['url'] as String?,
         htmlUrl: json['html_url'] as String?,
         gitUrl: json['git_url'] as String?,
@@ -93,15 +93,15 @@ class FileCommitContent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is FileCommitContent &&
-        name == other.name &&
-        path == other.path &&
-        sha == other.sha &&
-        size == other.size &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        gitUrl == other.gitUrl &&
-        downloadUrl == other.downloadUrl &&
-        type == other.type &&
-        links == other.links;
+        this.name == other.name &&
+        this.path == other.path &&
+        this.sha == other.sha &&
+        this.size == other.size &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.gitUrl == other.gitUrl &&
+        this.downloadUrl == other.downloadUrl &&
+        this.type == other.type &&
+        this.links == other.links;
   }
 }

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CustomDeploymentRuleApp {
   /// {@macro custom_deployment_rule_app}
-  const CustomDeploymentRuleApp({
+  CustomDeploymentRuleApp({
     required this.id,
     required this.slug,
     required this.integrationUrl,
@@ -21,7 +21,7 @@ class CustomDeploymentRuleApp {
       'CustomDeploymentRuleApp',
       json,
       () => CustomDeploymentRuleApp(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         slug: json['slug'] as String,
         integrationUrl: json['integration_url'] as String,
         nodeId: json['node_id'] as String,
@@ -76,9 +76,9 @@ class CustomDeploymentRuleApp {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CustomDeploymentRuleApp &&
-        id == other.id &&
-        slug == other.slug &&
-        integrationUrl == other.integrationUrl &&
-        nodeId == other.nodeId;
+        this.id == other.id &&
+        this.slug == other.slug &&
+        this.integrationUrl == other.integrationUrl &&
+        this.nodeId == other.nodeId;
   }
 }

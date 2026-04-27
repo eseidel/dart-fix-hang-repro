@@ -1,8 +1,5 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/messages/interaction_limit_response.dart';
+import 'package:github_out/models/interaction_group.dart';
 import 'package:github_out/models/interactions_get_restrictions_for_authenticated_user200_response_any_of_1.dart';
 import 'package:meta/meta.dart';
 

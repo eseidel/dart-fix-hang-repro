@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/codespaces_create_with_pr_for_authenticated_user_request_geo.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodespacesCreateWithPrForAuthenticatedUserRequest {
-  const CodespacesCreateWithPrForAuthenticatedUserRequest({
+  CodespacesCreateWithPrForAuthenticatedUserRequest({
     this.location,
     this.geo,
     this.clientIp,
@@ -40,9 +36,9 @@ class CodespacesCreateWithPrForAuthenticatedUserRequest {
         multiRepoPermissionsOptOut:
             json['multi_repo_permissions_opt_out'] as bool?,
         workingDirectory: json['working_directory'] as String?,
-        idleTimeoutMinutes: json['idle_timeout_minutes'] as int?,
+        idleTimeoutMinutes: (json['idle_timeout_minutes'] as int?),
         displayName: json['display_name'] as String?,
-        retentionPeriodMinutes: json['retention_period_minutes'] as int?,
+        retentionPeriodMinutes: (json['retention_period_minutes'] as int?),
       ),
     );
   }
@@ -127,15 +123,15 @@ class CodespacesCreateWithPrForAuthenticatedUserRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesCreateWithPrForAuthenticatedUserRequest &&
-        location == other.location &&
-        geo == other.geo &&
-        clientIp == other.clientIp &&
-        machine == other.machine &&
-        devcontainerPath == other.devcontainerPath &&
-        multiRepoPermissionsOptOut == other.multiRepoPermissionsOptOut &&
-        workingDirectory == other.workingDirectory &&
-        idleTimeoutMinutes == other.idleTimeoutMinutes &&
-        displayName == other.displayName &&
-        retentionPeriodMinutes == other.retentionPeriodMinutes;
+        this.location == other.location &&
+        this.geo == other.geo &&
+        this.clientIp == other.clientIp &&
+        this.machine == other.machine &&
+        this.devcontainerPath == other.devcontainerPath &&
+        this.multiRepoPermissionsOptOut == other.multiRepoPermissionsOptOut &&
+        this.workingDirectory == other.workingDirectory &&
+        this.idleTimeoutMinutes == other.idleTimeoutMinutes &&
+        this.displayName == other.displayName &&
+        this.retentionPeriodMinutes == other.retentionPeriodMinutes;
   }
 }

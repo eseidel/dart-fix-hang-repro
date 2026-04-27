@@ -1,3 +1,6 @@
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/stargazer.dart';
+
 sealed class ActivityListStargazersForRepo200Response {
   static ActivityListStargazersForRepo200Response fromJson(dynamic jsonArg) {
     // Determine which schema to use based on the json.

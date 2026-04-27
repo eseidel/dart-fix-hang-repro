@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesLockRequest {
-  const IssuesLockRequest({
+  IssuesLockRequest({
     this.lockReason,
   });
 
@@ -51,6 +51,6 @@ class IssuesLockRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is IssuesLockRequest && lockReason == other.lockReason;
+    return other is IssuesLockRequest && this.lockReason == other.lockReason;
   }
 }

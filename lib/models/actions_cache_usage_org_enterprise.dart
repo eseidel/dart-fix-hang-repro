@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsCacheUsageOrgEnterprise {
-  const ActionsCacheUsageOrgEnterprise({
+  ActionsCacheUsageOrgEnterprise({
     required this.totalActiveCachesCount,
     required this.totalActiveCachesSizeInBytes,
   });
@@ -14,9 +14,9 @@ class ActionsCacheUsageOrgEnterprise {
       'ActionsCacheUsageOrgEnterprise',
       json,
       () => ActionsCacheUsageOrgEnterprise(
-        totalActiveCachesCount: json['total_active_caches_count'] as int,
+        totalActiveCachesCount: (json['total_active_caches_count'] as int),
         totalActiveCachesSizeInBytes:
-            json['total_active_caches_size_in_bytes'] as int,
+            (json['total_active_caches_size_in_bytes'] as int),
       ),
     );
   }
@@ -58,7 +58,7 @@ class ActionsCacheUsageOrgEnterprise {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsCacheUsageOrgEnterprise &&
-        totalActiveCachesCount == other.totalActiveCachesCount &&
-        totalActiveCachesSizeInBytes == other.totalActiveCachesSizeInBytes;
+        this.totalActiveCachesCount == other.totalActiveCachesCount &&
+        this.totalActiveCachesSizeInBytes == other.totalActiveCachesSizeInBytes;
   }
 }

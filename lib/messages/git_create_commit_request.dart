@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitCreateCommitRequest {
-  const GitCreateCommitRequest({
+  GitCreateCommitRequest({
     required this.message,
     required this.tree,
     this.parents,
@@ -103,11 +103,11 @@ class GitCreateCommitRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCreateCommitRequest &&
-        message == other.message &&
-        tree == other.tree &&
-        listsEqual(parents, other.parents) &&
-        author == other.author &&
-        committer == other.committer &&
-        signature == other.signature;
+        this.message == other.message &&
+        this.tree == other.tree &&
+        listsEqual(this.parents, other.parents) &&
+        this.author == other.author &&
+        this.committer == other.committer &&
+        this.signature == other.signature;
   }
 }

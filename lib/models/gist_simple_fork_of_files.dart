@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GistSimpleForkOfFiles {
-  const GistSimpleForkOfFiles({
+  GistSimpleForkOfFiles({
     this.filename,
     this.type,
     this.language,
@@ -21,7 +21,7 @@ class GistSimpleForkOfFiles {
         type: json['type'] as String?,
         language: json['language'] as String?,
         rawUrl: json['raw_url'] as String?,
-        size: json['size'] as int?,
+        size: (json['size'] as int?),
       ),
     );
   }
@@ -65,10 +65,10 @@ class GistSimpleForkOfFiles {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistSimpleForkOfFiles &&
-        filename == other.filename &&
-        type == other.type &&
-        language == other.language &&
-        rawUrl == other.rawUrl &&
-        size == other.size;
+        this.filename == other.filename &&
+        this.type == other.type &&
+        this.language == other.language &&
+        this.rawUrl == other.rawUrl &&
+        this.size == other.size;
   }
 }

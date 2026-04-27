@@ -1,17 +1,26 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/messages/issue_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/issue_labels_inner.dart';
+import 'package:github_out/models/issue_labels_inner_one_of_1.dart';
 import 'package:github_out/models/issue_state_reason.dart';
 import 'package:github_out/models/issue_type.dart';
+import 'package:github_out/models/issue_type_color.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
 import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/sub_issues_summary.dart';
 import 'package:meta/meta.dart';
@@ -24,7 +33,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Issue {
   /// {@macro issue}
-  const Issue({
+  Issue({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -35,22 +44,21 @@ class Issue {
     required this.htmlUrl,
     required this.number,
     required this.state,
+    this.stateReason,
     required this.title,
+    this.body,
     required this.user,
     required this.labels,
     required this.assignee,
+    this.assignees,
     required this.milestone,
     required this.locked,
+    this.activeLockReason,
     required this.comments,
+    this.pullRequest,
     required this.closedAt,
     required this.createdAt,
     required this.updatedAt,
-    required this.authorAssociation,
-    this.stateReason,
-    this.body,
-    this.assignees,
-    this.activeLockReason,
-    this.pullRequest,
     this.draft,
     this.closedBy,
     this.bodyHtml,
@@ -59,6 +67,7 @@ class Issue {
     this.type,
     this.repository,
     this.performedViaGithubApp,
+    required this.authorAssociation,
     this.reactions,
     this.subIssuesSummary,
   });
@@ -69,7 +78,7 @@ class Issue {
       'Issue',
       json,
       () => Issue(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         repositoryUrl: Uri.parse(json['repository_url'] as String),
@@ -77,7 +86,7 @@ class Issue {
         commentsUrl: Uri.parse(json['comments_url'] as String),
         eventsUrl: Uri.parse(json['events_url'] as String),
         htmlUrl: Uri.parse(json['html_url'] as String),
-        number: json['number'] as int,
+        number: (json['number'] as int),
         state: json['state'] as String,
         stateReason: IssueStateReason.maybeFromJson(
           json['state_reason'] as String?,
@@ -105,7 +114,7 @@ class Issue {
         ),
         locked: json['locked'] as bool,
         activeLockReason: json['active_lock_reason'] as String?,
-        comments: json['comments'] as int,
+        comments: (json['comments'] as int),
         pullRequest: IssuePullRequest.maybeFromJson(
           json['pull_request'] as Map<String, dynamic>?,
         ),
@@ -328,41 +337,41 @@ class Issue {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Issue &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        repositoryUrl == other.repositoryUrl &&
-        labelsUrl == other.labelsUrl &&
-        commentsUrl == other.commentsUrl &&
-        eventsUrl == other.eventsUrl &&
-        htmlUrl == other.htmlUrl &&
-        number == other.number &&
-        state == other.state &&
-        stateReason == other.stateReason &&
-        title == other.title &&
-        body == other.body &&
-        user == other.user &&
-        listsEqual(labels, other.labels) &&
-        assignee == other.assignee &&
-        listsEqual(assignees, other.assignees) &&
-        milestone == other.milestone &&
-        locked == other.locked &&
-        activeLockReason == other.activeLockReason &&
-        comments == other.comments &&
-        pullRequest == other.pullRequest &&
-        closedAt == other.closedAt &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        draft == other.draft &&
-        closedBy == other.closedBy &&
-        bodyHtml == other.bodyHtml &&
-        bodyText == other.bodyText &&
-        timelineUrl == other.timelineUrl &&
-        type == other.type &&
-        repository == other.repository &&
-        performedViaGithubApp == other.performedViaGithubApp &&
-        authorAssociation == other.authorAssociation &&
-        reactions == other.reactions &&
-        subIssuesSummary == other.subIssuesSummary;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.repositoryUrl == other.repositoryUrl &&
+        this.labelsUrl == other.labelsUrl &&
+        this.commentsUrl == other.commentsUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.number == other.number &&
+        this.state == other.state &&
+        this.stateReason == other.stateReason &&
+        this.title == other.title &&
+        this.body == other.body &&
+        this.user == other.user &&
+        listsEqual(this.labels, other.labels) &&
+        this.assignee == other.assignee &&
+        listsEqual(this.assignees, other.assignees) &&
+        this.milestone == other.milestone &&
+        this.locked == other.locked &&
+        this.activeLockReason == other.activeLockReason &&
+        this.comments == other.comments &&
+        this.pullRequest == other.pullRequest &&
+        this.closedAt == other.closedAt &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.draft == other.draft &&
+        this.closedBy == other.closedBy &&
+        this.bodyHtml == other.bodyHtml &&
+        this.bodyText == other.bodyText &&
+        this.timelineUrl == other.timelineUrl &&
+        this.type == other.type &&
+        this.repository == other.repository &&
+        this.performedViaGithubApp == other.performedViaGithubApp &&
+        this.authorAssociation == other.authorAssociation &&
+        this.reactions == other.reactions &&
+        this.subIssuesSummary == other.subIssuesSummary;
   }
 }

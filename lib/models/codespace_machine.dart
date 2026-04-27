@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodespaceMachine {
   /// {@macro codespace_machine}
-  const CodespaceMachine({
+  CodespaceMachine({
     required this.name,
     required this.displayName,
     required this.operatingSystem,
@@ -28,9 +28,9 @@ class CodespaceMachine {
         name: json['name'] as String,
         displayName: json['display_name'] as String,
         operatingSystem: json['operating_system'] as String,
-        storageInBytes: json['storage_in_bytes'] as int,
-        memoryInBytes: json['memory_in_bytes'] as int,
-        cpus: json['cpus'] as int,
+        storageInBytes: (json['storage_in_bytes'] as int),
+        memoryInBytes: (json['memory_in_bytes'] as int),
+        cpus: (json['cpus'] as int),
         prebuildAvailability:
             CodespaceMachinePrebuildAvailability.maybeFromJson(
               checkedKey(json, 'prebuild_availability') as String?,
@@ -109,12 +109,12 @@ class CodespaceMachine {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespaceMachine &&
-        name == other.name &&
-        displayName == other.displayName &&
-        operatingSystem == other.operatingSystem &&
-        storageInBytes == other.storageInBytes &&
-        memoryInBytes == other.memoryInBytes &&
-        cpus == other.cpus &&
-        prebuildAvailability == other.prebuildAvailability;
+        this.name == other.name &&
+        this.displayName == other.displayName &&
+        this.operatingSystem == other.operatingSystem &&
+        this.storageInBytes == other.storageInBytes &&
+        this.memoryInBytes == other.memoryInBytes &&
+        this.cpus == other.cpus &&
+        this.prebuildAvailability == other.prebuildAvailability;
   }
 }

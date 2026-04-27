@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/artifact.dart';
+import 'package:github_out/models/artifact_workflow_run.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListArtifactsForRepo200Response {
-  const ActionsListArtifactsForRepo200Response({
+  ActionsListArtifactsForRepo200Response({
     required this.totalCount,
     required this.artifacts,
   });
@@ -18,7 +19,7 @@ class ActionsListArtifactsForRepo200Response {
       'ActionsListArtifactsForRepo200Response',
       json,
       () => ActionsListArtifactsForRepo200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         artifacts: (json['artifacts'] as List)
             .map<Artifact>((e) => Artifact.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -59,7 +60,7 @@ class ActionsListArtifactsForRepo200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListArtifactsForRepo200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(artifacts, other.artifacts);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.artifacts, other.artifacts);
   }
 }

@@ -1,11 +1,18 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestSimpleHead {
-  const PullRequestSimpleHead({
+  PullRequestSimpleHead({
     required this.label,
     required this.ref,
     required this.repo,
@@ -75,10 +82,10 @@ class PullRequestSimpleHead {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestSimpleHead &&
-        label == other.label &&
-        ref == other.ref &&
-        repo == other.repo &&
-        sha == other.sha &&
-        user == other.user;
+        this.label == other.label &&
+        this.ref == other.ref &&
+        this.repo == other.repo &&
+        this.sha == other.sha &&
+        this.user == other.user;
   }
 }

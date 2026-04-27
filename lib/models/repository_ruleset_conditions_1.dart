@@ -1,3 +1,15 @@
+import 'package:github_out/models/org_ruleset_conditions.dart';
+import 'package:github_out/models/org_ruleset_conditions_one_of_0.dart';
+import 'package:github_out/models/org_ruleset_conditions_one_of_1.dart';
+import 'package:github_out/models/org_ruleset_conditions_one_of_2.dart';
+import 'package:github_out/models/repository_ruleset_conditions.dart';
+import 'package:github_out/models/repository_ruleset_conditions_ref_name.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_id_target_repository_id.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_name_target_repository_name.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_property_spec.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_property_spec_source.dart';
+import 'package:github_out/models/repository_ruleset_conditions_repository_property_target_repository_property.dart';
+
 sealed class RepositoryRulesetConditions1 {
   static RepositoryRulesetConditions1 fromJson(dynamic jsonArg) {
     // Determine which schema to use based on the json.

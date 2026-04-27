@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleMaxFilePathLengthParameters {
-  const RepositoryRuleMaxFilePathLengthParameters({
+  RepositoryRuleMaxFilePathLengthParameters({
     required this.maxFilePathLength,
   });
 
@@ -16,7 +16,7 @@ class RepositoryRuleMaxFilePathLengthParameters {
       'RepositoryRuleMaxFilePathLengthParameters',
       json,
       () => RepositoryRuleMaxFilePathLengthParameters(
-        maxFilePathLength: json['max_file_path_length'] as int,
+        maxFilePathLength: (json['max_file_path_length'] as int),
       ),
     );
   }
@@ -50,6 +50,6 @@ class RepositoryRuleMaxFilePathLengthParameters {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleMaxFilePathLengthParameters &&
-        maxFilePathLength == other.maxFilePathLength;
+        this.maxFilePathLength == other.maxFilePathLength;
   }
 }

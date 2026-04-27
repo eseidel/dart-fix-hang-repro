@@ -3,18 +3,18 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RunnerGroupsOrg {
-  const RunnerGroupsOrg({
+  RunnerGroupsOrg({
     required this.id,
     required this.name,
     required this.visibility,
     required this.default_,
-    required this.runnersUrl,
-    required this.inherited,
-    required this.allowsPublicRepositories,
     this.selectedRepositoriesUrl,
+    required this.runnersUrl,
     this.hostedRunnersUrl,
     this.networkConfigurationId,
+    required this.inherited,
     this.inheritedAllowsPublicRepositories,
+    required this.allowsPublicRepositories,
     this.workflowRestrictionsReadOnly = false,
     this.restrictedToWorkflows = false,
     this.selectedWorkflows,
@@ -129,20 +129,21 @@ class RunnerGroupsOrg {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RunnerGroupsOrg &&
-        id == other.id &&
-        name == other.name &&
-        visibility == other.visibility &&
-        default_ == other.default_ &&
-        selectedRepositoriesUrl == other.selectedRepositoriesUrl &&
-        runnersUrl == other.runnersUrl &&
-        hostedRunnersUrl == other.hostedRunnersUrl &&
-        networkConfigurationId == other.networkConfigurationId &&
-        inherited == other.inherited &&
-        inheritedAllowsPublicRepositories ==
+        this.id == other.id &&
+        this.name == other.name &&
+        this.visibility == other.visibility &&
+        this.default_ == other.default_ &&
+        this.selectedRepositoriesUrl == other.selectedRepositoriesUrl &&
+        this.runnersUrl == other.runnersUrl &&
+        this.hostedRunnersUrl == other.hostedRunnersUrl &&
+        this.networkConfigurationId == other.networkConfigurationId &&
+        this.inherited == other.inherited &&
+        this.inheritedAllowsPublicRepositories ==
             other.inheritedAllowsPublicRepositories &&
-        allowsPublicRepositories == other.allowsPublicRepositories &&
-        workflowRestrictionsReadOnly == other.workflowRestrictionsReadOnly &&
-        restrictedToWorkflows == other.restrictedToWorkflows &&
-        listsEqual(selectedWorkflows, other.selectedWorkflows);
+        this.allowsPublicRepositories == other.allowsPublicRepositories &&
+        this.workflowRestrictionsReadOnly ==
+            other.workflowRestrictionsReadOnly &&
+        this.restrictedToWorkflows == other.restrictedToWorkflows &&
+        listsEqual(this.selectedWorkflows, other.selectedWorkflows);
   }
 }

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ActionsHostedRunnerLimitsPublicIps {
   /// {@macro actions_hosted_runner_limits_public_ips}
-  const ActionsHostedRunnerLimitsPublicIps({
+  ActionsHostedRunnerLimitsPublicIps({
     required this.maximum,
     required this.currentUsage,
   });
@@ -22,8 +22,8 @@ class ActionsHostedRunnerLimitsPublicIps {
       'ActionsHostedRunnerLimitsPublicIps',
       json,
       () => ActionsHostedRunnerLimitsPublicIps(
-        maximum: json['maximum'] as int,
-        currentUsage: json['current_usage'] as int,
+        maximum: (json['maximum'] as int),
+        currentUsage: (json['current_usage'] as int),
       ),
     );
   }
@@ -68,7 +68,7 @@ class ActionsHostedRunnerLimitsPublicIps {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsHostedRunnerLimitsPublicIps &&
-        maximum == other.maximum &&
-        currentUsage == other.currentUsage;
+        this.maximum == other.maximum &&
+        this.currentUsage == other.currentUsage;
   }
 }

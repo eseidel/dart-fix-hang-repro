@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsAddCustomLabelsToSelfHostedRunnerForRepoRequest {
-  const ActionsAddCustomLabelsToSelfHostedRunnerForRepoRequest({
+  ActionsAddCustomLabelsToSelfHostedRunnerForRepoRequest({
     required this.labels,
   });
 
@@ -52,6 +52,6 @@ class ActionsAddCustomLabelsToSelfHostedRunnerForRepoRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsAddCustomLabelsToSelfHostedRunnerForRepoRequest &&
-        listsEqual(labels, other.labels);
+        listsEqual(this.labels, other.labels);
   }
 }

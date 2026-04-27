@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/copilot_dotcom_pull_requests_repositories_inner_models_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CopilotDotcomPullRequestsRepositoriesInner {
-  const CopilotDotcomPullRequestsRepositoriesInner({
+  CopilotDotcomPullRequestsRepositoriesInner({
     this.name,
     this.totalEngagedUsers,
     this.models,
@@ -24,7 +20,7 @@ class CopilotDotcomPullRequestsRepositoriesInner {
       json,
       () => CopilotDotcomPullRequestsRepositoriesInner(
         name: json['name'] as String?,
-        totalEngagedUsers: json['total_engaged_users'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
         models: (json['models'] as List?)
             ?.map<CopilotDotcomPullRequestsRepositoriesInnerModelsInner>(
               (e) =>
@@ -79,8 +75,8 @@ class CopilotDotcomPullRequestsRepositoriesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotDotcomPullRequestsRepositoriesInner &&
-        name == other.name &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        listsEqual(models, other.models);
+        this.name == other.name &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        listsEqual(this.models, other.models);
   }
 }

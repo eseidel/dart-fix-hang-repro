@@ -7,35 +7,47 @@ import 'package:github_out/models/alert_instances_url.dart';
 import 'package:github_out/models/alert_number.dart';
 import 'package:github_out/models/alert_updated_at.dart';
 import 'package:github_out/models/alert_url.dart';
+import 'package:github_out/models/code_scanning_alert_classification.dart';
 import 'package:github_out/models/code_scanning_alert_dismissed_comment.dart';
 import 'package:github_out/models/code_scanning_alert_dismissed_reason.dart';
+import 'package:github_out/models/code_scanning_alert_environment.dart';
 import 'package:github_out/models/code_scanning_alert_instance.dart';
+import 'package:github_out/models/code_scanning_alert_instance_message.dart';
+import 'package:github_out/models/code_scanning_alert_location.dart';
 import 'package:github_out/models/code_scanning_alert_rule_summary.dart';
+import 'package:github_out/models/code_scanning_alert_rule_summary_security_severity_level.dart';
+import 'package:github_out/models/code_scanning_alert_rule_summary_severity.dart';
 import 'package:github_out/models/code_scanning_alert_state.dart';
+import 'package:github_out/models/code_scanning_analysis_analysis_key.dart';
+import 'package:github_out/models/code_scanning_analysis_category.dart';
 import 'package:github_out/models/code_scanning_analysis_tool.dart';
+import 'package:github_out/models/code_scanning_analysis_tool_guid.dart';
+import 'package:github_out/models/code_scanning_analysis_tool_name.dart';
+import 'package:github_out/models/code_scanning_analysis_tool_version.dart';
+import 'package:github_out/models/code_scanning_ref.dart';
 import 'package:github_out/models/simple_repository.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningOrganizationAlertItems {
-  const CodeScanningOrganizationAlertItems({
+  CodeScanningOrganizationAlertItems({
     required this.number,
     required this.createdAt,
+    this.updatedAt,
     required this.url,
     required this.htmlUrl,
     required this.instancesUrl,
     required this.state,
+    this.fixedAt,
     required this.dismissedBy,
     required this.dismissedAt,
     required this.dismissedReason,
+    this.dismissedComment,
     required this.rule,
     required this.tool,
     required this.mostRecentInstance,
     required this.repository,
-    this.updatedAt,
-    this.fixedAt,
-    this.dismissedComment,
     this.dismissalApprovedBy,
   });
 
@@ -204,22 +216,22 @@ class CodeScanningOrganizationAlertItems {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningOrganizationAlertItems &&
-        number == other.number &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        instancesUrl == other.instancesUrl &&
-        state == other.state &&
-        fixedAt == other.fixedAt &&
-        dismissedBy == other.dismissedBy &&
-        dismissedAt == other.dismissedAt &&
-        dismissedReason == other.dismissedReason &&
-        dismissedComment == other.dismissedComment &&
-        rule == other.rule &&
-        tool == other.tool &&
-        mostRecentInstance == other.mostRecentInstance &&
-        repository == other.repository &&
-        dismissalApprovedBy == other.dismissalApprovedBy;
+        this.number == other.number &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.instancesUrl == other.instancesUrl &&
+        this.state == other.state &&
+        this.fixedAt == other.fixedAt &&
+        this.dismissedBy == other.dismissedBy &&
+        this.dismissedAt == other.dismissedAt &&
+        this.dismissedReason == other.dismissedReason &&
+        this.dismissedComment == other.dismissedComment &&
+        this.rule == other.rule &&
+        this.tool == other.tool &&
+        this.mostRecentInstance == other.mostRecentInstance &&
+        this.repository == other.repository &&
+        this.dismissalApprovedBy == other.dismissalApprovedBy;
   }
 }

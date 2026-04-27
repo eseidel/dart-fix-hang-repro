@@ -1,9 +1,8 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/package_version_metadata.dart';
+import 'package:github_out/models/package_version_metadata_container.dart';
+import 'package:github_out/models/package_version_metadata_docker.dart';
+import 'package:github_out/models/package_version_metadata_package_type.dart';
 import 'package:meta/meta.dart';
 
 /// {@template package_version}
@@ -13,16 +12,16 @@ import 'package:meta/meta.dart';
 @immutable
 class PackageVersion {
   /// {@macro package_version}
-  const PackageVersion({
+  PackageVersion({
     required this.id,
     required this.name,
     required this.url,
     required this.packageHtmlUrl,
-    required this.createdAt,
-    required this.updatedAt,
     this.htmlUrl,
     this.license,
     this.description,
+    required this.createdAt,
+    required this.updatedAt,
     this.deletedAt,
     this.metadata,
   });
@@ -33,7 +32,7 @@ class PackageVersion {
       'PackageVersion',
       json,
       () => PackageVersion(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         url: json['url'] as String,
         packageHtmlUrl: json['package_html_url'] as String,
@@ -131,16 +130,16 @@ class PackageVersion {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PackageVersion &&
-        id == other.id &&
-        name == other.name &&
-        url == other.url &&
-        packageHtmlUrl == other.packageHtmlUrl &&
-        htmlUrl == other.htmlUrl &&
-        license == other.license &&
-        description == other.description &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        deletedAt == other.deletedAt &&
-        metadata == other.metadata;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.url == other.url &&
+        this.packageHtmlUrl == other.packageHtmlUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.license == other.license &&
+        this.description == other.description &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.deletedAt == other.deletedAt &&
+        this.metadata == other.metadata;
   }
 }

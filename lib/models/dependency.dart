@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class Dependency {
-  const Dependency({
+  Dependency({
     this.packageUrl,
     this.metadata,
     this.relationship,
@@ -91,10 +91,10 @@ class Dependency {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Dependency &&
-        packageUrl == other.packageUrl &&
-        mapsEqual(metadata, other.metadata) &&
-        relationship == other.relationship &&
-        scope == other.scope &&
-        listsEqual(dependencies, other.dependencies);
+        this.packageUrl == other.packageUrl &&
+        mapsEqual(this.metadata, other.metadata) &&
+        this.relationship == other.relationship &&
+        this.scope == other.scope &&
+        listsEqual(this.dependencies, other.dependencies);
   }
 }

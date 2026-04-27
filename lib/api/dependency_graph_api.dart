@@ -1,16 +1,30 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/dependency_graph_create_repository_snapshot201_response.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/dependency.dart';
 import 'package:github_out/models/dependency_graph_diff_inner.dart';
+import 'package:github_out/models/dependency_graph_diff_inner_change_type.dart';
+import 'package:github_out/models/dependency_graph_diff_inner_scope.dart';
+import 'package:github_out/models/dependency_graph_diff_inner_vulnerabilities_inner.dart';
 import 'package:github_out/models/dependency_graph_spdx_sbom.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_creation_info.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_packages_inner.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_packages_inner_external_refs_inner.dart';
+import 'package:github_out/models/dependency_graph_spdx_sbom_sbom_relationships_inner.dart';
+import 'package:github_out/models/dependency_relationship.dart';
+import 'package:github_out/models/dependency_scope.dart';
+import 'package:github_out/models/manifest.dart';
+import 'package:github_out/models/manifest_file.dart';
+import 'package:github_out/models/metadata_1.dart';
 import 'package:github_out/models/snapshot.dart';
+import 'package:github_out/models/snapshot_detector.dart';
+import 'package:github_out/models/snapshot_job.dart';
+import 'package:http/http.dart' as http;
 
 /// Endpoints to access Dependency Graph features.
 class DependencyGraphApi {
@@ -31,18 +45,18 @@ class DependencyGraphApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/dependency-graph/compare/{basehead}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{basehead}', basehead),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{basehead}', '${basehead}'),
       queryParameters: {
-        if (name != null) 'name': [name],
+        if (name != null) 'name': [name.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -67,14 +81,14 @@ class DependencyGraphApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/dependency-graph/sbom'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -103,15 +117,16 @@ class DependencyGraphApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/dependency-graph/snapshots'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: snapshot.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

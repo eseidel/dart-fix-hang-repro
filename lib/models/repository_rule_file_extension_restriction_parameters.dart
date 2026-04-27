@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleFileExtensionRestrictionParameters {
-  const RepositoryRuleFileExtensionRestrictionParameters({
+  RepositoryRuleFileExtensionRestrictionParameters({
     required this.restrictedFileExtensions,
   });
 
@@ -53,7 +53,7 @@ class RepositoryRuleFileExtensionRestrictionParameters {
     if (identical(this, other)) return true;
     return other is RepositoryRuleFileExtensionRestrictionParameters &&
         listsEqual(
-          restrictedFileExtensions,
+          this.restrictedFileExtensions,
           other.restrictedFileExtensions,
         );
   }

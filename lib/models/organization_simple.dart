@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OrganizationSimple {
   /// {@macro organization_simple}
-  const OrganizationSimple({
+  OrganizationSimple({
     required this.login,
     required this.id,
     required this.nodeId,
@@ -30,7 +30,7 @@ class OrganizationSimple {
       json,
       () => OrganizationSimple(
         login: json['login'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         reposUrl: Uri.parse(json['repos_url'] as String),
@@ -128,17 +128,17 @@ class OrganizationSimple {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrganizationSimple &&
-        login == other.login &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        reposUrl == other.reposUrl &&
-        eventsUrl == other.eventsUrl &&
-        hooksUrl == other.hooksUrl &&
-        issuesUrl == other.issuesUrl &&
-        membersUrl == other.membersUrl &&
-        publicMembersUrl == other.publicMembersUrl &&
-        avatarUrl == other.avatarUrl &&
-        description == other.description;
+        this.login == other.login &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.reposUrl == other.reposUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.hooksUrl == other.hooksUrl &&
+        this.issuesUrl == other.issuesUrl &&
+        this.membersUrl == other.membersUrl &&
+        this.publicMembersUrl == other.publicMembersUrl &&
+        this.avatarUrl == other.avatarUrl &&
+        this.description == other.description;
   }
 }

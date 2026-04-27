@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeScanningCodeqlDatabase {
   /// {@macro code_scanning_codeql_database}
-  const CodeScanningCodeqlDatabase({
+  CodeScanningCodeqlDatabase({
     required this.id,
     required this.name,
     required this.language,
@@ -28,12 +28,12 @@ class CodeScanningCodeqlDatabase {
       'CodeScanningCodeqlDatabase',
       json,
       () => CodeScanningCodeqlDatabase(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         language: json['language'] as String,
         uploader: SimpleUser.fromJson(json['uploader'] as Map<String, dynamic>),
         contentType: json['content_type'] as String,
-        size: json['size'] as int,
+        size: (json['size'] as int),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         url: Uri.parse(json['url'] as String),
@@ -120,15 +120,15 @@ class CodeScanningCodeqlDatabase {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningCodeqlDatabase &&
-        id == other.id &&
-        name == other.name &&
-        language == other.language &&
-        uploader == other.uploader &&
-        contentType == other.contentType &&
-        size == other.size &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        url == other.url &&
-        commitOid == other.commitOid;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.language == other.language &&
+        this.uploader == other.uploader &&
+        this.contentType == other.contentType &&
+        this.size == other.size &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.url == other.url &&
+        this.commitOid == other.commitOid;
   }
 }

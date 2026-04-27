@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryCodeSearchIndexStatus {
   /// {@macro repository_code_search_index_status}
-  const RepositoryCodeSearchIndexStatus({
+  RepositoryCodeSearchIndexStatus({
     this.lexicalSearchOk,
     this.lexicalCommitSha,
   });
@@ -56,7 +56,7 @@ class RepositoryCodeSearchIndexStatus {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryCodeSearchIndexStatus &&
-        lexicalSearchOk == other.lexicalSearchOk &&
-        lexicalCommitSha == other.lexicalCommitSha;
+        this.lexicalSearchOk == other.lexicalSearchOk &&
+        this.lexicalCommitSha == other.lexicalCommitSha;
   }
 }

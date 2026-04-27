@@ -1,13 +1,9 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class GitTreeTreeInner {
-  const GitTreeTreeInner({
+  GitTreeTreeInner({
     required this.path,
     required this.mode,
     required this.type,
@@ -26,7 +22,7 @@ class GitTreeTreeInner {
         mode: json['mode'] as String,
         type: json['type'] as String,
         sha: json['sha'] as String,
-        size: json['size'] as int?,
+        size: (json['size'] as int?),
         url: json['url'] as String?,
       ),
     );
@@ -86,11 +82,11 @@ class GitTreeTreeInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitTreeTreeInner &&
-        path == other.path &&
-        mode == other.mode &&
-        type == other.type &&
-        sha == other.sha &&
-        size == other.size &&
-        url == other.url;
+        this.path == other.path &&
+        this.mode == other.mode &&
+        this.type == other.type &&
+        this.sha == other.sha &&
+        this.size == other.size &&
+        this.url == other.url;
   }
 }

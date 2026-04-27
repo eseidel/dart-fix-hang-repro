@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class OrgsListAttestationsBulkRequest {
-  const OrgsListAttestationsBulkRequest({
+  OrgsListAttestationsBulkRequest({
     required this.subjectDigests,
     this.predicateType,
   });
@@ -57,7 +57,7 @@ class OrgsListAttestationsBulkRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgsListAttestationsBulkRequest &&
-        listsEqual(subjectDigests, other.subjectDigests) &&
-        predicateType == other.predicateType;
+        listsEqual(this.subjectDigests, other.subjectDigests) &&
+        this.predicateType == other.predicateType;
   }
 }

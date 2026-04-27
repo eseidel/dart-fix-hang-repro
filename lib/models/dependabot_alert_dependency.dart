@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -20,7 +16,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotAlertDependency {
   /// {@macro dependabot_alert_dependency}
-  const DependabotAlertDependency({
+  DependabotAlertDependency({
     this.package,
     this.manifestPath,
     this.scope,
@@ -96,9 +92,9 @@ class DependabotAlertDependency {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotAlertDependency &&
-        package == other.package &&
-        manifestPath == other.manifestPath &&
-        scope == other.scope &&
-        relationship == other.relationship;
+        this.package == other.package &&
+        this.manifestPath == other.manifestPath &&
+        this.scope == other.scope &&
+        this.relationship == other.relationship;
   }
 }

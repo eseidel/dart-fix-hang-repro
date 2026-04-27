@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RenamedIssueEventRename {
-  const RenamedIssueEventRename({
+  RenamedIssueEventRename({
     required this.from,
     required this.to,
   });
@@ -50,7 +50,7 @@ class RenamedIssueEventRename {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RenamedIssueEventRename &&
-        from == other.from &&
-        to == other.to;
+        this.from == other.from &&
+        this.to == other.to;
   }
 }

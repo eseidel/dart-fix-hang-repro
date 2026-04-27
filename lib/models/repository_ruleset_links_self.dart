@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRulesetLinksSelf {
-  const RepositoryRulesetLinksSelf({
+  RepositoryRulesetLinksSelf({
     this.href,
   });
 
@@ -43,6 +43,6 @@ class RepositoryRulesetLinksSelf {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RepositoryRulesetLinksSelf && href == other.href;
+    return other is RepositoryRulesetLinksSelf && this.href == other.href;
   }
 }

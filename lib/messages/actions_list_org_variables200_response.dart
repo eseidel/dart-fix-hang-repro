@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/organization_actions_variable.dart';
+import 'package:github_out/models/organization_actions_variable_visibility.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListOrgVariables200Response {
-  const ActionsListOrgVariables200Response({
+  ActionsListOrgVariables200Response({
     required this.totalCount,
     required this.variables,
   });
@@ -18,7 +19,7 @@ class ActionsListOrgVariables200Response {
       'ActionsListOrgVariables200Response',
       json,
       () => ActionsListOrgVariables200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         variables: (json['variables'] as List)
             .map<OrganizationActionsVariable>(
               (e) => OrganizationActionsVariable.fromJson(
@@ -63,7 +64,7 @@ class ActionsListOrgVariables200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListOrgVariables200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(variables, other.variables);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.variables, other.variables);
   }
 }

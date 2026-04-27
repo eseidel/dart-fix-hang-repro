@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/workflow_state.dart';
 import 'package:meta/meta.dart';
@@ -13,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Workflow {
   /// {@macro workflow}
-  const Workflow({
+  Workflow({
     required this.id,
     required this.nodeId,
     required this.name,
@@ -33,7 +29,7 @@ class Workflow {
       'Workflow',
       json,
       () => Workflow(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         path: json['path'] as String,
@@ -128,16 +124,16 @@ class Workflow {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Workflow &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        path == other.path &&
-        state == other.state &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        badgeUrl == other.badgeUrl &&
-        deletedAt == other.deletedAt;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.path == other.path &&
+        this.state == other.state &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.badgeUrl == other.badgeUrl &&
+        this.deletedAt == other.deletedAt;
   }
 }

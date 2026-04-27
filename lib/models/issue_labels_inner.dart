@@ -6,8 +6,8 @@ sealed class IssueLabelsInner {
 
   factory IssueLabelsInner.fromJson(dynamic json) {
     return switch (json) {
-      final String v => IssueLabelsInnerString(v),
-      final Map<String, dynamic> v => IssueLabelsInnerIssueLabelsInnerOneOf1(
+      String v => IssueLabelsInnerString(v),
+      Map<String, dynamic> v => IssueLabelsInnerIssueLabelsInnerOneOf1(
         IssueLabelsInnerOneOf1.fromJson(v),
       ),
       _ => throw FormatException(

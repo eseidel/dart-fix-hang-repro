@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CustomPropertyValue {
   /// {@macro custom_property_value}
-  const CustomPropertyValue({
+  CustomPropertyValue({
     required this.propertyName,
     required this.value,
   });
@@ -61,7 +61,7 @@ class CustomPropertyValue {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CustomPropertyValue &&
-        propertyName == other.propertyName &&
-        value == other.value;
+        this.propertyName == other.propertyName &&
+        this.value == other.value;
   }
 }

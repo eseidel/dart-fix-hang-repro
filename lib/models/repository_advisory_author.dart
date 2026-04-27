@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// The author of the advisory.
 sealed class RepositoryAdvisoryAuthor {
   const RepositoryAdvisoryAuthor();

@@ -8,20 +8,20 @@ import 'package:meta/meta.dart';
 @immutable
 class EnterpriseTeam {
   /// {@macro enterprise_team}
-  const EnterpriseTeam({
+  EnterpriseTeam({
     required this.id,
     required this.name,
+    this.description,
     required this.slug,
     required this.url,
-    required this.htmlUrl,
-    required this.membersUrl,
-    required this.createdAt,
-    required this.updatedAt,
-    this.description,
     this.syncToOrganizations,
     this.organizationSelectionType,
     this.groupId,
     this.groupName,
+    required this.htmlUrl,
+    required this.membersUrl,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   /// Converts a `Map<String, dynamic>` to an [EnterpriseTeam].
@@ -30,7 +30,7 @@ class EnterpriseTeam {
       'EnterpriseTeam',
       json,
       () => EnterpriseTeam(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         description: json['description'] as String?,
         slug: json['slug'] as String,
@@ -121,18 +121,18 @@ class EnterpriseTeam {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is EnterpriseTeam &&
-        id == other.id &&
-        name == other.name &&
-        description == other.description &&
-        slug == other.slug &&
-        url == other.url &&
-        syncToOrganizations == other.syncToOrganizations &&
-        organizationSelectionType == other.organizationSelectionType &&
-        groupId == other.groupId &&
-        groupName == other.groupName &&
-        htmlUrl == other.htmlUrl &&
-        membersUrl == other.membersUrl &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.description == other.description &&
+        this.slug == other.slug &&
+        this.url == other.url &&
+        this.syncToOrganizations == other.syncToOrganizations &&
+        this.organizationSelectionType == other.organizationSelectionType &&
+        this.groupId == other.groupId &&
+        this.groupName == other.groupName &&
+        this.htmlUrl == other.htmlUrl &&
+        this.membersUrl == other.membersUrl &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

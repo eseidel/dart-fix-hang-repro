@@ -4,10 +4,10 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RateLimitOverviewResources {
-  const RateLimitOverviewResources({
+  RateLimitOverviewResources({
     required this.core,
-    required this.search,
     this.graphql,
+    required this.search,
     this.codeSearch,
     this.sourceImport,
     this.integrationManifest,
@@ -133,16 +133,16 @@ class RateLimitOverviewResources {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RateLimitOverviewResources &&
-        core == other.core &&
-        graphql == other.graphql &&
-        search == other.search &&
-        codeSearch == other.codeSearch &&
-        sourceImport == other.sourceImport &&
-        integrationManifest == other.integrationManifest &&
-        codeScanningUpload == other.codeScanningUpload &&
-        actionsRunnerRegistration == other.actionsRunnerRegistration &&
-        scim == other.scim &&
-        dependencySnapshots == other.dependencySnapshots &&
-        codeScanningAutofix == other.codeScanningAutofix;
+        this.core == other.core &&
+        this.graphql == other.graphql &&
+        this.search == other.search &&
+        this.codeSearch == other.codeSearch &&
+        this.sourceImport == other.sourceImport &&
+        this.integrationManifest == other.integrationManifest &&
+        this.codeScanningUpload == other.codeScanningUpload &&
+        this.actionsRunnerRegistration == other.actionsRunnerRegistration &&
+        this.scim == other.scim &&
+        this.dependencySnapshots == other.dependencySnapshots &&
+        this.codeScanningAutofix == other.codeScanningAutofix;
   }
 }

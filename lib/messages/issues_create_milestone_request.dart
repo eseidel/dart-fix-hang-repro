@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class IssuesCreateMilestoneRequest {
-  const IssuesCreateMilestoneRequest({
+  IssuesCreateMilestoneRequest({
     required this.title,
     this.state,
     this.description,
@@ -74,9 +74,9 @@ class IssuesCreateMilestoneRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssuesCreateMilestoneRequest &&
-        title == other.title &&
-        state == other.state &&
-        description == other.description &&
-        dueOn == other.dueOn;
+        this.title == other.title &&
+        this.state == other.state &&
+        this.description == other.description &&
+        this.dueOn == other.dueOn;
   }
 }

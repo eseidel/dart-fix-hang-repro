@@ -1,18 +1,27 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/messages/issue_search_result_item_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/issue_search_result_item_labels_inner.dart';
 import 'package:github_out/models/issue_search_result_item_sub_issues_summary.dart';
 import 'package:github_out/models/issue_type.dart';
+import 'package:github_out/models/issue_type_color.dart';
+import 'package:github_out/models/license_simple.dart';
 import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
 import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -23,7 +32,7 @@ import 'package:meta/meta.dart';
 @immutable
 class IssueSearchResultItem {
   /// {@macro issue_search_result_item}
-  const IssueSearchResultItem({
+  IssueSearchResultItem({
     required this.url,
     required this.repositoryUrl,
     required this.labelsUrl,
@@ -35,24 +44,24 @@ class IssueSearchResultItem {
     required this.number,
     required this.title,
     required this.locked,
+    this.activeLockReason,
+    this.assignees,
     required this.user,
     required this.labels,
+    this.subIssuesSummary,
     required this.state,
+    this.stateReason,
     required this.assignee,
     required this.milestone,
     required this.comments,
     required this.createdAt,
     required this.updatedAt,
     required this.closedAt,
-    required this.score,
-    required this.authorAssociation,
-    this.activeLockReason,
-    this.assignees,
-    this.subIssuesSummary,
-    this.stateReason,
     this.textMatches,
     this.pullRequest,
     this.body,
+    required this.score,
+    required this.authorAssociation,
     this.draft,
     this.repository,
     this.bodyHtml,
@@ -75,9 +84,9 @@ class IssueSearchResultItem {
         commentsUrl: Uri.parse(json['comments_url'] as String),
         eventsUrl: Uri.parse(json['events_url'] as String),
         htmlUrl: Uri.parse(json['html_url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
-        number: json['number'] as int,
+        number: (json['number'] as int),
         title: json['title'] as String,
         locked: json['locked'] as bool,
         activeLockReason: json['active_lock_reason'] as String?,
@@ -107,7 +116,7 @@ class IssueSearchResultItem {
         milestone: Milestone.maybeFromJson(
           checkedKey(json, 'milestone') as Map<String, dynamic>?,
         ),
-        comments: json['comments'] as int,
+        comments: (json['comments'] as int),
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         closedAt: maybeParseDateTime(checkedKey(json, 'closed_at') as String?),
@@ -310,42 +319,42 @@ class IssueSearchResultItem {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssueSearchResultItem &&
-        url == other.url &&
-        repositoryUrl == other.repositoryUrl &&
-        labelsUrl == other.labelsUrl &&
-        commentsUrl == other.commentsUrl &&
-        eventsUrl == other.eventsUrl &&
-        htmlUrl == other.htmlUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        number == other.number &&
-        title == other.title &&
-        locked == other.locked &&
-        activeLockReason == other.activeLockReason &&
-        listsEqual(assignees, other.assignees) &&
-        user == other.user &&
-        listsEqual(labels, other.labels) &&
-        subIssuesSummary == other.subIssuesSummary &&
-        state == other.state &&
-        stateReason == other.stateReason &&
-        assignee == other.assignee &&
-        milestone == other.milestone &&
-        comments == other.comments &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        closedAt == other.closedAt &&
-        listsEqual(textMatches, other.textMatches) &&
-        pullRequest == other.pullRequest &&
-        body == other.body &&
-        score == other.score &&
-        authorAssociation == other.authorAssociation &&
-        draft == other.draft &&
-        repository == other.repository &&
-        bodyHtml == other.bodyHtml &&
-        bodyText == other.bodyText &&
-        timelineUrl == other.timelineUrl &&
-        type == other.type &&
-        performedViaGithubApp == other.performedViaGithubApp &&
-        reactions == other.reactions;
+        this.url == other.url &&
+        this.repositoryUrl == other.repositoryUrl &&
+        this.labelsUrl == other.labelsUrl &&
+        this.commentsUrl == other.commentsUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.htmlUrl == other.htmlUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.number == other.number &&
+        this.title == other.title &&
+        this.locked == other.locked &&
+        this.activeLockReason == other.activeLockReason &&
+        listsEqual(this.assignees, other.assignees) &&
+        this.user == other.user &&
+        listsEqual(this.labels, other.labels) &&
+        this.subIssuesSummary == other.subIssuesSummary &&
+        this.state == other.state &&
+        this.stateReason == other.stateReason &&
+        this.assignee == other.assignee &&
+        this.milestone == other.milestone &&
+        this.comments == other.comments &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.closedAt == other.closedAt &&
+        listsEqual(this.textMatches, other.textMatches) &&
+        this.pullRequest == other.pullRequest &&
+        this.body == other.body &&
+        this.score == other.score &&
+        this.authorAssociation == other.authorAssociation &&
+        this.draft == other.draft &&
+        this.repository == other.repository &&
+        this.bodyHtml == other.bodyHtml &&
+        this.bodyText == other.bodyText &&
+        this.timelineUrl == other.timelineUrl &&
+        this.type == other.type &&
+        this.performedViaGithubApp == other.performedViaGithubApp &&
+        this.reactions == other.reactions;
   }
 }

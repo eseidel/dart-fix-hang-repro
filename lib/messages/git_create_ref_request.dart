@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitCreateRefRequest {
-  const GitCreateRefRequest({
+  GitCreateRefRequest({
     required this.ref,
     required this.sha,
   });
@@ -54,6 +54,8 @@ class GitCreateRefRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is GitCreateRefRequest && ref == other.ref && sha == other.sha;
+    return other is GitCreateRefRequest &&
+        this.ref == other.ref &&
+        this.sha == other.sha;
   }
 }

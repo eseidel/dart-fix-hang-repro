@@ -1,10 +1,9 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
@@ -16,19 +15,19 @@ import 'package:meta/meta.dart';
 @immutable
 class IssueComment {
   /// {@macro issue_comment}
-  const IssueComment({
+  IssueComment({
     required this.id,
     required this.nodeId,
     required this.url,
+    this.body,
+    this.bodyText,
+    this.bodyHtml,
     required this.htmlUrl,
     required this.user,
     required this.createdAt,
     required this.updatedAt,
     required this.issueUrl,
     required this.authorAssociation,
-    this.body,
-    this.bodyText,
-    this.bodyHtml,
     this.performedViaGithubApp,
     this.reactions,
   });
@@ -39,7 +38,7 @@ class IssueComment {
       'IssueComment',
       json,
       () => IssueComment(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: Uri.parse(json['url'] as String),
         body: json['body'] as String?,
@@ -158,19 +157,19 @@ class IssueComment {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is IssueComment &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        body == other.body &&
-        bodyText == other.bodyText &&
-        bodyHtml == other.bodyHtml &&
-        htmlUrl == other.htmlUrl &&
-        user == other.user &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        issueUrl == other.issueUrl &&
-        authorAssociation == other.authorAssociation &&
-        performedViaGithubApp == other.performedViaGithubApp &&
-        reactions == other.reactions;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.body == other.body &&
+        this.bodyText == other.bodyText &&
+        this.bodyHtml == other.bodyHtml &&
+        this.htmlUrl == other.htmlUrl &&
+        this.user == other.user &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.issueUrl == other.issueUrl &&
+        this.authorAssociation == other.authorAssociation &&
+        this.performedViaGithubApp == other.performedViaGithubApp &&
+        this.reactions == other.reactions;
   }
 }

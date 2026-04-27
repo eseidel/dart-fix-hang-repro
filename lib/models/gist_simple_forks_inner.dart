@@ -1,10 +1,11 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/public_user.dart';
+import 'package:github_out/models/public_user_plan.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class GistSimpleForksInner {
-  const GistSimpleForksInner({
+  GistSimpleForksInner({
     this.id,
     this.url,
     this.user,
@@ -69,10 +70,10 @@ class GistSimpleForksInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistSimpleForksInner &&
-        id == other.id &&
-        url == other.url &&
-        user == other.user &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.id == other.id &&
+        this.url == other.url &&
+        this.user == other.user &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

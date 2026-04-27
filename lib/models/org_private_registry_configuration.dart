@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/org_private_registry_configuration_registry_type.dart';
 import 'package:github_out/models/org_private_registry_configuration_visibility.dart';
@@ -14,13 +10,13 @@ import 'package:meta/meta.dart';
 @immutable
 class OrgPrivateRegistryConfiguration {
   /// {@macro org_private_registry_configuration}
-  const OrgPrivateRegistryConfiguration({
+  OrgPrivateRegistryConfiguration({
     required this.name,
     required this.registryType,
+    this.username,
     required this.visibility,
     required this.createdAt,
     required this.updatedAt,
-    this.username,
   });
 
   /// Converts a `Map<String, dynamic>` to an [OrgPrivateRegistryConfiguration].
@@ -97,11 +93,11 @@ class OrgPrivateRegistryConfiguration {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgPrivateRegistryConfiguration &&
-        name == other.name &&
-        registryType == other.registryType &&
-        username == other.username &&
-        visibility == other.visibility &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt;
+        this.name == other.name &&
+        this.registryType == other.registryType &&
+        this.username == other.username &&
+        this.visibility == other.visibility &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt;
   }
 }

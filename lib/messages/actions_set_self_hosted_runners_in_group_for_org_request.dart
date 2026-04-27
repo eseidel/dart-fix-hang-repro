@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsSetSelfHostedRunnersInGroupForOrgRequest {
-  const ActionsSetSelfHostedRunnersInGroupForOrgRequest({
+  ActionsSetSelfHostedRunnersInGroupForOrgRequest({
     required this.runners,
   });
 
@@ -50,6 +50,6 @@ class ActionsSetSelfHostedRunnersInGroupForOrgRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsSetSelfHostedRunnersInGroupForOrgRequest &&
-        listsEqual(runners, other.runners);
+        listsEqual(this.runners, other.runners);
   }
 }

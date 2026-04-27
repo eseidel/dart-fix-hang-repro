@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsUpdateEnvironmentVariableRequest {
-  const ActionsUpdateEnvironmentVariableRequest({
+  ActionsUpdateEnvironmentVariableRequest({
     this.name,
     this.value,
   });
@@ -59,7 +59,7 @@ class ActionsUpdateEnvironmentVariableRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsUpdateEnvironmentVariableRequest &&
-        name == other.name &&
-        value == other.value;
+        this.name == other.name &&
+        this.value == other.value;
   }
 }

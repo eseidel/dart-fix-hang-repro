@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -18,12 +14,12 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeOfConduct {
   /// {@macro code_of_conduct}
-  const CodeOfConduct({
+  CodeOfConduct({
     required this.key,
     required this.name,
     required this.url,
-    required this.htmlUrl,
     this.body,
+    required this.htmlUrl,
   });
 
   /// Converts a `Map<String, dynamic>` to a [CodeOfConduct].
@@ -164,10 +160,10 @@ class CodeOfConduct {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeOfConduct &&
-        key == other.key &&
-        name == other.name &&
-        url == other.url &&
-        body == other.body &&
-        htmlUrl == other.htmlUrl;
+        this.key == other.key &&
+        this.name == other.name &&
+        this.url == other.url &&
+        this.body == other.body &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

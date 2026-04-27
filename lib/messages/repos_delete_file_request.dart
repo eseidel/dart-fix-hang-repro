@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposDeleteFileRequest {
-  const ReposDeleteFileRequest({
+  ReposDeleteFileRequest({
     required this.message,
     required this.sha,
     this.branch,
@@ -80,10 +80,10 @@ class ReposDeleteFileRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposDeleteFileRequest &&
-        message == other.message &&
-        sha == other.sha &&
-        branch == other.branch &&
-        committer == other.committer &&
-        author == other.author;
+        this.message == other.message &&
+        this.sha == other.sha &&
+        this.branch == other.branch &&
+        this.committer == other.committer &&
+        this.author == other.author;
   }
 }

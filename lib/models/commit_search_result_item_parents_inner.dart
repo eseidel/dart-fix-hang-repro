@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CommitSearchResultItemParentsInner {
-  const CommitSearchResultItemParentsInner({
+  CommitSearchResultItemParentsInner({
     this.url,
     this.htmlUrl,
     this.sha,
@@ -61,8 +61,8 @@ class CommitSearchResultItemParentsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitSearchResultItemParentsInner &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        sha == other.sha;
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.sha == other.sha;
   }
 }

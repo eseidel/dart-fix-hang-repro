@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ContributorActivityWeeksInner {
-  const ContributorActivityWeeksInner({
+  ContributorActivityWeeksInner({
     this.w,
     this.a,
     this.d,
@@ -16,10 +16,10 @@ class ContributorActivityWeeksInner {
       'ContributorActivityWeeksInner',
       json,
       () => ContributorActivityWeeksInner(
-        w: json['w'] as int?,
-        a: json['a'] as int?,
-        d: json['d'] as int?,
-        c: json['c'] as int?,
+        w: (json['w'] as int?),
+        a: (json['a'] as int?),
+        d: (json['d'] as int?),
+        c: (json['c'] as int?),
       ),
     );
   }
@@ -62,9 +62,9 @@ class ContributorActivityWeeksInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ContributorActivityWeeksInner &&
-        w == other.w &&
-        a == other.a &&
-        d == other.d &&
-        c == other.c;
+        this.w == other.w &&
+        this.a == other.a &&
+        this.d == other.d &&
+        this.c == other.c;
   }
 }

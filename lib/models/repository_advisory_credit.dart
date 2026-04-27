@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryAdvisoryCredit {
   /// {@macro repository_advisory_credit}
-  const RepositoryAdvisoryCredit({
+  RepositoryAdvisoryCredit({
     required this.user,
     required this.type,
     required this.state,
@@ -68,8 +68,8 @@ class RepositoryAdvisoryCredit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryAdvisoryCredit &&
-        user == other.user &&
-        type == other.type &&
-        state == other.state;
+        this.user == other.user &&
+        this.type == other.type &&
+        this.state == other.state;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class EnvironmentProtectionRulesInnerAnyOf2 {
-  const EnvironmentProtectionRulesInnerAnyOf2({
+  EnvironmentProtectionRulesInnerAnyOf2({
     required this.id,
     required this.nodeId,
     required this.type,
@@ -18,7 +18,7 @@ class EnvironmentProtectionRulesInnerAnyOf2 {
       'EnvironmentProtectionRulesInnerAnyOf2',
       json,
       () => EnvironmentProtectionRulesInnerAnyOf2(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         type: json['type'] as String,
       ),
@@ -66,8 +66,8 @@ class EnvironmentProtectionRulesInnerAnyOf2 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is EnvironmentProtectionRulesInnerAnyOf2 &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        type == other.type;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.type == other.type;
   }
 }

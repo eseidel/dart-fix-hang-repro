@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRuleDeletion {
   /// {@macro repository_rule_deletion}
-  const RepositoryRuleDeletion({
+  RepositoryRuleDeletion({
     required this.type,
   });
 
@@ -48,6 +48,6 @@ class RepositoryRuleDeletion {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is RepositoryRuleDeletion && type == other.type;
+    return other is RepositoryRuleDeletion && this.type == other.type;
   }
 }

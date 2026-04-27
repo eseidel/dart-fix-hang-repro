@@ -1,17 +1,19 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
 import 'package:github_out/models/actions_billing_usage.dart';
+import 'package:github_out/models/actions_billing_usage_minutes_used_breakdown.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/billing_usage_report.dart';
+import 'package:github_out/models/billing_usage_report_usage_items_inner.dart';
 import 'package:github_out/models/billing_usage_report_user.dart';
+import 'package:github_out/models/billing_usage_report_user_usage_items_inner.dart';
 import 'package:github_out/models/combined_billing_usage.dart';
 import 'package:github_out/models/packages_billing_usage.dart';
+import 'package:http/http.dart' as http;
 
 /// Monitor charges and usage from Actions and Packages.
 class BillingApi {
@@ -39,7 +41,7 @@ class BillingApi {
       method: Method.get,
       path: '/organizations/{org}/settings/billing/usage'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
         if (year != null) 'year': [year.toString()],
@@ -52,7 +54,7 @@ class BillingApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -85,14 +87,14 @@ class BillingApi {
       method: Method.get,
       path: '/orgs/{org}/settings/billing/actions'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -121,14 +123,14 @@ class BillingApi {
       method: Method.get,
       path: '/orgs/{org}/settings/billing/packages'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -158,14 +160,14 @@ class BillingApi {
       method: Method.get,
       path: '/orgs/{org}/settings/billing/shared-storage'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -198,14 +200,14 @@ class BillingApi {
       method: Method.get,
       path: '/users/{username}/settings/billing/actions'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -234,14 +236,14 @@ class BillingApi {
       method: Method.get,
       path: '/users/{username}/settings/billing/packages'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -271,14 +273,14 @@ class BillingApi {
       method: Method.get,
       path: '/users/{username}/settings/billing/shared-storage'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -307,7 +309,7 @@ class BillingApi {
       method: Method.get,
       path: '/users/{username}/settings/billing/usage'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
         if (year != null) 'year': [year.toString()],
@@ -320,7 +322,7 @@ class BillingApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

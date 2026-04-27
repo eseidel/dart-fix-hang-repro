@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PackagesBillingUsage {
-  const PackagesBillingUsage({
+  PackagesBillingUsage({
     required this.totalGigabytesBandwidthUsed,
     required this.totalPaidGigabytesBandwidthUsed,
     required this.includedGigabytesBandwidth,
@@ -16,10 +16,11 @@ class PackagesBillingUsage {
       json,
       () => PackagesBillingUsage(
         totalGigabytesBandwidthUsed:
-            json['total_gigabytes_bandwidth_used'] as int,
+            (json['total_gigabytes_bandwidth_used'] as int),
         totalPaidGigabytesBandwidthUsed:
-            json['total_paid_gigabytes_bandwidth_used'] as int,
-        includedGigabytesBandwidth: json['included_gigabytes_bandwidth'] as int,
+            (json['total_paid_gigabytes_bandwidth_used'] as int),
+        includedGigabytesBandwidth:
+            (json['included_gigabytes_bandwidth'] as int),
       ),
     );
   }
@@ -62,9 +63,9 @@ class PackagesBillingUsage {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PackagesBillingUsage &&
-        totalGigabytesBandwidthUsed == other.totalGigabytesBandwidthUsed &&
-        totalPaidGigabytesBandwidthUsed ==
+        this.totalGigabytesBandwidthUsed == other.totalGigabytesBandwidthUsed &&
+        this.totalPaidGigabytesBandwidthUsed ==
             other.totalPaidGigabytesBandwidthUsed &&
-        includedGigabytesBandwidth == other.includedGigabytesBandwidth;
+        this.includedGigabytesBandwidth == other.includedGigabytesBandwidth;
   }
 }

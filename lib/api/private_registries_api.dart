@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -11,8 +7,21 @@ import 'package:github_out/messages/private_registries_create_org_private_regist
 import 'package:github_out/messages/private_registries_get_org_public_key200_response.dart';
 import 'package:github_out/messages/private_registries_list_org_private_registries200_response.dart';
 import 'package:github_out/messages/private_registries_update_org_private_registry_request.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/org_private_registry_configuration.dart';
+import 'package:github_out/models/org_private_registry_configuration_registry_type.dart';
+import 'package:github_out/models/org_private_registry_configuration_visibility.dart';
 import 'package:github_out/models/org_private_registry_configuration_with_selected_repositories.dart';
+import 'package:github_out/models/org_private_registry_configuration_with_selected_repositories_registry_type.dart';
+import 'package:github_out/models/org_private_registry_configuration_with_selected_repositories_visibility.dart';
+import 'package:github_out/models/private_registries_create_org_private_registry_request_registry_type.dart';
+import 'package:github_out/models/private_registries_create_org_private_registry_request_visibility.dart';
+import 'package:github_out/models/private_registries_update_org_private_registry_request_registry_type.dart';
+import 'package:github_out/models/private_registries_update_org_private_registry_request_visibility.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:http/http.dart' as http;
 
 /// Manage private registry configurations.
 class PrivateRegistriesApi {
@@ -36,7 +45,7 @@ class PrivateRegistriesApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/private-registries'.replaceAll('{org}', org),
+      path: '/orgs/{org}/private-registries'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -46,7 +55,7 @@ class PrivateRegistriesApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -77,14 +86,15 @@ class PrivateRegistriesApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/private-registries'.replaceAll('{org}', org),
+      path: '/orgs/{org}/private-registries'.replaceAll('{org}', '${org}'),
       body: privateRegistriesCreateOrgPrivateRegistryRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -113,14 +123,14 @@ class PrivateRegistriesApi {
       method: Method.get,
       path: '/orgs/{org}/private-registries/public-key'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -148,14 +158,14 @@ class PrivateRegistriesApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/private-registries/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -181,14 +191,14 @@ class PrivateRegistriesApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/private-registries/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -212,15 +222,16 @@ class PrivateRegistriesApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/orgs/{org}/private-registries/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: privateRegistriesUpdateOrgPrivateRegistryRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }

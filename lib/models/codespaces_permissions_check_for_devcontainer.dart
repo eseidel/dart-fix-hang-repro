@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodespacesPermissionsCheckForDevcontainer {
   /// {@macro codespaces_permissions_check_for_devcontainer}
-  const CodespacesPermissionsCheckForDevcontainer({
+  CodespacesPermissionsCheckForDevcontainer({
     required this.accepted,
   });
 
@@ -57,6 +57,6 @@ class CodespacesPermissionsCheckForDevcontainer {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespacesPermissionsCheckForDevcontainer &&
-        accepted == other.accepted;
+        this.accepted == other.accepted;
   }
 }

@@ -1,15 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/migrations_start_for_authenticated_user_request_exclude_inner.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class MigrationsStartForAuthenticatedUserRequest {
-  const MigrationsStartForAuthenticatedUserRequest({
-    required this.repositories,
+  MigrationsStartForAuthenticatedUserRequest({
     this.lockRepositories,
     this.excludeMetadata,
     this.excludeGitData,
@@ -18,6 +13,7 @@ class MigrationsStartForAuthenticatedUserRequest {
     this.excludeOwnerProjects,
     this.orgMetadataOnly = false,
     this.exclude,
+    required this.repositories,
   });
 
   /// Converts a `Map<String, dynamic>` to a
@@ -130,14 +126,14 @@ class MigrationsStartForAuthenticatedUserRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MigrationsStartForAuthenticatedUserRequest &&
-        lockRepositories == other.lockRepositories &&
-        excludeMetadata == other.excludeMetadata &&
-        excludeGitData == other.excludeGitData &&
-        excludeAttachments == other.excludeAttachments &&
-        excludeReleases == other.excludeReleases &&
-        excludeOwnerProjects == other.excludeOwnerProjects &&
-        orgMetadataOnly == other.orgMetadataOnly &&
-        listsEqual(exclude, other.exclude) &&
-        listsEqual(repositories, other.repositories);
+        this.lockRepositories == other.lockRepositories &&
+        this.excludeMetadata == other.excludeMetadata &&
+        this.excludeGitData == other.excludeGitData &&
+        this.excludeAttachments == other.excludeAttachments &&
+        this.excludeReleases == other.excludeReleases &&
+        this.excludeOwnerProjects == other.excludeOwnerProjects &&
+        this.orgMetadataOnly == other.orgMetadataOnly &&
+        listsEqual(this.exclude, other.exclude) &&
+        listsEqual(this.repositories, other.repositories);
   }
 }

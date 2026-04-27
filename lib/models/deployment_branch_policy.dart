@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DeploymentBranchPolicy {
   /// {@macro deployment_branch_policy}
-  const DeploymentBranchPolicy({
+  DeploymentBranchPolicy({
     this.id,
     this.nodeId,
     this.name,
@@ -22,7 +22,7 @@ class DeploymentBranchPolicy {
       'DeploymentBranchPolicy',
       json,
       () => DeploymentBranchPolicy(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         nodeId: json['node_id'] as String?,
         name: json['name'] as String?,
         type: DeploymentBranchPolicyType.maybeFromJson(json['type'] as String?),
@@ -77,9 +77,9 @@ class DeploymentBranchPolicy {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DeploymentBranchPolicy &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        type == other.type;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.type == other.type;
   }
 }

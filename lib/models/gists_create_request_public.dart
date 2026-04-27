@@ -6,8 +6,8 @@ sealed class GistsCreateRequestPublic {
 
   factory GistsCreateRequestPublic.fromJson(dynamic json) {
     return switch (json) {
-      final bool v => GistsCreateRequestPublicBool(v),
-      final String v => GistsCreateRequestPublicGistsCreateRequestPublicOneOf1(
+      bool v => GistsCreateRequestPublicBool(v),
+      String v => GistsCreateRequestPublicGistsCreateRequestPublicOneOf1(
         GistsCreateRequestPublicOneOf1.fromJson(v),
       ),
       _ => throw FormatException(

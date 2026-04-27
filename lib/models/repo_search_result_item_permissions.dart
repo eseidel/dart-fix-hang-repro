@@ -3,12 +3,12 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepoSearchResultItemPermissions {
-  const RepoSearchResultItemPermissions({
+  RepoSearchResultItemPermissions({
     required this.admin,
-    required this.push,
-    required this.pull,
     this.maintain,
+    required this.push,
     this.triage,
+    required this.pull,
   });
 
   /// Converts a `Map<String, dynamic>` to a [RepoSearchResultItemPermissions].
@@ -67,10 +67,10 @@ class RepoSearchResultItemPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepoSearchResultItemPermissions &&
-        admin == other.admin &&
-        maintain == other.maintain &&
-        push == other.push &&
-        triage == other.triage &&
-        pull == other.pull;
+        this.admin == other.admin &&
+        this.maintain == other.maintain &&
+        this.push == other.push &&
+        this.triage == other.triage &&
+        this.pull == other.pull;
   }
 }

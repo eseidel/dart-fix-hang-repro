@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposListCustomDeploymentRuleIntegrations200Response {
-  const ReposListCustomDeploymentRuleIntegrations200Response({
+  ReposListCustomDeploymentRuleIntegrations200Response({
     this.totalCount,
     this.availableCustomDeploymentProtectionRuleIntegrations,
   });
@@ -18,7 +18,7 @@ class ReposListCustomDeploymentRuleIntegrations200Response {
       'ReposListCustomDeploymentRuleIntegrations200Response',
       json,
       () => ReposListCustomDeploymentRuleIntegrations200Response(
-        totalCount: json['total_count'] as int?,
+        totalCount: (json['total_count'] as int?),
         availableCustomDeploymentProtectionRuleIntegrations:
             (json['available_custom_deployment_protection_rule_integrations']
                     as List?)
@@ -72,9 +72,9 @@ class ReposListCustomDeploymentRuleIntegrations200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposListCustomDeploymentRuleIntegrations200Response &&
-        totalCount == other.totalCount &&
+        this.totalCount == other.totalCount &&
         listsEqual(
-          availableCustomDeploymentProtectionRuleIntegrations,
+          this.availableCustomDeploymentProtectionRuleIntegrations,
           other.availableCustomDeploymentProtectionRuleIntegrations,
         );
   }

@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TeamMembership {
   /// {@macro team_membership}
-  const TeamMembership({
+  TeamMembership({
     required this.url,
     required this.role,
     required this.state,
@@ -67,8 +67,8 @@ class TeamMembership {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamMembership &&
-        url == other.url &&
-        role == other.role &&
-        state == other.state;
+        this.url == other.url &&
+        this.role == other.role &&
+        this.state == other.state;
   }
 }

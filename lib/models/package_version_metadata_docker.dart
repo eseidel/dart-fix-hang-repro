@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PackageVersionMetadataDocker {
   /// {@macro package_version_metadata_docker}
-  const PackageVersionMetadataDocker({
+  PackageVersionMetadataDocker({
     this.tag,
   });
 
@@ -48,6 +48,7 @@ class PackageVersionMetadataDocker {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is PackageVersionMetadataDocker && listsEqual(tag, other.tag);
+    return other is PackageVersionMetadataDocker &&
+        listsEqual(this.tag, other.tag);
   }
 }

@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ProtectedBranchAllowForkSyncing {
   /// {@macro protected_branch_allow_fork_syncing}
-  const ProtectedBranchAllowForkSyncing({
+  ProtectedBranchAllowForkSyncing({
     this.enabled = false,
   });
 
@@ -49,6 +49,7 @@ class ProtectedBranchAllowForkSyncing {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is ProtectedBranchAllowForkSyncing && enabled == other.enabled;
+    return other is ProtectedBranchAllowForkSyncing &&
+        this.enabled == other.enabled;
   }
 }

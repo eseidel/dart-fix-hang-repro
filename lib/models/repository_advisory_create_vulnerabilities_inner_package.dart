@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryAdvisoryCreateVulnerabilitiesInnerPackage {
   /// {@macro repository_advisory_create_vulnerabilities_inner_package}
-  const RepositoryAdvisoryCreateVulnerabilitiesInnerPackage({
+  RepositoryAdvisoryCreateVulnerabilitiesInnerPackage({
     required this.ecosystem,
     this.name,
   });
@@ -66,7 +66,7 @@ class RepositoryAdvisoryCreateVulnerabilitiesInnerPackage {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryAdvisoryCreateVulnerabilitiesInnerPackage &&
-        ecosystem == other.ecosystem &&
-        name == other.name;
+        this.ecosystem == other.ecosystem &&
+        this.name == other.name;
   }
 }

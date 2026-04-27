@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Classroom {
   /// {@macro classroom}
-  const Classroom({
+  Classroom({
     required this.id,
     required this.name,
     required this.archived,
@@ -23,7 +23,7 @@ class Classroom {
       'Classroom',
       json,
       () => Classroom(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String,
         archived: json['archived'] as bool,
         organization: SimpleClassroomOrganization.fromJson(
@@ -88,10 +88,10 @@ class Classroom {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Classroom &&
-        id == other.id &&
-        name == other.name &&
-        archived == other.archived &&
-        organization == other.organization &&
-        url == other.url;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.archived == other.archived &&
+        this.organization == other.organization &&
+        this.url == other.url;
   }
 }

@@ -1,10 +1,15 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/actions_hosted_runner.dart';
+import 'package:github_out/models/actions_hosted_runner_machine_spec.dart';
+import 'package:github_out/models/actions_hosted_runner_pool_image.dart';
+import 'package:github_out/models/actions_hosted_runner_pool_image_source.dart';
+import 'package:github_out/models/actions_hosted_runner_status.dart';
+import 'package:github_out/models/public_ip.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsListGithubHostedRunnersInGroupForOrg200Response {
-  const ActionsListGithubHostedRunnersInGroupForOrg200Response({
+  ActionsListGithubHostedRunnersInGroupForOrg200Response({
     required this.totalCount,
     required this.runners,
   });
@@ -63,7 +68,7 @@ class ActionsListGithubHostedRunnersInGroupForOrg200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsListGithubHostedRunnersInGroupForOrg200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(runners, other.runners);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.runners, other.runners);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamPermissions {
-  const TeamPermissions({
+  TeamPermissions({
     required this.pull,
     required this.triage,
     required this.push,
@@ -65,10 +65,10 @@ class TeamPermissions {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamPermissions &&
-        pull == other.pull &&
-        triage == other.triage &&
-        push == other.push &&
-        maintain == other.maintain &&
-        admin == other.admin;
+        this.pull == other.pull &&
+        this.triage == other.triage &&
+        this.push == other.push &&
+        this.maintain == other.maintain &&
+        this.admin == other.admin;
   }
 }

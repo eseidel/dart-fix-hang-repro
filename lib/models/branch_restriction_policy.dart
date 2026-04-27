@@ -1,5 +1,7 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/branch_restriction_policy_apps_inner.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner_owner.dart';
+import 'package:github_out/models/branch_restriction_policy_apps_inner_permissions.dart';
 import 'package:github_out/models/branch_restriction_policy_teams_inner.dart';
 import 'package:github_out/models/branch_restriction_policy_users_inner.dart';
 import 'package:meta/meta.dart';
@@ -11,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class BranchRestrictionPolicy {
   /// {@macro branch_restriction_policy}
-  const BranchRestrictionPolicy({
+  BranchRestrictionPolicy({
     required this.url,
     required this.usersUrl,
     required this.teamsUrl,
@@ -101,12 +103,12 @@ class BranchRestrictionPolicy {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchRestrictionPolicy &&
-        url == other.url &&
-        usersUrl == other.usersUrl &&
-        teamsUrl == other.teamsUrl &&
-        appsUrl == other.appsUrl &&
-        listsEqual(users, other.users) &&
-        listsEqual(teams, other.teams) &&
-        listsEqual(apps, other.apps);
+        this.url == other.url &&
+        this.usersUrl == other.usersUrl &&
+        this.teamsUrl == other.teamsUrl &&
+        this.appsUrl == other.appsUrl &&
+        listsEqual(this.users, other.users) &&
+        listsEqual(this.teams, other.teams) &&
+        listsEqual(this.apps, other.apps);
   }
 }

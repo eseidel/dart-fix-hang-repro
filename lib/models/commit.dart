@@ -1,14 +1,16 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/commit_author.dart';
 import 'package:github_out/models/commit_commit.dart';
+import 'package:github_out/models/commit_commit_tree.dart';
 import 'package:github_out/models/commit_committer.dart';
 import 'package:github_out/models/commit_parents_inner.dart';
 import 'package:github_out/models/commit_stats.dart';
 import 'package:github_out/models/diff_entry.dart';
+import 'package:github_out/models/diff_entry_status.dart';
+import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/git_user.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/verification.dart';
 import 'package:meta/meta.dart';
 
 /// {@template commit}
@@ -18,7 +20,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Commit {
   /// {@macro commit}
-  const Commit({
+  Commit({
     required this.url,
     required this.sha,
     required this.nodeId,
@@ -137,16 +139,16 @@ class Commit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Commit &&
-        url == other.url &&
-        sha == other.sha &&
-        nodeId == other.nodeId &&
-        htmlUrl == other.htmlUrl &&
-        commentsUrl == other.commentsUrl &&
-        commit == other.commit &&
-        author == other.author &&
-        committer == other.committer &&
-        listsEqual(parents, other.parents) &&
-        stats == other.stats &&
-        listsEqual(files, other.files);
+        this.url == other.url &&
+        this.sha == other.sha &&
+        this.nodeId == other.nodeId &&
+        this.htmlUrl == other.htmlUrl &&
+        this.commentsUrl == other.commentsUrl &&
+        this.commit == other.commit &&
+        this.author == other.author &&
+        this.committer == other.committer &&
+        listsEqual(this.parents, other.parents) &&
+        this.stats == other.stats &&
+        listsEqual(this.files, other.files);
   }
 }

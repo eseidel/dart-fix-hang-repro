@@ -6,8 +6,8 @@ sealed class CustomPropertyValueValue {
 
   factory CustomPropertyValueValue.fromJson(dynamic json) {
     return switch (json) {
-      final String v => CustomPropertyValueValueString(v),
-      final List<dynamic> v => CustomPropertyValueValueList(v.cast<dynamic>()),
+      String v => CustomPropertyValueValueString(v),
+      List<dynamic> v => CustomPropertyValueValueList(v.cast<dynamic>()),
       _ => throw FormatException(
         'Unsupported shape for CustomPropertyValueValue: ${json.runtimeType}',
       ),

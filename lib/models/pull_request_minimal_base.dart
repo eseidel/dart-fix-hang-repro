@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestMinimalBase {
-  const PullRequestMinimalBase({
+  PullRequestMinimalBase({
     required this.ref,
     required this.sha,
     required this.repo,
@@ -58,8 +58,8 @@ class PullRequestMinimalBase {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestMinimalBase &&
-        ref == other.ref &&
-        sha == other.sha &&
-        repo == other.repo;
+        this.ref == other.ref &&
+        this.sha == other.sha &&
+        this.repo == other.repo;
   }
 }

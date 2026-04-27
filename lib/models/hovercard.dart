@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Hovercard {
   /// {@macro hovercard}
-  const Hovercard({
+  Hovercard({
     required this.contexts,
   });
 
@@ -52,6 +52,6 @@ class Hovercard {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Hovercard && listsEqual(contexts, other.contexts);
+    return other is Hovercard && listsEqual(this.contexts, other.contexts);
   }
 }

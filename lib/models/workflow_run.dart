@@ -1,12 +1,32 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/code_of_conduct.dart';
 import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/pull_request_minimal.dart';
+import 'package:github_out/models/pull_request_minimal_base.dart';
+import 'package:github_out/models/pull_request_minimal_base_repo.dart';
+import 'package:github_out/models/pull_request_minimal_head.dart';
+import 'package:github_out/models/pull_request_minimal_head_repo.dart';
 import 'package:github_out/models/referenced_workflow.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
 import 'package:github_out/models/simple_commit.dart';
+import 'package:github_out/models/simple_commit_author.dart';
+import 'package:github_out/models/simple_commit_committer.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -17,13 +37,18 @@ import 'package:meta/meta.dart';
 @immutable
 class WorkflowRun {
   /// {@macro workflow_run}
-  const WorkflowRun({
+  WorkflowRun({
     required this.id,
+    this.name,
     required this.nodeId,
+    this.checkSuiteId,
+    this.checkSuiteNodeId,
     required this.headBranch,
     required this.headSha,
     required this.path,
     required this.runNumber,
+    this.runAttempt,
+    this.referencedWorkflows,
     required this.event,
     required this.status,
     required this.conclusion,
@@ -33,27 +58,22 @@ class WorkflowRun {
     required this.pullRequests,
     required this.createdAt,
     required this.updatedAt,
+    this.actor,
+    this.triggeringActor,
+    this.runStartedAt,
     required this.jobsUrl,
     required this.logsUrl,
     required this.checkSuiteUrl,
     required this.artifactsUrl,
     required this.cancelUrl,
     required this.rerunUrl,
+    this.previousAttemptUrl,
     required this.workflowUrl,
     required this.headCommit,
     required this.repository,
     required this.headRepository,
-    required this.displayTitle,
-    this.name,
-    this.checkSuiteId,
-    this.checkSuiteNodeId,
-    this.runAttempt,
-    this.referencedWorkflows,
-    this.actor,
-    this.triggeringActor,
-    this.runStartedAt,
-    this.previousAttemptUrl,
     this.headRepositoryId,
+    required this.displayTitle,
   });
 
   /// Converts a `Map<String, dynamic>` to a [WorkflowRun].
@@ -62,16 +82,16 @@ class WorkflowRun {
       'WorkflowRun',
       json,
       () => WorkflowRun(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         name: json['name'] as String?,
         nodeId: json['node_id'] as String,
-        checkSuiteId: json['check_suite_id'] as int?,
+        checkSuiteId: (json['check_suite_id'] as int?),
         checkSuiteNodeId: json['check_suite_node_id'] as String?,
         headBranch: checkedKey(json, 'head_branch') as String?,
         headSha: json['head_sha'] as String,
         path: json['path'] as String,
-        runNumber: json['run_number'] as int,
-        runAttempt: json['run_attempt'] as int?,
+        runNumber: (json['run_number'] as int),
+        runAttempt: (json['run_attempt'] as int?),
         referencedWorkflows: (json['referenced_workflows'] as List?)
             ?.map<ReferencedWorkflow>(
               (e) => ReferencedWorkflow.fromJson(e as Map<String, dynamic>),
@@ -80,7 +100,7 @@ class WorkflowRun {
         event: json['event'] as String,
         status: checkedKey(json, 'status') as String?,
         conclusion: checkedKey(json, 'conclusion') as String?,
-        workflowId: json['workflow_id'] as int,
+        workflowId: (json['workflow_id'] as int),
         url: json['url'] as String,
         htmlUrl: json['html_url'] as String,
         pullRequests: (checkedKey(json, 'pull_requests') as List?)
@@ -112,7 +132,7 @@ class WorkflowRun {
         headRepository: MinimalRepository.fromJson(
           json['head_repository'] as Map<String, dynamic>,
         ),
-        headRepositoryId: json['head_repository_id'] as int?,
+        headRepositoryId: (json['head_repository_id'] as int?),
         displayTitle: json['display_title'] as String,
       ),
     );
@@ -355,41 +375,41 @@ class WorkflowRun {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is WorkflowRun &&
-        id == other.id &&
-        name == other.name &&
-        nodeId == other.nodeId &&
-        checkSuiteId == other.checkSuiteId &&
-        checkSuiteNodeId == other.checkSuiteNodeId &&
-        headBranch == other.headBranch &&
-        headSha == other.headSha &&
-        path == other.path &&
-        runNumber == other.runNumber &&
-        runAttempt == other.runAttempt &&
-        listsEqual(referencedWorkflows, other.referencedWorkflows) &&
-        event == other.event &&
-        status == other.status &&
-        conclusion == other.conclusion &&
-        workflowId == other.workflowId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        listsEqual(pullRequests, other.pullRequests) &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        actor == other.actor &&
-        triggeringActor == other.triggeringActor &&
-        runStartedAt == other.runStartedAt &&
-        jobsUrl == other.jobsUrl &&
-        logsUrl == other.logsUrl &&
-        checkSuiteUrl == other.checkSuiteUrl &&
-        artifactsUrl == other.artifactsUrl &&
-        cancelUrl == other.cancelUrl &&
-        rerunUrl == other.rerunUrl &&
-        previousAttemptUrl == other.previousAttemptUrl &&
-        workflowUrl == other.workflowUrl &&
-        headCommit == other.headCommit &&
-        repository == other.repository &&
-        headRepository == other.headRepository &&
-        headRepositoryId == other.headRepositoryId &&
-        displayTitle == other.displayTitle;
+        this.id == other.id &&
+        this.name == other.name &&
+        this.nodeId == other.nodeId &&
+        this.checkSuiteId == other.checkSuiteId &&
+        this.checkSuiteNodeId == other.checkSuiteNodeId &&
+        this.headBranch == other.headBranch &&
+        this.headSha == other.headSha &&
+        this.path == other.path &&
+        this.runNumber == other.runNumber &&
+        this.runAttempt == other.runAttempt &&
+        listsEqual(this.referencedWorkflows, other.referencedWorkflows) &&
+        this.event == other.event &&
+        this.status == other.status &&
+        this.conclusion == other.conclusion &&
+        this.workflowId == other.workflowId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        listsEqual(this.pullRequests, other.pullRequests) &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.actor == other.actor &&
+        this.triggeringActor == other.triggeringActor &&
+        this.runStartedAt == other.runStartedAt &&
+        this.jobsUrl == other.jobsUrl &&
+        this.logsUrl == other.logsUrl &&
+        this.checkSuiteUrl == other.checkSuiteUrl &&
+        this.artifactsUrl == other.artifactsUrl &&
+        this.cancelUrl == other.cancelUrl &&
+        this.rerunUrl == other.rerunUrl &&
+        this.previousAttemptUrl == other.previousAttemptUrl &&
+        this.workflowUrl == other.workflowUrl &&
+        this.headCommit == other.headCommit &&
+        this.repository == other.repository &&
+        this.headRepository == other.headRepository &&
+        this.headRepositoryId == other.headRepositoryId &&
+        this.displayTitle == other.displayTitle;
   }
 }

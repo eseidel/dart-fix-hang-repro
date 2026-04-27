@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BillingUsageReportUsageItemsInner {
-  const BillingUsageReportUsageItemsInner({
+  BillingUsageReportUsageItemsInner({
     required this.date,
     required this.product,
     required this.sku,
@@ -29,7 +29,7 @@ class BillingUsageReportUsageItemsInner {
         date: json['date'] as String,
         product: json['product'] as String,
         sku: json['sku'] as String,
-        quantity: json['quantity'] as int,
+        quantity: (json['quantity'] as int),
         unitType: json['unitType'] as String,
         pricePerUnit: (json['pricePerUnit'] as num).toDouble(),
         grossAmount: (json['grossAmount'] as num).toDouble(),
@@ -122,16 +122,16 @@ class BillingUsageReportUsageItemsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BillingUsageReportUsageItemsInner &&
-        date == other.date &&
-        product == other.product &&
-        sku == other.sku &&
-        quantity == other.quantity &&
-        unitType == other.unitType &&
-        pricePerUnit == other.pricePerUnit &&
-        grossAmount == other.grossAmount &&
-        discountAmount == other.discountAmount &&
-        netAmount == other.netAmount &&
-        organizationName == other.organizationName &&
-        repositoryName == other.repositoryName;
+        this.date == other.date &&
+        this.product == other.product &&
+        this.sku == other.sku &&
+        this.quantity == other.quantity &&
+        this.unitType == other.unitType &&
+        this.pricePerUnit == other.pricePerUnit &&
+        this.grossAmount == other.grossAmount &&
+        this.discountAmount == other.discountAmount &&
+        this.netAmount == other.netAmount &&
+        this.organizationName == other.organizationName &&
+        this.repositoryName == other.repositoryName;
   }
 }

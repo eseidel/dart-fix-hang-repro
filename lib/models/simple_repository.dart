@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
@@ -13,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SimpleRepository {
   /// {@macro simple_repository}
-  const SimpleRepository({
+  SimpleRepository({
     required this.id,
     required this.nodeId,
     required this.name,
@@ -68,7 +64,7 @@ class SimpleRepository {
       'SimpleRepository',
       json,
       () => SimpleRepository(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         fullName: json['full_name'] as String,
@@ -463,51 +459,51 @@ class SimpleRepository {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SimpleRepository &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        fullName == other.fullName &&
-        owner == other.owner &&
-        private == other.private &&
-        htmlUrl == other.htmlUrl &&
-        description == other.description &&
-        fork == other.fork &&
-        url == other.url &&
-        archiveUrl == other.archiveUrl &&
-        assigneesUrl == other.assigneesUrl &&
-        blobsUrl == other.blobsUrl &&
-        branchesUrl == other.branchesUrl &&
-        collaboratorsUrl == other.collaboratorsUrl &&
-        commentsUrl == other.commentsUrl &&
-        commitsUrl == other.commitsUrl &&
-        compareUrl == other.compareUrl &&
-        contentsUrl == other.contentsUrl &&
-        contributorsUrl == other.contributorsUrl &&
-        deploymentsUrl == other.deploymentsUrl &&
-        downloadsUrl == other.downloadsUrl &&
-        eventsUrl == other.eventsUrl &&
-        forksUrl == other.forksUrl &&
-        gitCommitsUrl == other.gitCommitsUrl &&
-        gitRefsUrl == other.gitRefsUrl &&
-        gitTagsUrl == other.gitTagsUrl &&
-        issueCommentUrl == other.issueCommentUrl &&
-        issueEventsUrl == other.issueEventsUrl &&
-        issuesUrl == other.issuesUrl &&
-        keysUrl == other.keysUrl &&
-        labelsUrl == other.labelsUrl &&
-        languagesUrl == other.languagesUrl &&
-        mergesUrl == other.mergesUrl &&
-        milestonesUrl == other.milestonesUrl &&
-        notificationsUrl == other.notificationsUrl &&
-        pullsUrl == other.pullsUrl &&
-        releasesUrl == other.releasesUrl &&
-        stargazersUrl == other.stargazersUrl &&
-        statusesUrl == other.statusesUrl &&
-        subscribersUrl == other.subscribersUrl &&
-        subscriptionUrl == other.subscriptionUrl &&
-        tagsUrl == other.tagsUrl &&
-        teamsUrl == other.teamsUrl &&
-        treesUrl == other.treesUrl &&
-        hooksUrl == other.hooksUrl;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.fullName == other.fullName &&
+        this.owner == other.owner &&
+        this.private == other.private &&
+        this.htmlUrl == other.htmlUrl &&
+        this.description == other.description &&
+        this.fork == other.fork &&
+        this.url == other.url &&
+        this.archiveUrl == other.archiveUrl &&
+        this.assigneesUrl == other.assigneesUrl &&
+        this.blobsUrl == other.blobsUrl &&
+        this.branchesUrl == other.branchesUrl &&
+        this.collaboratorsUrl == other.collaboratorsUrl &&
+        this.commentsUrl == other.commentsUrl &&
+        this.commitsUrl == other.commitsUrl &&
+        this.compareUrl == other.compareUrl &&
+        this.contentsUrl == other.contentsUrl &&
+        this.contributorsUrl == other.contributorsUrl &&
+        this.deploymentsUrl == other.deploymentsUrl &&
+        this.downloadsUrl == other.downloadsUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.forksUrl == other.forksUrl &&
+        this.gitCommitsUrl == other.gitCommitsUrl &&
+        this.gitRefsUrl == other.gitRefsUrl &&
+        this.gitTagsUrl == other.gitTagsUrl &&
+        this.issueCommentUrl == other.issueCommentUrl &&
+        this.issueEventsUrl == other.issueEventsUrl &&
+        this.issuesUrl == other.issuesUrl &&
+        this.keysUrl == other.keysUrl &&
+        this.labelsUrl == other.labelsUrl &&
+        this.languagesUrl == other.languagesUrl &&
+        this.mergesUrl == other.mergesUrl &&
+        this.milestonesUrl == other.milestonesUrl &&
+        this.notificationsUrl == other.notificationsUrl &&
+        this.pullsUrl == other.pullsUrl &&
+        this.releasesUrl == other.releasesUrl &&
+        this.stargazersUrl == other.stargazersUrl &&
+        this.statusesUrl == other.statusesUrl &&
+        this.subscribersUrl == other.subscribersUrl &&
+        this.subscriptionUrl == other.subscriptionUrl &&
+        this.tagsUrl == other.tagsUrl &&
+        this.teamsUrl == other.teamsUrl &&
+        this.treesUrl == other.treesUrl &&
+        this.hooksUrl == other.hooksUrl;
   }
 }

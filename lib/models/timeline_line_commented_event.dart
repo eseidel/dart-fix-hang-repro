@@ -1,5 +1,15 @@
+import 'package:github_out/messages/pull_request_review_comment_links_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/author_association.dart';
 import 'package:github_out/models/pull_request_review_comment.dart';
+import 'package:github_out/models/pull_request_review_comment_links.dart';
+import 'package:github_out/models/pull_request_review_comment_links_html.dart';
+import 'package:github_out/models/pull_request_review_comment_links_self.dart';
+import 'package:github_out/models/pull_request_review_comment_side.dart';
+import 'package:github_out/models/pull_request_review_comment_start_side.dart';
+import 'package:github_out/models/pull_request_review_comment_subject_type.dart';
+import 'package:github_out/models/reaction_rollup.dart';
+import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
 /// {@template timeline_line_commented_event}
@@ -9,7 +19,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TimelineLineCommentedEvent {
   /// {@macro timeline_line_commented_event}
-  const TimelineLineCommentedEvent({
+  TimelineLineCommentedEvent({
     this.event,
     this.nodeId,
     this.comments,
@@ -66,8 +76,8 @@ class TimelineLineCommentedEvent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TimelineLineCommentedEvent &&
-        event == other.event &&
-        nodeId == other.nodeId &&
-        listsEqual(comments, other.comments);
+        this.event == other.event &&
+        this.nodeId == other.nodeId &&
+        listsEqual(this.comments, other.comments);
   }
 }

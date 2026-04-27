@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ProtectedBranchEnforceAdmins {
-  const ProtectedBranchEnforceAdmins({
+  ProtectedBranchEnforceAdmins({
     required this.url,
     required this.enabled,
   });
@@ -52,7 +52,7 @@ class ProtectedBranchEnforceAdmins {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProtectedBranchEnforceAdmins &&
-        url == other.url &&
-        enabled == other.enabled;
+        this.url == other.url &&
+        this.enabled == other.enabled;
   }
 }

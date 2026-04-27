@@ -7,11 +7,26 @@ import 'package:github_out/models/alert_html_url.dart';
 import 'package:github_out/models/alert_number.dart';
 import 'package:github_out/models/alert_updated_at.dart';
 import 'package:github_out/models/alert_url.dart';
+import 'package:github_out/models/cvss_severities.dart';
+import 'package:github_out/models/cvss_severities_cvss_v3.dart';
+import 'package:github_out/models/cvss_severities_cvss_v4.dart';
 import 'package:github_out/models/dependabot_alert_dependency.dart';
+import 'package:github_out/models/dependabot_alert_dependency_relationship.dart';
+import 'package:github_out/models/dependabot_alert_dependency_scope.dart';
 import 'package:github_out/models/dependabot_alert_dismissed_reason.dart';
+import 'package:github_out/models/dependabot_alert_package.dart';
 import 'package:github_out/models/dependabot_alert_security_advisory.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_cvss.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_cwes_inner.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_identifiers_inner.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_identifiers_inner_type.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_references_inner.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_severity.dart';
 import 'package:github_out/models/dependabot_alert_security_vulnerability.dart';
+import 'package:github_out/models/dependabot_alert_security_vulnerability_first_patched_version.dart';
+import 'package:github_out/models/dependabot_alert_security_vulnerability_severity.dart';
 import 'package:github_out/models/dependabot_alert_state.dart';
+import 'package:github_out/models/security_advisory_epss.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -21,7 +36,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotAlert {
   /// {@macro dependabot_alert}
-  const DependabotAlert({
+  DependabotAlert({
     required this.number,
     required this.state,
     required this.dependency,
@@ -184,20 +199,20 @@ class DependabotAlert {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotAlert &&
-        number == other.number &&
-        state == other.state &&
-        dependency == other.dependency &&
-        securityAdvisory == other.securityAdvisory &&
-        securityVulnerability == other.securityVulnerability &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        dismissedAt == other.dismissedAt &&
-        dismissedBy == other.dismissedBy &&
-        dismissedReason == other.dismissedReason &&
-        dismissedComment == other.dismissedComment &&
-        fixedAt == other.fixedAt &&
-        autoDismissedAt == other.autoDismissedAt;
+        this.number == other.number &&
+        this.state == other.state &&
+        this.dependency == other.dependency &&
+        this.securityAdvisory == other.securityAdvisory &&
+        this.securityVulnerability == other.securityVulnerability &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.dismissedAt == other.dismissedAt &&
+        this.dismissedBy == other.dismissedBy &&
+        this.dismissedReason == other.dismissedReason &&
+        this.dismissedComment == other.dismissedComment &&
+        this.fixedAt == other.fixedAt &&
+        this.autoDismissedAt == other.autoDismissedAt;
   }
 }

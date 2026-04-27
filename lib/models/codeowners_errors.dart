@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeownersErrors {
   /// {@macro codeowners_errors}
-  const CodeownersErrors({
+  CodeownersErrors({
     required this.errors,
   });
 
@@ -54,6 +54,6 @@ class CodeownersErrors {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is CodeownersErrors && listsEqual(errors, other.errors);
+    return other is CodeownersErrors && listsEqual(this.errors, other.errors);
   }
 }

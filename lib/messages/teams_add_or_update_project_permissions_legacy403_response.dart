@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class TeamsAddOrUpdateProjectPermissionsLegacy403Response {
-  const TeamsAddOrUpdateProjectPermissionsLegacy403Response({
+  TeamsAddOrUpdateProjectPermissionsLegacy403Response({
     this.message,
     this.documentationUrl,
   });
@@ -56,7 +56,7 @@ class TeamsAddOrUpdateProjectPermissionsLegacy403Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamsAddOrUpdateProjectPermissionsLegacy403Response &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl;
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl;
   }
 }

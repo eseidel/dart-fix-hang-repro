@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PagesDeploymentStatus {
   /// {@macro pages_deployment_status}
-  const PagesDeploymentStatus({
+  PagesDeploymentStatus({
     this.status,
   });
 
@@ -50,6 +50,6 @@ class PagesDeploymentStatus {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is PagesDeploymentStatus && status == other.status;
+    return other is PagesDeploymentStatus && this.status == other.status;
   }
 }

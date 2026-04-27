@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestMinimalHead {
-  const PullRequestMinimalHead({
+  PullRequestMinimalHead({
     required this.ref,
     required this.sha,
     required this.repo,
@@ -58,8 +58,8 @@ class PullRequestMinimalHead {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestMinimalHead &&
-        ref == other.ref &&
-        sha == other.sha &&
-        repo == other.repo;
+        this.ref == other.ref &&
+        this.sha == other.sha &&
+        this.repo == other.repo;
   }
 }

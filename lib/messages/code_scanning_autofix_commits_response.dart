@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningAutofixCommitsResponse {
-  const CodeScanningAutofixCommitsResponse({
+  CodeScanningAutofixCommitsResponse({
     this.targetRef,
     this.sha,
   });
@@ -62,7 +62,7 @@ class CodeScanningAutofixCommitsResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningAutofixCommitsResponse &&
-        targetRef == other.targetRef &&
-        sha == other.sha;
+        this.targetRef == other.targetRef &&
+        this.sha == other.sha;
   }
 }

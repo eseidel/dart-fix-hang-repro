@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/reaction_rollup.dart';
 import 'package:github_out/models/simple_user.dart';
@@ -15,7 +11,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TeamDiscussion {
   /// {@macro team_discussion}
-  const TeamDiscussion({
+  TeamDiscussion({
     required this.author,
     required this.body,
     required this.bodyHtml,
@@ -48,7 +44,7 @@ class TeamDiscussion {
         body: json['body'] as String,
         bodyHtml: json['body_html'] as String,
         bodyVersion: json['body_version'] as String,
-        commentsCount: json['comments_count'] as int,
+        commentsCount: (json['comments_count'] as int),
         commentsUrl: Uri.parse(json['comments_url'] as String),
         createdAt: DateTime.parse(json['created_at'] as String),
         lastEditedAt: maybeParseDateTime(
@@ -56,7 +52,7 @@ class TeamDiscussion {
         ),
         htmlUrl: Uri.parse(json['html_url'] as String),
         nodeId: json['node_id'] as String,
-        number: json['number'] as int,
+        number: (json['number'] as int),
         pinned: json['pinned'] as bool,
         private: json['private'] as bool,
         teamUrl: Uri.parse(json['team_url'] as String),
@@ -194,23 +190,23 @@ class TeamDiscussion {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TeamDiscussion &&
-        author == other.author &&
-        body == other.body &&
-        bodyHtml == other.bodyHtml &&
-        bodyVersion == other.bodyVersion &&
-        commentsCount == other.commentsCount &&
-        commentsUrl == other.commentsUrl &&
-        createdAt == other.createdAt &&
-        lastEditedAt == other.lastEditedAt &&
-        htmlUrl == other.htmlUrl &&
-        nodeId == other.nodeId &&
-        number == other.number &&
-        pinned == other.pinned &&
-        private == other.private &&
-        teamUrl == other.teamUrl &&
-        title == other.title &&
-        updatedAt == other.updatedAt &&
-        url == other.url &&
-        reactions == other.reactions;
+        this.author == other.author &&
+        this.body == other.body &&
+        this.bodyHtml == other.bodyHtml &&
+        this.bodyVersion == other.bodyVersion &&
+        this.commentsCount == other.commentsCount &&
+        this.commentsUrl == other.commentsUrl &&
+        this.createdAt == other.createdAt &&
+        this.lastEditedAt == other.lastEditedAt &&
+        this.htmlUrl == other.htmlUrl &&
+        this.nodeId == other.nodeId &&
+        this.number == other.number &&
+        this.pinned == other.pinned &&
+        this.private == other.private &&
+        this.teamUrl == other.teamUrl &&
+        this.title == other.title &&
+        this.updatedAt == other.updatedAt &&
+        this.url == other.url &&
+        this.reactions == other.reactions;
   }
 }

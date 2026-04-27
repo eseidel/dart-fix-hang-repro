@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class OrganizationCreateIssueType {
-  const OrganizationCreateIssueType({
+  OrganizationCreateIssueType({
     required this.name,
     required this.isEnabled,
     this.description,
@@ -72,9 +72,9 @@ class OrganizationCreateIssueType {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrganizationCreateIssueType &&
-        name == other.name &&
-        isEnabled == other.isEnabled &&
-        description == other.description &&
-        color == other.color;
+        this.name == other.name &&
+        this.isEnabled == other.isEnabled &&
+        this.description == other.description &&
+        this.color == other.color;
   }
 }

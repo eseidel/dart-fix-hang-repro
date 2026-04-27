@@ -4,7 +4,7 @@ import 'package:uri/uri.dart';
 
 @immutable
 class Root {
-  const Root({
+  Root({
     required this.currentUserUrl,
     required this.currentUserAuthorizationsHtmlUrl,
     required this.authorizationsUrl,
@@ -17,6 +17,7 @@ class Root {
     required this.followersUrl,
     required this.followingUrl,
     required this.gistsUrl,
+    @deprecated this.hubUrl,
     required this.issueSearchUrl,
     required this.issuesUrl,
     required this.keysUrl,
@@ -32,12 +33,11 @@ class Root {
     required this.currentUserRepositoriesUrl,
     required this.starredUrl,
     required this.starredGistsUrl,
+    this.topicSearchUrl,
     required this.userUrl,
     required this.userOrganizationsUrl,
     required this.userRepositoriesUrl,
     required this.userSearchUrl,
-    @deprecated this.hubUrl,
-    this.topicSearchUrl,
   });
 
   /// Converts a `Map<String, dynamic>` to a [Root].
@@ -224,39 +224,39 @@ class Root {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Root &&
-        currentUserUrl == other.currentUserUrl &&
-        currentUserAuthorizationsHtmlUrl ==
+        this.currentUserUrl == other.currentUserUrl &&
+        this.currentUserAuthorizationsHtmlUrl ==
             other.currentUserAuthorizationsHtmlUrl &&
-        authorizationsUrl == other.authorizationsUrl &&
-        codeSearchUrl == other.codeSearchUrl &&
-        commitSearchUrl == other.commitSearchUrl &&
-        emailsUrl == other.emailsUrl &&
-        emojisUrl == other.emojisUrl &&
-        eventsUrl == other.eventsUrl &&
-        feedsUrl == other.feedsUrl &&
-        followersUrl == other.followersUrl &&
-        followingUrl == other.followingUrl &&
-        gistsUrl == other.gistsUrl &&
-        hubUrl == other.hubUrl &&
-        issueSearchUrl == other.issueSearchUrl &&
-        issuesUrl == other.issuesUrl &&
-        keysUrl == other.keysUrl &&
-        labelSearchUrl == other.labelSearchUrl &&
-        notificationsUrl == other.notificationsUrl &&
-        organizationUrl == other.organizationUrl &&
-        organizationRepositoriesUrl == other.organizationRepositoriesUrl &&
-        organizationTeamsUrl == other.organizationTeamsUrl &&
-        publicGistsUrl == other.publicGistsUrl &&
-        rateLimitUrl == other.rateLimitUrl &&
-        repositoryUrl == other.repositoryUrl &&
-        repositorySearchUrl == other.repositorySearchUrl &&
-        currentUserRepositoriesUrl == other.currentUserRepositoriesUrl &&
-        starredUrl == other.starredUrl &&
-        starredGistsUrl == other.starredGistsUrl &&
-        topicSearchUrl == other.topicSearchUrl &&
-        userUrl == other.userUrl &&
-        userOrganizationsUrl == other.userOrganizationsUrl &&
-        userRepositoriesUrl == other.userRepositoriesUrl &&
-        userSearchUrl == other.userSearchUrl;
+        this.authorizationsUrl == other.authorizationsUrl &&
+        this.codeSearchUrl == other.codeSearchUrl &&
+        this.commitSearchUrl == other.commitSearchUrl &&
+        this.emailsUrl == other.emailsUrl &&
+        this.emojisUrl == other.emojisUrl &&
+        this.eventsUrl == other.eventsUrl &&
+        this.feedsUrl == other.feedsUrl &&
+        this.followersUrl == other.followersUrl &&
+        this.followingUrl == other.followingUrl &&
+        this.gistsUrl == other.gistsUrl &&
+        this.hubUrl == other.hubUrl &&
+        this.issueSearchUrl == other.issueSearchUrl &&
+        this.issuesUrl == other.issuesUrl &&
+        this.keysUrl == other.keysUrl &&
+        this.labelSearchUrl == other.labelSearchUrl &&
+        this.notificationsUrl == other.notificationsUrl &&
+        this.organizationUrl == other.organizationUrl &&
+        this.organizationRepositoriesUrl == other.organizationRepositoriesUrl &&
+        this.organizationTeamsUrl == other.organizationTeamsUrl &&
+        this.publicGistsUrl == other.publicGistsUrl &&
+        this.rateLimitUrl == other.rateLimitUrl &&
+        this.repositoryUrl == other.repositoryUrl &&
+        this.repositorySearchUrl == other.repositorySearchUrl &&
+        this.currentUserRepositoriesUrl == other.currentUserRepositoriesUrl &&
+        this.starredUrl == other.starredUrl &&
+        this.starredGistsUrl == other.starredGistsUrl &&
+        this.topicSearchUrl == other.topicSearchUrl &&
+        this.userUrl == other.userUrl &&
+        this.userOrganizationsUrl == other.userOrganizationsUrl &&
+        this.userRepositoriesUrl == other.userRepositoriesUrl &&
+        this.userSearchUrl == other.userSearchUrl;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/code_scanning_default_setup_languages_inner.dart';
 import 'package:github_out/models/code_scanning_default_setup_query_suite.dart';
@@ -17,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeScanningDefaultSetup {
   /// {@macro code_scanning_default_setup}
-  const CodeScanningDefaultSetup({
+  CodeScanningDefaultSetup({
     this.state,
     this.languages,
     this.runnerType,
@@ -129,13 +125,13 @@ class CodeScanningDefaultSetup {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningDefaultSetup &&
-        state == other.state &&
-        listsEqual(languages, other.languages) &&
-        runnerType == other.runnerType &&
-        runnerLabel == other.runnerLabel &&
-        querySuite == other.querySuite &&
-        threatModel == other.threatModel &&
-        updatedAt == other.updatedAt &&
-        schedule == other.schedule;
+        this.state == other.state &&
+        listsEqual(this.languages, other.languages) &&
+        this.runnerType == other.runnerType &&
+        this.runnerLabel == other.runnerLabel &&
+        this.querySuite == other.querySuite &&
+        this.threatModel == other.threatModel &&
+        this.updatedAt == other.updatedAt &&
+        this.schedule == other.schedule;
   }
 }

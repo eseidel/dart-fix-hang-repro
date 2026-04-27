@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GistsUpdateRequestFiles {
-  const GistsUpdateRequestFiles({
+  GistsUpdateRequestFiles({
     this.content,
     this.filename,
   });
@@ -53,7 +53,7 @@ class GistsUpdateRequestFiles {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistsUpdateRequestFiles &&
-        content == other.content &&
-        filename == other.filename;
+        this.content == other.content &&
+        this.filename == other.filename;
   }
 }

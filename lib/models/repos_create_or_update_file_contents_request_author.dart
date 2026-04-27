@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReposCreateOrUpdateFileContentsRequestAuthor {
   /// {@macro repos_create_or_update_file_contents_request_author}
-  const ReposCreateOrUpdateFileContentsRequestAuthor({
+  ReposCreateOrUpdateFileContentsRequestAuthor({
     required this.name,
     required this.email,
     this.date,
@@ -73,8 +73,8 @@ class ReposCreateOrUpdateFileContentsRequestAuthor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateOrUpdateFileContentsRequestAuthor &&
-        name == other.name &&
-        email == other.email &&
-        date == other.date;
+        this.name == other.name &&
+        this.email == other.email &&
+        this.date == other.date;
   }
 }

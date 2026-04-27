@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SearchResultTextMatchesInnerMatchesInner {
-  const SearchResultTextMatchesInnerMatchesInner({
+  SearchResultTextMatchesInnerMatchesInner({
     this.text,
     this.indices,
   });
@@ -56,7 +56,7 @@ class SearchResultTextMatchesInnerMatchesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SearchResultTextMatchesInnerMatchesInner &&
-        text == other.text &&
-        listsEqual(indices, other.indices);
+        this.text == other.text &&
+        listsEqual(this.indices, other.indices);
   }
 }

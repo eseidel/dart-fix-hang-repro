@@ -11,21 +11,21 @@ import 'package:meta/meta.dart';
 @immutable
 class Team {
   /// {@macro team}
-  const Team({
+  Team({
     required this.id,
     required this.nodeId,
     required this.name,
     required this.slug,
     required this.description,
+    this.privacy,
+    this.notificationSetting,
     required this.permission,
+    this.permissions,
     required this.url,
     required this.htmlUrl,
     required this.membersUrl,
     required this.repositoriesUrl,
     required this.parent,
-    this.privacy,
-    this.notificationSetting,
-    this.permissions,
   });
 
   /// Converts a `Map<String, dynamic>` to a [Team].
@@ -34,7 +34,7 @@ class Team {
       'Team',
       json,
       () => Team(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         slug: json['slug'] as String,
@@ -128,19 +128,19 @@ class Team {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Team &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        slug == other.slug &&
-        description == other.description &&
-        privacy == other.privacy &&
-        notificationSetting == other.notificationSetting &&
-        permission == other.permission &&
-        permissions == other.permissions &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        membersUrl == other.membersUrl &&
-        repositoriesUrl == other.repositoriesUrl &&
-        parent == other.parent;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.slug == other.slug &&
+        this.description == other.description &&
+        this.privacy == other.privacy &&
+        this.notificationSetting == other.notificationSetting &&
+        this.permission == other.permission &&
+        this.permissions == other.permissions &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.membersUrl == other.membersUrl &&
+        this.repositoriesUrl == other.repositoriesUrl &&
+        this.parent == other.parent;
   }
 }

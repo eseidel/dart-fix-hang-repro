@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SnapshotJob {
-  const SnapshotJob({
+  SnapshotJob({
     required this.id,
     required this.correlator,
     this.htmlUrl,
@@ -72,8 +72,8 @@ class SnapshotJob {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SnapshotJob &&
-        id == other.id &&
-        correlator == other.correlator &&
-        htmlUrl == other.htmlUrl;
+        this.id == other.id &&
+        this.correlator == other.correlator &&
+        this.htmlUrl == other.htmlUrl;
   }
 }

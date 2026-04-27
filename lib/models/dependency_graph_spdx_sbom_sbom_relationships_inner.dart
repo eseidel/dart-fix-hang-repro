@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class DependencyGraphSpdxSbomSbomRelationshipsInner {
-  const DependencyGraphSpdxSbomSbomRelationshipsInner({
+  DependencyGraphSpdxSbomSbomRelationshipsInner({
     this.relationshipType,
     this.spdxElementId,
     this.relatedSpdxElement,
@@ -69,8 +69,8 @@ class DependencyGraphSpdxSbomSbomRelationshipsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependencyGraphSpdxSbomSbomRelationshipsInner &&
-        relationshipType == other.relationshipType &&
-        spdxElementId == other.spdxElementId &&
-        relatedSpdxElement == other.relatedSpdxElement;
+        this.relationshipType == other.relationshipType &&
+        this.spdxElementId == other.spdxElementId &&
+        this.relatedSpdxElement == other.relatedSpdxElement;
   }
 }

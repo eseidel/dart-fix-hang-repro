@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GistCommitChangeStatus {
-  const GistCommitChangeStatus({
+  GistCommitChangeStatus({
     this.total,
     this.additions,
     this.deletions,
@@ -15,9 +15,9 @@ class GistCommitChangeStatus {
       'GistCommitChangeStatus',
       json,
       () => GistCommitChangeStatus(
-        total: json['total'] as int?,
-        additions: json['additions'] as int?,
-        deletions: json['deletions'] as int?,
+        total: (json['total'] as int?),
+        additions: (json['additions'] as int?),
+        deletions: (json['deletions'] as int?),
       ),
     );
   }
@@ -55,8 +55,8 @@ class GistCommitChangeStatus {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GistCommitChangeStatus &&
-        total == other.total &&
-        additions == other.additions &&
-        deletions == other.deletions;
+        this.total == other.total &&
+        this.additions == other.additions &&
+        this.deletions == other.deletions;
   }
 }

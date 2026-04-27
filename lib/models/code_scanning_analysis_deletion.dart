@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodeScanningAnalysisDeletion {
   /// {@macro code_scanning_analysis_deletion}
-  const CodeScanningAnalysisDeletion({
+  CodeScanningAnalysisDeletion({
     required this.nextAnalysisUrl,
     required this.confirmDeleteUrl,
   });
@@ -66,7 +66,7 @@ class CodeScanningAnalysisDeletion {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningAnalysisDeletion &&
-        nextAnalysisUrl == other.nextAnalysisUrl &&
-        confirmDeleteUrl == other.confirmDeleteUrl;
+        this.nextAnalysisUrl == other.nextAnalysisUrl &&
+        this.confirmDeleteUrl == other.confirmDeleteUrl;
   }
 }

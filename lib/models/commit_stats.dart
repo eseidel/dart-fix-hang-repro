@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CommitStats {
-  const CommitStats({
+  CommitStats({
     this.additions,
     this.deletions,
     this.total,
@@ -15,9 +15,9 @@ class CommitStats {
       'CommitStats',
       json,
       () => CommitStats(
-        additions: json['additions'] as int?,
-        deletions: json['deletions'] as int?,
-        total: json['total'] as int?,
+        additions: (json['additions'] as int?),
+        deletions: (json['deletions'] as int?),
+        total: (json['total'] as int?),
       ),
     );
   }
@@ -55,8 +55,8 @@ class CommitStats {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitStats &&
-        additions == other.additions &&
-        deletions == other.deletions &&
-        total == other.total;
+        this.additions == other.additions &&
+        this.deletions == other.deletions &&
+        this.total == other.total;
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsBillingUsageMinutesUsedBreakdown {
-  const ActionsBillingUsageMinutesUsedBreakdown({
+  ActionsBillingUsageMinutesUsedBreakdown({
     this.ubuntu,
     this.macos,
     this.windows,
@@ -30,21 +30,21 @@ class ActionsBillingUsageMinutesUsedBreakdown {
       'ActionsBillingUsageMinutesUsedBreakdown',
       json,
       () => ActionsBillingUsageMinutesUsedBreakdown(
-        ubuntu: json['UBUNTU'] as int?,
-        macos: json['MACOS'] as int?,
-        windows: json['WINDOWS'] as int?,
-        ubuntu4Core: json['ubuntu_4_core'] as int?,
-        ubuntu8Core: json['ubuntu_8_core'] as int?,
-        ubuntu16Core: json['ubuntu_16_core'] as int?,
-        ubuntu32Core: json['ubuntu_32_core'] as int?,
-        ubuntu64Core: json['ubuntu_64_core'] as int?,
-        windows4Core: json['windows_4_core'] as int?,
-        windows8Core: json['windows_8_core'] as int?,
-        windows16Core: json['windows_16_core'] as int?,
-        windows32Core: json['windows_32_core'] as int?,
-        windows64Core: json['windows_64_core'] as int?,
-        macos12Core: json['macos_12_core'] as int?,
-        total: json['total'] as int?,
+        ubuntu: (json['UBUNTU'] as int?),
+        macos: (json['MACOS'] as int?),
+        windows: (json['WINDOWS'] as int?),
+        ubuntu4Core: (json['ubuntu_4_core'] as int?),
+        ubuntu8Core: (json['ubuntu_8_core'] as int?),
+        ubuntu16Core: (json['ubuntu_16_core'] as int?),
+        ubuntu32Core: (json['ubuntu_32_core'] as int?),
+        ubuntu64Core: (json['ubuntu_64_core'] as int?),
+        windows4Core: (json['windows_4_core'] as int?),
+        windows8Core: (json['windows_8_core'] as int?),
+        windows16Core: (json['windows_16_core'] as int?),
+        windows32Core: (json['windows_32_core'] as int?),
+        windows64Core: (json['windows_64_core'] as int?),
+        macos12Core: (json['macos_12_core'] as int?),
+        total: (json['total'] as int?),
       ),
     );
   }
@@ -150,20 +150,20 @@ class ActionsBillingUsageMinutesUsedBreakdown {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsBillingUsageMinutesUsedBreakdown &&
-        ubuntu == other.ubuntu &&
-        macos == other.macos &&
-        windows == other.windows &&
-        ubuntu4Core == other.ubuntu4Core &&
-        ubuntu8Core == other.ubuntu8Core &&
-        ubuntu16Core == other.ubuntu16Core &&
-        ubuntu32Core == other.ubuntu32Core &&
-        ubuntu64Core == other.ubuntu64Core &&
-        windows4Core == other.windows4Core &&
-        windows8Core == other.windows8Core &&
-        windows16Core == other.windows16Core &&
-        windows32Core == other.windows32Core &&
-        windows64Core == other.windows64Core &&
-        macos12Core == other.macos12Core &&
-        total == other.total;
+        this.ubuntu == other.ubuntu &&
+        this.macos == other.macos &&
+        this.windows == other.windows &&
+        this.ubuntu4Core == other.ubuntu4Core &&
+        this.ubuntu8Core == other.ubuntu8Core &&
+        this.ubuntu16Core == other.ubuntu16Core &&
+        this.ubuntu32Core == other.ubuntu32Core &&
+        this.ubuntu64Core == other.ubuntu64Core &&
+        this.windows4Core == other.windows4Core &&
+        this.windows8Core == other.windows8Core &&
+        this.windows16Core == other.windows16Core &&
+        this.windows32Core == other.windows32Core &&
+        this.windows64Core == other.windows64Core &&
+        this.macos12Core == other.macos12Core &&
+        this.total == other.total;
   }
 }

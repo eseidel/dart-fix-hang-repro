@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/protected_branch_required_status_check_checks_inner.dart';
 import 'package:meta/meta.dart';
@@ -13,11 +9,11 @@ import 'package:meta/meta.dart';
 @immutable
 class ProtectedBranchRequiredStatusCheck {
   /// {@macro protected_branch_required_status_check}
-  const ProtectedBranchRequiredStatusCheck({
-    required this.contexts,
-    required this.checks,
+  ProtectedBranchRequiredStatusCheck({
     this.url,
     this.enforcementLevel,
+    required this.contexts,
+    required this.checks,
     this.contextsUrl,
     this.strict,
   });
@@ -92,11 +88,11 @@ class ProtectedBranchRequiredStatusCheck {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ProtectedBranchRequiredStatusCheck &&
-        url == other.url &&
-        enforcementLevel == other.enforcementLevel &&
-        listsEqual(contexts, other.contexts) &&
-        listsEqual(checks, other.checks) &&
-        contextsUrl == other.contextsUrl &&
-        strict == other.strict;
+        this.url == other.url &&
+        this.enforcementLevel == other.enforcementLevel &&
+        listsEqual(this.contexts, other.contexts) &&
+        listsEqual(this.checks, other.checks) &&
+        this.contextsUrl == other.contextsUrl &&
+        this.strict == other.strict;
   }
 }

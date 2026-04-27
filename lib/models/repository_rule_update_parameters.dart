@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryRuleUpdateParameters {
-  const RepositoryRuleUpdateParameters({
+  RepositoryRuleUpdateParameters({
     required this.updateAllowsFetchAndMerge,
   });
 
@@ -47,6 +47,6 @@ class RepositoryRuleUpdateParameters {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRuleUpdateParameters &&
-        updateAllowsFetchAndMerge == other.updateAllowsFetchAndMerge;
+        this.updateAllowsFetchAndMerge == other.updateAllowsFetchAndMerge;
   }
 }

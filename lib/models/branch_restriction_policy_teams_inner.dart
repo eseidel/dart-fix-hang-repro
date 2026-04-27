@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class BranchRestrictionPolicyTeamsInner {
-  const BranchRestrictionPolicyTeamsInner({
+  BranchRestrictionPolicyTeamsInner({
     this.id,
     this.nodeId,
     this.url,
@@ -28,7 +28,7 @@ class BranchRestrictionPolicyTeamsInner {
       'BranchRestrictionPolicyTeamsInner',
       json,
       () => BranchRestrictionPolicyTeamsInner(
-        id: json['id'] as int?,
+        id: (json['id'] as int?),
         nodeId: json['node_id'] as String?,
         url: json['url'] as String?,
         htmlUrl: json['html_url'] as String?,
@@ -111,18 +111,18 @@ class BranchRestrictionPolicyTeamsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is BranchRestrictionPolicyTeamsInner &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        name == other.name &&
-        slug == other.slug &&
-        description == other.description &&
-        privacy == other.privacy &&
-        notificationSetting == other.notificationSetting &&
-        permission == other.permission &&
-        membersUrl == other.membersUrl &&
-        repositoriesUrl == other.repositoriesUrl &&
-        parent == other.parent;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.name == other.name &&
+        this.slug == other.slug &&
+        this.description == other.description &&
+        this.privacy == other.privacy &&
+        this.notificationSetting == other.notificationSetting &&
+        this.permission == other.permission &&
+        this.membersUrl == other.membersUrl &&
+        this.repositoriesUrl == other.repositoriesUrl &&
+        this.parent == other.parent;
   }
 }

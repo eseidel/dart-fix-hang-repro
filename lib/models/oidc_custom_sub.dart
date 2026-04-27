@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OidcCustomSub {
   /// {@macro oidc_custom_sub}
-  const OidcCustomSub({
+  OidcCustomSub({
     required this.includeClaimKeys,
   });
 
@@ -50,6 +50,6 @@ class OidcCustomSub {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OidcCustomSub &&
-        listsEqual(includeClaimKeys, other.includeClaimKeys);
+        listsEqual(this.includeClaimKeys, other.includeClaimKeys);
   }
 }

@@ -1,18 +1,20 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/deployment_reviewer_type.dart';
 import 'package:github_out/models/environment_protection_rules_inner_any_of_1_reviewers_inner.dart';
+import 'package:github_out/models/environment_protection_rules_inner_any_of_1_reviewers_inner_reviewer.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/team.dart';
+import 'package:github_out/models/team_permissions.dart';
+import 'package:github_out/models/team_simple.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class EnvironmentProtectionRulesInnerAnyOf1 {
-  const EnvironmentProtectionRulesInnerAnyOf1({
+  EnvironmentProtectionRulesInnerAnyOf1({
     required this.id,
     required this.nodeId,
-    required this.type,
     this.preventSelfReview,
+    required this.type,
     this.reviewers,
   });
 
@@ -25,7 +27,7 @@ class EnvironmentProtectionRulesInnerAnyOf1 {
       'EnvironmentProtectionRulesInnerAnyOf1',
       json,
       () => EnvironmentProtectionRulesInnerAnyOf1(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         preventSelfReview: json['prevent_self_review'] as bool?,
         type: json['type'] as String,
@@ -97,10 +99,10 @@ class EnvironmentProtectionRulesInnerAnyOf1 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is EnvironmentProtectionRulesInnerAnyOf1 &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        preventSelfReview == other.preventSelfReview &&
-        type == other.type &&
-        listsEqual(reviewers, other.reviewers);
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.preventSelfReview == other.preventSelfReview &&
+        this.type == other.type &&
+        listsEqual(this.reviewers, other.reviewers);
   }
 }

@@ -2,6 +2,9 @@ import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/rule_suite_evaluation_result.dart';
 import 'package:github_out/models/rule_suite_result.dart';
 import 'package:github_out/models/rule_suite_rule_evaluations_inner.dart';
+import 'package:github_out/models/rule_suite_rule_evaluations_inner_enforcement.dart';
+import 'package:github_out/models/rule_suite_rule_evaluations_inner_result.dart';
+import 'package:github_out/models/rule_suite_rule_evaluations_inner_rule_source.dart';
 import 'package:meta/meta.dart';
 
 /// {@template rule_suite}
@@ -11,7 +14,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RuleSuite {
   /// {@macro rule_suite}
-  const RuleSuite({
+  RuleSuite({
     this.id,
     this.actorId,
     this.actorName,
@@ -32,13 +35,13 @@ class RuleSuite {
       'RuleSuite',
       json,
       () => RuleSuite(
-        id: json['id'] as int?,
-        actorId: json['actor_id'] as int?,
+        id: (json['id'] as int?),
+        actorId: (json['actor_id'] as int?),
         actorName: json['actor_name'] as String?,
         beforeSha: json['before_sha'] as String?,
         afterSha: json['after_sha'] as String?,
         ref: json['ref'] as String?,
-        repositoryId: json['repository_id'] as int?,
+        repositoryId: (json['repository_id'] as int?),
         repositoryName: json['repository_name'] as String?,
         pushedAt: maybeParseDateTime(json['pushed_at'] as String?),
         result: RuleSuiteResult.maybeFromJson(json['result'] as String?),
@@ -143,17 +146,17 @@ class RuleSuite {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RuleSuite &&
-        id == other.id &&
-        actorId == other.actorId &&
-        actorName == other.actorName &&
-        beforeSha == other.beforeSha &&
-        afterSha == other.afterSha &&
-        ref == other.ref &&
-        repositoryId == other.repositoryId &&
-        repositoryName == other.repositoryName &&
-        pushedAt == other.pushedAt &&
-        result == other.result &&
-        evaluationResult == other.evaluationResult &&
-        listsEqual(ruleEvaluations, other.ruleEvaluations);
+        this.id == other.id &&
+        this.actorId == other.actorId &&
+        this.actorName == other.actorName &&
+        this.beforeSha == other.beforeSha &&
+        this.afterSha == other.afterSha &&
+        this.ref == other.ref &&
+        this.repositoryId == other.repositoryId &&
+        this.repositoryName == other.repositoryName &&
+        this.pushedAt == other.pushedAt &&
+        this.result == other.result &&
+        this.evaluationResult == other.evaluationResult &&
+        listsEqual(this.ruleEvaluations, other.ruleEvaluations);
   }
 }

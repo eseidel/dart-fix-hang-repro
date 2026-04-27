@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CommitSearchResultItemCommit {
-  const CommitSearchResultItemCommit({
+  CommitSearchResultItemCommit({
     required this.author,
     required this.committer,
     required this.commentCount,
@@ -29,7 +29,7 @@ class CommitSearchResultItemCommit {
         committer: GitUser.maybeFromJson(
           checkedKey(json, 'committer') as Map<String, dynamic>?,
         ),
-        commentCount: json['comment_count'] as int,
+        commentCount: (json['comment_count'] as int),
         message: json['message'] as String,
         tree: CommitSearchResultItemCommitTree.fromJson(
           json['tree'] as Map<String, dynamic>,
@@ -94,12 +94,12 @@ class CommitSearchResultItemCommit {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitSearchResultItemCommit &&
-        author == other.author &&
-        committer == other.committer &&
-        commentCount == other.commentCount &&
-        message == other.message &&
-        tree == other.tree &&
-        url == other.url &&
-        verification == other.verification;
+        this.author == other.author &&
+        this.committer == other.committer &&
+        this.commentCount == other.commentCount &&
+        this.message == other.message &&
+        this.tree == other.tree &&
+        this.url == other.url &&
+        this.verification == other.verification;
   }
 }

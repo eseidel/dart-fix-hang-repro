@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class DependencyGraphSpdxSbomSbomPackagesInnerExternalRefsInner {
-  const DependencyGraphSpdxSbomSbomPackagesInnerExternalRefsInner({
+  DependencyGraphSpdxSbomSbomPackagesInnerExternalRefsInner({
     required this.referenceCategory,
     required this.referenceLocator,
     required this.referenceType,
@@ -72,8 +72,8 @@ class DependencyGraphSpdxSbomSbomPackagesInnerExternalRefsInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependencyGraphSpdxSbomSbomPackagesInnerExternalRefsInner &&
-        referenceCategory == other.referenceCategory &&
-        referenceLocator == other.referenceLocator &&
-        referenceType == other.referenceType;
+        this.referenceCategory == other.referenceCategory &&
+        this.referenceLocator == other.referenceLocator &&
+        this.referenceType == other.referenceType;
   }
 }

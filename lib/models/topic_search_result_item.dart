@@ -1,7 +1,10 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
 import 'package:github_out/models/topic_search_result_item_aliases_inner.dart';
+import 'package:github_out/models/topic_search_result_item_aliases_inner_topic_relation.dart';
 import 'package:github_out/models/topic_search_result_item_related_inner.dart';
+import 'package:github_out/models/topic_search_result_item_related_inner_topic_relation.dart';
 import 'package:meta/meta.dart';
 
 /// {@template topic_search_result_item}
@@ -11,7 +14,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TopicSearchResultItem {
   /// {@macro topic_search_result_item}
-  const TopicSearchResultItem({
+  TopicSearchResultItem({
     required this.name,
     required this.displayName,
     required this.shortDescription,
@@ -47,7 +50,7 @@ class TopicSearchResultItem {
         featured: json['featured'] as bool,
         curated: json['curated'] as bool,
         score: (json['score'] as num).toDouble(),
-        repositoryCount: json['repository_count'] as int?,
+        repositoryCount: (json['repository_count'] as int?),
         logoUrl: maybeParseUri(json['logo_url'] as String?),
         textMatches: (json['text_matches'] as List?)
             ?.map<SearchResultTextMatchesInner>(
@@ -148,21 +151,21 @@ class TopicSearchResultItem {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TopicSearchResultItem &&
-        name == other.name &&
-        displayName == other.displayName &&
-        shortDescription == other.shortDescription &&
-        description == other.description &&
-        createdBy == other.createdBy &&
-        released == other.released &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        featured == other.featured &&
-        curated == other.curated &&
-        score == other.score &&
-        repositoryCount == other.repositoryCount &&
-        logoUrl == other.logoUrl &&
-        listsEqual(textMatches, other.textMatches) &&
-        listsEqual(related, other.related) &&
-        listsEqual(aliases, other.aliases);
+        this.name == other.name &&
+        this.displayName == other.displayName &&
+        this.shortDescription == other.shortDescription &&
+        this.description == other.description &&
+        this.createdBy == other.createdBy &&
+        this.released == other.released &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.featured == other.featured &&
+        this.curated == other.curated &&
+        this.score == other.score &&
+        this.repositoryCount == other.repositoryCount &&
+        this.logoUrl == other.logoUrl &&
+        listsEqual(this.textMatches, other.textMatches) &&
+        listsEqual(this.related, other.related) &&
+        listsEqual(this.aliases, other.aliases);
   }
 }

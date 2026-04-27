@@ -3,9 +3,9 @@ import 'package:meta/meta.dart';
 
 @immutable
 class UsersCreateGpgKeyForAuthenticatedUserRequest {
-  const UsersCreateGpgKeyForAuthenticatedUserRequest({
-    required this.armoredPublicKey,
+  UsersCreateGpgKeyForAuthenticatedUserRequest({
     this.name,
+    required this.armoredPublicKey,
   });
 
   /// Converts a `Map<String, dynamic>` to a
@@ -59,7 +59,7 @@ class UsersCreateGpgKeyForAuthenticatedUserRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UsersCreateGpgKeyForAuthenticatedUserRequest &&
-        name == other.name &&
-        armoredPublicKey == other.armoredPublicKey;
+        this.name == other.name &&
+        this.armoredPublicKey == other.armoredPublicKey;
   }
 }

@@ -1,6 +1,8 @@
+import 'package:github_out/messages/pull_request_review_links_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
 import 'package:github_out/models/pull_request_review_links.dart';
+import 'package:github_out/models/pull_request_review_links_html.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PullRequestReview {
   /// {@macro pull_request_review}
-  const PullRequestReview({
+  PullRequestReview({
     required this.id,
     required this.nodeId,
     required this.user,
@@ -20,11 +22,11 @@ class PullRequestReview {
     required this.htmlUrl,
     required this.pullRequestUrl,
     required this.links,
-    required this.commitId,
-    required this.authorAssociation,
     this.submittedAt,
+    required this.commitId,
     this.bodyHtml,
     this.bodyText,
+    required this.authorAssociation,
   });
 
   /// Converts a `Map<String, dynamic>` to a [PullRequestReview].
@@ -33,7 +35,7 @@ class PullRequestReview {
       'PullRequestReview',
       json,
       () => PullRequestReview(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         user: SimpleUser.maybeFromJson(
           checkedKey(json, 'user') as Map<String, dynamic>?,
@@ -145,18 +147,18 @@ class PullRequestReview {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestReview &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        user == other.user &&
-        body == other.body &&
-        state == other.state &&
-        htmlUrl == other.htmlUrl &&
-        pullRequestUrl == other.pullRequestUrl &&
-        links == other.links &&
-        submittedAt == other.submittedAt &&
-        commitId == other.commitId &&
-        bodyHtml == other.bodyHtml &&
-        bodyText == other.bodyText &&
-        authorAssociation == other.authorAssociation;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.user == other.user &&
+        this.body == other.body &&
+        this.state == other.state &&
+        this.htmlUrl == other.htmlUrl &&
+        this.pullRequestUrl == other.pullRequestUrl &&
+        this.links == other.links &&
+        this.submittedAt == other.submittedAt &&
+        this.commitId == other.commitId &&
+        this.bodyHtml == other.bodyHtml &&
+        this.bodyText == other.bodyText &&
+        this.authorAssociation == other.authorAssociation;
   }
 }

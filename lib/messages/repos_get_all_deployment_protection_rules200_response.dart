@@ -1,11 +1,12 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/custom_deployment_rule_app.dart';
 import 'package:github_out/models/deployment_protection_rule.dart';
 import 'package:meta/meta.dart';
 
 /// example: `{$ref: #/components/examples/deployment-protection-rules}`
 @immutable
 class ReposGetAllDeploymentProtectionRules200Response {
-  const ReposGetAllDeploymentProtectionRules200Response({
+  ReposGetAllDeploymentProtectionRules200Response({
     this.totalCount,
     this.customDeploymentProtectionRules,
   });
@@ -19,7 +20,7 @@ class ReposGetAllDeploymentProtectionRules200Response {
       'ReposGetAllDeploymentProtectionRules200Response',
       json,
       () => ReposGetAllDeploymentProtectionRules200Response(
-        totalCount: json['total_count'] as int?,
+        totalCount: (json['total_count'] as int?),
         customDeploymentProtectionRules:
             (json['custom_deployment_protection_rules'] as List?)
                 ?.map<DeploymentProtectionRule>(
@@ -70,9 +71,9 @@ class ReposGetAllDeploymentProtectionRules200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposGetAllDeploymentProtectionRules200Response &&
-        totalCount == other.totalCount &&
+        this.totalCount == other.totalCount &&
         listsEqual(
-          customDeploymentProtectionRules,
+          this.customDeploymentProtectionRules,
           other.customDeploymentProtectionRules,
         );
   }

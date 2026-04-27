@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActionsGetHostedRunnersPlatformsForOrg200Response {
-  const ActionsGetHostedRunnersPlatformsForOrg200Response({
+  ActionsGetHostedRunnersPlatformsForOrg200Response({
     required this.totalCount,
     required this.platforms,
   });
@@ -17,7 +17,7 @@ class ActionsGetHostedRunnersPlatformsForOrg200Response {
       'ActionsGetHostedRunnersPlatformsForOrg200Response',
       json,
       () => ActionsGetHostedRunnersPlatformsForOrg200Response(
-        totalCount: json['total_count'] as int,
+        totalCount: (json['total_count'] as int),
         platforms: (json['platforms'] as List).cast<String>(),
       ),
     );
@@ -56,7 +56,7 @@ class ActionsGetHostedRunnersPlatformsForOrg200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsGetHostedRunnersPlatformsForOrg200Response &&
-        totalCount == other.totalCount &&
-        listsEqual(platforms, other.platforms);
+        this.totalCount == other.totalCount &&
+        listsEqual(this.platforms, other.platforms);
   }
 }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposDelete403Response {
-  const ReposDelete403Response({
+  ReposDelete403Response({
     this.message,
     this.documentationUrl,
   });
@@ -50,7 +50,7 @@ class ReposDelete403Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposDelete403Response &&
-        message == other.message &&
-        documentationUrl == other.documentationUrl;
+        this.message == other.message &&
+        this.documentationUrl == other.documentationUrl;
   }
 }

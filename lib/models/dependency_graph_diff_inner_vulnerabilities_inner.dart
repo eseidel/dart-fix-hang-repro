@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class DependencyGraphDiffInnerVulnerabilitiesInner {
-  const DependencyGraphDiffInnerVulnerabilitiesInner({
+  DependencyGraphDiffInnerVulnerabilitiesInner({
     required this.severity,
     required this.advisoryGhsaId,
     required this.advisorySummary,
@@ -73,9 +73,9 @@ class DependencyGraphDiffInnerVulnerabilitiesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependencyGraphDiffInnerVulnerabilitiesInner &&
-        severity == other.severity &&
-        advisoryGhsaId == other.advisoryGhsaId &&
-        advisorySummary == other.advisorySummary &&
-        advisoryUrl == other.advisoryUrl;
+        this.severity == other.severity &&
+        this.advisoryGhsaId == other.advisoryGhsaId &&
+        this.advisorySummary == other.advisorySummary &&
+        this.advisoryUrl == other.advisoryUrl;
   }
 }

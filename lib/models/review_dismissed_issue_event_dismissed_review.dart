@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReviewDismissedIssueEventDismissedReview {
-  const ReviewDismissedIssueEventDismissedReview({
+  ReviewDismissedIssueEventDismissedReview({
     required this.state,
     required this.reviewId,
     required this.dismissalMessage,
@@ -20,7 +20,7 @@ class ReviewDismissedIssueEventDismissedReview {
       json,
       () => ReviewDismissedIssueEventDismissedReview(
         state: json['state'] as String,
-        reviewId: json['review_id'] as int,
+        reviewId: (json['review_id'] as int),
         dismissalMessage: checkedKey(json, 'dismissal_message') as String?,
         dismissalCommitId: json['dismissal_commit_id'] as String?,
       ),
@@ -66,9 +66,9 @@ class ReviewDismissedIssueEventDismissedReview {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReviewDismissedIssueEventDismissedReview &&
-        state == other.state &&
-        reviewId == other.reviewId &&
-        dismissalMessage == other.dismissalMessage &&
-        dismissalCommitId == other.dismissalCommitId;
+        this.state == other.state &&
+        this.reviewId == other.reviewId &&
+        this.dismissalMessage == other.dismissalMessage &&
+        this.dismissalCommitId == other.dismissalCommitId;
   }
 }

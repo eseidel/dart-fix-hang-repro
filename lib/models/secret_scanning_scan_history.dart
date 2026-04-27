@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/secret_scanning_scan.dart';
 import 'package:github_out/models/secret_scanning_scan_history_custom_pattern_backfill_scans_inner.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class SecretScanningScanHistory {
-  const SecretScanningScanHistory({
+  SecretScanningScanHistory({
     this.incrementalScans,
     this.patternUpdateScans,
     this.backfillScans,
@@ -90,11 +86,11 @@ class SecretScanningScanHistory {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningScanHistory &&
-        listsEqual(incrementalScans, other.incrementalScans) &&
-        listsEqual(patternUpdateScans, other.patternUpdateScans) &&
-        listsEqual(backfillScans, other.backfillScans) &&
+        listsEqual(this.incrementalScans, other.incrementalScans) &&
+        listsEqual(this.patternUpdateScans, other.patternUpdateScans) &&
+        listsEqual(this.backfillScans, other.backfillScans) &&
         listsEqual(
-          customPatternBackfillScans,
+          this.customPatternBackfillScans,
           other.customPatternBackfillScans,
         );
   }

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class UsersDeleteAttestationsBulkRequestOneOf0 {
-  const UsersDeleteAttestationsBulkRequestOneOf0({
+  UsersDeleteAttestationsBulkRequestOneOf0({
     required this.subjectDigests,
   });
 
@@ -51,6 +51,6 @@ class UsersDeleteAttestationsBulkRequestOneOf0 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is UsersDeleteAttestationsBulkRequestOneOf0 &&
-        listsEqual(subjectDigests, other.subjectDigests);
+        listsEqual(this.subjectDigests, other.subjectDigests);
   }
 }

@@ -1,14 +1,11 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_advisory_update_vulnerabilities_inner_package.dart';
+import 'package:github_out/models/security_advisory_ecosystems.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class RepositoryAdvisoryUpdateVulnerabilitiesInner {
-  const RepositoryAdvisoryUpdateVulnerabilitiesInner({
+  RepositoryAdvisoryUpdateVulnerabilitiesInner({
     required this.package,
     this.vulnerableVersionRange,
     this.patchedVersions,
@@ -81,9 +78,9 @@ class RepositoryAdvisoryUpdateVulnerabilitiesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryAdvisoryUpdateVulnerabilitiesInner &&
-        package == other.package &&
-        vulnerableVersionRange == other.vulnerableVersionRange &&
-        patchedVersions == other.patchedVersions &&
-        listsEqual(vulnerableFunctions, other.vulnerableFunctions);
+        this.package == other.package &&
+        this.vulnerableVersionRange == other.vulnerableVersionRange &&
+        this.patchedVersions == other.patchedVersions &&
+        listsEqual(this.vulnerableFunctions, other.vulnerableFunctions);
   }
 }

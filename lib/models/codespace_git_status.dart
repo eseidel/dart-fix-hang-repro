@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CodespaceGitStatus {
   /// {@macro codespace_git_status}
-  const CodespaceGitStatus({
+  CodespaceGitStatus({
     this.ahead,
     this.behind,
     this.hasUnpushedChanges,
@@ -21,8 +21,8 @@ class CodespaceGitStatus {
       'CodespaceGitStatus',
       json,
       () => CodespaceGitStatus(
-        ahead: json['ahead'] as int?,
-        behind: json['behind'] as int?,
+        ahead: (json['ahead'] as int?),
+        behind: (json['behind'] as int?),
         hasUnpushedChanges: json['has_unpushed_changes'] as bool?,
         hasUncommittedChanges: json['has_uncommitted_changes'] as bool?,
         ref: json['ref'] as String?,
@@ -82,10 +82,10 @@ class CodespaceGitStatus {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodespaceGitStatus &&
-        ahead == other.ahead &&
-        behind == other.behind &&
-        hasUnpushedChanges == other.hasUnpushedChanges &&
-        hasUncommittedChanges == other.hasUncommittedChanges &&
-        ref == other.ref;
+        this.ahead == other.ahead &&
+        this.behind == other.behind &&
+        this.hasUnpushedChanges == other.hasUnpushedChanges &&
+        this.hasUncommittedChanges == other.hasUncommittedChanges &&
+        this.ref == other.ref;
   }
 }

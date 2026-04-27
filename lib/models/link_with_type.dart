@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class LinkWithType {
   /// {@macro link_with_type}
-  const LinkWithType({
+  LinkWithType({
     required this.href,
     required this.type,
   });
@@ -54,6 +54,8 @@ class LinkWithType {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is LinkWithType && href == other.href && type == other.type;
+    return other is LinkWithType &&
+        this.href == other.href &&
+        this.type == other.type;
   }
 }

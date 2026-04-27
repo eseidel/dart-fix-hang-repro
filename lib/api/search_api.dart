@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -13,6 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
+import 'package:github_out/messages/issue_search_result_item_pull_request.dart';
 import 'package:github_out/messages/search_code200_response.dart';
 import 'package:github_out/messages/search_commits200_response.dart';
 import 'package:github_out/messages/search_issues_and_pull_requests200_response.dart';
@@ -20,14 +17,80 @@ import 'package:github_out/messages/search_labels200_response.dart';
 import 'package:github_out/messages/search_repos200_response.dart';
 import 'package:github_out/messages/search_topics200_response.dart';
 import 'package:github_out/messages/search_users200_response.dart';
+import 'package:github_out/messages/service_unavailable_response.dart';
+import 'package:github_out/models/author_association.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
+import 'package:github_out/models/code_search_result_item.dart';
+import 'package:github_out/models/commit_search_result_item.dart';
+import 'package:github_out/models/commit_search_result_item_commit.dart';
+import 'package:github_out/models/commit_search_result_item_commit_author.dart';
+import 'package:github_out/models/commit_search_result_item_commit_tree.dart';
+import 'package:github_out/models/commit_search_result_item_parents_inner.dart';
+import 'package:github_out/models/enterprise.dart';
+import 'package:github_out/models/git_user.dart';
+import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
+import 'package:github_out/models/issue_search_result_item.dart';
+import 'package:github_out/models/issue_search_result_item_labels_inner.dart';
+import 'package:github_out/models/issue_search_result_item_sub_issues_summary.dart';
+import 'package:github_out/models/issue_type.dart';
+import 'package:github_out/models/issue_type_color.dart';
+import 'package:github_out/models/label_search_result_item.dart';
+import 'package:github_out/models/license_simple.dart';
+import 'package:github_out/models/milestone.dart';
+import 'package:github_out/models/milestone_state.dart';
+import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/order_param.dart';
+import 'package:github_out/models/reaction_rollup.dart';
+import 'package:github_out/models/repo_search_result_item.dart';
+import 'package:github_out/models/repo_search_result_item_permissions.dart';
+import 'package:github_out/models/repository.dart';
+import 'package:github_out/models/repository_code_search_index_status.dart';
+import 'package:github_out/models/repository_merge_commit_message.dart';
+import 'package:github_out/models/repository_merge_commit_title.dart';
+import 'package:github_out/models/repository_permissions.dart';
+import 'package:github_out/models/repository_squash_merge_commit_message.dart';
+import 'package:github_out/models/repository_squash_merge_commit_title.dart';
 import 'package:github_out/models/search_code_parameter1.dart';
 import 'package:github_out/models/search_code_parameter2.dart';
 import 'package:github_out/models/search_commits_parameter1.dart';
 import 'package:github_out/models/search_issues_and_pull_requests_parameter1.dart';
 import 'package:github_out/models/search_labels_parameter2.dart';
 import 'package:github_out/models/search_repos_parameter1.dart';
+import 'package:github_out/models/search_result_text_matches_inner.dart';
+import 'package:github_out/models/search_result_text_matches_inner_matches_inner.dart';
 import 'package:github_out/models/search_users_parameter1.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/topic_search_result_item.dart';
+import 'package:github_out/models/topic_search_result_item_aliases_inner.dart';
+import 'package:github_out/models/topic_search_result_item_aliases_inner_topic_relation.dart';
+import 'package:github_out/models/topic_search_result_item_related_inner.dart';
+import 'package:github_out/models/topic_search_result_item_related_inner_topic_relation.dart';
+import 'package:github_out/models/user_search_result_item.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/verification.dart';
+import 'package:http/http.dart' as http;
 
 /// Look for stuff on GitHub.
 class SearchApi {
@@ -83,9 +146,9 @@ class SearchApi {
       method: Method.get,
       path: '/search/code',
       queryParameters: {
-        'q': [q],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (order != null) 'order': [order.toJson()],
+        'q': [q.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (order != null) 'order': [order.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -94,7 +157,7 @@ class SearchApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -133,9 +196,9 @@ class SearchApi {
       method: Method.get,
       path: '/search/commits',
       queryParameters: {
-        'q': [q],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (order != null) 'order': [order.toJson()],
+        'q': [q.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (order != null) 'order': [order.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -144,7 +207,7 @@ class SearchApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -175,19 +238,20 @@ class SearchApi {
       method: Method.get,
       path: '/search/issues',
       queryParameters: {
-        'q': [q],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (order != null) 'order': [order.toJson()],
+        'q': [q.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (order != null) 'order': [order.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
-        if (advancedSearch != null) 'advanced_search': [advancedSearch],
+        if (advancedSearch != null)
+          'advanced_search': [advancedSearch.toString()],
       },
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -231,9 +295,9 @@ class SearchApi {
       path: '/search/labels',
       queryParameters: {
         'repository_id': [repositoryId.toString()],
-        'q': [q],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (order != null) 'order': [order.toJson()],
+        'q': [q.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (order != null) 'order': [order.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -242,7 +306,7 @@ class SearchApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -287,9 +351,9 @@ class SearchApi {
       method: Method.get,
       path: '/search/repositories',
       queryParameters: {
-        'q': [q],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (order != null) 'order': [order.toJson()],
+        'q': [q.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (order != null) 'order': [order.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -298,7 +362,7 @@ class SearchApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -343,7 +407,7 @@ class SearchApi {
       method: Method.get,
       path: '/search/topics',
       queryParameters: {
-        'q': [q],
+        'q': [q.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -352,7 +416,7 @@ class SearchApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -405,9 +469,9 @@ class SearchApi {
       method: Method.get,
       path: '/search/users',
       queryParameters: {
-        'q': [q],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (order != null) 'order': [order.toJson()],
+        'q': [q.toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (order != null) 'order': [order.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -416,7 +480,7 @@ class SearchApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

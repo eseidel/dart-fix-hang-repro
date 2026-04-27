@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:meta/meta.dart';
 
@@ -12,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotIdeCodeCompletionsEditorsInnerModelsInnerLanguagesInner {
   /// {@macro copilot_ide_code_completions_editors_inner_models_inner_languages_inner}
-  const CopilotIdeCodeCompletionsEditorsInnerModelsInnerLanguagesInner({
+  CopilotIdeCodeCompletionsEditorsInnerModelsInnerLanguagesInner({
     this.name,
     this.totalEngagedUsers,
     this.totalCodeSuggestions,
@@ -31,11 +27,11 @@ class CopilotIdeCodeCompletionsEditorsInnerModelsInnerLanguagesInner {
       json,
       () => CopilotIdeCodeCompletionsEditorsInnerModelsInnerLanguagesInner(
         name: json['name'] as String?,
-        totalEngagedUsers: json['total_engaged_users'] as int?,
-        totalCodeSuggestions: json['total_code_suggestions'] as int?,
-        totalCodeAcceptances: json['total_code_acceptances'] as int?,
-        totalCodeLinesSuggested: json['total_code_lines_suggested'] as int?,
-        totalCodeLinesAccepted: json['total_code_lines_accepted'] as int?,
+        totalEngagedUsers: (json['total_engaged_users'] as int?),
+        totalCodeSuggestions: (json['total_code_suggestions'] as int?),
+        totalCodeAcceptances: (json['total_code_acceptances'] as int?),
+        totalCodeLinesSuggested: (json['total_code_lines_suggested'] as int?),
+        totalCodeLinesAccepted: (json['total_code_lines_accepted'] as int?),
       ),
     );
   }
@@ -105,11 +101,11 @@ class CopilotIdeCodeCompletionsEditorsInnerModelsInnerLanguagesInner {
     if (identical(this, other)) return true;
     return other
             is CopilotIdeCodeCompletionsEditorsInnerModelsInnerLanguagesInner &&
-        name == other.name &&
-        totalEngagedUsers == other.totalEngagedUsers &&
-        totalCodeSuggestions == other.totalCodeSuggestions &&
-        totalCodeAcceptances == other.totalCodeAcceptances &&
-        totalCodeLinesSuggested == other.totalCodeLinesSuggested &&
-        totalCodeLinesAccepted == other.totalCodeLinesAccepted;
+        this.name == other.name &&
+        this.totalEngagedUsers == other.totalEngagedUsers &&
+        this.totalCodeSuggestions == other.totalCodeSuggestions &&
+        this.totalCodeAcceptances == other.totalCodeAcceptances &&
+        this.totalCodeLinesSuggested == other.totalCodeLinesSuggested &&
+        this.totalCodeLinesAccepted == other.totalCodeLinesAccepted;
   }
 }

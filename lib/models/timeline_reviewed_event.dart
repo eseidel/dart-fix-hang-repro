@@ -1,7 +1,9 @@
+import 'package:github_out/messages/timeline_reviewed_event_links_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/author_association.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:github_out/models/timeline_reviewed_event_links.dart';
+import 'package:github_out/models/timeline_reviewed_event_links_html.dart';
 import 'package:meta/meta.dart';
 
 /// {@template timeline_reviewed_event}
@@ -11,7 +13,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TimelineReviewedEvent {
   /// {@macro timeline_reviewed_event}
-  const TimelineReviewedEvent({
+  TimelineReviewedEvent({
     required this.event,
     required this.id,
     required this.nodeId,
@@ -21,11 +23,11 @@ class TimelineReviewedEvent {
     required this.htmlUrl,
     required this.pullRequestUrl,
     required this.links,
-    required this.commitId,
-    required this.authorAssociation,
     this.submittedAt,
+    required this.commitId,
     this.bodyHtml,
     this.bodyText,
+    required this.authorAssociation,
   });
 
   /// Converts a `Map<String, dynamic>` to a [TimelineReviewedEvent].
@@ -35,7 +37,7 @@ class TimelineReviewedEvent {
       json,
       () => TimelineReviewedEvent(
         event: json['event'] as String,
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         user: SimpleUser.fromJson(json['user'] as Map<String, dynamic>),
         body: checkedKey(json, 'body') as String?,
@@ -147,19 +149,19 @@ class TimelineReviewedEvent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TimelineReviewedEvent &&
-        event == other.event &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        user == other.user &&
-        body == other.body &&
-        state == other.state &&
-        htmlUrl == other.htmlUrl &&
-        pullRequestUrl == other.pullRequestUrl &&
-        links == other.links &&
-        submittedAt == other.submittedAt &&
-        commitId == other.commitId &&
-        bodyHtml == other.bodyHtml &&
-        bodyText == other.bodyText &&
-        authorAssociation == other.authorAssociation;
+        this.event == other.event &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.user == other.user &&
+        this.body == other.body &&
+        this.state == other.state &&
+        this.htmlUrl == other.htmlUrl &&
+        this.pullRequestUrl == other.pullRequestUrl &&
+        this.links == other.links &&
+        this.submittedAt == other.submittedAt &&
+        this.commitId == other.commitId &&
+        this.bodyHtml == other.bodyHtml &&
+        this.bodyText == other.bodyText &&
+        this.authorAssociation == other.authorAssociation;
   }
 }

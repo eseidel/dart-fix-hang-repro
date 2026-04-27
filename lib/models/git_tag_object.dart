@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitTagObject {
-  const GitTagObject({
+  GitTagObject({
     required this.sha,
     required this.type,
     required this.url,
@@ -55,8 +55,8 @@ class GitTagObject {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitTagObject &&
-        sha == other.sha &&
-        type == other.type &&
-        url == other.url;
+        this.sha == other.sha &&
+        this.type == other.type &&
+        this.url == other.url;
   }
 }

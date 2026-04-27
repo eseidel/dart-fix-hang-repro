@@ -10,7 +10,7 @@ import 'package:meta/meta.dart';
 /// example: `{contexts: [contexts]}`
 @immutable
 class ReposRemoveStatusCheckContextsRequestOneOf0 {
-  const ReposRemoveStatusCheckContextsRequestOneOf0({
+  ReposRemoveStatusCheckContextsRequestOneOf0({
     required this.contexts,
   });
 
@@ -57,6 +57,6 @@ class ReposRemoveStatusCheckContextsRequestOneOf0 {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposRemoveStatusCheckContextsRequestOneOf0 &&
-        listsEqual(contexts, other.contexts);
+        listsEqual(this.contexts, other.contexts);
   }
 }

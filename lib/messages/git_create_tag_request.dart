@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitCreateTagRequest {
-  const GitCreateTagRequest({
+  GitCreateTagRequest({
     required this.tag,
     required this.message,
     required this.object,
@@ -79,10 +79,10 @@ class GitCreateTagRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitCreateTagRequest &&
-        tag == other.tag &&
-        message == other.message &&
-        object == other.object &&
-        type == other.type &&
-        tagger == other.tagger;
+        this.tag == other.tag &&
+        this.message == other.message &&
+        this.object == other.object &&
+        this.type == other.type &&
+        this.tagger == other.tagger;
   }
 }

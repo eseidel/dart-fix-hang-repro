@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class GitTagTagger {
-  const GitTagTagger({
+  GitTagTagger({
     required this.date,
     required this.email,
     required this.name,
@@ -55,8 +55,8 @@ class GitTagTagger {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is GitTagTagger &&
-        date == other.date &&
-        email == other.email &&
-        name == other.name;
+        this.date == other.date &&
+        this.email == other.email &&
+        this.name == other.name;
   }
 }

@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/messages/pull_request_review_links_pull_request.dart';
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/pull_request_review_links_html.dart';
@@ -9,7 +5,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullRequestReviewLinks {
-  const PullRequestReviewLinks({
+  PullRequestReviewLinks({
     required this.html,
     required this.pullRequest,
   });
@@ -60,7 +56,7 @@ class PullRequestReviewLinks {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestReviewLinks &&
-        html == other.html &&
-        pullRequest == other.pullRequest;
+        this.html == other.html &&
+        this.pullRequest == other.pullRequest;
   }
 }

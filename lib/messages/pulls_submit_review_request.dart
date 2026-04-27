@@ -4,9 +4,9 @@ import 'package:meta/meta.dart';
 
 @immutable
 class PullsSubmitReviewRequest {
-  const PullsSubmitReviewRequest({
-    required this.event,
+  PullsSubmitReviewRequest({
     this.body,
+    required this.event,
   });
 
   /// Converts a `Map<String, dynamic>` to a [PullsSubmitReviewRequest].
@@ -58,7 +58,7 @@ class PullsSubmitReviewRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullsSubmitReviewRequest &&
-        body == other.body &&
-        event == other.event;
+        this.body == other.body &&
+        this.event == other.event;
   }
 }

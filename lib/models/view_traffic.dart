@@ -9,7 +9,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ViewTraffic {
   /// {@macro view_traffic}
-  const ViewTraffic({
+  ViewTraffic({
     required this.count,
     required this.uniques,
     required this.views,
@@ -21,8 +21,8 @@ class ViewTraffic {
       'ViewTraffic',
       json,
       () => ViewTraffic(
-        count: json['count'] as int,
-        uniques: json['uniques'] as int,
+        count: (json['count'] as int),
+        uniques: (json['uniques'] as int),
         views: (json['views'] as List)
             .map<Traffic>((e) => Traffic.fromJson(e as Map<String, dynamic>))
             .toList(),
@@ -66,8 +66,8 @@ class ViewTraffic {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ViewTraffic &&
-        count == other.count &&
-        uniques == other.uniques &&
-        listsEqual(views, other.views);
+        this.count == other.count &&
+        this.uniques == other.uniques &&
+        listsEqual(this.views, other.views);
   }
 }

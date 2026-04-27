@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/project_organization_permission.dart';
 import 'package:github_out/models/simple_user.dart';
@@ -14,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class Project {
   /// {@macro project}
-  const Project({
+  Project({
     required this.ownerUrl,
     required this.url,
     required this.htmlUrl,
@@ -42,11 +38,11 @@ class Project {
         url: Uri.parse(json['url'] as String),
         htmlUrl: Uri.parse(json['html_url'] as String),
         columnsUrl: Uri.parse(json['columns_url'] as String),
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         name: json['name'] as String,
         body: checkedKey(json, 'body') as String?,
-        number: json['number'] as int,
+        number: (json['number'] as int),
         state: json['state'] as String,
         creator: SimpleUser.maybeFromJson(
           checkedKey(json, 'creator') as Map<String, dynamic>?,
@@ -165,20 +161,20 @@ class Project {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Project &&
-        ownerUrl == other.ownerUrl &&
-        url == other.url &&
-        htmlUrl == other.htmlUrl &&
-        columnsUrl == other.columnsUrl &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        name == other.name &&
-        body == other.body &&
-        number == other.number &&
-        state == other.state &&
-        creator == other.creator &&
-        createdAt == other.createdAt &&
-        updatedAt == other.updatedAt &&
-        organizationPermission == other.organizationPermission &&
-        private == other.private;
+        this.ownerUrl == other.ownerUrl &&
+        this.url == other.url &&
+        this.htmlUrl == other.htmlUrl &&
+        this.columnsUrl == other.columnsUrl &&
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.name == other.name &&
+        this.body == other.body &&
+        this.number == other.number &&
+        this.state == other.state &&
+        this.creator == other.creator &&
+        this.createdAt == other.createdAt &&
+        this.updatedAt == other.updatedAt &&
+        this.organizationPermission == other.organizationPermission &&
+        this.private == other.private;
   }
 }

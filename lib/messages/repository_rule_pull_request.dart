@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repository_rule_pull_request_parameters.dart';
+import 'package:github_out/models/repository_rule_pull_request_parameters_allowed_merge_methods_inner.dart';
 import 'package:github_out/models/repository_rule_pull_request_type.dart';
 import 'package:meta/meta.dart';
 
@@ -11,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class RepositoryRulePullRequest {
   /// {@macro repository_rule_pull_request}
-  const RepositoryRulePullRequest({
+  RepositoryRulePullRequest({
     required this.type,
     this.parameters,
   });
@@ -60,7 +61,7 @@ class RepositoryRulePullRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is RepositoryRulePullRequest &&
-        type == other.type &&
-        parameters == other.parameters;
+        this.type == other.type &&
+        this.parameters == other.parameters;
   }
 }

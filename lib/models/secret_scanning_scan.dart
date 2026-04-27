@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class SecretScanningScan {
   /// {@macro secret_scanning_scan}
-  const SecretScanningScan({
+  SecretScanningScan({
     this.type,
     this.status,
     this.completedAt,
@@ -71,9 +71,9 @@ class SecretScanningScan {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SecretScanningScan &&
-        type == other.type &&
-        status == other.status &&
-        completedAt == other.completedAt &&
-        startedAt == other.startedAt;
+        this.type == other.type &&
+        this.status == other.status &&
+        this.completedAt == other.completedAt &&
+        this.startedAt == other.startedAt;
   }
 }

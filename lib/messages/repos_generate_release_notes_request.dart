@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReposGenerateReleaseNotesRequest {
-  const ReposGenerateReleaseNotesRequest({
+  ReposGenerateReleaseNotesRequest({
     required this.tagName,
     this.targetCommitish,
     this.previousTagName,
@@ -77,9 +77,9 @@ class ReposGenerateReleaseNotesRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposGenerateReleaseNotesRequest &&
-        tagName == other.tagName &&
-        targetCommitish == other.targetCommitish &&
-        previousTagName == other.previousTagName &&
-        configurationFilePath == other.configurationFilePath;
+        this.tagName == other.tagName &&
+        this.targetCommitish == other.targetCommitish &&
+        this.previousTagName == other.previousTagName &&
+        this.configurationFilePath == other.configurationFilePath;
   }
 }

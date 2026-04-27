@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -22,18 +18,81 @@ import 'package:github_out/messages/dependabot_set_repository_access_default_lev
 import 'package:github_out/messages/dependabot_set_selected_repos_for_org_secret_request.dart';
 import 'package:github_out/messages/dependabot_update_alert_request.dart';
 import 'package:github_out/messages/dependabot_update_repository_access_for_org_request.dart';
+import 'package:github_out/models/alert_auto_dismissed_at.dart';
+import 'package:github_out/models/alert_created_at.dart';
+import 'package:github_out/models/alert_dismissed_at.dart';
+import 'package:github_out/models/alert_fixed_at.dart';
+import 'package:github_out/models/alert_html_url.dart';
 import 'package:github_out/models/alert_number.dart';
+import 'package:github_out/models/alert_updated_at.dart';
+import 'package:github_out/models/alert_url.dart';
+import 'package:github_out/models/basic_error.dart';
+import 'package:github_out/models/code_of_conduct.dart';
+import 'package:github_out/models/cvss_severities.dart';
+import 'package:github_out/models/cvss_severities_cvss_v3.dart';
+import 'package:github_out/models/cvss_severities_cvss_v4.dart';
 import 'package:github_out/models/dependabot_alert.dart';
 import 'package:github_out/models/dependabot_alert_comma_separated_has_param.dart';
+import 'package:github_out/models/dependabot_alert_comma_separated_has_param_one_of_1_inner.dart';
+import 'package:github_out/models/dependabot_alert_dependency.dart';
+import 'package:github_out/models/dependabot_alert_dependency_relationship.dart';
+import 'package:github_out/models/dependabot_alert_dependency_scope.dart';
+import 'package:github_out/models/dependabot_alert_dismissed_reason.dart';
+import 'package:github_out/models/dependabot_alert_package.dart';
 import 'package:github_out/models/dependabot_alert_scope_param.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_cvss.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_cwes_inner.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_identifiers_inner.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_identifiers_inner_type.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_references_inner.dart';
+import 'package:github_out/models/dependabot_alert_security_advisory_severity.dart';
+import 'package:github_out/models/dependabot_alert_security_vulnerability.dart';
+import 'package:github_out/models/dependabot_alert_security_vulnerability_first_patched_version.dart';
+import 'package:github_out/models/dependabot_alert_security_vulnerability_severity.dart';
 import 'package:github_out/models/dependabot_alert_sort_param.dart';
+import 'package:github_out/models/dependabot_alert_state.dart';
 import 'package:github_out/models/dependabot_alert_with_repository.dart';
+import 'package:github_out/models/dependabot_alert_with_repository_dependency.dart';
+import 'package:github_out/models/dependabot_alert_with_repository_dependency_relationship.dart';
+import 'package:github_out/models/dependabot_alert_with_repository_dependency_scope.dart';
+import 'package:github_out/models/dependabot_alert_with_repository_dismissed_reason.dart';
+import 'package:github_out/models/dependabot_alert_with_repository_state.dart';
+import 'package:github_out/models/dependabot_create_or_update_org_secret_request_visibility.dart';
 import 'package:github_out/models/dependabot_public_key.dart';
 import 'package:github_out/models/dependabot_repository_access_details.dart';
+import 'package:github_out/models/dependabot_repository_access_details_default_level.dart';
 import 'package:github_out/models/dependabot_secret.dart';
+import 'package:github_out/models/dependabot_set_repository_access_default_level_request_default_level.dart';
+import 'package:github_out/models/dependabot_update_alert_request_dismissed_reason.dart';
+import 'package:github_out/models/dependabot_update_alert_request_state.dart';
 import 'package:github_out/models/direction_param.dart';
 import 'package:github_out/models/empty_object.dart';
+import 'package:github_out/models/minimal_repository.dart';
+import 'package:github_out/models/minimal_repository_license.dart';
+import 'package:github_out/models/minimal_repository_permissions.dart';
 import 'package:github_out/models/organization_dependabot_secret.dart';
+import 'package:github_out/models/organization_dependabot_secret_visibility.dart';
+import 'package:github_out/models/security_advisory_epss.dart';
+import 'package:github_out/models/security_and_analysis.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security.dart';
+import 'package:github_out/models/security_and_analysis_advanced_security_status.dart';
+import 'package:github_out/models/security_and_analysis_code_security.dart';
+import 'package:github_out/models/security_and_analysis_code_security_status.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates.dart';
+import 'package:github_out/models/security_and_analysis_dependabot_security_updates_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_ai_detection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_non_provider_patterns_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_push_protection_status.dart';
+import 'package:github_out/models/security_and_analysis_secret_scanning_status.dart';
+import 'package:github_out/models/simple_repository.dart';
+import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/validation_error_simple.dart';
+import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 sealed class DependabotCreateOrUpdateOrgSecretResponse {
@@ -153,20 +212,21 @@ class DependabotApi {
       method: Method.get,
       path: '/enterprises/{enterprise}/dependabot/alerts'.replaceAll(
         '{enterprise}',
-        enterprise,
+        '${enterprise}',
       ),
       queryParameters: {
-        if (state != null) 'state': [state],
-        if (severity != null) 'severity': [severity],
-        if (ecosystem != null) 'ecosystem': [ecosystem],
-        if (package != null) 'package': [package],
-        if (epssPercentage != null) 'epss_percentage': [epssPercentage],
+        if (state != null) 'state': [state.toString()],
+        if (severity != null) 'severity': [severity.toString()],
+        if (ecosystem != null) 'ecosystem': [ecosystem.toString()],
+        if (package != null) 'package': [package.toString()],
+        if (epssPercentage != null)
+          'epss_percentage': [epssPercentage.toString()],
         if (has != null) 'has': [has.toJson().toString()],
-        if (scope != null) 'scope': [scope.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (scope != null) 'scope': [scope.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
         if (first != null) 'first': [first.toString()],
         if (last != null) 'last': [last.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -176,7 +236,7 @@ class DependabotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -212,7 +272,7 @@ class DependabotApi {
       method: Method.get,
       path: '/organizations/{org}/dependabot/repository-access'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
@@ -223,7 +283,7 @@ class DependabotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -259,15 +319,16 @@ class DependabotApi {
       method: Method.patch,
       path: '/organizations/{org}/dependabot/repository-access'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
       body: dependabotUpdateRepositoryAccessForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -293,14 +354,15 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/organizations/{org}/dependabot/repository-access/default-level'
-          .replaceAll('{org}', org),
+          .replaceAll('{org}', '${org}'),
       body: dependabotSetRepositoryAccessDefaultLevelRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -339,19 +401,20 @@ class DependabotApi {
 
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/dependabot/alerts'.replaceAll('{org}', org),
+      path: '/orgs/{org}/dependabot/alerts'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (state != null) 'state': [state],
-        if (severity != null) 'severity': [severity],
-        if (ecosystem != null) 'ecosystem': [ecosystem],
-        if (package != null) 'package': [package],
-        if (epssPercentage != null) 'epss_percentage': [epssPercentage],
+        if (state != null) 'state': [state.toString()],
+        if (severity != null) 'severity': [severity.toString()],
+        if (ecosystem != null) 'ecosystem': [ecosystem.toString()],
+        if (package != null) 'package': [package.toString()],
+        if (epssPercentage != null)
+          'epss_percentage': [epssPercentage.toString()],
         if (has != null) 'has': [has.toJson().toString()],
-        if (scope != null) 'scope': [scope.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (scope != null) 'scope': [scope.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
         if (first != null) 'first': [first.toString()],
         if (last != null) 'last': [last.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -361,7 +424,7 @@ class DependabotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -391,7 +454,7 @@ class DependabotApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/dependabot/secrets'.replaceAll('{org}', org),
+      path: '/orgs/{org}/dependabot/secrets'.replaceAll('{org}', '${org}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -401,7 +464,7 @@ class DependabotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -427,14 +490,14 @@ class DependabotApi {
       method: Method.get,
       path: '/orgs/{org}/dependabot/secrets/public-key'.replaceAll(
         '{org}',
-        org,
+        '${org}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -459,14 +522,14 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/dependabot/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -497,20 +560,21 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/dependabot/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: dependabotCreateOrUpdateOrgSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      201 => const DependabotCreateOrUpdateOrgSecretResponse201(EmptyObject()),
+      201 => DependabotCreateOrUpdateOrgSecretResponse201(const EmptyObject()),
       204 => const DependabotCreateOrUpdateOrgSecretResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
     };
@@ -528,14 +592,14 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/orgs/{org}/dependabot/secrets/{secret_name}'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -556,8 +620,8 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/orgs/{org}/dependabot/secrets/{secret_name}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       queryParameters: {
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -567,7 +631,7 @@ class DependabotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -599,15 +663,16 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/orgs/{org}/dependabot/secrets/{secret_name}/repositories'
-          .replaceAll('{org}', org)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{org}', '${org}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: dependabotSetSelectedReposForOrgSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -630,15 +695,15 @@ class DependabotApi {
       method: Method.put,
       path:
           '/orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{secret_name}', secretName)
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{secret_name}', '${secretName}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -661,15 +726,15 @@ class DependabotApi {
       method: Method.delete,
       path:
           '/orgs/{org}/dependabot/secrets/{secret_name}/repositories/{repository_id}'
-              .replaceAll('{org}', org)
-              .replaceAll('{secret_name}', secretName)
-              .replaceAll('{repository_id}', '$repositoryId'),
+              .replaceAll('{org}', '${org}')
+              .replaceAll('{secret_name}', '${secretName}')
+              .replaceAll('{repository_id}', '${repositoryId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -707,23 +772,24 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/dependabot/alerts'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (state != null) 'state': [state],
-        if (severity != null) 'severity': [severity],
-        if (ecosystem != null) 'ecosystem': [ecosystem],
-        if (package != null) 'package': [package],
-        if (manifest != null) 'manifest': [manifest],
-        if (epssPercentage != null) 'epss_percentage': [epssPercentage],
+        if (state != null) 'state': [state.toString()],
+        if (severity != null) 'severity': [severity.toString()],
+        if (ecosystem != null) 'ecosystem': [ecosystem.toString()],
+        if (package != null) 'package': [package.toString()],
+        if (manifest != null) 'manifest': [manifest.toString()],
+        if (epssPercentage != null)
+          'epss_percentage': [epssPercentage.toString()],
         if (has != null) 'has': [has.toJson().toString()],
-        if (scope != null) 'scope': [scope.toJson()],
-        if (sort != null) 'sort': [sort.toJson()],
-        if (direction != null) 'direction': [direction.toJson()],
+        if (scope != null) 'scope': [scope.toJson().toString()],
+        if (sort != null) 'sort': [sort.toJson().toString()],
+        if (direction != null) 'direction': [direction.toJson().toString()],
         if (page != null) 'page': [page.toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
-        if (before != null) 'before': [before],
-        if (after != null) 'after': [after],
+        if (before != null) 'before': [before.toString()],
+        if (after != null) 'after': [after.toString()],
         if (first != null) 'first': [first.toString()],
         if (last != null) 'last': [last.toString()],
       },
@@ -732,7 +798,7 @@ class DependabotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -760,15 +826,15 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/dependabot/alerts/{alert_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -800,16 +866,17 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.patch,
       path: '/repos/{owner}/{repo}/dependabot/alerts/{alert_number}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
           .replaceAll('{alert_number}', '${alertNumber.toJson()}'),
       body: dependabotUpdateAlertRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -838,8 +905,8 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/dependabot/secrets'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
@@ -849,7 +916,7 @@ class DependabotApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -877,14 +944,14 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/dependabot/secrets/public-key'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -910,15 +977,15 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/dependabot/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -950,21 +1017,22 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/repos/{owner}/{repo}/dependabot/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
       body: dependabotCreateOrUpdateRepoSecretRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
     return switch (response.statusCode) {
-      201 => const DependabotCreateOrUpdateRepoSecretResponse201(EmptyObject()),
+      201 => DependabotCreateOrUpdateRepoSecretResponse201(const EmptyObject()),
       204 => const DependabotCreateOrUpdateRepoSecretResponse204(),
       _ => throw ApiException<Object?>.unhandled(response.statusCode),
     };
@@ -983,15 +1051,15 @@ class DependabotApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/repos/{owner}/{repo}/dependabot/secrets/{secret_name}'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo)
-          .replaceAll('{secret_name}', secretName),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}')
+          .replaceAll('{secret_name}', '${secretName}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }

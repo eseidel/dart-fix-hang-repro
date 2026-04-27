@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ActivityMarkNotificationsAsReadRequest {
-  const ActivityMarkNotificationsAsReadRequest({
+  ActivityMarkNotificationsAsReadRequest({
     this.lastReadAt,
     this.read,
   });
@@ -63,7 +63,7 @@ class ActivityMarkNotificationsAsReadRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActivityMarkNotificationsAsReadRequest &&
-        lastReadAt == other.lastReadAt &&
-        read == other.read;
+        this.lastReadAt == other.lastReadAt &&
+        this.read == other.read;
   }
 }

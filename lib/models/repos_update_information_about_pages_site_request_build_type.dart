@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 /// The process by which the GitHub Pages site will be built. `workflow` means
 /// that the site is built by a custom GitHub Actions workflow. `legacy` means
 /// that the site is built by GitHub when changes are pushed to a specific

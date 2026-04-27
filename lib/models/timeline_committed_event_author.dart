@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class TimelineCommittedEventAuthor {
   /// {@macro timeline_committed_event_author}
-  const TimelineCommittedEventAuthor({
+  TimelineCommittedEventAuthor({
     required this.date,
     required this.email,
     required this.name,
@@ -69,8 +69,8 @@ class TimelineCommittedEventAuthor {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is TimelineCommittedEventAuthor &&
-        date == other.date &&
-        email == other.email &&
-        name == other.name;
+        this.date == other.date &&
+        this.email == other.email &&
+        this.name == other.name;
   }
 }

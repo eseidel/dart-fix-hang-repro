@@ -1,9 +1,8 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/enterprise.dart';
 import 'package:github_out/models/integration.dart';
+import 'package:github_out/models/integration_owner.dart';
+import 'package:github_out/models/integration_permissions.dart';
 import 'package:github_out/models/moved_column_in_project_issue_event_project_card.dart';
 import 'package:github_out/models/simple_user.dart';
 import 'package:meta/meta.dart';
@@ -15,7 +14,7 @@ import 'package:meta/meta.dart';
 @immutable
 class MovedColumnInProjectIssueEvent {
   /// {@macro moved_column_in_project_issue_event}
-  const MovedColumnInProjectIssueEvent({
+  MovedColumnInProjectIssueEvent({
     required this.id,
     required this.nodeId,
     required this.url,
@@ -34,7 +33,7 @@ class MovedColumnInProjectIssueEvent {
       'MovedColumnInProjectIssueEvent',
       json,
       () => MovedColumnInProjectIssueEvent(
-        id: json['id'] as int,
+        id: (json['id'] as int),
         nodeId: json['node_id'] as String,
         url: json['url'] as String,
         actor: SimpleUser.fromJson(json['actor'] as Map<String, dynamic>),
@@ -117,15 +116,15 @@ class MovedColumnInProjectIssueEvent {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is MovedColumnInProjectIssueEvent &&
-        id == other.id &&
-        nodeId == other.nodeId &&
-        url == other.url &&
-        actor == other.actor &&
-        event == other.event &&
-        commitId == other.commitId &&
-        commitUrl == other.commitUrl &&
-        createdAt == other.createdAt &&
-        performedViaGithubApp == other.performedViaGithubApp &&
-        projectCard == other.projectCard;
+        this.id == other.id &&
+        this.nodeId == other.nodeId &&
+        this.url == other.url &&
+        this.actor == other.actor &&
+        this.event == other.event &&
+        this.commitId == other.commitId &&
+        this.commitUrl == other.commitUrl &&
+        this.createdAt == other.createdAt &&
+        this.performedViaGithubApp == other.performedViaGithubApp &&
+        this.projectCard == other.projectCard;
   }
 }

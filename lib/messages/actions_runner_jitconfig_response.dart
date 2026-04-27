@@ -1,10 +1,12 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/runner.dart';
+import 'package:github_out/models/runner_label.dart';
+import 'package:github_out/models/runner_label_type.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ActionsRunnerJitconfigResponse {
-  const ActionsRunnerJitconfigResponse({
+  ActionsRunnerJitconfigResponse({
     required this.runner,
     required this.encodedJitConfig,
   });
@@ -57,7 +59,7 @@ class ActionsRunnerJitconfigResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ActionsRunnerJitconfigResponse &&
-        runner == other.runner &&
-        encodedJitConfig == other.encodedJitConfig;
+        this.runner == other.runner &&
+        this.encodedJitConfig == other.encodedJitConfig;
   }
 }

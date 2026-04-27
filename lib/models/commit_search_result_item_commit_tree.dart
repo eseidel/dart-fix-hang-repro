@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CommitSearchResultItemCommitTree {
-  const CommitSearchResultItemCommitTree({
+  CommitSearchResultItemCommitTree({
     required this.sha,
     required this.url,
   });
@@ -52,7 +52,7 @@ class CommitSearchResultItemCommitTree {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CommitSearchResultItemCommitTree &&
-        sha == other.sha &&
-        url == other.url;
+        this.sha == other.sha &&
+        this.url == other.url;
   }
 }

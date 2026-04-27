@@ -1,7 +1,3 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 // Spec descriptions copy prose verbatim into dartdoc, where `[x]`
 // inside a sentence (placeholder text, ALL_CAPS tokens, license
 // templates) is parsed as a symbol reference even when no such
@@ -14,28 +10,49 @@ import 'dart:io';
 import 'package:github_out/api_client.dart';
 import 'package:github_out/api_exception.dart';
 import 'package:github_out/messages/projects_add_collaborator_request.dart';
+import 'package:github_out/messages/projects_create_card422_response.dart';
+import 'package:github_out/messages/projects_create_card503_response.dart';
 import 'package:github_out/messages/projects_create_card_request.dart';
 import 'package:github_out/messages/projects_create_column_request.dart';
 import 'package:github_out/messages/projects_create_for_authenticated_user_request.dart';
 import 'package:github_out/messages/projects_create_for_org_request.dart';
 import 'package:github_out/messages/projects_create_for_repo_request.dart';
+import 'package:github_out/messages/projects_delete403_response.dart';
+import 'package:github_out/messages/projects_delete_card403_response.dart';
 import 'package:github_out/messages/projects_move_card201_response.dart';
+import 'package:github_out/messages/projects_move_card403_response.dart';
+import 'package:github_out/messages/projects_move_card503_response.dart';
 import 'package:github_out/messages/projects_move_card_request.dart';
 import 'package:github_out/messages/projects_move_column201_response.dart';
 import 'package:github_out/messages/projects_move_column_request.dart';
+import 'package:github_out/messages/projects_update403_response.dart';
 import 'package:github_out/messages/projects_update_card_request.dart';
 import 'package:github_out/messages/projects_update_column_request.dart';
 import 'package:github_out/messages/projects_update_request.dart';
+import 'package:github_out/models/basic_error.dart';
 import 'package:github_out/models/project.dart';
 import 'package:github_out/models/project_card.dart';
 import 'package:github_out/models/project_collaborator_permission.dart';
 import 'package:github_out/models/project_column.dart';
+import 'package:github_out/models/project_organization_permission.dart';
+import 'package:github_out/models/projects_add_collaborator_request_permission.dart';
+import 'package:github_out/models/projects_create_card503_response_errors_inner.dart';
+import 'package:github_out/models/projects_create_card_request_one_of_0.dart';
+import 'package:github_out/models/projects_create_card_request_one_of_1.dart';
 import 'package:github_out/models/projects_list_cards_parameter1.dart';
 import 'package:github_out/models/projects_list_collaborators_parameter1.dart';
 import 'package:github_out/models/projects_list_for_org_parameter1.dart';
 import 'package:github_out/models/projects_list_for_repo_parameter2.dart';
 import 'package:github_out/models/projects_list_for_user_parameter1.dart';
+import 'package:github_out/models/projects_move_card403_response_errors_inner.dart';
+import 'package:github_out/models/projects_move_card503_response_errors_inner.dart';
+import 'package:github_out/models/projects_update_request_organization_permission.dart';
 import 'package:github_out/models/simple_user.dart';
+import 'package:github_out/models/validation_error.dart';
+import 'package:github_out/models/validation_error_errors_inner.dart';
+import 'package:github_out/models/validation_error_errors_inner_value.dart';
+import 'package:github_out/models/validation_error_simple.dart';
+import 'package:http/http.dart' as http;
 
 /// Interact with GitHub Projects.
 class ProjectsApi {
@@ -58,9 +75,9 @@ class ProjectsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/orgs/{org}/projects'.replaceAll('{org}', org),
+      path: '/orgs/{org}/projects'.replaceAll('{org}', '${org}'),
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -69,7 +86,7 @@ class ProjectsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -95,14 +112,15 @@ class ProjectsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.post,
-      path: '/orgs/{org}/projects'.replaceAll('{org}', org),
+      path: '/orgs/{org}/projects'.replaceAll('{org}', '${org}'),
       body: projectsCreateForOrgRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -129,14 +147,14 @@ class ProjectsApi {
       method: Method.get,
       path: '/projects/columns/cards/{card_id}'.replaceAll(
         '{card_id}',
-        '$cardId',
+        '${cardId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -163,14 +181,14 @@ class ProjectsApi {
       method: Method.delete,
       path: '/projects/columns/cards/{card_id}'.replaceAll(
         '{card_id}',
-        '$cardId',
+        '${cardId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -190,15 +208,16 @@ class ProjectsApi {
       method: Method.patch,
       path: '/projects/columns/cards/{card_id}'.replaceAll(
         '{card_id}',
-        '$cardId',
+        '${cardId}',
       ),
       body: projectsUpdateCardRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -226,15 +245,16 @@ class ProjectsApi {
       method: Method.post,
       path: '/projects/columns/cards/{card_id}/moves'.replaceAll(
         '{card_id}',
-        '$cardId',
+        '${cardId}',
       ),
       body: projectsMoveCardRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -259,14 +279,14 @@ class ProjectsApi {
       method: Method.get,
       path: '/projects/columns/{column_id}'.replaceAll(
         '{column_id}',
-        '$columnId',
+        '${columnId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -293,14 +313,14 @@ class ProjectsApi {
       method: Method.delete,
       path: '/projects/columns/{column_id}'.replaceAll(
         '{column_id}',
-        '$columnId',
+        '${columnId}',
       ),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -320,15 +340,16 @@ class ProjectsApi {
       method: Method.patch,
       path: '/projects/columns/{column_id}'.replaceAll(
         '{column_id}',
-        '$columnId',
+        '${columnId}',
       ),
       body: projectsUpdateColumnRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -358,10 +379,11 @@ class ProjectsApi {
       method: Method.get,
       path: '/projects/columns/{column_id}/cards'.replaceAll(
         '{column_id}',
-        '$columnId',
+        '${columnId}',
       ),
       queryParameters: {
-        if (archivedState != null) 'archived_state': [archivedState.toJson()],
+        if (archivedState != null)
+          'archived_state': [archivedState.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -370,7 +392,7 @@ class ProjectsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -400,15 +422,16 @@ class ProjectsApi {
       method: Method.post,
       path: '/projects/columns/{column_id}/cards'.replaceAll(
         '{column_id}',
-        '$columnId',
+        '${columnId}',
       ),
       body: projectsCreateCardRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -436,15 +459,16 @@ class ProjectsApi {
       method: Method.post,
       path: '/projects/columns/{column_id}/moves'.replaceAll(
         '{column_id}',
-        '$columnId',
+        '${columnId}',
       ),
       body: projectsMoveColumnRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -467,13 +491,13 @@ class ProjectsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.get,
-      path: '/projects/{project_id}'.replaceAll('{project_id}', '$projectId'),
+      path: '/projects/{project_id}'.replaceAll('{project_id}', '${projectId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -498,13 +522,13 @@ class ProjectsApi {
   ) async {
     final response = await client.invokeApi(
       method: Method.delete,
-      path: '/projects/{project_id}'.replaceAll('{project_id}', '$projectId'),
+      path: '/projects/{project_id}'.replaceAll('{project_id}', '${projectId}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -522,14 +546,15 @@ class ProjectsApi {
   }) async {
     final response = await client.invokeApi(
       method: Method.patch,
-      path: '/projects/{project_id}'.replaceAll('{project_id}', '$projectId'),
+      path: '/projects/{project_id}'.replaceAll('{project_id}', '${projectId}'),
       body: projectsUpdateRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -559,10 +584,11 @@ class ProjectsApi {
       method: Method.get,
       path: '/projects/{project_id}/collaborators'.replaceAll(
         '{project_id}',
-        '$projectId',
+        '${projectId}',
       ),
       queryParameters: {
-        if (affiliation != null) 'affiliation': [affiliation.toJson()],
+        if (affiliation != null)
+          'affiliation': [affiliation.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -571,7 +597,7 @@ class ProjectsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -601,15 +627,16 @@ class ProjectsApi {
     final response = await client.invokeApi(
       method: Method.put,
       path: '/projects/{project_id}/collaborators/{username}'
-          .replaceAll('{project_id}', '$projectId')
-          .replaceAll('{username}', username),
+          .replaceAll('{project_id}', '${projectId}')
+          .replaceAll('{username}', '${username}'),
       body: projectsAddCollaboratorRequest?.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -628,14 +655,14 @@ class ProjectsApi {
     final response = await client.invokeApi(
       method: Method.delete,
       path: '/projects/{project_id}/collaborators/{username}'
-          .replaceAll('{project_id}', '$projectId')
-          .replaceAll('{username}', username),
+          .replaceAll('{project_id}', '${projectId}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
   }
@@ -654,14 +681,14 @@ class ProjectsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/projects/{project_id}/collaborators/{username}/permission'
-          .replaceAll('{project_id}', '$projectId')
-          .replaceAll('{username}', username),
+          .replaceAll('{project_id}', '${projectId}')
+          .replaceAll('{username}', '${username}'),
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -690,7 +717,7 @@ class ProjectsApi {
       method: Method.get,
       path: '/projects/{project_id}/columns'.replaceAll(
         '{project_id}',
-        '$projectId',
+        '${projectId}',
       ),
       queryParameters: {
         if (perPage != null) 'per_page': [perPage.toString()],
@@ -701,7 +728,7 @@ class ProjectsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -731,15 +758,16 @@ class ProjectsApi {
       method: Method.post,
       path: '/projects/{project_id}/columns'.replaceAll(
         '{project_id}',
-        '$projectId',
+        '${projectId}',
       ),
       body: projectsCreateColumnRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -769,10 +797,10 @@ class ProjectsApi {
     final response = await client.invokeApi(
       method: Method.get,
       path: '/repos/{owner}/{repo}/projects'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -781,7 +809,7 @@ class ProjectsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -809,15 +837,16 @@ class ProjectsApi {
     final response = await client.invokeApi(
       method: Method.post,
       path: '/repos/{owner}/{repo}/projects'
-          .replaceAll('{owner}', owner)
-          .replaceAll('{repo}', repo),
+          .replaceAll('{owner}', '${owner}')
+          .replaceAll('{repo}', '${repo}'),
       body: projectsCreateForRepoRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -845,12 +874,13 @@ class ProjectsApi {
       method: Method.post,
       path: '/user/projects',
       body: projectsCreateForAuthenticatedUserRequest.toJson(),
+      bodyContentType: BodyContentType.json,
     );
 
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 
@@ -880,10 +910,10 @@ class ProjectsApi {
       method: Method.get,
       path: '/users/{username}/projects'.replaceAll(
         '{username}',
-        username,
+        '${username}',
       ),
       queryParameters: {
-        if (state != null) 'state': [state.toJson()],
+        if (state != null) 'state': [state.toJson().toString()],
         if (perPage != null) 'per_page': [perPage.toString()],
         if (page != null) 'page': [page.toString()],
       },
@@ -892,7 +922,7 @@ class ProjectsApi {
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException<Object?>(
         response.statusCode,
-        response.body,
+        response.body.toString(),
       );
     }
 

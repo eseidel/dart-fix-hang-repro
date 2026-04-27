@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class ReferencedWorkflow {
   /// {@macro referenced_workflow}
-  const ReferencedWorkflow({
+  ReferencedWorkflow({
     required this.path,
     required this.sha,
     this.ref,
@@ -60,8 +60,8 @@ class ReferencedWorkflow {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReferencedWorkflow &&
-        path == other.path &&
-        sha == other.sha &&
-        ref == other.ref;
+        this.path == other.path &&
+        this.sha == other.sha &&
+        this.ref == other.ref;
   }
 }

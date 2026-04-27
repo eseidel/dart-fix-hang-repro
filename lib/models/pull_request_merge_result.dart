@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class PullRequestMergeResult {
   /// {@macro pull_request_merge_result}
-  const PullRequestMergeResult({
+  PullRequestMergeResult({
     required this.sha,
     required this.merged,
     required this.message,
@@ -60,8 +60,8 @@ class PullRequestMergeResult {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is PullRequestMergeResult &&
-        sha == other.sha &&
-        merged == other.merged &&
-        message == other.message;
+        this.sha == other.sha &&
+        this.merged == other.merged &&
+        this.message == other.message;
   }
 }

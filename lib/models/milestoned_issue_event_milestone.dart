@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class MilestonedIssueEventMilestone {
-  const MilestonedIssueEventMilestone({
+  MilestonedIssueEventMilestone({
     required this.title,
   });
 
@@ -44,6 +44,6 @@ class MilestonedIssueEventMilestone {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is MilestonedIssueEventMilestone && title == other.title;
+    return other is MilestonedIssueEventMilestone && this.title == other.title;
   }
 }

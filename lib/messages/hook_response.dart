@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class HookResponse {
   /// {@macro hook_response}
-  const HookResponse({
+  HookResponse({
     required this.code,
     required this.status,
     required this.message,
@@ -19,7 +19,7 @@ class HookResponse {
       'HookResponse',
       json,
       () => HookResponse(
-        code: checkedKey(json, 'code') as int?,
+        code: (checkedKey(json, 'code') as int?),
         status: checkedKey(json, 'status') as String?,
         message: checkedKey(json, 'message') as String?,
       ),
@@ -59,8 +59,8 @@ class HookResponse {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is HookResponse &&
-        code == other.code &&
-        status == other.status &&
-        message == other.message;
+        this.code == other.code &&
+        this.status == other.status &&
+        this.message == other.message;
   }
 }

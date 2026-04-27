@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class CodeScanningUpdateAlertRequest {
-  const CodeScanningUpdateAlertRequest({
+  CodeScanningUpdateAlertRequest({
     required this.state,
     this.dismissedReason,
     this.dismissedComment,
@@ -81,9 +81,9 @@ class CodeScanningUpdateAlertRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CodeScanningUpdateAlertRequest &&
-        state == other.state &&
-        dismissedReason == other.dismissedReason &&
-        dismissedComment == other.dismissedComment &&
-        createRequest == other.createRequest;
+        this.state == other.state &&
+        this.dismissedReason == other.dismissedReason &&
+        this.dismissedComment == other.dismissedComment &&
+        this.createRequest == other.createRequest;
   }
 }

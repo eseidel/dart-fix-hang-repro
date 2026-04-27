@@ -1,5 +1,9 @@
 import 'package:github_out/model_helpers.dart';
+import 'package:github_out/models/dependency.dart';
+import 'package:github_out/models/dependency_relationship.dart';
+import 'package:github_out/models/dependency_scope.dart';
 import 'package:github_out/models/manifest.dart';
+import 'package:github_out/models/manifest_file.dart';
 import 'package:github_out/models/metadata_1.dart';
 import 'package:github_out/models/snapshot_detector.dart';
 import 'package:github_out/models/snapshot_job.dart';
@@ -12,15 +16,15 @@ import 'package:meta/meta.dart';
 @immutable
 class Snapshot {
   /// {@macro snapshot}
-  const Snapshot({
+  Snapshot({
     required this.version,
     required this.job,
     required this.sha,
     required this.ref,
     required this.detector,
-    required this.scanned,
     this.metadata,
     this.manifests,
+    required this.scanned,
   });
 
   /// Converts a `Map<String, dynamic>` to a [Snapshot].
@@ -29,7 +33,7 @@ class Snapshot {
       'Snapshot',
       json,
       () => Snapshot(
-        version: json['version'] as int,
+        version: (json['version'] as int),
         job: SnapshotJob.fromJson(json['job'] as Map<String, dynamic>),
         sha: json['sha'] as String,
         ref: json['ref'] as String,
@@ -119,13 +123,13 @@ class Snapshot {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is Snapshot &&
-        version == other.version &&
-        job == other.job &&
-        sha == other.sha &&
-        ref == other.ref &&
-        detector == other.detector &&
-        mapsEqual(metadata, other.metadata) &&
-        mapsEqual(manifests, other.manifests) &&
-        scanned == other.scanned;
+        this.version == other.version &&
+        this.job == other.job &&
+        this.sha == other.sha &&
+        this.ref == other.ref &&
+        this.detector == other.detector &&
+        mapsEqual(this.metadata, other.metadata) &&
+        mapsEqual(this.manifests, other.manifests) &&
+        this.scanned == other.scanned;
   }
 }

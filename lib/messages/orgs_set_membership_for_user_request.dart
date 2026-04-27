@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/orgs_set_membership_for_user_request_role.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class OrgsSetMembershipForUserRequest {
-  const OrgsSetMembershipForUserRequest({
+  OrgsSetMembershipForUserRequest({
     this.role,
   });
 
@@ -55,6 +51,6 @@ class OrgsSetMembershipForUserRequest {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is OrgsSetMembershipForUserRequest && role == other.role;
+    return other is OrgsSetMembershipForUserRequest && this.role == other.role;
   }
 }

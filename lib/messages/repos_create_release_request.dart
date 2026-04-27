@@ -1,14 +1,10 @@
-// Some OpenAPI specs flatten inline schemas into class names long
-// enough that `dart format` can't keep imports and call sites under
-// 80 cols as bare identifiers.
-// ignore_for_file: lines_longer_than_80_chars
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/repos_create_release_request_make_latest.dart';
 import 'package:meta/meta.dart';
 
 @immutable
 class ReposCreateReleaseRequest {
-  const ReposCreateReleaseRequest({
+  ReposCreateReleaseRequest({
     required this.tagName,
     this.targetCommitish,
     this.name,
@@ -124,14 +120,14 @@ class ReposCreateReleaseRequest {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReposCreateReleaseRequest &&
-        tagName == other.tagName &&
-        targetCommitish == other.targetCommitish &&
-        name == other.name &&
-        body == other.body &&
-        draft == other.draft &&
-        prerelease == other.prerelease &&
-        discussionCategoryName == other.discussionCategoryName &&
-        generateReleaseNotes == other.generateReleaseNotes &&
-        makeLatest == other.makeLatest;
+        this.tagName == other.tagName &&
+        this.targetCommitish == other.targetCommitish &&
+        this.name == other.name &&
+        this.body == other.body &&
+        this.draft == other.draft &&
+        this.prerelease == other.prerelease &&
+        this.discussionCategoryName == other.discussionCategoryName &&
+        this.generateReleaseNotes == other.generateReleaseNotes &&
+        this.makeLatest == other.makeLatest;
   }
 }

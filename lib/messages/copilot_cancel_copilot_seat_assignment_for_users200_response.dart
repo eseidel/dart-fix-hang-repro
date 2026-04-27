@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 @immutable
 class CopilotCancelCopilotSeatAssignmentForUsers200Response {
   /// {@macro copilot_cancel_copilot_seat_assignment_for_users200_response}
-  const CopilotCancelCopilotSeatAssignmentForUsers200Response({
+  CopilotCancelCopilotSeatAssignmentForUsers200Response({
     required this.seatsCancelled,
   });
 
@@ -21,7 +21,7 @@ class CopilotCancelCopilotSeatAssignmentForUsers200Response {
       'CopilotCancelCopilotSeatAssignmentForUsers200Response',
       json,
       () => CopilotCancelCopilotSeatAssignmentForUsers200Response(
-        seatsCancelled: json['seats_cancelled'] as int,
+        seatsCancelled: (json['seats_cancelled'] as int),
       ),
     );
   }
@@ -54,6 +54,6 @@ class CopilotCancelCopilotSeatAssignmentForUsers200Response {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is CopilotCancelCopilotSeatAssignmentForUsers200Response &&
-        seatsCancelled == other.seatsCancelled;
+        this.seatsCancelled == other.seatsCancelled;
   }
 }

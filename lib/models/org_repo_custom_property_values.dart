@@ -1,5 +1,6 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/custom_property_value.dart';
+import 'package:github_out/models/custom_property_value_value.dart';
 import 'package:meta/meta.dart';
 
 /// {@template org_repo_custom_property_values}
@@ -9,7 +10,7 @@ import 'package:meta/meta.dart';
 @immutable
 class OrgRepoCustomPropertyValues {
   /// {@macro org_repo_custom_property_values}
-  const OrgRepoCustomPropertyValues({
+  OrgRepoCustomPropertyValues({
     required this.repositoryId,
     required this.repositoryName,
     required this.repositoryFullName,
@@ -22,7 +23,7 @@ class OrgRepoCustomPropertyValues {
       'OrgRepoCustomPropertyValues',
       json,
       () => OrgRepoCustomPropertyValues(
-        repositoryId: json['repository_id'] as int,
+        repositoryId: (json['repository_id'] as int),
         repositoryName: json['repository_name'] as String,
         repositoryFullName: json['repository_full_name'] as String,
         properties: (json['properties'] as List)
@@ -79,9 +80,9 @@ class OrgRepoCustomPropertyValues {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is OrgRepoCustomPropertyValues &&
-        repositoryId == other.repositoryId &&
-        repositoryName == other.repositoryName &&
-        repositoryFullName == other.repositoryFullName &&
-        listsEqual(properties, other.properties);
+        this.repositoryId == other.repositoryId &&
+        this.repositoryName == other.repositoryName &&
+        this.repositoryFullName == other.repositoryFullName &&
+        listsEqual(this.properties, other.properties);
   }
 }

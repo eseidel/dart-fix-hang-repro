@@ -7,7 +7,7 @@ import 'package:meta/meta.dart';
 @immutable
 class DependabotAlertSecurityAdvisoryReferencesInner {
   /// {@macro dependabot_alert_security_advisory_references_inner}
-  const DependabotAlertSecurityAdvisoryReferencesInner({
+  DependabotAlertSecurityAdvisoryReferencesInner({
     required this.url,
   });
 
@@ -54,6 +54,6 @@ class DependabotAlertSecurityAdvisoryReferencesInner {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is DependabotAlertSecurityAdvisoryReferencesInner &&
-        url == other.url;
+        this.url == other.url;
   }
 }

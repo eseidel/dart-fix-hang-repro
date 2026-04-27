@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 
 @immutable
 class ReviewCustomGatesCommentRequired {
-  const ReviewCustomGatesCommentRequired({
+  ReviewCustomGatesCommentRequired({
     required this.environmentName,
     required this.comment,
   });
@@ -56,7 +56,7 @@ class ReviewCustomGatesCommentRequired {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is ReviewCustomGatesCommentRequired &&
-        environmentName == other.environmentName &&
-        comment == other.comment;
+        this.environmentName == other.environmentName &&
+        this.comment == other.comment;
   }
 }

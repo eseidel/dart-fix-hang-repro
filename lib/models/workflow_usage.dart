@@ -1,5 +1,8 @@
 import 'package:github_out/model_helpers.dart';
 import 'package:github_out/models/workflow_usage_billable.dart';
+import 'package:github_out/models/workflow_usage_billable_m_a_c_o_s.dart';
+import 'package:github_out/models/workflow_usage_billable_u_b_u_n_t_u.dart';
+import 'package:github_out/models/workflow_usage_billable_w_i_n_d_o_w_s.dart';
 import 'package:meta/meta.dart';
 
 /// {@template workflow_usage}
@@ -9,7 +12,7 @@ import 'package:meta/meta.dart';
 @immutable
 class WorkflowUsage {
   /// {@macro workflow_usage}
-  const WorkflowUsage({
+  WorkflowUsage({
     required this.billable,
   });
 
@@ -50,6 +53,6 @@ class WorkflowUsage {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is WorkflowUsage && billable == other.billable;
+    return other is WorkflowUsage && this.billable == other.billable;
   }
 }
