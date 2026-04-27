@@ -1,0 +1,40 @@
+enum PackagesListPackagesForUserParameter0 {
+  npm._('npm'),
+  maven._('maven'),
+  rubygems._('rubygems'),
+  docker._('docker'),
+  nuget._('nuget'),
+  container._('container');
+
+  const PackagesListPackagesForUserParameter0._(this.value);
+
+  /// Creates a PackagesListPackagesForUserParameter0 from a json string.
+  factory PackagesListPackagesForUserParameter0.fromJson(String json) {
+    return PackagesListPackagesForUserParameter0.values.firstWhere(
+      (value) => value.value == json,
+      orElse: () => throw FormatException(
+        'Unknown PackagesListPackagesForUserParameter0 value: $json',
+      ),
+    );
+  }
+
+  /// Convenience to create a nullable type from a nullable json object.
+  /// Useful when parsing optional fields.
+  static PackagesListPackagesForUserParameter0? maybeFromJson(String? json) {
+    if (json == null) {
+      return null;
+    }
+    return PackagesListPackagesForUserParameter0.fromJson(json);
+  }
+
+  /// The value of the enum, as a string.  This is the exact value
+  /// from the OpenAPI spec and will be used for network transport.
+  final String value;
+
+  /// Converts the enum to a json string.
+  String toJson() => value;
+
+  /// Returns the string value of the enum.
+  @override
+  String toString() => value;
+}
